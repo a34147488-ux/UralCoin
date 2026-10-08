@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin REFERRALS v4
-// Telegram Referral System
+// URALcoin REFERRALS v5
+// Server Referral System
 // ===================================
 
 
@@ -52,7 +52,6 @@ player.id
 
 
 
-
 function loadReferral(){
 
 
@@ -65,17 +64,12 @@ document.getElementById(
 
 
 
-
-
 if(input){
-
 
 input.value =
 createReferralLink();
 
-
 }
-
 
 
 
@@ -87,7 +81,6 @@ const count =
 document.getElementById(
 "friendsCount"
 );
-
 
 
 
@@ -120,7 +113,12 @@ player.friends || 0;
 
 
 
-function checkStartReferral(){
+// ===============================
+// ПРОВЕРКА ВХОДА ПО ССЫЛКЕ
+// ===============================
+
+
+async function checkStartReferral(){
 
 
 
@@ -135,8 +133,11 @@ let start = "";
 
 
 
-
-if(tg?.initDataUnsafe?.start_param){
+if(
+tg &&
+tg.initDataUnsafe &&
+tg.initDataUnsafe.start_param
+){
 
 
 start =
@@ -144,6 +145,7 @@ tg.initDataUnsafe.start_param;
 
 
 }
+
 
 
 
@@ -176,8 +178,13 @@ params.get("start") || "";
 
 
 
+if(!start)
 
-if(start){
+return;
+
+
+
+
 
 
 
@@ -188,23 +195,106 @@ Storage.getPlayer();
 
 
 
+
+
 if(
 
 String(player.id)
 
-!==
+===
 
 String(start)
 
-){
+)
+
+return;
 
 
+
+
+
+
+
+// сохраняем локально
 
 Storage.setReferrer(start);
 
 
 
+
+
+
+
+// отправляем на сервер
+
+
+try{
+
+
+
+await fetch(
+
+CONFIG.API_URL +
+
+"/referral",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+userId:
+
+player.id,
+
+
+referrerId:
+
+start
+
+
+})
+
+
 }
+
+
+
+);
+
+
+
+console.log(
+"Referral sent"
+);
+
+
+
+}
+
+catch(e){
+
+
+
+console.log(
+"Referral error",
+e
+);
 
 
 
@@ -235,6 +325,7 @@ document.getElementById(
 
 
 
+
 if(copyButton){
 
 
@@ -254,18 +345,16 @@ createReferralLink();
 
 
 
-if(navigator.clipboard){
-
-
 navigator.clipboard.writeText(link);
 
 
-}
 
 
 
 copyButton.innerText =
 "Скопировано";
+
+
 
 
 
@@ -301,6 +390,8 @@ copyButton.innerText =
 checkStartReferral();
 
 loadReferral();
+
+
 
 
 
