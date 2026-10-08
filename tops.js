@@ -1,39 +1,145 @@
-const demoUsers = [
+function formatTopNumber(num){
 
 
-{
-name:"Ural Boss",
-balance:125000,
-friends:25,
-avatar:""
-},
+return Number(num)
+.toFixed(3)
+.replace(".",",");
 
 
-{
-name:"Екатеринбург",
-balance:87000,
-friends:18,
-avatar:""
-},
 
-
-{
-name:"Crypto U",
-balance:54000,
-friends:12,
-avatar:""
-},
-
-
-{
-name:"Player",
-balance:23000,
-friends:5,
-avatar:""
 }
 
 
-];
+
+
+
+
+
+
+function getPlayers(){
+
+
+
+let players =
+
+JSON.parse(
+
+localStorage.getItem(
+"players"
+)
+
+)
+
+||
+[];
+
+
+
+
+
+let current =
+Storage.getPlayer();
+
+
+
+
+
+
+// добавляем текущего игрока
+
+
+let exists =
+
+players.find(
+
+p=>
+p.id === current.id
+
+);
+
+
+
+
+
+
+if(!exists){
+
+
+
+players.push({
+
+id:
+current.id,
+
+
+name:
+current.name ||
+"Игрок",
+
+
+photo:
+current.photo ||
+"",
+
+
+balance:
+current.balance ||
+0,
+
+
+friends:
+current.friends ||
+0
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+else{
+
+
+
+exists.balance =
+current.balance;
+
+
+
+exists.friends =
+current.friends;
+
+
+
+}
+
+
+
+
+
+localStorage.setItem(
+
+"players",
+
+JSON.stringify(players)
+
+);
+
+
+
+
+
+return players;
+
+
+
+}
 
 
 
@@ -55,6 +161,7 @@ document.getElementById(
 
 
 
+
 if(!box)
 return;
 
@@ -62,20 +169,92 @@ return;
 
 
 
-box.innerHTML = "";
+box.innerHTML="";
 
 
 
 
 
 
-demoUsers
-.sort(
+let players =
+getPlayers();
+
+
+
+
+
+
+players.sort(
+
 (a,b)=>
-b.balance-a.balance
-)
+
+b.balance -
+a.balance
+
+);
+
+
+
+
+
+
+
+players
+.slice(0,20)
 .forEach(
-(user,index)=>{
+
+(player,index)=>{
+
+
+
+
+
+
+let avatar = "";
+
+
+
+
+
+if(player.photo){
+
+
+
+avatar =
+
+`
+
+<img class="top-avatar"
+src="${player.photo}">
+
+`;
+
+
+
+}
+
+else{
+
+
+
+avatar =
+
+`
+
+<div class="top-avatar">
+
+${index+1}
+
+</div>
+
+`;
+
+
+
+}
+
+
+
 
 
 
@@ -88,23 +267,11 @@ document.createElement(
 
 
 
+
+
 item.className =
 "top-player";
 
-
-
-
-
-let photo =
-user.avatar
-?
-`<img class="top-avatar" src="${user.avatar}">`
-:
-`
-<div class="top-avatar">
-${index+1}
-</div>
-`;
 
 
 
@@ -114,31 +281,49 @@ ${index+1}
 item.innerHTML = `
 
 
-${photo}
+
+${avatar}
 
 
-<div>
+
+<div class="top-info">
 
 
 <b>
-#${index+1} ${user.name}
+
+#${index+1}
+
+${player.name}
+
 </b>
 
 
+
 <br>
 
 
 <span>
-${user.balance.toFixed(2)} U
+
+${formatTopNumber(
+player.balance
+)}
+
+U
+
 </span>
 
 
+
 <br>
 
 
+
 <span>
+
 Приглашено:
-${user.friends}
+
+${player.friends || 0}
+
 </span>
 
 
@@ -146,7 +331,10 @@ ${user.friends}
 </div>
 
 
+
 `;
+
+
 
 
 
@@ -159,8 +347,10 @@ item
 
 
 
+
 }
 );
+
 
 
 
@@ -175,3 +365,22 @@ item
 
 
 loadTop();
+
+
+
+
+
+
+
+
+
+// обновление топа каждые 5 секунд
+
+
+setInterval(
+
+loadTop,
+
+5000
+
+);
