@@ -1,227 +1,35 @@
-
 // ===================================
-// URALcoin PROMO v10
-// Create + Activate Promo Codes
+// URALcoin PROMO SYSTEM v12
+// Create + Activate Promo
 // ===================================
 
 
 
-
-const createPromo =
-document.getElementById(
-"createPromo"
-);
-
-
-
-if(createPromo){
-
-
-
-createPromo.onclick = async ()=>{
-
-
-
-let name =
-document.getElementById(
-"promoName"
-)
-.value
-.trim();
-
-
-
-
-
-let reward =
-Number(
-document.getElementById(
-"promoReward"
-)
-.value
-);
-
-
-
-
-
-let limit =
-Number(
-document.getElementById(
-"promoLimit"
-)
-.value
-);
-
-
-
-
-
-
-
-if(!name || !reward || !limit){
-
-
-alert(
-"Заполните все поля"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-try{
-
-
-
-let response =
-
-await fetch(
-
-CONFIG.API_URL +
-"/promo/create",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json"
-
-},
-
-
-body:JSON.stringify({
-
-name:name,
-
-
-reward:reward,
-
-
-limit:limit
-
-
-})
-
-
-}
-
-);
-
-
-
-
-
-
-
-let data =
-await response.json();
-
-
-
-
-
-if(data){
-
-
-alert(
-
-"Промокод создан: "
-+
-name
-
-);
-
-
-
-}
-
-
-
-}
-
-catch(e){
-
-
-console.log(
-e
-);
-
-
-alert(
-"Ошибка сервера"
-);
-
-
-
-}
-
-
-
-};
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// USE PROMO
-// ===============================
-
-
-
-const usePromo =
-document.getElementById(
-"usePromo"
-);
-
-
-
-
-
-
-if(usePromo){
-
-
-
-usePromo.onclick = async ()=>{
-
-
-
-
-
-let code =
-document.getElementById(
+const promoInput = document.getElementById(
 "promoInput"
-)
-.value
-.trim();
+);
+
+
+
+const promoButton = document.getElementById(
+"promoButton"
+);
 
 
 
 
 
-let player =
-Storage.getPlayer();
+
+
+
+
+async function activatePromo(){
+
+
+
+const code =
+
+promoInput?.value.trim();
 
 
 
@@ -247,25 +55,38 @@ return;
 
 
 
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+
+
 try{
 
 
 
-let response =
+const response = await fetch(
 
-await fetch(
-
-CONFIG.API_URL +
-"/promo/use",
+CONFIG.API_URL + "/promo/use",
 
 {
 
+
 method:"POST",
+
 
 headers:{
 
+
 "Content-Type":
+
 "application/json"
+
 
 },
 
@@ -273,7 +94,6 @@ headers:{
 body:JSON.stringify({
 
 id:player.id,
-
 
 code:code
 
@@ -291,8 +111,7 @@ code:code
 
 
 
-let data =
-await response.json();
+const data = await response.json();
 
 
 
@@ -300,15 +119,89 @@ await response.json();
 
 
 
+if(!data.success){
 
-if(data.success){
+
+
+if(data.error==="USED"){
+
+
+alert(
+"Вы уже использовали этот промокод"
+);
+
+
+}
+
+
+
+else if(data.error==="LIMIT"){
+
+
+alert(
+"Лимит промокода закончился"
+);
+
+
+}
+
+
+else{
+
+
+alert(
+"Промокод не найден"
+);
+
+
+}
+
+
+
+return;
+
+
+}
+
+
+
+
+
 
 
 
 player.balance +=
-Number(
-data.reward
+
+Number(data.reward);
+
+
+
+
+
+
+
+
+if(!player.usedPromos)
+
+player.usedPromos=[];
+
+
+
+
+
+
+
+
+player.usedPromos.push(
+
+code.toUpperCase()
+
 );
+
+
+
+
+
 
 
 
@@ -318,48 +211,63 @@ player
 
 
 
+
+
+
+
+
+if(typeof updateScreen==="function"){
+
+
 updateScreen();
+
+
+}
+
+
+
+
 
 
 
 alert(
 
 "Получено +"
+
 +
+
 data.reward
+
 +
+
 " U"
 
 );
 
 
 
-}
-
-else{
 
 
 
-alert(
-"Промокод недоступен"
-);
+if(promoInput)
+
+promoInput.value="";
 
 
-
-}
 
 
 
 }
 
-catch(e){
 
+
+catch(error){
 
 
 console.log(
-e
+"PROMO ERROR",
+error
 );
-
 
 
 alert(
@@ -367,12 +275,28 @@ alert(
 );
 
 
+}
+
+
+
 
 }
 
 
 
-};
+
+
+
+
+
+
+if(promoButton){
+
+
+
+promoButton.onclick=
+
+activatePromo;
 
 
 
