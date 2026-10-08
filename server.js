@@ -1,5 +1,5 @@
-// UralCoin Server v3
-// Пользователи + подготовка топов + рефералы
+// UralCoin Server v4
+// Users + Top + Referrals + Admin
 
 
 const express = require("express");
@@ -9,6 +9,7 @@ const cors = require("cors");
 const app = express();
 
 
+
 app.use(cors());
 
 app.use(express.json());
@@ -16,23 +17,28 @@ app.use(express.json());
 
 
 
-// временное хранилище
-// позже заменим на PostgreSQL
+
+// ВРЕМЕННОЕ ХРАНЕНИЕ
+// после теста заменим на PostgreSQL
+
 
 let users = [];
 
 
 
 
-// ADMIN
+// ТВОЙ TELEGRAM ID
 
-const ADMIN_ID = "ТВОЙ_TELEGRAM_ID";
-
-
+const ADMIN_ID = "ТВОЙ_ID";
 
 
 
-// СОЗДАНИЕ / ПОЛУЧЕНИЕ ИГРОКА
+
+
+
+
+
+// СОЗДАНИЕ ИЛИ ПОЛУЧЕНИЕ ИГРОКА
 
 
 app.post("/user",(req,res)=>{
@@ -42,10 +48,15 @@ const data = req.body;
 
 
 
+
 let user = users.find(
+
 u =>
+
 String(u.id) === String(data.id)
+
 );
+
 
 
 
@@ -58,24 +69,22 @@ if(!user){
 user = {
 
 
-id:data.id,
+id:String(data.id),
+
 
 
 name:
-data.name ||
-"Игрок",
+data.name || "Игрок",
 
 
 
 username:
-data.username ||
-"",
+data.username || "",
 
 
 
 photo:
-data.photo ||
-"",
+data.photo || "",
 
 
 
@@ -95,11 +104,16 @@ clickPower:0.01,
 
 
 
-autoPower:0
+autoPower:0,
+
+
+
+created:Date.now()
 
 
 
 };
+
 
 
 
@@ -109,6 +123,35 @@ users.push(user);
 
 
 }
+
+
+
+
+
+
+else{
+
+
+// обновляем профиль Telegram
+
+
+user.name =
+data.name || user.name;
+
+
+
+user.username =
+data.username || user.username;
+
+
+
+user.photo =
+data.photo || user.photo;
+
+
+
+}
+
 
 
 
@@ -128,26 +171,41 @@ res.json(user);
 
 
 
+
+
 // ПОЛУЧИТЬ ИГРОКА
 
 
 app.get(
+
 "/user/:id",
+
 (req,res)=>{
 
 
 const user =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(req.params.id)
+
 );
 
 
 
+
+
+
 res.json(
+
 user || null
+
 );
 
 
@@ -166,27 +224,42 @@ user || null
 
 
 app.post(
+
 "/balance",
+
 (req,res)=>{
 
 
 const {
+
 id,
+
 balance
+
 }
+
 =
+
 req.body;
 
 
 
 
+
 const user =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(id)
+
 );
+
 
 
 
@@ -196,11 +269,14 @@ if(user){
 
 
 user.balance =
+
 Number(balance);
 
 
 
 }
+
+
 
 
 
@@ -226,11 +302,15 @@ success:true
 
 
 app.get(
+
 "/top",
+
 (req,res)=>{
 
 
-let top =
+
+const top =
+
 
 [...users]
 
@@ -238,12 +318,14 @@ let top =
 
 (a,b)=>
 
-b.balance -
-a.balance
+b.balance-a.balance
 
 )
 
+
+
 .slice(0,20);
+
 
 
 
@@ -267,55 +349,88 @@ res.json(top);
 
 
 app.post(
+
 "/referral",
+
 (req,res)=>{
 
 
+
 const {
+
 userId,
+
 referrerId
+
 }
+
 =
+
 req.body;
 
 
 
 
 
+
 const user =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(userId)
+
 );
+
+
 
 
 
 
 
 const referrer =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(referrerId)
+
 );
 
 
 
 
 
+
 if(
+
 user &&
+
 referrer &&
-!user.referrer
+
+!user.referrer &&
+
+user.id !== referrer.id
+
 ){
 
 
 
 user.referrer =
-referrerId;
+
+String(referrerId);
+
+
 
 
 
@@ -333,6 +448,8 @@ referrer.balance +=5000;
 
 
 
+
+
 res.json({
 
 success:true
@@ -351,20 +468,28 @@ success:true
 
 
 
-// АДМИН ВЫДАТЬ МОНЕТЫ
+// АДМИН ВЫДАТЬ U
 
 
 app.post(
+
 "/admin/give",
+
 (req,res)=>{
 
 
 const {
+
 admin,
+
 id,
+
 amount
+
 }
+
 =
+
 req.body;
 
 
@@ -372,8 +497,13 @@ req.body;
 
 
 if(
+
 String(admin)
-!==ADMIN_ID
+
+!==
+
+String(ADMIN_ID)
+
 ){
 
 
@@ -390,14 +520,21 @@ error:"Нет доступа"
 
 
 
-
 const user =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(id)
+
 );
+
+
 
 
 
@@ -407,11 +544,14 @@ if(user){
 
 
 user.balance +=
+
 Number(amount);
 
 
 
 }
+
+
 
 
 
@@ -434,20 +574,28 @@ success:true
 
 
 
-// АДМИН СНЯТЬ МОНЕТЫ
+// АДМИН СНЯТЬ U
 
 
 app.post(
+
 "/admin/take",
+
 (req,res)=>{
 
 
 const {
+
 admin,
+
 id,
+
 amount
+
 }
+
 =
+
 req.body;
 
 
@@ -455,8 +603,13 @@ req.body;
 
 
 if(
+
 String(admin)
-!==ADMIN_ID
+
+!==
+
+String(ADMIN_ID)
+
 ){
 
 
@@ -474,12 +627,19 @@ error:"Нет доступа"
 
 
 const user =
+
 users.find(
+
 u =>
+
 String(u.id)
+
 ===
+
 String(id)
+
 );
+
 
 
 
@@ -488,12 +648,15 @@ String(id)
 if(user){
 
 
+
 user.balance -=
+
 Number(amount);
 
 
 
 }
+
 
 
 
@@ -517,13 +680,18 @@ success:true
 
 
 app.listen(
+
 3000,
+
 ()=>{
 
 
 console.log(
-"UralCoin server v3 started"
+
+"UralCoin server v4 started"
+
 );
+
 
 
 });
