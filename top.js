@@ -1,100 +1,18 @@
-// UralCoin TOP SYSTEM v3
+// UralCoin TOP v3
+// Серверный рейтинг игроков
+
+
+
 
 function formatTopBalance(value){
 
-    return Number(value || 0)
-        .toLocaleString("ru-RU", {
-            minimumFractionDigits:3,
-            maximumFractionDigits:3
-        });
 
-}
+return Number(value || 0)
 
+.toFixed(3)
 
+.replace(".", ",");
 
-function getCurrentPlayerForTop(){
-
-    const player = Storage.getPlayer() || {};
-
-    const tg =
-    window.Telegram?.WebApp?.initDataUnsafe?.user;
-
-
-    return {
-
-        id:
-        player.id ||
-        tg?.id ||
-        "guest",
-
-
-        name:
-        player.name ||
-        tg?.first_name ||
-        "Игрок",
-
-
-        photo:
-        player.photo ||
-        tg?.photo_url ||
-        "",
-
-
-        balance:
-        Number(player.balance || 0),
-
-
-        friends:
-        Number(player.friends || 0)
-
-    };
-
-}
-
-
-
-
-
-
-function savePlayerToTop(){
-
-
-    let players =
-    JSON.parse(
-        localStorage.getItem("ural_players")
-    ) || [];
-
-
-
-    const current =
-    getCurrentPlayerForTop();
-
-
-
-    const exists =
-    players.findIndex(
-        p=>String(p.id)===String(current.id)
-    );
-
-
-
-    if(exists >=0){
-
-        players[exists]=current;
-
-    }
-    else{
-
-        players.push(current);
-
-    }
-
-
-
-    localStorage.setItem(
-        "ural_players",
-        JSON.stringify(players)
-    );
 
 }
 
@@ -104,140 +22,72 @@ function savePlayerToTop(){
 
 
 
-function renderTop(){
+async function renderTop(){
 
 
-    const list =
-    document.getElementById("topList");
 
+const list =
 
-    if(!list)
-    return;
+document.getElementById(
+"topList"
+);
 
 
 
-    savePlayerToTop();
 
 
+if(!list)
+return;
 
-    let players =
-    JSON.parse(
-        localStorage.getItem("ural_players")
-    ) || [];
 
 
 
-    players =
-    players
-    .sort(
-        (a,b)=>
-        Number(b.balance)-Number(a.balance)
-    );
 
 
+if(
+!window.API
+){
 
-    list.innerHTML="";
+return;
 
+}
 
 
-    players
-    .slice(0,20)
-    .forEach(
-        (player,index)=>{
 
 
-        let avatar =
-        "";
 
 
 
-        if(player.photo){
+const players =
 
-            avatar = `
-            <img 
-            class="top-avatar-img"
-            src="${player.photo}">
-            `;
+await API.getTop();
 
-        }
-        else{
 
-            avatar = `
-            <div class="top-avatar">
-            ${player.name.charAt(0).toUpperCase()}
-            </div>
-            `;
 
-        }
 
 
 
 
+if(
+!players ||
+players.length === 0
+){
 
-        const card =
-        document.createElement("div");
 
 
+list.innerHTML = `
 
-        card.className="top-card";
+<div class="top-empty">
 
+Игроков пока нет
 
+</div>
 
-        card.innerHTML=`
+`;
 
-        <div class="top-place">
-        ${index+1}
-        </div>
 
 
-        ${avatar}
-
-
-        <div class="top-info">
-
-
-        <div class="top-name">
-        ${player.name}
-        </div>
-
-
-        <div class="top-balance">
-        ${formatTopBalance(player.balance)}
-        <span>U</span>
-        </div>
-
-
-        <div class="top-friends">
-        Приглашено: ${player.friends}
-        </div>
-
-
-        </div>
-
-
-        `;
-
-
-
-        card.onclick=()=>{
-
-
-            alert(
-            "Игрок: "+player.name+
-            "\nБаланс: "+
-            formatTopBalance(player.balance)
-            );
-
-
-        };
-
-
-
-        list.appendChild(card);
-
-
-
-    });
+return;
 
 
 
@@ -249,18 +99,251 @@ function renderTop(){
 
 
 
-document.addEventListener(
-"DOMContentLoaded",
+list.innerHTML = "";
+
+
+
+
+
+
+
+
+players
+.slice(0,20)
+.forEach(
+
+(player,index)=>{
+
+
+
+
+
+
+const place =
+
+index + 1;
+
+
+
+
+
+
+
+let avatar = "";
+
+
+
+
+
+
+
+if(
+player.photo
+){
+
+
+
+avatar = `
+
+<img class="top-avatar-img"
+
+src="${player.photo}">
+
+`;
+
+
+
+}
+
+else{
+
+
+
+avatar = `
+
+<div class="top-avatar">
+
+${place}
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+
+const card =
+
+document.createElement(
+"div"
+);
+
+
+
+card.className =
+"top-card";
+
+
+
+
+
+
+
+
+card.innerHTML = `
+
+
+
+<div class="top-position">
+
+${place}
+
+</div>
+
+
+
+
+
+<div class="top-avatar">
+
+${avatar}
+
+</div>
+
+
+
+
+
+
+<div class="top-data">
+
+
+
+<div class="top-name">
+
+${player.name || "Игрок"}
+
+</div>
+
+
+
+
+
+<div class="top-balance">
+
+${formatTopBalance(
+player.balance
+)} U
+
+</div>
+
+
+
+
+
+<div class="top-friends">
+
+Приглашено:
+
+${player.friends || 0}
+
+</div>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+
+
+
+list.appendChild(card);
+
+
+
+
+
+});
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// обновление при открытии страницы
+
+
+document
+.querySelector('[data-page="tops"]')
+
+?.addEventListener(
+"click",
 ()=>{
 
 
 renderTop();
 
 
-setInterval(
-renderTop,
-5000
-);
-
 
 });
+
+
+
+
+
+
+
+
+// первый запуск
+
+
+setTimeout(()=>{
+
+
+renderTop();
+
+
+},1000);
+
+
+
+
+
+
+
+// обновление каждые 10 секунд
+
+
+setInterval(()=>{
+
+
+renderTop();
+
+
+},10000);
