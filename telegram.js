@@ -1,12 +1,15 @@
-// UralCoin Telegram CONNECT v3
+// UralCoin Telegram CONNECT v4
 
 
 const tg = window.Telegram.WebApp;
 
 
+
+
 tg.ready();
 
 tg.expand();
+
 
 
 
@@ -18,18 +21,21 @@ tg.setBackgroundColor("#090414");
 
 
 
-const tgUser =
+
+const telegramUser =
 tg.initDataUnsafe?.user;
 
 
 
 
 
-function connectTelegram(){
+
+
+function loadTelegramUser(){
 
 
 
-if(!tgUser){
+if(!telegramUser){
 
 
 
@@ -38,16 +44,22 @@ Storage.getPlayer();
 
 
 
+
+
 if(!player.id){
 
 
-player.id="guest";
+player.id =
+"guest";
+
 
 
 Storage.savePlayer(player);
 
 
 }
+
+
 
 
 
@@ -61,6 +73,8 @@ return;
 
 
 
+
+
 let player =
 Storage.getPlayer();
 
@@ -68,47 +82,73 @@ Storage.getPlayer();
 
 
 
+
 player.id =
-tgUser.id;
-
-
-
-player.name =
-tgUser.first_name ||
-"Игрок";
-
-
-
-player.username =
-tgUser.username ||
-"";
-
-
-
-player.photo =
-tgUser.photo_url ||
-"";
-
-
-
-
-
-Storage.savePlayer(player);
-
-
-
-
-
-localStorage.setItem(
-"telegram_id",
-tgUser.id
+String(
+telegramUser.id
 );
 
 
 
 
 
-updateTelegramProfile();
+player.name =
+
+telegramUser.first_name ||
+
+"Игрок";
+
+
+
+
+
+player.username =
+
+telegramUser.username ||
+
+"";
+
+
+
+
+
+player.photo =
+
+telegramUser.photo_url ||
+
+"";
+
+
+
+
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
+
+
+
+localStorage.setItem(
+
+"telegram_id",
+
+String(
+telegramUser.id
+)
+
+);
+
+
+
+
+
+
+updateProfile();
 
 
 
@@ -122,7 +162,7 @@ updateTelegramProfile();
 
 
 
-function updateTelegramProfile(){
+function updateProfile(){
 
 
 
@@ -130,6 +170,7 @@ const avatar =
 document.getElementById(
 "userAvatar"
 );
+
 
 
 
@@ -142,7 +183,8 @@ document.getElementById(
 
 
 
-if(!tgUser)
+
+if(!telegramUser)
 return;
 
 
@@ -150,24 +192,39 @@ return;
 
 
 
-if(tgUser.photo_url && avatar){
+
+
+if(
+telegramUser.photo_url &&
+avatar
+){
 
 
 
 avatar.src =
-tgUser.photo_url;
+
+telegramUser.photo_url;
 
 
 
-avatar.style.display="block";
+
+avatar.style.display =
+"block";
+
+
+
 
 
 
 if(letter){
 
-letter.style.display="none";
+
+letter.style.display =
+"none";
+
 
 }
+
 
 
 }
@@ -178,17 +235,23 @@ else if(letter){
 
 letter.innerText =
 
+
 (
-tgUser.first_name ||
+telegramUser.first_name ||
+
 "U"
 
 )
+
 .charAt(0)
+
 .toUpperCase();
 
 
 
+
 }
+
 
 
 
@@ -201,16 +264,16 @@ document.querySelector(
 
 
 
+
+
 if(brand){
+
 
 
 brand.innerText =
 "URALcoin";
 
 
-}
-
-
 
 }
 
@@ -218,9 +281,49 @@ brand.innerText =
 
 
 
-connectTelegram();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// запуск подключения
+
+
+loadTelegramUser();
+
+
+
+
+
+
+
+// синхронизация с сервером после загрузки
+
+
 setTimeout(()=>{
+
+
+
+if(
+window.API &&
+API.syncUser
+){
+
 
 API.syncUser();
 
-},500);
+
+
+}
+
+
+
+},700);
