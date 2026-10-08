@@ -3,13 +3,30 @@ const botUsername = "uralscoin_bot";
 const reward = 5000;
 
 
-const userId =
-localStorage.getItem("telegram_id");
+const tg = window.Telegram.WebApp;
+
+
+tg.ready();
 
 
 
-let invited =
-Number(localStorage.getItem("invited")) || 0;
+function getUserId(){
+
+
+if(tg.initDataUnsafe && tg.initDataUnsafe.user){
+
+
+return tg.initDataUnsafe.user.id;
+
+
+}
+
+
+
+return null;
+
+
+}
 
 
 
@@ -18,21 +35,22 @@ Number(localStorage.getItem("invited")) || 0;
 function getReferralLink(){
 
 
-if(!userId){
-
-return "Откройте приложение через Telegram";
-
-}
+const id = getUserId();
 
 
 
-return `https://t.me/${botUsername}?start=${userId}`;
+if(!id){
 
+return "Откройте приложение внутри Telegram";
 
 }
 
 
 
+return `https://t.me/${botUsername}?start=${id}`;
+
+
+}
 
 
 
@@ -41,40 +59,15 @@ return `https://t.me/${botUsername}?start=${userId}`;
 function updateReferral(){
 
 
-
-let blocks =
-document.querySelectorAll("#referrals b");
-
-
-
-if(blocks.length >= 2){
-
-
-blocks[0].innerHTML =
-invited;
-
-
-
-blocks[1].innerHTML =
-reward + " U";
-
-
-}
-
-
-
-
-
-
-let link =
+let linkBlock =
 document.querySelector(".ref-link");
 
 
 
-if(link){
+if(linkBlock){
 
 
-link.innerHTML = `
+linkBlock.innerHTML = `
 
 Ваша ссылка:
 
@@ -84,18 +77,11 @@ ${getReferralLink()}
 
 `;
 
-
-
 }
 
 
 
-
 }
-
-
-
-
 
 
 
@@ -106,15 +92,13 @@ document.querySelector("#referrals button");
 
 
 
-
 if(inviteButton){
-
 
 
 inviteButton.onclick=()=>{
 
 
-let link =
+const link =
 getReferralLink();
 
 
@@ -123,19 +107,13 @@ navigator.clipboard.writeText(link);
 
 
 
-alert(
-"Реферальная ссылка скопирована"
-);
-
+alert("Ссылка скопирована");
 
 
 };
 
 
-
 }
-
-
 
 
 
