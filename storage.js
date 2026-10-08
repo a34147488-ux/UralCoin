@@ -1,11 +1,11 @@
 // ===================================
-// URALcoin STORAGE v8
-// Stable Player + Referral Ready
+// URALcoin STORAGE v10
+// Stable Player + Profile + Referrals
 // ===================================
 
 
-
 const Storage = {
+
 
 
 
@@ -13,9 +13,7 @@ getPlayer(){
 
 
 
-let player =
-
-JSON.parse(
+let player = JSON.parse(
 
 localStorage.getItem(
 "ural_player"
@@ -27,13 +25,14 @@ localStorage.getItem(
 
 
 
+
+// перенос старого сохранения
+
+
 if(!player){
 
 
-
-player =
-
-JSON.parse(
+player = JSON.parse(
 
 localStorage.getItem(
 "player"
@@ -59,30 +58,23 @@ if(!player){
 player = {
 
 
-
 id:
 
 localStorage.getItem(
 "telegram_id"
 )
 
-||
-
-"guest",
-
+|| "guest",
 
 
 
 username:"",
 
 
-
 name:"Игрок",
 
 
-
 photo:"",
-
 
 
 
@@ -101,7 +93,6 @@ autoPower:0,
 friends:0,
 
 
-
 invited:0,
 
 
@@ -110,11 +101,11 @@ referrer:null,
 
 
 
-referralRewarded:[],
-
-
-
 workers:[],
+
+
+
+referralRewarded:[],
 
 
 
@@ -134,7 +125,6 @@ apiKey:null
 
 
 
-
 }
 
 
@@ -143,13 +133,17 @@ apiKey:null
 
 
 
-// исправление старых игроков
+
+// нормализация данных
 
 
 
 player.id =
 
-player.id || "guest";
+String(
+player.id || "guest"
+);
+
 
 
 
@@ -159,40 +153,69 @@ player.name || "Игрок";
 
 
 
+
+player.username =
+
+player.username || "";
+
+
+
+
 player.photo =
 
 player.photo || "";
 
 
 
+
 player.balance =
 
-Number(player.balance || 0);
+Number(
+player.balance || 0
+);
+
 
 
 
 player.clickPower =
 
-Number(player.clickPower || 0.01);
+Number(
+player.clickPower || 0.01
+);
+
 
 
 
 player.autoPower =
 
-Number(player.autoPower || 0);
+Number(
+player.autoPower || 0
+);
+
 
 
 
 player.friends =
 
-Number(player.friends || 0);
+Number(
+player.friends || 0
+);
+
 
 
 
 player.invited =
 
-Number(player.invited || 0);
+Number(
+player.invited || 0
+);
 
+
+
+
+player.workers =
+
+player.workers || [];
 
 
 
@@ -203,11 +226,6 @@ player.referralRewarded || [];
 
 
 
-player.workers =
-
-player.workers || [];
-
-
 
 player.history =
 
@@ -215,10 +233,10 @@ player.history || [];
 
 
 
+
 player.usedPromos =
 
 player.usedPromos || [];
-
 
 
 
@@ -257,16 +275,6 @@ JSON.stringify(player)
 
 
 
-localStorage.setItem(
-
-"player",
-
-JSON.stringify(player)
-
-);
-
-
-
 },
 
 
@@ -277,14 +285,16 @@ JSON.stringify(player)
 
 
 
-updateProfile(data){
+// ===================================
+// TELEGRAM PROFILE
+// ===================================
+
+
+updateTelegramProfile(data){
 
 
 
-let player =
-
-this.getPlayer();
-
+let player = this.getPlayer();
 
 
 
@@ -297,7 +307,6 @@ String(data.id);
 
 
 
-
 if(data.username)
 
 player.username =
@@ -306,21 +315,18 @@ data.username;
 
 
 
-
-if(data.name)
+if(data.first_name)
 
 player.name =
-data.name;
+data.first_name;
 
 
 
 
-
-if(data.photo)
+if(data.photo_url)
 
 player.photo =
-data.photo;
-
+data.photo_url;
 
 
 
@@ -341,14 +347,17 @@ this.savePlayer(player);
 
 
 
+// ===================================
+// REFERRALS
+// ===================================
+
+
+
 setReferrer(id){
 
 
 
-let player =
-
-this.getPlayer();
-
+let player=this.getPlayer();
 
 
 
@@ -363,9 +372,7 @@ return false;
 
 
 if(
-String(id)
-===
-String(player.id)
+String(player.id)===String(id)
 )
 
 return false;
@@ -374,10 +381,7 @@ return false;
 
 
 
-
-
 player.referrer =
-
 String(id);
 
 
@@ -389,6 +393,7 @@ this.savePlayer(player);
 
 
 
+
 return true;
 
 
@@ -402,27 +407,17 @@ return true;
 
 
 
-
-
-// ===============================
-// БАЛАНС
-// ===============================
+addFriend(){
 
 
 
-addBalance(amount){
+let player=this.getPlayer();
 
 
 
-let player =
+player.friends++;
 
-this.getPlayer();
-
-
-
-player.balance +=
-
-Number(amount);
+player.invited++;
 
 
 
@@ -431,6 +426,39 @@ this.savePlayer(player);
 
 
 },
+
+
+
+
+
+
+
+
+
+// ===================================
+// BALANCE
+// ===================================
+
+
+
+addBalance(amount){
+
+
+
+let player=this.getPlayer();
+
+
+
+player.balance += Number(amount);
+
+
+
+this.savePlayer(player);
+
+
+
+},
+
 
 
 
@@ -442,15 +470,11 @@ removeBalance(amount){
 
 
 
-let player =
-
-this.getPlayer();
+let player=this.getPlayer();
 
 
 
-if(
-player.balance < amount
-)
+if(player.balance < amount)
 
 return false;
 
@@ -458,10 +482,7 @@ return false;
 
 
 
-
-player.balance -=
-
-Number(amount);
+player.balance -= Number(amount);
 
 
 
@@ -483,9 +504,9 @@ return true;
 
 
 
-// ===============================
-// ИСТОРИЯ
-// ===============================
+// ===================================
+// HISTORY
+// ===================================
 
 
 
@@ -493,9 +514,7 @@ addHistory(data){
 
 
 
-let player =
-
-this.getPlayer();
+let player=this.getPlayer();
 
 
 
@@ -508,7 +527,6 @@ this.savePlayer(player);
 
 
 },
-
 
 
 
@@ -533,9 +551,9 @@ return this.getPlayer().history;
 
 
 
-// ===============================
+// ===================================
 // API
-// ===============================
+// ===================================
 
 
 
@@ -543,11 +561,9 @@ generateApiKey(){
 
 
 
-let key =
+const key =
 
-"URAL-"
-
-+
+"URAL-" +
 
 Math.random()
 
@@ -561,13 +577,12 @@ Math.random()
 
 
 
-let player =
 
-this.getPlayer();
-
+let player=this.getPlayer();
 
 
-player.apiKey = key;
+
+player.apiKey=key;
 
 
 
@@ -587,17 +602,12 @@ return key;
 
 
 
+
 getApiKey(){
 
 
 
-let player =
-
-this.getPlayer();
-
-
-
-return player.apiKey || null;
+return this.getPlayer().apiKey || null;
 
 
 
@@ -609,7 +619,6 @@ return player.apiKey || null;
 
 
 };
-
 
 
 
