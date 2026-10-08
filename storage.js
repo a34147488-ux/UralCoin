@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin STORAGE v5
-// Стабильная версия без конфликтов
+// URALcoin STORAGE v6
+// Stable Player Storage
 // ===================================
 
 
@@ -18,8 +18,6 @@ localStorage.getItem("ural_player")
 
 
 
-// перенос старых данных
-
 if(!player){
 
 
@@ -29,7 +27,9 @@ localStorage.getItem("player")
 
 );
 
+
 }
+
 
 
 
@@ -38,41 +38,54 @@ if(!player){
 
 player = {
 
+
 id:
 localStorage.getItem("telegram_id") || "guest",
+
 
 name:
 "Игрок",
 
+
 photo:
 "",
 
+
 balance:0,
+
 
 clickPower:0.01,
 
+
 autoPower:0,
+
 
 friends:0,
 
+
 invited:0,
+
 
 referrer:null,
 
+
 history:[],
+
 
 usedPromos:[],
 
+
 apiKey:null
 
+
 };
+
 
 
 }
 
 
 
-// защита полей
 
 player.id =
 player.id || "guest";
@@ -80,10 +93,6 @@ player.id || "guest";
 
 player.name =
 player.name || "Игрок";
-
-
-player.photo =
-player.photo || "";
 
 
 player.balance =
@@ -103,7 +112,7 @@ Number(player.friends || 0);
 
 
 player.invited =
-Number(player.invited || player.friends);
+Number(player.invited || 0);
 
 
 player.history =
@@ -122,7 +131,6 @@ this.savePlayer(player);
 return player;
 
 
-
 },
 
 
@@ -134,6 +142,7 @@ return player;
 savePlayer(player){
 
 
+
 localStorage.setItem(
 
 "ural_player",
@@ -143,8 +152,6 @@ JSON.stringify(player)
 );
 
 
-
-// оставляем совместимость
 
 localStorage.setItem(
 
@@ -164,33 +171,27 @@ JSON.stringify(player)
 
 
 
-setUser(user){
+setReferrer(id){
 
 
-let player = this.getPlayer();
-
-
-
-player.id =
-String(user.id);
+let player=this.getPlayer();
 
 
 
-player.name =
-user.first_name || "Игрок";
+if(
+player.referrer
+)
+
+return;
 
 
 
-player.photo =
-user.photo_url || "";
+player.referrer =
+String(id);
 
 
 
 this.savePlayer(player);
-
-
-
-return player;
 
 
 
@@ -247,30 +248,6 @@ this.savePlayer(player);
 
 
 return true;
-
-
-
-},
-
-
-
-
-
-
-
-updateBalance(amount){
-
-
-let player=this.getPlayer();
-
-
-
-player.balance =
-Number(amount);
-
-
-
-this.savePlayer(player);
 
 
 
@@ -348,7 +325,7 @@ return this.getPlayer().history;
 generateApiKey(){
 
 
-let key =
+const key =
 
 "URAL-" +
 
@@ -359,7 +336,6 @@ Math.random()
 .substring(2,12)
 
 .toUpperCase();
-
 
 
 
@@ -416,7 +392,6 @@ null;
 
 
 };
-
 
 
 
