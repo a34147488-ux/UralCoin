@@ -6,47 +6,42 @@ padding:0;
 }
 
 
-html,
-body{
+html,body{
 
 width:100%;
 height:100%;
 
 overflow:hidden;
 
-font-family:Arial,Helvetica,sans-serif;
+font-family:
+Arial,
+Helvetica,
+sans-serif;
 
-background:#ffffff;
-
-color:#171717;
+background:#090414;
 
 touch-action:manipulation;
 
-}
-
-
-
-button,
-input{
-
-font-family:inherit;
+color:white;
 
 }
+
 
 
 
 
 .app{
 
-height:100vh;
-
 width:100%;
+height:100vh;
 
 display:flex;
 
 flex-direction:column;
 
-background:white;
+position:relative;
+
+overflow:hidden;
 
 }
 
@@ -54,42 +49,130 @@ background:white;
 
 
 
-/* HEADER */
+
+/* ФОН ГОРОДА */
+
+
+.city-bg{
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+135deg,
+rgba(255,193,7,.55),
+rgba(92,35,180,.65)
+),
+
+url("ekaterinburg.jpg");
+
+
+background-size:cover;
+
+background-position:center;
+
+filter:saturate(1.2);
+
+
+animation:
+
+cityGlow 8s infinite alternate;
+
+
+z-index:0;
+
+}
+
+
+
+@keyframes cityGlow{
+
+
+0%{
+
+opacity:.75;
+
+}
+
+
+100%{
+
+opacity:1;
+
+}
+
+
+}
+
+
+
+
+
+
 
 
 .header{
 
-height:95px;
-
-background:white;
+height:90px;
 
 display:flex;
 
 align-items:center;
 
-justify-content:center;
+justify-content:flex-end;
+
+padding:0 25px;
 
 position:relative;
 
-border-bottom:1px solid #eee;
+z-index:2;
 
-flex-shrink:0;
+
+background:
+
+linear-gradient(
+90deg,
+rgba(255,255,255,.12),
+rgba(255,255,255,.04)
+);
+
+
+backdrop-filter:blur(12px);
+
 
 }
 
 
 
-.profile-area{
+
+.brand{
+
+font-size:22px;
+
+font-weight:900;
+
+letter-spacing:1px;
+
+color:#ffd85c;
+
+text-shadow:
+
+0 0 15px #ffd85c;
+
+}
+
+
+
+
+
+.user-profile{
 
 position:absolute;
 
 left:20px;
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
 
 }
 
@@ -103,8 +186,6 @@ height:55px;
 
 border-radius:50%;
 
-background:#ffc400;
-
 overflow:hidden;
 
 display:flex;
@@ -113,13 +194,21 @@ align-items:center;
 
 justify-content:center;
 
-font-size:30px;
+background:
+
+linear-gradient(
+135deg,
+#ffd700,
+#8b2cff
+);
+
+
+font-size:28px;
 
 font-weight:900;
 
-color:white;
-
 }
+
 
 
 
@@ -135,59 +224,23 @@ object-fit:cover;
 
 
 
-.nickname{
-
-font-size:18px;
-
-font-weight:800;
-
-}
 
 
+.content{
 
-.logo h1{
+position:relative;
 
-font-size:26px;
-
-font-weight:900;
-
-}
-
-
-
-.dots{
-
-position:absolute;
-
-right:20px;
-
-background:none;
-
-font-size:28px;
-
-border:0;
-
-color:#333;
-
-}
-
-
-
-
-
-
-/* CONTENT */
-
-
-main{
+z-index:2;
 
 flex:1;
 
 overflow-y:auto;
 
-padding-bottom:85px;
+padding-bottom:90px;
 
 }
+
+
 
 
 
@@ -196,6 +249,10 @@ padding-bottom:85px;
 display:none;
 
 padding:20px;
+
+animation:
+
+fade .3s;
 
 }
 
@@ -210,13 +267,39 @@ display:block;
 
 
 
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+
+}
 
 
 
-/* GAME */
 
 
-.balance-block{
+
+
+
+/* БАЛАНС */
+
+
+.balance-box{
 
 text-align:center;
 
@@ -228,37 +311,35 @@ margin-top:35px;
 
 .balance{
 
-font-size:75px;
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:10px;
+
+font-size:55px;
 
 font-weight:900;
 
-}
+color:white;
 
+text-shadow:
 
-
-.power{
-
-display:inline-block;
-
-margin-top:20px;
-
-background:#fff0c2;
-
-color:#d89d00;
-
-padding:12px 25px;
-
-border-radius:30px;
-
-font-size:20px;
-
-font-weight:800;
+0 0 20px rgba(255,215,0,.6);
 
 }
 
 
 
-.coin{
+.coin-small{
+
+width:34px;
+
+height:34px;
+
+border-radius:50%;
 
 display:flex;
 
@@ -266,70 +347,131 @@ align-items:center;
 
 justify-content:center;
 
-flex-direction:column;
+background:
 
-position:relative;
+linear-gradient(
+135deg,
+#ffe600,
+#d99000
+);
 
-margin:100px auto 0;
 
-width:290px;
+color:white;
 
-height:290px;
+font-size:20px;
+
+font-weight:900;
+
+box-shadow:
+
+0 0 15px gold;
+
+}
+
+
+
+
+
+.click-power{
+
+margin-top:18px;
+
+display:inline-block;
+
+padding:10px 22px;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+90deg,
+#ffd700,
+#8b2cff
+);
+
+
+font-weight:800;
+
+}
+
+
+
+
+
+
+
+
+
+/* КНОПКА КЛИКА */
+
+
+.main-coin{
+
+margin:90px auto 0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+width:260px;
+
+height:260px;
+
 
 border-radius:50%;
 
-border:16px solid #ffc400;
+
+border:
+
+12px solid #ffd700;
+
 
 background:
 
 radial-gradient(
-circle at 35% 25%,
-#fff3a0,
-#ffd000 55%,
-#e5a000
+circle,
+#fff28a,
+#ffc400 50%,
+#8b2cff
 );
 
-font-size:150px;
+
+
+font-size:130px;
 
 font-weight:900;
 
 color:white;
 
+
 box-shadow:
 
-0 15px 40px rgba(255,180,0,.35);
+0 0 50px gold;
+
+
+animation:
+
+coinFloat 3s infinite ease-in-out;
+
 
 }
 
 
 
-.coin span{
 
-text-shadow:
+@keyframes coinFloat{
 
-5px 5px 0 #c58b00;
+
+50%{
+
+transform:translateY(-8px);
 
 }
 
-
-
-.online{
-
-position:absolute;
-
-bottom:35px;
-
-font-size:15px;
-
-background:#fff;
-
-color:#16a34a;
-
-padding:7px 15px;
-
-border-radius:20px;
-
-font-weight:900;
 
 }
 
@@ -337,43 +479,74 @@ font-weight:900;
 
 
 
+.main-coin:active{
 
-/* CARDS */
+transform:scale(.92);
+
+}
 
 
-.card{
 
-background:white;
 
-border-radius:30px;
+
+
+
+
+/* ПАНЕЛИ */
+
+
+.panel{
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+border-radius:25px;
+
 
 padding:25px;
 
-box-shadow:
 
-0 10px 30px rgba(0,0,0,.08);
+border:
+
+1px solid rgba(255,255,255,.25);
+
 
 }
 
 
 
-.card h2{
+.panel h2{
 
-font-size:35px;
+font-size:32px;
 
 margin-bottom:25px;
 
+color:#ffd85c;
+
+}
+
+
+
+
+
+
+.info-row{
+
+font-size:20px;
+
+margin:15px 0;
+
 }
 
 
-
-.stat{
-
-font-size:22px;
-
-margin:20px 0;
-
-}
 
 
 
@@ -384,204 +557,119 @@ width:100%;
 
 height:55px;
 
+margin-bottom:15px;
+
 border-radius:15px;
 
-border:1px solid #ddd;
+border:none;
 
 padding:0 15px;
+
+font-size:17px;
+
+}
+
+
+
+
+
+button,
+.menu-card{
+
+transition:.15s;
+
+}
+
+
+
+button:active,
+.menu-card:active{
+
+transform:scale(.94);
+
+}
+
+
+
+
+
+
+
+
+.gold-button,
+.menu-card{
+
+width:100%;
+
+padding:17px;
+
+border-radius:18px;
+
+border:1px solid #ffd700;
+
+
+background:
+
+linear-gradient(
+90deg,
+#ffd700,
+#8b2cff
+);
+
+
+color:white;
+
+font-weight:900;
 
 font-size:18px;
 
 margin-bottom:15px;
-
-}
-
-
-
-button{
-
-cursor:pointer;
-
-}
-
-
-
-
-
-.card button{
-
-background:#ffc400;
-
-color:#1769ff;
-
-border:0;
-
-border-radius:25px;
-
-padding:15px 25px;
-
-font-size:18px;
-
-font-weight:900;
-
-}
-
-
-
-
-
-/* REF */
-
-
-.ref-box{
-
-display:flex;
-
-gap:10px;
-
-}
-
-
-
-.ref-box input{
-
-font-size:14px;
-
-}
-
-
-
-
-
-
-
-/* TOP */
-
-
-.top-player{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-padding:15px;
-
-border-radius:20px;
-
-border:1px solid #eee;
-
-margin-bottom:12px;
-
-}
-
-
-
-.top-avatar{
-
-width:60px;
-
-height:60px;
-
-border-radius:50%;
-
-background:#ffc400;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:25px;
-
-font-weight:900;
-
-color:white;
-
-}
-
-
-
-
-
-
-
-/* MORE */
-
-
-.more-item{
-
-display:block;
-
-width:100%;
 
 text-align:center;
 
 text-decoration:none;
 
-background:#ffc400;
+display:block;
 
-color:#1769ff;
-
-border:0;
-
-padding:18px;
-
-border-radius:25px;
-
-margin-bottom:15px;
-
-font-size:19px;
-
-font-weight:900;
 
 }
 
 
 
-.upgrade-title{
-
-margin-top:30px;
-
-}
 
 
 
-.upgrade{
+
+.upgrade-card{
 
 display:flex;
 
-align-items:center;
-
 justify-content:space-between;
 
-border:2px solid #eee;
+align-items:center;
 
-border-radius:25px;
+background:
 
-padding:20px;
+rgba(0,0,0,.25);
+
+
+padding:18px;
+
+border-radius:20px;
 
 margin-bottom:15px;
-
-font-size:20px;
-
-font-weight:800;
 
 }
 
 
 
-.upgrade button{
+.upgrade-card button{
 
-background:#ffc400;
+padding:12px 20px;
 
-padding:15px 25px;
+border-radius:15px;
 
-border-radius:25px;
-
-color:#1769ff;
+background:#ffd700;
 
 font-weight:900;
 
@@ -591,18 +679,23 @@ font-weight:900;
 
 
 
+/* НИЖНЕЕ МЕНЮ */
 
 
-/* BOTTOM */
+.bottom-nav{
 
+height:80px;
 
-.bottom-menu{
+position:absolute;
 
-height:85px;
+bottom:0;
 
-background:white;
+left:0;
 
-border-top:1px solid #eee;
+width:100%;
+
+z-index:5;
+
 
 display:flex;
 
@@ -610,69 +703,40 @@ justify-content:space-around;
 
 align-items:center;
 
-flex-shrink:0;
+
+background:
+
+rgba(0,0,0,.55);
+
+
+backdrop-filter:blur(15px);
+
 
 }
 
 
 
-.bottom-menu button{
+.nav{
 
 background:none;
 
-border:0;
+border:none;
 
-font-size:16px;
+color:white;
+
+font-size:14px;
 
 font-weight:800;
 
-color:#999;
+}
+
+
+
+.nav.active{
+
+color:#ffd700;
 
 }
 
 
 
-.bottom-menu button.active{
-
-color:#d99c00;
-
-}
-
-
-
-
-
-
-@media(max-width:500px){
-
-
-.coin{
-
-width:250px;
-
-height:250px;
-
-font-size:120px;
-
-margin-top:80px;
-
-}
-
-
-
-.balance{
-
-font-size:65px;
-
-}
-
-
-
-.logo h1{
-
-font-size:23px;
-
-}
-
-
-}
