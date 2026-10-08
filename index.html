@@ -1,25 +1,34 @@
+<!-- ===================================
+URALcoin INDEX v6
+Clean Interface
+=================================== -->
+
+
 <!DOCTYPE html>
 
 <html lang="ru">
+
 
 <head>
 
 <meta charset="UTF-8">
 
+
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
 
 <title>URALcoin</title>
 
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="glass.css">
-
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+
 </head>
+
 
 
 <body>
@@ -32,25 +41,8 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="city-bg"></div>
 
 
-
-<!-- ГИРЛЯНДА -->
-
-<div class="garland">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-
-
-<!-- СНЕГ -->
-
 <div class="snow"></div>
+
 
 
 
@@ -68,9 +60,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 
 <span id="avatarLetter">
-
 U
-
 </span>
 
 
@@ -86,6 +76,8 @@ U
 
 
 
+
+
 <main class="content">
 
 
@@ -93,6 +85,8 @@ U
 
 
 <section class="page active" id="game">
+
+
 
 
 
@@ -123,13 +117,15 @@ U
 
 
 
-<div class="stats-box">
 
 
 
 <div class="click-power">
 
-+
+
+
+<div class="stat">
+
 
 <span id="clickPower">
 
@@ -137,16 +133,19 @@ U
 
 </span>
 
-за клик
+
+За клик
+
 
 </div>
 
 
 
 
-<div class="second-power">
 
-+
+
+<div class="stat">
+
 
 <span id="autoPower">
 
@@ -154,10 +153,8 @@ U
 
 </span>
 
-в секунду
 
-</div>
-
+В секунду
 
 
 </div>
@@ -172,8 +169,21 @@ U
 
 
 
+</div>
 
-<button class="main-coin" id="clickButton">
+
+
+
+
+
+
+
+
+<button
+
+class="main-coin"
+
+id="clickButton">
 
 
 U
@@ -186,12 +196,11 @@ U
 
 
 
-<div id="bonusEffect"></div>
-
-
-
-
 </section>
+
+
+
+
 
 
 
@@ -214,15 +223,11 @@ U
 
 
 
+
 <div class="info-row">
 
 
-<span>
-
 Приглашено:
-
-</span>
-
 
 <b id="friendsCount">
 
@@ -231,8 +236,8 @@ U
 </b>
 
 
-
 </div>
+
 
 
 
@@ -241,19 +246,13 @@ U
 <div class="info-row">
 
 
-<span>
-
 За человека:
-
-</span>
-
 
 <b>
 
 5000 U
 
 </b>
-
 
 
 </div>
@@ -269,13 +268,19 @@ U
 
 
 
-<button class="gold-button" id="copyReferral">
+
+<button
+
+class="gold-button"
+
+id="copyReferral">
 
 
 Копировать ссылку
 
 
 </button>
+
 
 
 
@@ -288,11 +293,15 @@ U
 
 
 
+
+
+
+
 <section class="page" id="transfer">
 
 
-
 <div class="panel">
+
 
 
 <h2>
@@ -304,23 +313,32 @@ U
 
 
 
-<input id="transferName"
+<input
+
+id="transferName"
 
 placeholder="@username">
 
 
 
 
-<input id="transferSum"
 
-placeholder="Количество U"
+<input
 
-type="number">
+id="transferSum"
+
+type="number"
+
+placeholder="Количество U">
 
 
 
 
-<button class="gold-button"
+
+
+<button
+
+class="gold-button"
 
 id="transferButton">
 
@@ -336,10 +354,20 @@ id="transferButton">
 
 
 </section>
+
+
+
+
+
+
+
+
+
 <section class="page" id="tops">
 
 
 <div class="panel">
+
 
 
 <h2>
@@ -347,6 +375,7 @@ id="transferButton">
 Топ игроков
 
 </h2>
+
 
 
 
@@ -368,6 +397,8 @@ id="transferButton">
 
 
 
+
+
 <section class="page" id="more">
 
 
@@ -378,7 +409,7 @@ id="transferButton">
 
 <h2>
 
-Еще
+Ещё
 
 </h2>
 
@@ -386,7 +417,11 @@ id="transferButton">
 
 
 
-<button class="menu-card"
+
+
+<button
+
+class="menu-card"
 
 id="promoButton">
 
@@ -401,12 +436,15 @@ id="promoButton">
 
 
 
-<button class="menu-card"
+
+<button
+
+class="menu-card"
 
 id="historyButton">
 
 
-История переводов
+История
 
 
 </button>
@@ -416,12 +454,15 @@ id="historyButton">
 
 
 
-<button class="menu-card"
+
+<button
+
+class="menu-card"
 
 id="apiButton">
 
 
-Получить ключ API
+API ключ
 
 
 </button>
@@ -431,7 +472,11 @@ id="apiButton">
 
 
 
-<a class="menu-card"
+
+
+<a
+
+class="menu-card"
 
 href="https://t.me/+NyqTkXAU-H5hNDky">
 
@@ -445,13 +490,14 @@ href="https://t.me/+NyqTkXAU-H5hNDky">
 
 
 
+<a
 
-<a class="menu-card"
+class="menu-card"
 
 href="https://t.me/BuysStarsBot?start=8265611469">
 
 
-Купить прем
+Купить U
 
 
 </a>
@@ -462,136 +508,12 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
-<h2>
-
-Улучшения
-
-</h2>
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-
-<span>
-
-Сила клика +0.01
-
-</span>
-
-
-
-
-
-<button
-
-data-price="10"
-
-data-type="click"
-
-data-value="0.01">
-
-
-10 U
-
-
-</button>
-
-
-
 </div>
 
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-
-<span>
-
-Автодоход +1 U/мин
-
-</span>
-
-
-
-
-
-<button
-
-data-price="100"
-
-data-type="auto"
-
-data-value="1">
-
-
-100 U
-
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-
-<span>
-
-Сила клика +0.05
-
-</span>
-
-
-
-
-
-<button
-
-data-price="500"
-
-data-type="click"
-
-data-value="0.05">
-
-
-500 U
-
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
 
 
 </section>
+
 
 
 
@@ -603,9 +525,7 @@ data-value="0.05">
 <section class="page" id="promo">
 
 
-
 <div class="panel">
-
 
 
 <h2>
@@ -616,62 +536,9 @@ data-value="0.05">
 
 
 
+<input
 
-
-
-<input id="promoName"
-
-placeholder="Название">
-
-
-
-
-
-<input id="promoReward"
-
-placeholder="Награда U"
-
-type="number">
-
-
-
-
-
-<input id="promoLimit"
-
-placeholder="Лимит"
-
-type="number">
-
-
-
-
-
-
-<button class="gold-button"
-
-id="createPromo">
-
-
-Создать промокод
-
-
-</button>
-
-
-
-
-
-
-
-<hr>
-
-
-
-
-
-
-<input id="promoInput"
+id="promoInput"
 
 placeholder="Введите промокод">
 
@@ -679,8 +546,9 @@ placeholder="Введите промокод">
 
 
 
+<button
 
-<button class="gold-button"
+class="gold-button"
 
 id="usePromo">
 
@@ -692,12 +560,11 @@ id="usePromo">
 
 
 
-
-
 </div>
 
-
 </section>
+
+
 
 
 
@@ -708,14 +575,12 @@ id="usePromo">
 <section class="page" id="history">
 
 
-
 <div class="panel">
-
 
 
 <h2>
 
-История переводов
+История
 
 </h2>
 
@@ -742,12 +607,13 @@ id="usePromo">
 
 
 
+
+
+
 <section class="page" id="api">
 
 
-
 <div class="panel">
-
 
 
 <h2>
@@ -758,23 +624,19 @@ API ключ
 
 
 
-
-
-
 <div id="apiResult">
 
 
-Ключ еще не создан
-
+Ключ не создан
 
 </div>
 
 
 
 
+<button
 
-
-<button class="gold-button"
+class="gold-button"
 
 id="createApi">
 
@@ -786,11 +648,16 @@ id="createApi">
 
 
 
-
 </div>
 
 
 </section>
+
+
+
+
+
+
 
 </main>
 
@@ -800,14 +667,15 @@ id="createApi">
 
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
 
 
 <nav class="bottom-nav">
 
 
 
-<button class="nav active"
+<button
+
+class="nav active"
 
 data-page="game">
 
@@ -821,13 +689,14 @@ data-page="game">
 
 
 
+<button
 
-<button class="nav"
+class="nav"
 
 data-page="referrals">
 
 
-Рефералы
+Реф
 
 
 </button>
@@ -836,13 +705,14 @@ data-page="referrals">
 
 
 
+<button
 
-<button class="nav"
+class="nav"
 
 data-page="transfer">
 
 
-Переводы
+U
 
 
 </button>
@@ -851,13 +721,14 @@ data-page="transfer">
 
 
 
+<button
 
-<button class="nav"
+class="nav"
 
 data-page="tops">
 
 
-Топы
+Топ
 
 
 </button>
@@ -866,17 +737,17 @@ data-page="tops">
 
 
 
+<button
 
-<button class="nav"
+class="nav"
 
 data-page="more">
 
 
-Еще
+Ещё
 
 
 </button>
-
 
 
 
@@ -888,62 +759,30 @@ data-page="more">
 
 
 
-</div>
-
-
-
-
-
-
-
-
-
-<!-- СКРИПТЫ -->
-
 
 
 <script src="config.js"></script>
 
-
 <script src="telegram.js"></script>
-
 
 <script src="storage.js"></script>
 
-
 <script src="app.js"></script>
-
 
 <script src="referrals.js"></script>
 
-
 <script src="promo.js"></script>
-
 
 <script src="top.js"></script>
 
-
 <script src="transfer.js"></script>
-
 
 <script src="more.js"></script>
 
-
-<script src="effects.js"></script>
-
-
-
-
-
+<script src="profile.js"></script>
 
 
 </body>
 
+
 </html>
-
-
-
-
-
-
-
