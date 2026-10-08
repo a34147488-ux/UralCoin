@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="
+width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no
+">
 
 <title>UralCoin</title>
 
@@ -22,66 +27,26 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="app">
 
 
+
 <header class="header">
 
 
-<div class="profile">
+<div class="profile-area">
 
-<img id="userPhoto" src="" alt="">
 
-<div id="letter">
+<div class="avatar">
+
+<img id="telegramAvatar" src="">
+
+<span id="avatarLetter">
 U
-</div>
-
-</div>
-
-
-
-<div class="brand">
-
-<h1>
-UralCoin
-</h1>
-
-<span>
-мини-приложение
 </span>
 
-</div>
-
-
-
-<button class="header-button">
-•••
-</button>
-
-
-</header>
-
-
-
-
-
-
-<main class="content">
-
-
-
-<section class="screen active" id="home">
-
-
-
-<div class="player-info">
-
-
-<div class="avatar-big">
-
-U
 
 </div>
 
 
-<div class="player-name">
+<div class="nickname" id="nickname">
 
 Игрок
 
@@ -93,7 +58,44 @@ U
 
 
 
-<div class="balance-box">
+
+<div class="logo">
+
+
+<h1>
+UralCoin
+</h1>
+
+
+</div>
+
+
+
+<button class="dots">
+
+•••
+
+</button>
+
+
+
+</header>
+
+
+
+
+
+
+
+<main>
+
+
+
+<section class="page active" id="game">
+
+
+
+<div class="balance-block">
 
 
 <div class="balance">
@@ -107,18 +109,10 @@ U
 </div>
 
 
-</div>
 
+<div class="power">
 
-
-
-
-<div class="click-info">
-
-
-<div class="info">
-
-<span id="clickPower">
++<span id="clickPower">
 0.01
 </span>
 
@@ -128,28 +122,27 @@ U / клик
 
 
 
-<div class="info">
+</div>
+
+
+
+
+
+
+
+<button class="coin" id="coin">
+
 
 <span>
-0
+U
 </span>
 
-U / сек
+
+<div class="online">
+
+ONLINE
 
 </div>
-
-
-</div>
-
-
-
-
-
-
-<button id="clickButton" class="clicker">
-
-
-U
 
 
 </button>
@@ -167,10 +160,11 @@ U
 
 
 
-<section class="screen" id="referrals">
+
+<section class="page" id="referrals">
 
 
-<div class="box">
+<div class="card">
 
 
 <h2>
@@ -178,19 +172,20 @@ U
 </h2>
 
 
-<div class="line">
+<div class="stat">
 
 Приглашено:
 
-<b id="friends">
+<b id="refCount">
 0
 </b>
+
 
 </div>
 
 
 
-<div class="line">
+<div class="stat">
 
 За человека:
 
@@ -198,29 +193,26 @@ U
 5000 U
 </b>
 
+
 </div>
 
 
 
+<div class="ref-box">
 
 
-<div class="ref-container">
+<input id="refLink" readonly>
 
 
-<input id="refLink"
-readonly>
-
-
-
-<button id="copy">
+<button id="copyRef">
 
 Копировать
 
 </button>
 
 
-
 </div>
+
 
 
 </div>
@@ -236,11 +228,10 @@ readonly>
 
 
 
-<section class="screen" id="transfer">
+<section class="page" id="transfer">
 
 
-
-<div class="box">
+<div class="card">
 
 
 <h2>
@@ -249,18 +240,17 @@ readonly>
 
 
 
-<input id="receiver"
-placeholder="Username">
+<input id="transferUser"
+placeholder="Username получателя">
 
 
-
-<input id="amount"
+<input id="transferAmount"
 placeholder="Количество U"
 type="number">
 
 
 
-<button id="transferButton">
+<button id="sendTransfer">
 
 Перевести
 
@@ -281,11 +271,10 @@ type="number">
 
 
 
+<section class="page" id="tops">
 
-<section class="screen" id="rating">
 
-
-<div class="box">
+<div class="card">
 
 
 <h2>
@@ -293,9 +282,12 @@ type="number">
 </h2>
 
 
-<div id="topUsers">
+
+<div id="topList">
+
 
 </div>
+
 
 
 </div>
@@ -311,11 +303,11 @@ type="number">
 
 
 
-<section class="screen" id="more">
+<section class="page" id="more">
 
 
 
-<div class="box">
+<div class="card">
 
 
 <h2>
@@ -324,22 +316,54 @@ type="number">
 
 
 
+<button class="more-item" id="apiKey">
+
+Получить ключ API
+
+</button>
 
 
-<div class="upgrade-title">
+
+<button class="more-item">
+
+История переводов
+
+</button>
+
+
+
+<a class="more-item"
+href="https://t.me/+NyqTkXAU-H5hNDky">
+
+Наш канал
+
+</a>
+
+
+
+
+<a class="more-item"
+href="https://t.me/BuysStarsBot?start=8265611469">
+
+Купить прем
+
+</a>
+
+
+
+
+
+
+<h2 class="upgrade-title">
 
 Улучшения
 
-</div>
-
-
-
-
-<div class="upgrade-list">
+</h2>
 
 
 
 <div class="upgrade">
+
 
 <div>
 
@@ -347,13 +371,12 @@ type="number">
 
 <br>
 
-+0.01 U за клик
++0.01 U
 
 </div>
 
 
-<button data-price="10"
-data-power="0.01">
+<button data-price="10" data-power="0.01">
 
 10 U
 
@@ -365,9 +388,8 @@ data-power="0.01">
 
 
 
-
-
 <div class="upgrade">
+
 
 <div>
 
@@ -375,13 +397,12 @@ data-power="0.01">
 
 <br>
 
-+0.05 U за клик
++0.05 U
 
 </div>
 
 
-<button data-price="100"
-data-power="0.05">
+<button data-price="100" data-power="0.05">
 
 100 U
 
@@ -394,8 +415,8 @@ data-power="0.05">
 
 
 
-
 <div class="upgrade">
+
 
 <div>
 
@@ -403,13 +424,12 @@ data-power="0.05">
 
 <br>
 
-+0.10 U за клик
++0.10 U
 
 </div>
 
 
-<button data-price="500"
-data-power="0.10">
+<button data-price="500" data-power="0.10">
 
 500 U
 
@@ -423,8 +443,8 @@ data-power="0.10">
 
 
 
-
 <div class="upgrade">
+
 
 <div>
 
@@ -432,13 +452,12 @@ data-power="0.10">
 
 <br>
 
-+0.50 U за клик
++0.50 U
 
 </div>
 
 
-<button data-price="2500"
-data-power="0.50">
+<button data-price="2500" data-power="0.50">
 
 2500 U
 
@@ -452,7 +471,9 @@ data-power="0.50">
 
 
 
+
 <div class="upgrade">
+
 
 <div>
 
@@ -460,13 +481,12 @@ data-power="0.50">
 
 <br>
 
-+1.00 U за клик
++1 U
 
 </div>
 
 
-<button data-price="10000"
-data-power="1">
+<button data-price="10000" data-power="1">
 
 10000 U
 
@@ -477,61 +497,13 @@ data-power="1">
 
 
 
-</div>
-
-
-
-
-
-
-
-
-
-<div class="more-buttons">
-
-
-<button id="api">
-
-Получить ключ API
-
-</button>
-
-
-
-<button>
-
-История переводов
-
-</button>
-
-
-
-<a href="https://t.me/+NyqTkXAU-H5hNDky">
-
-Наш канал
-
-</a>
-
-
-
-<a href="https://t.me/BuysStarsBot?start=8265611469">
-
-Купить прем
-
-</a>
-
 
 
 </div>
 
-
-
-</div>
 
 
 </section>
-
-
 
 
 
@@ -544,53 +516,42 @@ data-power="1">
 
 
 
+<nav class="bottom-menu">
 
-<nav class="navigation">
 
-
-<button class="nav active"
-data-open="home">
+<button class="active" data-page="game">
 
 Играть
 
 </button>
 
 
-
-<button class="nav"
-data-open="referrals">
+<button data-page="referrals">
 
 Рефералы
 
 </button>
 
 
-
-<button class="nav"
-data-open="transfer">
+<button data-page="transfer">
 
 Переводы
 
 </button>
 
 
-
-<button class="nav"
-data-open="rating">
+<button data-page="tops">
 
 Топы
 
 </button>
 
 
-
-<button class="nav"
-data-open="more">
+<button data-page="more">
 
 Еще
 
 </button>
-
 
 
 </nav>
@@ -605,8 +566,17 @@ data-open="more">
 
 
 
+<script src="telegram.js"></script>
+
+<script src="storage.js"></script>
 
 <script src="app.js"></script>
+
+<script src="referrals.js"></script>
+
+<script src="top.js"></script>
+
+<script src="transfer.js"></script>
 
 
 </body>
