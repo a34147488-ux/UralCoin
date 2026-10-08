@@ -1,34 +1,41 @@
 *{
-    box-sizing:border-box;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+
+box-sizing:border-box;
+
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+
 }
+
 
 
 body{
 
-    margin:0;
+margin:0;
 
-    background:white;
+background:white;
 
-    color:#161616;
+color:#171717;
 
 }
+
 
 
 
 .app{
 
-    width:100%;
+height:100vh;
 
-    height:100vh;
+width:100%;
 
-    position:relative;
+background:white;
 
-    overflow:hidden;
+overflow:hidden;
 
-    background:white;
+position:relative;
 
 }
+
+
 
 
 
@@ -39,13 +46,13 @@ body{
 
 .page{
 
-    display:none;
+display:none;
 
-    height:calc(100vh - 90px);
+height:calc(100vh - 90px);
 
-    padding:20px;
+padding:20px;
 
-    overflow-y:auto;
+overflow-y:auto;
 
 }
 
@@ -53,9 +60,11 @@ body{
 
 .page.active{
 
-    display:block;
+display:block;
 
 }
+
+
 
 
 
@@ -67,431 +76,14 @@ body{
 
 .top{
 
-    text-align:center;
+padding-top:25px;
 
-    padding-top:35px;
-
-}
-
-
-
-.balance{
-
-    font-size:58px;
-
-    font-weight:900;
-
-    letter-spacing:-2px;
+text-align:center;
 
 }
 
 
 
-
-
-.stats{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:12px;
-
-    margin-top:18px;
-
-}
-
-
-
-.stats span{
-
-    background:#fff7db;
-
-    color:#d69d00;
-
-    padding:9px 15px;
-
-    border-radius:20px;
-
-    font-size:14px;
-
-    font-weight:800;
-
-}
-
-
-
-
-
-
-
-/* монета */
-
-
-.coin{
-
-    width:270px;
-
-    height:270px;
-
-    margin:70px auto 0;
-
-    border-radius:50%;
-
-
-    background:
-
-    radial-gradient(
-    circle at 30% 25%,
-    #fff7a8,
-    #ffd126 45%,
-    #efa900
-    );
-
-
-    border:8px solid #ffc928;
-
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-
-    position:relative;
-
-
-    box-shadow:
-
-    0 20px 45px rgba(220,160,0,.35),
-
-    inset 0 0 25px rgba(255,255,255,.8);
-
-
-    transition:.15s;
-
-}
-
-
-
-.coin:active{
-
-    transform:scale(.94);
-
-}
-
-
-
-.u{
-
-    font-size:160px;
-
-    font-weight:900;
-
-    color:white;
-
-
-    text-shadow:
-
-    5px 6px 0 #d89800;
-
-}
-
-
-
-
-
-
-.online{
-
-    position:absolute;
-
-    top:25px;
-
-    background:#32c96b;
-
-    color:white;
-
-    padding:6px 15px;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:900;
-
-    letter-spacing:.5px;
-
-}
-
-
-
-
-
-
-
-
-/* заголовки */
-
-
-h2{
-
-    font-size:28px;
-
-    margin:10px 0 20px;
-
-    font-weight:900;
-
-}
-
-
-
-
-
-/* карточки */
-
-
-.card{
-
-    background:#f7f7f7;
-
-    border-radius:24px;
-
-    padding:22px;
-
-    margin-bottom:18px;
-
-    border:1px solid #ededed;
-
-}
-
-
-
-
-
-.card p{
-
-    font-size:18px;
-
-}
-
-
-
-
-
-
-button{
-
-    border:none;
-
-    background:#ffc400;
-
-    color:#111;
-
-    padding:15px 20px;
-
-    border-radius:16px;
-
-    font-size:16px;
-
-    font-weight:800;
-
-}
-
-
-
-
-
-
-/* улучшения */
-
-
-.upgrade-card{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    border:1px solid #eaeaea;
-
-}
-
-
-
-
-
-/* поля */
-
-
-input{
-
-    width:100%;
-
-    height:55px;
-
-    border-radius:16px;
-
-    border:1px solid #ddd;
-
-    padding:0 16px;
-
-    font-size:17px;
-
-    margin-bottom:12px;
-
-}
-
-
-
-
-
-
-/* топы */
-
-
-.player{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    background:#f7f7f7;
-
-    padding:16px;
-
-    border-radius:22px;
-
-    margin-bottom:12px;
-
-}
-
-
-
-.avatar{
-
-    width:60px;
-
-    height:60px;
-
-    border-radius:50%;
-
-    background:#ffd000;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:28px;
-
-    font-weight:900;
-
-}
-
-
-
-
-
-
-
-
-/* ссылки */
-
-
-.menu-more a{
-
-    display:block;
-
-    text-align:center;
-
-    text-decoration:none;
-
-    background:#ffc400;
-
-    color:#111;
-
-    padding:16px;
-
-    border-radius:16px;
-
-    margin-top:12px;
-
-    font-weight:800;
-
-}
-
-
-
-
-
-
-
-
-/* нижнее меню */
-
-
-nav{
-
-    position:absolute;
-
-    bottom:0;
-
-    left:0;
-
-
-    width:100%;
-
-
-    height:90px;
-
-
-    background:white;
-
-
-    border-top:1px solid #ededed;
-
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-around;
-
-}
-
-
-
-nav button{
-
-    background:none;
-
-    padding:10px 8px;
-
-    font-size:14px;
-
-    color:#888;
-
-}
-
-
-
-nav button.active{
-
-    color:#e3a900;
-
-}
 .profile-mini{
 
 position:absolute;
@@ -526,7 +118,7 @@ align-items:center;
 
 justify-content:center;
 
-font-size:26px;
+font-size:27px;
 
 font-weight:900;
 
@@ -541,5 +133,403 @@ color:white;
 font-size:17px;
 
 font-weight:800;
+
+}
+
+
+
+
+
+.balance{
+
+font-size:58px;
+
+font-weight:900;
+
+letter-spacing:-2px;
+
+margin-top:35px;
+
+}
+
+
+
+
+
+
+.stats{
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:18px;
+
+}
+
+
+
+.stats span{
+
+background:#fff6d8;
+
+color:#d49b00;
+
+padding:10px 15px;
+
+border-radius:20px;
+
+font-size:14px;
+
+font-weight:800;
+
+}
+
+
+
+
+
+
+
+
+
+/* кнопка U */
+
+
+.coin{
+
+width:270px;
+
+height:270px;
+
+margin:70px auto 0;
+
+border-radius:50%;
+
+
+background:
+
+radial-gradient(
+circle at 30% 25%,
+#fff7a8,
+#ffd126 45%,
+#efa900
+);
+
+
+border:8px solid #ffc928;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+position:relative;
+
+
+box-shadow:
+
+0 20px 45px rgba(220,160,0,.35),
+
+inset 0 0 25px rgba(255,255,255,.8);
+
+
+}
+
+
+
+.u{
+
+font-size:160px;
+
+font-weight:900;
+
+color:white;
+
+
+text-shadow:
+
+5px 6px 0 #d89800;
+
+}
+
+
+
+
+
+
+
+
+
+/* карточки */
+
+
+.card{
+
+background:#f7f7f7;
+
+border-radius:24px;
+
+padding:22px;
+
+margin-bottom:18px;
+
+border:1px solid #ededed;
+
+}
+
+
+
+
+.card p{
+
+font-size:18px;
+
+}
+
+
+
+
+button{
+
+border:none;
+
+background:#ffc400;
+
+color:#111;
+
+padding:15px 20px;
+
+border-radius:16px;
+
+font-size:16px;
+
+font-weight:800;
+
+}
+
+
+
+
+
+
+
+
+/* улучшения */
+
+
+.upgrade-card{
+
+background:white;
+
+border:1px solid #e8e8e8;
+
+border-radius:18px;
+
+padding:18px;
+
+margin-top:12px;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+}
+
+
+
+
+
+.upgrade-card p{
+
+margin:5px 0 0;
+
+font-size:14px;
+
+color:#777;
+
+}
+
+
+
+
+
+
+
+
+/* поля */
+
+
+input{
+
+width:100%;
+
+height:55px;
+
+border-radius:16px;
+
+border:1px solid #ddd;
+
+padding:0 16px;
+
+font-size:17px;
+
+margin-bottom:12px;
+
+}
+
+
+
+
+
+
+
+
+/* топ */
+
+
+.player{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+background:#f7f7f7;
+
+border-radius:22px;
+
+padding:16px;
+
+margin-bottom:12px;
+
+}
+
+
+
+.avatar{
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+background:#ffd000;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+font-weight:900;
+
+}
+
+
+
+
+
+
+
+
+/* ссылки */
+
+
+.menu-more a{
+
+display:block;
+
+text-align:center;
+
+background:#ffc400;
+
+color:#111;
+
+padding:16px;
+
+border-radius:16px;
+
+margin-top:12px;
+
+text-decoration:none;
+
+font-weight:800;
+
+}
+
+
+
+
+
+
+
+
+/* нижнее меню */
+
+
+nav{
+
+position:absolute;
+
+bottom:0;
+
+left:0;
+
+
+height:90px;
+
+
+width:100%;
+
+
+background:white;
+
+
+border-top:1px solid #ededed;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+}
+
+
+
+
+nav button{
+
+background:none;
+
+color:#888;
+
+font-size:14px;
+
+padding:10px;
+
+}
+
+
+
+nav button.active{
+
+color:#dfa600;
+
+font-weight:900;
 
 }
