@@ -1,28 +1,7 @@
-// ===================================
-// URALcoin TOP v12
-// Stable Leaderboard + Avatars
-// ===================================
-
-
-
-
-function formatTopBalance(value){
-
-
-return Number(value || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-}
-
-
-
-
-
-
+// =================================
+// URALcoin TOP v13.2
+// PLAYERS RATING
+// =================================
 
 
 
@@ -30,23 +9,19 @@ async function loadTop(){
 
 
 
-const list =
+const box =
 
 document.getElementById(
-
 "topList"
-
 );
 
 
 
 
 
-if(!list)
+if(!box)
 
 return;
-
-
 
 
 
@@ -57,26 +32,20 @@ try{
 
 
 
-const response = await fetch(
-
-CONFIG.API_URL + "/top"
-
-);
+if(!CONFIG.API_URL){
 
 
 
+box.innerHTML =
+`
+<div class="top-card">
+Топ пока пуст
+</div>
+`;
 
 
 
-if(!response.ok){
-
-
-
-throw new Error(
-"TOP SERVER ERROR"
-);
-
-
+return;
 
 }
 
@@ -84,36 +53,44 @@ throw new Error(
 
 
 
+const response = await fetch(
 
+CONFIG.API_URL+
+"/top"
 
-let players = await response.json();
-
-
-
-
-
-
-
-if(
-
-!Array.isArray(players)
-
-||
-
-players.length===0
-
-){
+);
 
 
 
-list.innerHTML = `
 
-<div class="top-empty">
 
+
+const data = await response.json();
+
+
+
+
+
+
+let players =
+
+data.players || data || [];
+
+
+
+
+
+
+
+if(!players.length){
+
+
+
+box.innerHTML =
+`
+<div class="top-card">
 Игроков пока нет
-
 </div>
-
 `;
 
 
@@ -131,22 +108,17 @@ return;
 
 
 
+players.sort((a,b)=>{
 
-players = players
 
-.sort(
-
-(a,b)=>
-
-Number(b.balance || 0)
+return Number(b.balance||0)
 
 -
 
-Number(a.balance || 0)
+Number(a.balance||0);
 
-)
 
-.slice(0,50);
+});
 
 
 
@@ -156,8 +128,8 @@ Number(a.balance || 0)
 
 
 
+box.innerHTML="";
 
-list.innerHTML="";
 
 
 
@@ -165,212 +137,95 @@ list.innerHTML="";
 
 
 
+players.slice(0,50)
 
+.forEach((p,index)=>{
 
-players.forEach(
 
-(player,index)=>{
 
 
 
+let avatar =
 
+p.photo ||
 
-const card =
+"";
 
-document.createElement(
-"div"
-);
 
 
 
 
 
 
-card.className =
-"top-card";
+let image = avatar ?
 
 
 
+`
+<img src="${avatar}">
+`
 
+:
 
-
-
-
-let avatarHTML;
-
-
-
-
-
-
-
-
-if(
-
-player.photo &&
-
-player.photo.length > 5
-
-){
-
-
-
-avatarHTML = `
-
-
-<img
-
-class="top-avatar-img"
-
-src="${player.photo}"
-
-onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-
-
-
->
-
-
-
-<div class="top-avatar fallback-avatar"
-
-style="display:none"
-
->
-
-${
-
-(player.name || "U")
-
-.charAt(0)
-
-.toUpperCase()
-
-}
-
-</div>
-
-
-
-`;
-
-
-
-}
-
-else{
-
-
-
-avatarHTML = `
-
-
-
+`
 <div class="top-avatar">
 
-
 ${
 
-(player.name || "U")
-
+(p.name||"U")
 .charAt(0)
-
-.toUpperCase()
 
 }
 
-
-
 </div>
-
-
 
 `;
 
 
 
-}
 
 
 
 
 
 
+box.innerHTML +=
 
 
 
+`
 
-card.innerHTML = `
-
-
-
-<div class="top-position">
-
-${index+1}
-
-</div>
+<div class="top-card">
 
 
+<div class="place">
 
-
-${avatarHTML}
-
-
-
-
-<div class="top-data">
-
-
-
-<div class="top-name">
-
-${
-
-player.name ||
-
-"Игрок"
-
-}
+#${index+1}
 
 </div>
 
+
+
+${image}
+
+
+
+<div class="top-info">
+
+
+<b>
+
+${p.name || "Игрок"}
+
+</b>
 
 
 
 <div class="top-balance">
 
-${
-
-formatTopBalance(
-
-player.balance
-
-)
-
-}
-
- U
+${formatNumber(p.balance)} U
 
 </div>
-
-
-
-
-
-<div class="top-friends">
-
-
-Приглашено:
-
-${
-
-player.invited ||
-
-player.friends ||
-
-0
-
-}
 
 
 
@@ -379,7 +234,6 @@ player.friends ||
 
 
 </div>
-
 
 
 `;
@@ -387,19 +241,7 @@ player.friends ||
 
 
 
-
-
-
-list.appendChild(card);
-
-
-
-
-
-}
-
-);
-
+});
 
 
 
@@ -407,34 +249,27 @@ list.appendChild(card);
 
 
 }
-
-
 
 catch(error){
 
 
 
 console.log(
-
 "TOP ERROR",
-
 error
-
 );
 
 
 
 
 
+box.innerHTML =
+`
+<div class="top-card">
 
-list.innerHTML = `
-
-<div class="top-empty">
-
-Ошибка загрузки топа
+Топ временно недоступен
 
 </div>
-
 `;
 
 
@@ -443,7 +278,6 @@ list.innerHTML = `
 
 
 
-
 }
 
 
@@ -454,25 +288,21 @@ list.innerHTML = `
 
 
 
-// первая загрузка
 
-
-loadTop();
-
-
-
-
-
-
-
-
-// обновление
-
+// обновление каждые 30 секунд
 
 setInterval(
 
 loadTop,
 
-10000
+30000
 
 );
+
+
+
+
+
+
+
+loadTop();
