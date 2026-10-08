@@ -1,5 +1,8 @@
-// UralCoin TOP v3
-// Серверные топы игроков
+// ===================================
+// URALcoin TOP v4
+// Server Leaderboard
+// ===================================
+
 
 
 function formatTopBalance(value){
@@ -9,10 +12,11 @@ return Number(value || 0)
 
 .toFixed(3)
 
-.replace(".", ",");
+.replace(".",",");
 
 
 }
+
 
 
 
@@ -36,9 +40,11 @@ document.getElementById(
 
 
 
+
 if(!list)
 
 return;
+
 
 
 
@@ -48,9 +54,7 @@ try{
 
 
 
-const response =
-
-await fetch(
+const response = await fetch(
 
 CONFIG.API_URL + "/top"
 
@@ -60,11 +64,28 @@ CONFIG.API_URL + "/top"
 
 
 
-const players =
-
-await response.json();
 
 
+if(!response.ok){
+
+
+
+throw new Error(
+
+"Server error"
+
+);
+
+
+
+}
+
+
+
+
+
+
+let players = await response.json();
 
 
 
@@ -77,7 +98,7 @@ if(
 
 ||
 
-players.length === 0
+players.length===0
 
 ){
 
@@ -109,17 +130,7 @@ return;
 
 
 
-list.innerHTML = "";
-
-
-
-
-
-
-
-
-
-players
+players = players
 
 .sort(
 
@@ -133,31 +144,53 @@ Number(a.balance || 0)
 
 )
 
+.slice(0,50);
 
 
-.slice(0,20)
 
-.forEach(
+
+
+
+
+
+list.innerHTML = "";
+
+
+
+
+
+
+
+
+players.forEach(
 
 (player,index)=>{
 
 
 
+const card =
 
+document.createElement(
 
-const place =
+"div"
 
-index + 1;
-
-
-
-
-
-
-let avatar = "";
+);
 
 
 
+
+
+card.className =
+
+"top-card";
+
+
+
+
+
+
+
+let avatar;
 
 
 
@@ -189,7 +222,7 @@ avatar = `
 
 <div class="top-avatar">
 
-${place}
+${index + 1}
 
 </div>
 
@@ -206,38 +239,13 @@ ${place}
 
 
 
-
-const card =
-
-document.createElement(
-
-"div"
-
-);
-
-
-
-
-
-card.className =
-
-"top-card";
-
-
-
-
-
-
-
-
-
 card.innerHTML = `
 
 
 
 <div class="top-position">
 
-${place}
+${index + 1}
 
 </div>
 
@@ -262,10 +270,11 @@ ${player.name || "Игрок"}
 
 <div class="top-balance">
 
-${formatTopBalance(player.balance)} U
+${formatTopBalance(player.balance)}
+
+ U
 
 </div>
-
 
 
 
@@ -292,11 +301,14 @@ ${player.invited || player.friends || 0}
 
 
 
+
 list.appendChild(card);
 
 
 
 }
+
+
 
 );
 
@@ -314,7 +326,7 @@ catch(error){
 
 console.log(
 
-"Ошибка загрузки топа",
+"TOP ERROR",
 
 error
 
@@ -322,12 +334,11 @@ error
 
 
 
-
 list.innerHTML = `
 
 <div class="top-empty">
 
-Ошибка загрузки
+Ошибка загрузки топа
 
 </div>
 
@@ -348,12 +359,18 @@ list.innerHTML = `
 
 
 
+// первая загрузка
+
 
 loadTop();
 
 
 
 
+
+
+
+// обновление
 
 
 setInterval(
