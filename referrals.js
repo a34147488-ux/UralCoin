@@ -1,35 +1,25 @@
 // ===================================
-// URALcoin REFERRALS v5
-// Working Referral System
+// URALcoin REFERRALS v10
+// Telegram Referral System
 // ===================================
 
-
-
-// ===============================
-// Создание ссылки
-// ===============================
 
 
 function createReferralLink(){
 
 
-
-const player =
+let player =
 Storage.getPlayer();
-
-
 
 
 
 if(
 !player.id ||
 player.id==="guest"
-){
-
+)
 
 return "";
 
-}
 
 
 
@@ -64,45 +54,28 @@ player.id
 
 
 
-
-
-// ===============================
-// Отображение ссылки
-// ===============================
-
-
-
 function loadReferral(){
 
 
 
-const input =
-
+let input =
 document.getElementById(
 "refLink"
 );
 
 
 
-
-
 if(input){
-
 
 input.value =
 createReferralLink();
-
 
 }
 
 
 
 
-
-
-
-const count =
-
+let count =
 document.getElementById(
 "friendsCount"
 );
@@ -111,17 +84,15 @@ document.getElementById(
 
 
 
-
 if(count){
 
 
-const player =
+let player =
 Storage.getPlayer();
 
 
 
 count.innerText =
-
 player.friends || 0;
 
 
@@ -130,6 +101,178 @@ player.friends || 0;
 
 
 
+
+renderWorkers();
+
+
+}
+
+
+
+
+
+
+
+
+
+function renderWorkers(){
+
+
+
+let box =
+document.getElementById(
+"workersList"
+);
+
+
+
+if(!box)
+
+return;
+
+
+
+
+
+let workers =
+Storage.getPlayer().workers;
+
+
+
+
+if(!workers.length){
+
+
+
+box.innerHTML =
+
+`
+<div class="top-empty">
+Пока нет приглашённых
+</div>
+`;
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+box.innerHTML="";
+
+
+
+
+
+
+
+workers.forEach(worker=>{
+
+
+
+let div =
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"worker-card";
+
+
+
+
+
+
+let avatar = "";
+
+
+
+if(worker.photo){
+
+
+
+avatar =
+
+`
+<img src="${worker.photo}">
+`;
+
+
+
+}
+
+else{
+
+
+
+avatar =
+
+`
+<div class="worker-letter">
+${worker.name[0]}
+</div>
+`;
+
+
+
+}
+
+
+
+
+
+
+div.innerHTML =
+
+`
+
+${avatar}
+
+
+<div>
+
+
+<b>
+${worker.name}
+</b>
+
+
+<br>
+
+
+<span>
+Уровень:
+${worker.level || 1}
+</span>
+
+
+</div>
+
+
+`;
+
+
+
+
+box.appendChild(div);
+
+
+
+});
+
+
+
+
+
 }
 
 
@@ -141,27 +284,23 @@ player.friends || 0;
 
 
 
-
 // ===============================
-// Проверка старта
+// CHECK START PARAM
 // ===============================
 
 
-async function checkReferral(){
+async function checkReferralStart(){
 
 
 
-let refId = "";
+let start = "";
 
 
 
 
-
-// Telegram start_param
 
 
 const tg =
-
 window.Telegram?.WebApp;
 
 
@@ -170,15 +309,14 @@ window.Telegram?.WebApp;
 
 
 if(
-tg?.initDataUnsafe?.start_param
+tg &&
+tg.initDataUnsafe &&
+tg.initDataUnsafe.start_param
 ){
 
 
-
-refId =
-
+start =
 tg.initDataUnsafe.start_param;
-
 
 
 }
@@ -189,28 +327,20 @@ tg.initDataUnsafe.start_param;
 
 
 
-// запасной вариант
 
-
-if(!refId){
+if(!start){
 
 
 
-const params =
-
+let params =
 new URLSearchParams(
-
 window.location.search
-
 );
 
 
 
-refId =
-
-params.get("start")
-
-|| "";
+start =
+params.get("start") || "";
 
 
 
@@ -221,7 +351,9 @@ params.get("start")
 
 
 
-if(!refId)
+
+
+if(!start)
 
 return;
 
@@ -231,9 +363,7 @@ return;
 
 
 
-
 let player =
-
 Storage.getPlayer();
 
 
@@ -241,13 +371,11 @@ Storage.getPlayer();
 
 
 
-// нельзя самому себе
-
 
 if(
-String(player.id)
+String(start)
 ===
-String(refId)
+String(player.id)
 )
 
 return;
@@ -258,50 +386,16 @@ return;
 
 
 
-
-
-// если уже был приглашён
-
-
-if(player.referrer)
-
-return;
+let saved =
+Storage.setReferrer(start);
 
 
 
 
 
 
+if(saved){
 
-
-
-// сохраняем
-
-
-const saved =
-
-Storage.setReferrer(
-refId
-);
-
-
-
-
-
-
-if(!saved)
-
-return;
-
-
-
-
-
-
-
-
-
-// отправляем серверу
 
 
 try{
@@ -310,38 +404,28 @@ try{
 
 await fetch(
 
-CONFIG.API_URL + "/referral",
+CONFIG.API_URL+
+"/referral",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":
-
 "application/json"
-
 
 },
 
 
 body:JSON.stringify({
 
-
 userId:player.id,
 
+referrerId:start,
 
-referrerId:refId,
-
-
-name:player.name,
-
-
-photo:player.photo
+name:player.name
 
 
 })
@@ -349,13 +433,12 @@ photo:player.photo
 
 }
 
-
 );
 
 
 
 console.log(
-"Referral complete"
+"Referral sent"
 );
 
 
@@ -381,6 +464,10 @@ e
 
 
 
+}
+
+
+
 
 
 
@@ -388,43 +475,27 @@ e
 
 
 // ===============================
-// Копирование ссылки
+// COPY BUTTON
 // ===============================
 
 
-
-const copyReferral =
-
+let copy =
 document.getElementById(
-
 "copyReferral"
-
 );
 
 
 
+if(copy){
 
 
 
-if(copyReferral){
+copy.onclick = ()=>{
 
 
 
-copyReferral.onclick = ()=>{
-
-
-
-const link =
-
+let link =
 createReferralLink();
-
-
-
-
-
-if(
-navigator.clipboard
-){
 
 
 
@@ -434,27 +505,16 @@ link
 
 
 
-}
-
-
-
-
-
-copyReferral.innerText =
+copy.innerText =
 "Скопировано";
-
-
-
 
 
 
 setTimeout(()=>{
 
 
-
-copyReferral.innerText =
+copy.innerText =
 "Копировать ссылку";
-
 
 
 },1500);
@@ -475,14 +535,7 @@ copyReferral.innerText =
 
 
 
-// ===============================
-// Запуск
-// ===============================
-
-
-
-checkReferral();
-
+checkReferralStart();
 
 loadReferral();
 
@@ -490,13 +543,10 @@ loadReferral();
 
 
 
+setInterval(
 
+loadReferral,
 
-setInterval(()=>{
+5000
 
-
-loadReferral();
-
-
-
-},5000);
+);
