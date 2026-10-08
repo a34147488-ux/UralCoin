@@ -6,40 +6,61 @@ let clickPower =
 Number(localStorage.getItem("clickPower")) || 0.01;
 
 
+let autoPower =
+Number(localStorage.getItem("autoPower")) || 0;
 
-const balanceElement =
+
+
+const balanceEl =
 document.getElementById("balance");
 
 
-const powerElement =
+const powerEl =
 document.getElementById("clickPower");
 
 
 
-const coin =
-document.getElementById("coin");
+const clickButton =
+document.getElementById("clickButton");
 
 
 
 
 
 
-function updateBalance(){
+
+function formatNumber(num){
 
 
-if(balanceElement){
+return num
+.toFixed(3)
+.replace(".",",");
 
-balanceElement.innerText =
-balance.toFixed(2);
 
 }
 
 
 
-if(powerElement){
 
-powerElement.innerText =
-clickPower.toFixed(2);
+
+
+
+function update(){
+
+
+if(balanceEl){
+
+balanceEl.innerText =
+formatNumber(balance);
+
+}
+
+
+
+if(powerEl){
+
+powerEl.innerText =
+formatNumber(clickPower);
 
 }
 
@@ -59,6 +80,13 @@ clickPower
 
 
 
+localStorage.setItem(
+"autoPower",
+autoPower
+);
+
+
+
 }
 
 
@@ -68,31 +96,112 @@ clickPower
 
 
 
-/* КЛИК ПО U */
 
 
-if(coin){
+// КЛИК ПО U
 
 
-coin.addEventListener(
-"click",
-()=>{
+if(clickButton){
+
+
+
+clickButton.onclick = ()=>{
 
 
 balance += clickPower;
 
 
-updateBalance();
+showPlus(clickPower);
+
+
+
+update();
+
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+// АНИМАЦИЯ +U
+
+
+function showPlus(value){
+
+
+
+let el =
+document.createElement("div");
+
+
+
+el.className =
+"plus-animation";
+
+
+
+el.innerText =
+"+"+
+formatNumber(value)
++
+" U";
+
+
+
+document.body.appendChild(el);
+
+
+
+setTimeout(()=>{
+
+
+el.remove();
+
+
+},800);
 
 
 
 }
-);
+
+
+
+
+
+
+
+
+
+
+
+// АВТОКЛИКЕР
+
+
+setInterval(()=>{
+
+
+if(autoPower>0){
+
+
+balance += autoPower/60;
+
+
+update();
 
 
 }
 
 
+},1000);
 
 
 
@@ -100,75 +209,61 @@ updateBalance();
 
 
 
-/* МЕНЮ */
-
-
-const menuButtons =
-document.querySelectorAll(
-".bottom-menu button"
-);
-
-
-
-const pages =
-document.querySelectorAll(
-".page"
-);
-
-
-
-menuButtons.forEach(
-button=>{
-
-
-button.addEventListener(
-"click",
-()=>{
-
-
-let target =
-button.dataset.page;
 
 
 
 
-pages.forEach(
-page=>{
+// МЕНЮ
+
+
+
+document
+.querySelectorAll(".nav")
+.forEach(btn=>{
+
+
+btn.onclick=()=>{
+
+
+
+let id =
+btn.dataset.page;
+
+
+
+document
+.querySelectorAll(".page")
+.forEach(page=>{
+
 
 page.classList.remove(
 "active"
 );
 
+
 });
 
 
 
+
 document
-.getElementById(target)
+.getElementById(id)
 .classList.add(
 "active"
 );
 
 
 
-menuButtons.forEach(
-btn=>{
 
-btn.classList.remove(
+
+
+document
+.querySelectorAll(".nav")
+.forEach(b=>{
+
+
+b.classList.remove(
 "active"
-);
-
-});
-
-
-
-button.classList.add(
-"active"
-);
-
-
-
-}
 );
 
 
@@ -179,46 +274,37 @@ button.classList.add(
 
 
 
-
-
-
-
-/* УЛУЧШЕНИЯ */
-
-
-let bought =
-JSON.parse(
-localStorage.getItem("upgrades")
-)
-|| [];
-
-
-
-
-
-const upgradeButtons =
-document.querySelectorAll(
-".upgrade button"
+btn.classList.add(
+"active"
 );
 
 
 
-upgradeButtons.forEach(
-(button,index)=>{
+};
 
 
-button.addEventListener(
-"click",
-()=>{
+
+});
 
 
-if(
-bought.includes(index)
-){
 
-return;
 
-}
+
+
+
+
+
+// УЛУЧШЕНИЯ
+
+
+
+document
+.querySelectorAll(".upgrade-card button")
+.forEach(button=>{
+
+
+
+button.onclick=()=>{
 
 
 
@@ -229,52 +315,22 @@ button.dataset.price
 
 
 
-let power =
+let type =
+button.dataset.type;
+
+
+
+let value =
 Number(
-button.dataset.power
+button.dataset.value
 );
 
 
 
 
-if(balance >= price){
 
+if(balance < price){
 
-
-balance -= price;
-
-
-clickPower += power;
-
-
-
-
-bought.push(index);
-
-
-
-localStorage.setItem(
-"upgrades",
-JSON.stringify(bought)
-);
-
-
-
-button.innerText =
-"Куплено";
-
-
-button.disabled=true;
-
-
-
-updateBalance();
-
-
-
-}
-
-else{
 
 
 alert(
@@ -282,35 +338,50 @@ alert(
 );
 
 
+return;
+
+
 }
 
 
 
+
+
+
+
+balance -= price;
+
+
+
+
+
+
+if(type==="click"){
+
+
+
+clickPower += value;
+
+
+
 }
-);
-
-
-
-});
 
 
 
 
+if(type==="auto"){
+
+
+
+autoPower += value;
+
+
+
+}
 
 
 
 
-
-/* ВОССТАНОВЛЕНИЕ КУПЛЕННЫХ */
-
-
-upgradeButtons.forEach(
-(button,index)=>{
-
-
-if(
-bought.includes(index)
-){
 
 
 button.innerText =
@@ -320,7 +391,13 @@ button.innerText =
 button.disabled=true;
 
 
-}
+
+update();
+
+
+
+};
+
 
 
 });
@@ -333,4 +410,4 @@ button.disabled=true;
 
 
 
-updateBalance();
+update();
