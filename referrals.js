@@ -1,42 +1,25 @@
-// UralCoin Referrals v3
-// Настоящая реферальная система Telegram
-
-
-
-
-const BOT_USERNAME = "ТВОЙ_USERNAME_БОТА";
-
-
-
-
+// ===================================
+// URALcoin REFERRALS v4
+// Telegram Referral System
+// ===================================
 
 
 
 function createReferralLink(){
 
 
-
-const player =
-
-Storage.getPlayer();
-
-
-
+const player = Storage.getPlayer();
 
 
 
 if(
 !player.id ||
-player.id === "guest"
+player.id==="guest"
 ){
 
 return "";
 
 }
-
-
-
-
 
 
 
@@ -46,7 +29,7 @@ return (
 
 +
 
-BOT_USERNAME
+CONFIG.BOT_USERNAME
 
 +
 
@@ -87,14 +70,12 @@ document.getElementById(
 if(input){
 
 
-
 input.value =
-
 createReferralLink();
 
 
-
 }
+
 
 
 
@@ -115,10 +96,13 @@ if(count){
 
 
 
+const player =
+Storage.getPlayer();
+
+
+
 count.innerText =
-
-Storage.getPlayer()
-.friends || 0;
+player.friends || 0;
 
 
 
@@ -134,32 +118,58 @@ Storage.getPlayer()
 
 
 
-
-
-// получение приглашения через Telegram start
 
 
 function checkStartReferral(){
 
 
 
+const tg =
+
+window.Telegram?.WebApp;
+
+
+
+let start = "";
+
+
+
+
+
+if(tg?.initDataUnsafe?.start_param){
+
+
+start =
+tg.initDataUnsafe.start_param;
+
+
+}
+
+
+
+
+
+
+if(!start){
+
+
+
 const params =
 
 new URLSearchParams(
+
 window.location.search
+
 );
 
 
 
+start =
+params.get("start") || "";
 
 
-const start =
 
-params.get("tgWebAppStartParam")
-
-||
-
-params.get("start");
+}
 
 
 
@@ -167,24 +177,25 @@ params.get("start");
 
 
 
-if(
-start
-){
+if(start){
 
 
 
 const player =
-
 Storage.getPlayer();
 
 
 
 
 
-
-
 if(
-player.id !== String(start)
+
+String(player.id)
+
+!==
+
+String(start)
+
 ){
 
 
@@ -193,23 +204,6 @@ Storage.setReferrer(start);
 
 
 
-
-
-
-if(
-window.API
-){
-
-
-
-API.sendReferral(start);
-
-
-
-}
-
-
-
 }
 
 
@@ -226,16 +220,14 @@ API.sendReferral(start);
 
 
 
-
-
-
-// копирование ссылки
 
 
 const copyButton =
 
 document.getElementById(
+
 "copyReferral"
+
 );
 
 
@@ -256,36 +248,24 @@ copyButton.addEventListener(
 
 
 const link =
-
 createReferralLink();
 
 
 
 
 
-if(
-navigator.clipboard
-){
+if(navigator.clipboard){
 
 
-
-navigator.clipboard.writeText(
-link
-);
-
+navigator.clipboard.writeText(link);
 
 
 }
 
 
 
-
-
 copyButton.innerText =
-
 "Скопировано";
-
-
 
 
 
@@ -293,13 +273,10 @@ setTimeout(()=>{
 
 
 copyButton.innerText =
-
 "Копировать ссылку";
 
 
 },1500);
-
-
 
 
 
@@ -329,16 +306,11 @@ loadReferral();
 
 
 
-
-
-
-// обновление счётчика
-
-
 setInterval(()=>{
 
 
 loadReferral();
+
 
 
 },5000);
