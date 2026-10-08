@@ -1,80 +1,66 @@
-// ===================================
-// URALcoin UPGRADE SYSTEM v13
-// PUR SERIES
-// ===================================
-
+// =================================
+// URALcoin UPGRADE v13.2
+// =================================
 
 
 const upgrades = [
 
 
 {
-id:"purganis",
 name:"PURGANIS",
+price:5000,
 type:"click",
-start:5000,
-power:0.005
+value:0.005
 },
 
 
-
 {
-id:"purles",
 name:"PURLES",
+price:25000,
 type:"click",
-start:25000,
-power:0.01
+value:0.010
 },
 
 
-
 {
-id:"vladestok",
 name:"VLADESTOK",
+price:100000,
 type:"click",
-start:75000,
-power:0.025
+value:0.020
 },
 
 
-
 {
-id:"purpur",
 name:"PURPUR",
-type:"click",
-start:200000,
-power:0.05
+price:300000,
+type:"auto",
+value:2
 },
 
 
-
 {
-id:"purus",
 name:"PURUS",
+price:750000,
 type:"auto",
-start:500000,
-power:0.2
+value:5
 },
 
 
-
 {
-id:"vladet",
 name:"VLADET",
-type:"auto",
-start:1000000,
-power:0.5
+price:1500000,
+type:"click",
+value:0.050
 },
 
 
-
 {
-id:"vladikaz",
 name:"VLADIKAZ",
+price:3000000,
 type:"auto",
-start:2500000,
-power:1
+value:15
 }
+
 
 
 ];
@@ -86,20 +72,11 @@ power:1
 
 
 
-
 function drawUpgrades(){
 
 
-
-const box =
-
-document.getElementById(
-
-"upgradeList"
-
-);
-
-
+let box =
+document.getElementById("upgradeList");
 
 
 
@@ -111,10 +88,12 @@ return;
 
 
 
+box.innerHTML="";
+
+
 
 
 let player =
-
 Storage.getPlayer();
 
 
@@ -122,132 +101,63 @@ Storage.getPlayer();
 
 
 
-
-box.innerHTML="";
-
-
-
-
-
-
-
-
-
-upgrades.forEach(up=>{
+upgrades.forEach((u,index)=>{
 
 
 
 let level =
-
-player.upgrades[up.id] || 0;
-
+player.upgrades[index] || 0;
 
 
 
 
 
+let currentPrice =
 
-let price =
+u.price *
 
-Math.floor(
-
-up.start *
-
-Math.pow(
-
-1.7,
-
-level
-
-)
-
-);
+(level+1);
 
 
 
 
 
 
+box.innerHTML += `
 
 
-let card =
-
-document.createElement(
-
-"div"
-
-);
+<div class="upgrade-card">
 
 
+<h3>${u.name}</h3>
 
 
-
-card.className=
-
-"upgrade-card";
-
+<p>
+Уровень: ${level}
+</p>
 
 
-
-
-
-
-card.innerHTML=`
-
-<div class="upgrade-name">
-
-${up.name}
-
-</div>
-
-
-<div class="upgrade-level">
-
-Уровень:
-
-${level}
-
-</div>
-
-
-
-<div class="upgrade-price">
-
+<p>
 Цена:
-
-${price.toLocaleString()}
-
-U
-
-</div>
+${currentPrice.toLocaleString()} U
+</p>
 
 
 
-<button
-
+<button 
 class="gold-button upgrade-buy"
-
-data-id="${up.id}"
-
->
+data-id="${index}">
 
 Купить
 
 </button>
 
+
+
+</div>
+
+
 `;
-
-
-
-
-
-
-
-
-box.appendChild(card);
-
-
-
 
 
 
@@ -258,24 +168,18 @@ box.appendChild(card);
 
 
 
-
-
-
 document
-
 .querySelectorAll(".upgrade-buy")
-
 .forEach(btn=>{
 
 
 
-btn.onclick=()=>{
+btn.onclick=function(){
+
 
 
 buyUpgrade(
-
-btn.dataset.id
-
+Number(this.dataset.id)
 );
 
 
@@ -285,10 +189,6 @@ btn.dataset.id
 
 
 });
-
-
-
-
 
 
 
@@ -307,39 +207,19 @@ function buyUpgrade(id){
 
 
 let player =
-
 Storage.getPlayer();
 
 
 
 
-
-
-let up =
-
-upgrades.find(
-
-u=>u.id===id
-
-);
-
-
-
-
-
-
-if(!up)
-
-return;
-
-
+let upgrade =
+upgrades[id];
 
 
 
 
 
 let level =
-
 player.upgrades[id] || 0;
 
 
@@ -348,21 +228,7 @@ player.upgrades[id] || 0;
 
 
 let price =
-
-Math.floor(
-
-up.start *
-
-Math.pow(
-
-1.7,
-
-level
-
-)
-
-);
-
+upgrade.price*(level+1);
 
 
 
@@ -375,9 +241,7 @@ if(player.balance < price){
 
 
 alert(
-
 "Недостаточно U"
-
 );
 
 
@@ -401,11 +265,7 @@ player.balance -= price;
 
 
 
-
-
-player.upgrades[id] =
-
-level + 1;
+player.upgrades[id]=level+1;
 
 
 
@@ -413,14 +273,11 @@ level + 1;
 
 
 
-
-if(up.type==="click"){
-
+if(upgrade.type==="click"){
 
 
-player.clickPower +=
 
-up.power;
+player.clickPower += upgrade.value;
 
 
 
@@ -431,14 +288,11 @@ up.power;
 
 
 
-
-if(up.type==="auto"){
-
+if(upgrade.type==="auto"){
 
 
-player.autoPower +=
 
-up.power;
+player.autoPower += upgrade.value;
 
 
 
@@ -458,64 +312,27 @@ Storage.savePlayer(player);
 
 
 
-
-drawUpgrades();
-
-
-
-
-
-
-
-if(typeof updateScreen==="function"){
-
-
-
 updateScreen();
 
-
-
-}
-
-
-
-
-
-
-
-
-if(typeof syncBalance==="function"){
-
-
-
-syncBalance();
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-
 drawUpgrades();
 
 
 
-});
+
+
+
+
+alert(
+upgrade.name+" улучшен"
+);
+
+
+
+}
+
+
+
+
+
+
+window.drawUpgrades=drawUpgrades;
