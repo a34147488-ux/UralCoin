@@ -4,16 +4,12 @@
 
 <head>
 
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-
 <title>URALcoin</title>
-
 
 
 <link rel="stylesheet" href="style.css">
@@ -21,27 +17,19 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <link rel="stylesheet" href="glass.css">
 
 
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 
 </head>
 
 
-
 <body>
-
 
 
 <div class="app">
 
 
 
-
-
 <div class="city-bg"></div>
-
-
 
 
 
@@ -60,15 +48,9 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 
 
-
-
-
 <!-- СНЕГ -->
 
 <div class="snow"></div>
-
-
-
 
 
 
@@ -104,9 +86,6 @@ U
 
 
 
-
-
-
 <main class="content">
 
 
@@ -120,6 +99,7 @@ U
 <div class="balance-box">
 
 
+
 <div class="balance">
 
 
@@ -130,8 +110,6 @@ U
 </span>
 
 
-
-
 <div class="coin-small">
 
 U
@@ -139,15 +117,17 @@ U
 </div>
 
 
-
 </div>
 
 
 
 
 
-<div class="click-power">
+<div class="stats-box">
 
+
+
+<div class="click-power">
 
 +
 
@@ -159,8 +139,29 @@ U
 
 за клик
 
+</div>
+
+
+
+
+<div class="second-power">
+
++
+
+<span id="autoPower">
+
+0,000
+
+</span>
+
+в секунду
 
 </div>
+
+
+
+</div>
+
 
 
 
@@ -185,48 +186,7 @@ U
 
 
 
-
-<!-- САНТА БЕЗ КАРТИНКИ -->
-
-
-<div id="angrySanta" class="angry-santa">
-
-
-<div class="santa-hat"></div>
-
-
-<div class="santa-face">
-
-
-<span class="santa-eyes">
-
-😡
-
-</span>
-
-
-<div class="santa-beard"></div>
-
-
-</div>
-
-
-
-
-<div class="santa-snow">
-
-❄ ❄ ❄
-
-</div>
-
-
-
-</div>
-
-
-
-
-<div id="bonusEffect" class="bonus-effect"></div>
+<div id="bonusEffect"></div>
 
 
 
@@ -237,12 +197,12 @@ U
 
 
 
-
-
 <section class="page" id="referrals">
 
 
+
 <div class="panel">
+
 
 
 <h2>
@@ -271,6 +231,7 @@ U
 </b>
 
 
+
 </div>
 
 
@@ -294,13 +255,16 @@ U
 </b>
 
 
+
 </div>
 
 
 
 
 
+
 <input id="refLink" readonly>
+
 
 
 
@@ -314,11 +278,18 @@ U
 </button>
 
 
+
 </div>
 
 
 </section>
+
+
+
+
+
 <section class="page" id="transfer">
+
 
 
 <div class="panel">
@@ -340,13 +311,11 @@ placeholder="@username">
 
 
 
-
 <input id="transferSum"
 
 placeholder="Количество U"
 
 type="number">
-
 
 
 
@@ -367,15 +336,6 @@ id="transferButton">
 
 
 </section>
-
-
-
-
-
-
-
-
-
 <section class="page" id="tops">
 
 
@@ -390,12 +350,10 @@ id="transferButton">
 
 
 
-
 <div id="topList">
 
 
 </div>
-
 
 
 
@@ -410,12 +368,12 @@ id="transferButton">
 
 
 
-
-
 <section class="page" id="more">
 
 
+
 <div class="panel">
+
 
 
 <h2>
@@ -423,7 +381,6 @@ id="transferButton">
 Еще
 
 </h2>
-
 
 
 
@@ -438,7 +395,6 @@ id="promoButton">
 
 
 </button>
-
 
 
 
@@ -460,7 +416,6 @@ id="historyButton">
 
 
 
-
 <button class="menu-card"
 
 id="apiButton">
@@ -476,7 +431,6 @@ id="apiButton">
 
 
 
-
 <a class="menu-card"
 
 href="https://t.me/+NyqTkXAU-H5hNDky">
@@ -486,8 +440,6 @@ href="https://t.me/+NyqTkXAU-H5hNDky">
 
 
 </a>
-
-
 
 
 
@@ -510,8 +462,6 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
-
-
 <h2>
 
 Улучшения
@@ -523,8 +473,8 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
-
 <div class="upgrade-card">
+
 
 
 <span>
@@ -532,6 +482,7 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 Сила клика +0.01
 
 </span>
+
 
 
 
@@ -551,7 +502,9 @@ data-value="0.01">
 </button>
 
 
+
 </div>
+
 
 
 
@@ -563,9 +516,10 @@ data-value="0.01">
 <div class="upgrade-card">
 
 
+
 <span>
 
-Автокликер +1 U/мин
+Автодоход +1 U/мин
 
 </span>
 
@@ -596,6 +550,43 @@ data-value="1">
 
 
 
+<div class="upgrade-card">
+
+
+
+<span>
+
+Сила клика +0.05
+
+</span>
+
+
+
+
+
+<button
+
+data-price="500"
+
+data-type="click"
+
+data-value="0.05">
+
+
+500 U
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
 
 </div>
 
@@ -609,11 +600,12 @@ data-value="1">
 
 
 
-
 <section class="page" id="promo">
 
 
+
 <div class="panel">
+
 
 
 <h2>
@@ -621,6 +613,7 @@ data-value="1">
 Промокоды
 
 </h2>
+
 
 
 
@@ -678,7 +671,6 @@ id="createPromo">
 
 
 
-
 <input id="promoInput"
 
 placeholder="Введите промокод">
@@ -713,12 +705,12 @@ id="usePromo">
 
 
 
-
-
 <section class="page" id="history">
 
 
+
 <div class="panel">
+
 
 
 <h2>
@@ -750,13 +742,12 @@ id="usePromo">
 
 
 
-
-
-
 <section class="page" id="api">
 
 
+
 <div class="panel">
+
 
 
 <h2>
@@ -764,6 +755,7 @@ id="usePromo">
 API ключ
 
 </h2>
+
 
 
 
@@ -794,16 +786,21 @@ id="createApi">
 
 
 
+
 </div>
 
 
 </section>
+
 </main>
 
 
 
 
 
+
+
+<!-- НИЖНЕЕ МЕНЮ -->
 
 
 <nav class="bottom-nav">
@@ -824,6 +821,7 @@ data-page="game">
 
 
 
+
 <button class="nav"
 
 data-page="referrals">
@@ -833,6 +831,7 @@ data-page="referrals">
 
 
 </button>
+
 
 
 
@@ -852,6 +851,7 @@ data-page="transfer">
 
 
 
+
 <button class="nav"
 
 data-page="tops">
@@ -861,6 +861,7 @@ data-page="tops">
 
 
 </button>
+
 
 
 
@@ -878,6 +879,8 @@ data-page="more">
 
 
 
+
+
 </nav>
 
 
@@ -885,8 +888,8 @@ data-page="more">
 
 
 
-
 </div>
+
 
 
 
@@ -933,6 +936,14 @@ data-page="more">
 
 
 
+
 </body>
 
 </html>
+
+
+
+
+
+
+
