@@ -1,14 +1,15 @@
-/* ===================================
-URALcoin V12
-GLASS GOLD WINTER
-NO SANTA
-=================================== */
+/* =================================
+URALcoin v13.2
+GLASS GOLD UI
+================================= */
 
 
 *{
 
 box-sizing:border-box;
+
 margin:0;
+
 padding:0;
 
 -webkit-tap-highlight-color:transparent;
@@ -16,44 +17,35 @@ padding:0;
 }
 
 
+
 html,
 body{
 
-
 width:100%;
-height:100%;
 
+height:100%;
 
 overflow:hidden;
 
-
 font-family:Arial,sans-serif;
 
-
-background:#090414;
-
+background:#080313;
 
 color:white;
 
-
 }
-
-
 
 
 
 .app{
 
-
 width:100%;
-height:100vh;
 
+height:100vh;
 
 position:relative;
 
-
 overflow:hidden;
-
 
 }
 
@@ -62,76 +54,30 @@ overflow:hidden;
 
 
 
-/* ===============================
-ФОН
-=============================== */
-
+/* ФОН */
 
 .city-bg{
 
-
 position:absolute;
 
-
 inset:0;
-
-
 
 background:
 
-
 linear-gradient(
-
 135deg,
-
-rgba(255,215,0,.30),
-
-rgba(80,20,160,.75)
-
+rgba(255,215,0,.25),
+rgba(70,20,150,.8)
 ),
-
 
 url("ekaterinburg.jpg");
 
-
-
 background-size:cover;
-
 
 background-position:center;
 
-
-
-animation:
-
-cityMove 12s infinite alternate;
-
-
-
 z-index:0;
 
-
-}
-
-
-
-@keyframes cityMove{
-
-
-from{
-
-filter:brightness(.75);
-
-}
-
-
-to{
-
-filter:brightness(1.15);
-
-}
-
-
 }
 
 
@@ -139,188 +85,40 @@ filter:brightness(1.15);
 
 
 
-
-
-
-/* ===============================
-ГИРЛЯНДА
-=============================== */
-
-
-.garland{
-
-
-position:absolute;
-
-
-top:0;
-
-
-left:0;
-
-
-
-height:40px;
-
-
-width:100%;
-
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-align-items:center;
-
-
-
-z-index:30;
-
-
-}
-
-
-
-
-.garland span{
-
-
-width:12px;
-
-
-height:12px;
-
-
-
-border-radius:50%;
-
-
-
-background:#ffd700;
-
-
-
-box-shadow:
-
-0 0 20px gold;
-
-
-
-animation:
-
-lightBlink 1.5s infinite alternate;
-
-
-}
-
-
-
-
-.garland span:nth-child(even){
-
-
-background:white;
-
-
-animation-delay:.3s;
-
-
-}
-
-
-
-@keyframes lightBlink{
-
-
-from{
-
-opacity:.4;
-
-transform:scale(.8);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:scale(1.3);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===============================
-СНЕГ
-=============================== */
-
+/* СНЕГ */
 
 .snow{
 
-
 position:absolute;
-
 
 inset:0;
 
-
 pointer-events:none;
 
-
-z-index:15;
-
+z-index:2;
 
 overflow:hidden;
 
-
 }
+
 
 
 
 .snow:before{
 
-
-content:"❄ ❅ ❆ ❄ ❅ ❆";
-
+content:"❄ ❅ ❆ ❄ ❅";
 
 position:absolute;
 
+top:-60px;
 
-top:-50px;
+width:150%;
 
+font-size:30px;
 
-width:130%;
+opacity:.5;
 
-
-
-font-size:32px;
-
-
-letter-spacing:45px;
-
-
-
-opacity:.75;
-
-
-
-animation:
-
-snowMove 12s linear infinite;
-
+animation:snowMove 12s linear infinite;
 
 }
 
@@ -328,24 +126,17 @@ snowMove 12s linear infinite;
 
 @keyframes snowMove{
 
-
 from{
 
 transform:translateY(-100px);
 
 }
 
-
 to{
 
-transform:
-
-translateY(110vh)
-
-translateX(70px);
+transform:translateY(110vh);
 
 }
-
 
 }
 
@@ -355,99 +146,90 @@ translateX(70px);
 
 
 
+/* ГИРЛЯНДА */
 
-
-/* ===============================
-HEADER
-=============================== */
-
-
-.header{
-
-
-height:80px;
-
-
-position:relative;
-
-
-z-index:5;
-
-
-}
-
-
-
-
-.user-profile{
-
+.garland{
 
 position:absolute;
 
+top:0;
 
-top:15px;
+width:100%;
 
+height:35px;
 
-left:20px;
+display:flex;
 
+justify-content:space-around;
+
+z-index:10;
 
 }
 
+
+
+.garland span{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+background:gold;
+
+box-shadow:0 0 20px gold;
+
+}
+
+
+
+
+
+
+/* HEADER */
+
+.header{
+
+height:80px;
+
+position:relative;
+
+z-index:20;
+
+}
 
 
 
 .avatar{
 
+position:absolute;
+
+top:15px;
+
+left:20px;
 
 width:55px;
 
-
 height:55px;
-
-
 
 border-radius:50%;
 
-
 overflow:hidden;
-
-
 
 display:flex;
 
+align-items:center;
 
 justify-content:center;
 
-
-align-items:center;
-
-
+background:linear-gradient(135deg,gold,#7020d0);
 
 font-size:25px;
 
-
 font-weight:900;
 
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-gold,
-
-#7b2cff
-
-);
-
-
-
-box-shadow:
-
-0 0 25px gold;
-
+box-shadow:0 0 25px gold;
 
 }
 
@@ -455,15 +237,11 @@ box-shadow:
 
 .avatar img{
 
-
 width:100%;
-
 
 height:100%;
 
-
 object-fit:cover;
-
 
 }
 
@@ -474,34 +252,20 @@ object-fit:cover;
 
 
 
-
-/* ===============================
-CONTENT
-=============================== */
+/* КОНТЕНТ */
 
 
 .content{
 
-
-height:
-
-calc(100vh - 80px);
-
-
+height:calc(100vh - 150px);
 
 overflow-y:auto;
 
-
-
-padding-bottom:110px;
-
-
+padding-bottom:100px;
 
 position:relative;
 
-
-z-index:3;
-
+z-index:20;
 
 }
 
@@ -509,21 +273,17 @@ z-index:3;
 
 .page{
 
-
 display:none;
-
 
 padding:20px;
 
-
 }
+
 
 
 .page.active{
 
-
 display:block;
-
 
 }
 
@@ -533,21 +293,14 @@ display:block;
 
 
 
-
-
-/* ===============================
-БАЛАНС
-=============================== */
+/* БАЛАНС */
 
 
 .balance-box{
 
-
-margin-top:30px;
-
-
 text-align:center;
 
+margin-top:30px;
 
 }
 
@@ -555,100 +308,45 @@ text-align:center;
 
 .balance{
 
-
 display:flex;
-
-
-align-items:center;
-
 
 justify-content:center;
 
-
+align-items:center;
 
 gap:12px;
 
-
-
 font-size:42px;
-
-
 
 font-weight:900;
 
-
 }
 
-
-
-
-
-
-
-/* ЖЕЛТАЯ МОНЕТА U */
 
 
 .coin-balance{
 
+width:45px;
 
-width:42px;
-
-
-height:42px;
-
-
+height:45px;
 
 border-radius:50%;
 
-
-
 display:flex;
 
+align-items:center;
 
 justify-content:center;
 
-
-align-items:center;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#fff36b,
-
-#ffb700
-
-);
-
-
+background:linear-gradient(135deg,#fff27a,#ffae00);
 
 color:white;
 
-
-
-font-size:22px;
-
+font-size:25px;
 
 font-weight:900;
 
-
-
-border:2px solid rgba(255,255,255,.5);
-
-
-
-box-shadow:
-
-
-0 0 25px gold,
-
-
-inset 0 0 10px white;
-
+box-shadow:0 0 25px gold;
 
 }
 
@@ -656,107 +354,49 @@ inset 0 0 10px white;
 
 
 
+.crystals{
 
+margin-top:15px;
 
-/* КРИСТАЛЛЫ */
-
-
-.crystals-box{
-
-
-margin-top:12px;
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-align-items:center;
-
+font-size:24px;
 
 }
 
 
 
-.crystal-count{
+.crystals small{
 
-
-font-size:25px;
-
-
-}
-
-
-
-.crystals-box small{
-
+display:block;
 
 font-size:11px;
 
-
 opacity:.6;
-
 
 }
 
 
 
-
-
-
-
-
-
-/* СИЛА КЛИКА */
 
 
 .click-power{
 
-
 margin-top:15px;
-
-
 
 display:inline-flex;
 
-
-
 align-items:center;
-
-
 
 gap:8px;
 
-
-
-padding:12px 22px;
-
-
+padding:12px 20px;
 
 border-radius:30px;
 
+background:rgba(255,255,255,.12);
 
-
-background:
-
-rgba(255,255,255,.12);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.5);
-
-
+border:1px solid gold;
 
 backdrop-filter:blur(15px);
-
-
-
-font-weight:900;
-
 
 }
 
@@ -764,15 +404,10 @@ font-weight:900;
 
 #heartPower{
 
-
 font-size:26px;
 
-
-
-transition:.4s;
-
-
 }
+
 
 
 
@@ -781,16 +416,9 @@ transition:.4s;
 
 .second-power{
 
-
 margin-top:10px;
 
-
-font-size:13px;
-
-
-
 opacity:.8;
-
 
 }
 
@@ -801,214 +429,110 @@ opacity:.8;
 
 
 
-
-/* ===============================
-ГЛАВНЫЙ КЛИК
-=============================== */
+/* КЛИК */
 
 
 .fire-zone{
 
+height:300px;
 
-position:relative;
-
-
+margin-top:50px;
 
 display:flex;
 
-
 justify-content:center;
-
 
 align-items:center;
 
-
-
-margin-top:65px;
-
+position:relative;
 
 }
-
 
 
 
 .main-coin{
 
+width:240px;
 
-width:250px;
-
-
-height:250px;
-
-
+height:240px;
 
 border-radius:50%;
 
-
-
 border:8px solid gold;
-
-
-
 
 background:
 
-
 radial-gradient(
-
 circle,
-
 #fff59b,
-
 #ffc400,
-
 #7020d0
-
 );
-
-
-
 
 font-size:120px;
 
-
-
 font-weight:900;
-
-
 
 color:white;
 
-
-
-
 box-shadow:
-
-
 
 0 0 50px gold;
 
+position:relative;
 
-
-transition:.15s;
-
+z-index:30;
 
 }
-
 
 
 
 .main-coin:active{
-
-
-transform:scale(.90);
-
-
-}
-
-
-
-
-
-
-
-
-/* ОГОНЬ */
-
-
-.fire-effect{
-
-
-position:absolute;
-
-
-
-font-size:160px;
-
-
-
-opacity:0;
-
-
-
-pointer-events:none;
-
-
-
-transition:.5s;
-
-
-}
-
-
-
-.fire-zone.fire-mode .fire-effect{
-
-
-opacity:1;
-
-
-
-animation:
-
-firePulse .6s infinite alternate;
-
-
-}
-
-
-
-@keyframes firePulse{
-
-
-from{
 
 transform:scale(.9);
 
 }
 
 
-to{
 
-transform:scale(1.15);
+
+
+
+.fire-effect{
+
+position:absolute;
+
+font-size:150px;
+
+opacity:0;
+
+z-index:20;
 
 }
 
 
+
+
+.fire-zone.fire-mode .fire-effect{
+
+opacity:1;
+
 }
 
 
 
 
-
-
-
-
-
-/* ГОД */
 
 
 .year-label{
 
-
 text-align:center;
 
+margin-top:20px;
 
-
-margin-top:30px;
-
-
+opacity:.5;
 
 font-size:13px;
-
-
-
-opacity:.45;
-
-
-
-letter-spacing:2px;
-
 
 }
 
@@ -1018,38 +542,24 @@ letter-spacing:2px;
 
 
 
-
-
-/* ===============================
-ПАНЕЛИ
-=============================== */
+/* ПАНЕЛИ */
 
 
 .panel{
 
-
-background:
-
-rgba(255,255,255,.12);
-
-
+background:rgba(255,255,255,.12);
 
 border-radius:25px;
 
-
-
 padding:20px;
 
+border:1px solid rgba(255,215,0,.4);
 
+backdrop-filter:blur(20px);
 
-border:
+position:relative;
 
-1px solid rgba(255,215,0,.4);
-
-
-
-backdrop-filter:blur(18px);
-
+z-index:30;
 
 }
 
@@ -1057,69 +567,88 @@ backdrop-filter:blur(18px);
 
 
 
-/* ===============================
-КНОПКИ
-=============================== */
+
+/* INPUT */
+
+input{
+
+width:100%;
+
+height:50px;
+
+padding:0 15px;
+
+margin:10px 0;
+
+border-radius:18px;
+
+border:none;
+
+outline:none;
+
+background:rgba(255,255,255,.9);
+
+color:#222;
+
+font-size:16px;
+
+font-weight:700;
+
+}
+
+
+
+
+
+/* КНОПКИ */
 
 
 .gold-button,
 .menu-card{
 
-
 width:100%;
 
+padding:16px;
 
-
-padding:17px;
-
-
-
-margin-bottom:15px;
-
-
+margin:10px 0;
 
 border-radius:22px;
 
-
-
 border:1px solid gold;
-
-
-
 
 background:
 
 linear-gradient(
-
-90deg,
-
-#ffd700,
-
+135deg,
+gold,
 #7b2cff
-
 );
-
-
 
 color:white;
 
-
-
 font-weight:900;
 
-
-
-font-size:17px;
-
-
+font-size:16px;
 
 text-align:center;
 
-
-
 display:block;
 
+text-decoration:none;
 
+position:relative;
+
+z-index:50;
+
+cursor:pointer;
+
+}
+
+
+
+.premium{
+
+box-shadow:0 0 25px gold;
 
 }
 
@@ -1127,121 +656,77 @@ display:block;
 
 
 
+/* УЛУЧШЕНИЯ */
+
+
+.upgrade-card{
+
+background:rgba(255,255,255,.12);
+
+border-radius:20px;
+
+padding:15px;
+
+margin-bottom:15px;
+
+border:1px solid gold;
+
+}
 
 
 
 
-/* ===============================
-НИЖНЕЕ МЕНЮ
-=============================== */
+
+/* НИЖНЕЕ МЕНЮ */
 
 
 .bottom-nav{
 
-
 position:absolute;
-
-
 
 left:10px;
 
-
 right:10px;
-
 
 bottom:10px;
 
+height:70px;
 
+border-radius:40px;
 
-height:75px;
+background:rgba(255,255,255,.15);
 
-
-
-border-radius:45px;
-
-
+backdrop-filter:blur(20px);
 
 display:flex;
 
-
+justify-content:space-around;
 
 align-items:center;
 
+z-index:100;
 
-
-justify-content:space-around;
-
-
-
-background:
-
-
-rgba(255,255,255,.13);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
-backdrop-filter:
-
-blur(20px);
-
-
-
-z-index:50;
-
+border:1px solid rgba(255,215,0,.4);
 
 }
-
-
-
 
 
 
 .nav{
 
-
 height:50px;
 
-
-
-min-width:58px;
-
-
+min-width:55px;
 
 border-radius:30px;
 
-
-
 border:none;
 
-
-
-background:
-
-
-rgba(255,255,255,.08);
-
-
+background:rgba(255,255,255,.1);
 
 color:white;
 
-
-
-font-size:12px;
-
-
-
 font-weight:900;
-
-
-
-transition:.25s;
-
 
 }
 
@@ -1249,36 +734,9 @@ transition:.25s;
 
 .nav.active{
 
+background:linear-gradient(135deg,gold,#7b2cff);
 
-background:
-
-linear-gradient(
-
-135deg,
-
-gold,
-
-#7b2cff
-
-);
-
-
-
-box-shadow:
-
-0 0 25px gold;
-
-
-}
-
-
-
-
-.nav:active{
-
-
-transform:scale(.85);
-
+box-shadow:0 0 20px gold;
 
 }
 
@@ -1287,132 +745,37 @@ transform:scale(.85);
 
 
 
-
-
-
-/* ===============================
-TOP
-=============================== */
+/* ТОП */
 
 
 .top-card{
 
-
 display:flex;
-
 
 align-items:center;
 
-
-gap:12px;
-
-
+gap:15px;
 
 padding:15px;
 
-
-
-margin-bottom:12px;
-
-
-
-border-radius:22px;
-
-
-
-background:
-
-
-rgba(255,255,255,.12);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.4);
-
-
-
-backdrop-filter:blur(15px);
-
-
-}
-
-
-
-
-.top-avatar,
-.top-avatar-img{
-
-
-width:55px;
-
-
-height:55px;
-
-
-
-border-radius:50%;
-
-
-
-object-fit:cover;
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-gold,
-
-purple
-
-);
-
-
-}
-
-
-
-
-
-.top-balance{
-
-
-color:#ffd85c;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-
-
-::-webkit-scrollbar{
-
-
-width:4px;
-
-
-}
-
-
-::-webkit-scrollbar-thumb{
-
-
-background:gold;
-
+margin:10px 0;
 
 border-radius:20px;
 
+background:rgba(255,255,255,.12);
+
+}
+
+
+
+.top-card img{
+
+width:50px;
+
+height:50px;
+
+border-radius:50%;
+
+object-fit:cover;
 
 }
