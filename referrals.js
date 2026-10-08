@@ -2,149 +2,28 @@ const BOT_USERNAME = "uralscoin_bot";
 
 
 
-function loadReferrals(){
 
 
-const box = document.querySelector(".referrals");
+function getUserId(){
 
 
-if(!box) return;
-
-
-
-let userId = "";
+let id =
+localStorage.getItem(
+"user_id"
+);
 
 
 
-if(window.Telegram && Telegram.WebApp){
+if(!id){
 
-
-const tgUser = Telegram.WebApp.initDataUnsafe?.user;
-
-
-if(tgUser){
-
-userId = tgUser.id;
-
-}
+id = "guest";
 
 
 }
 
 
 
-
-
-if(!userId){
-
-
-userId = localStorage.getItem("user_id");
-
-
-}
-
-
-
-
-
-if(!userId){
-
-
-userId = "123456";
-
-
-}
-
-
-
-
-
-const link = 
-`https://t.me/${BOT_USERNAME}?start=${userId}`;
-
-
-
-
-
-
-box.innerHTML = `
-
-
-
-<div class="card">
-
-
-
-<h2>
-
-Рефералы
-
-</h2>
-
-
-
-
-<p>
-
-Приглашено:
-
-<b id="invite-count">
-
-0
-
-</b>
-
-</p>
-
-
-
-
-
-<p>
-
-Награда за человека:
-
-<b>
-
-5000 U
-
-</b>
-
-</p>
-
-
-
-
-
-<input 
-
-value="${link}"
-
-readonly
-
-class="ref-link"
-
->
-
-
-
-
-<button onclick="copyReferral()">
-
-Скопировать ссылку
-
-</button>
-
-
-
-
-</div>
-
-
-
-`;
-
-
+return id;
 
 
 
@@ -154,20 +33,119 @@ class="ref-link"
 
 
 
-function copyReferral(){
 
 
 
-const input = document.querySelector(".ref-link");
+
+function createReferralLink(){
 
 
 
-if(!input) return;
+return `https://t.me/${BOT_USERNAME}?start=${getUserId()}`;
 
+
+
+}
+
+
+
+
+
+
+
+
+
+function loadReferral(){
+
+
+
+const linkInput =
+document.getElementById(
+"refLink"
+);
+
+
+
+const count =
+document.getElementById(
+"refCount"
+);
+
+
+
+
+
+if(linkInput){
+
+
+linkInput.value =
+createReferralLink();
+
+
+}
+
+
+
+
+
+let user =
+Storage.getUser();
+
+
+
+
+
+if(count){
+
+
+count.innerText =
+user.friends || 0;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// КОПИРОВАНИЕ ССЫЛКИ
+
+
+const copyButton =
+document.getElementById(
+"copyRef"
+);
+
+
+
+
+if(copyButton){
+
+
+
+copyButton.onclick = ()=>{
+
+
+let link =
+document.getElementById(
+"refLink"
+);
+
+
+
+if(link){
 
 
 navigator.clipboard.writeText(
-input.value
+link.value
 );
 
 
@@ -182,6 +160,89 @@ alert(
 
 
 
+};
 
 
-loadReferrals();
+
+}
+
+
+
+
+
+
+
+
+
+// проверка входа по рефералу
+
+
+function checkReferral(){
+
+
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+
+const ref =
+params.get(
+"start"
+);
+
+
+
+
+
+if(
+ref &&
+ref !== getUserId()
+){
+
+
+
+let user =
+Storage.getUser();
+
+
+
+
+if(!user.referrer){
+
+
+user.referrer =
+ref;
+
+
+
+Storage.saveUser(
+user
+);
+
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+checkReferral();
+
+
+loadReferral();
