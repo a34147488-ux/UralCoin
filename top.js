@@ -1,5 +1,5 @@
 // ===================================
-// URALcoin TOP v5
+// URALcoin TOP v10
 // Server Leaderboard
 // ===================================
 
@@ -13,6 +13,7 @@ return Number(value || 0)
 .toFixed(3)
 
 .replace(".",",");
+
 
 
 }
@@ -32,9 +33,7 @@ async function loadTop(){
 const list =
 
 document.getElementById(
-
 "topList"
-
 );
 
 
@@ -57,7 +56,9 @@ try{
 
 const response = await fetch(
 
-CONFIG.API_URL + "/top"
+CONFIG.API_URL +
+
+"/top"
 
 );
 
@@ -67,25 +68,8 @@ CONFIG.API_URL + "/top"
 
 
 
-if(!response.ok){
+const players = await response.json();
 
-
-throw new Error(
-"TOP ERROR"
-);
-
-
-}
-
-
-
-
-
-
-
-let players =
-
-await response.json();
 
 
 
@@ -93,8 +77,11 @@ await response.json();
 
 
 if(
+
 !Array.isArray(players)
+
 ||
+
 players.length===0
 
 ){
@@ -126,31 +113,6 @@ return;
 
 
 
-
-players = players
-
-.sort(
-
-(a,b)=>
-
-Number(b.balance || 0)
-
--
-
-Number(a.balance || 0)
-
-)
-
-.slice(0,50);
-
-
-
-
-
-
-
-
-
 list.innerHTML="";
 
 
@@ -166,11 +128,15 @@ players.forEach(
 
 
 
+
+
 const card =
 
 document.createElement(
 "div"
 );
+
+
 
 
 
@@ -183,28 +149,28 @@ card.className =
 
 
 
-let avatar = "";
+let avatarHTML = "";
 
 
 
 
 
 
-if(
-player.photo &&
-player.photo.length > 5
 
-){
+
+if(player.photo){
 
 
 
-avatar = `
+avatarHTML = `
 
 <img
 
 class="top-avatar-img"
 
 src="${player.photo}"
+
+onerror="this.style.display='none'"
 
 >
 
@@ -218,28 +184,19 @@ else{
 
 
 
-const letter =
-
-(
-player.name ||
-"U"
-
-)
-
-.charAt(0)
-
-.toUpperCase();
-
-
-
-
-
-
-avatar = `
+avatarHTML = `
 
 <div class="top-avatar">
 
-${letter}
+${
+
+(player.name || "U")
+
+.charAt(0)
+
+.toUpperCase()
+
+}
 
 </div>
 
@@ -248,7 +205,6 @@ ${letter}
 
 
 }
-
 
 
 
@@ -272,13 +228,16 @@ ${index+1}
 
 
 
-${avatar}
+${avatarHTML}
+
+
 
 
 
 
 
 <div class="top-data">
+
 
 
 <div class="top-name">
@@ -290,13 +249,15 @@ ${player.name || "Игрок"}
 
 
 
+
 <div class="top-balance">
 
 ${formatTopBalance(player.balance)}
 
-U
+ U
 
 </div>
+
 
 
 
@@ -305,9 +266,11 @@ U
 
 Приглашено:
 
-${player.invited || player.friends || 0}
+${player.invited || 0}
 
 </div>
+
+
 
 
 
@@ -346,6 +309,7 @@ catch(error){
 
 
 console.log(
+"TOP ERROR",
 error
 );
 
@@ -375,10 +339,6 @@ list.innerHTML = `
 
 
 
-
-
-
-// запуск
 
 
 loadTop();
