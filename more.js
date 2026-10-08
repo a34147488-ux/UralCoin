@@ -1,69 +1,12 @@
-// UralCoin v2
-// Дополнительные функции
+// ===================================
+// URALcoin MORE v2
+// API + History + Navigation
+// ===================================
 
 
 
 
-
-function openMorePage(page){
-
-
-
-document
-.querySelectorAll(".page")
-.forEach(
-(item)=>{
-
-
-item.classList.remove(
-"active"
-);
-
-
-
-});
-
-
-
-
-
-
-
-const target =
-document.getElementById(
-page
-);
-
-
-
-
-
-if(target){
-
-
-
-target.classList.add(
-"active"
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ПРОМОКОДЫ
-
+// Открытие промокодов
 
 
 const promoButton =
@@ -74,23 +17,25 @@ document.getElementById(
 
 
 
-
-
 if(promoButton){
 
 
+promoButton.addEventListener(
 
-promoButton.onclick = ()=>{
+"click",
+
+()=>{
 
 
 
-openMorePage(
-"promo"
+openPage("promo");
+
+
+
+}
+
+
 );
-
-
-
-};
 
 
 
@@ -103,17 +48,15 @@ openMorePage(
 
 
 
-
-
-
-// ИСТОРИЯ
-
+// История переводов
 
 
 const historyButton =
 
 document.getElementById(
+
 "historyButton"
+
 );
 
 
@@ -123,22 +66,26 @@ document.getElementById(
 if(historyButton){
 
 
+historyButton.addEventListener(
 
-historyButton.onclick = ()=>{
+"click",
+
+()=>{
 
 
 
-openMorePage(
-"history"
+renderHistory();
+
+
+
+openPage("history");
+
+
+
+}
+
+
 );
-
-
-
-showHistory();
-
-
-
-};
 
 
 
@@ -151,14 +98,67 @@ showHistory();
 
 
 
-function showHistory(){
+
+// API кнопка
 
 
-
-const box =
+const apiButton =
 
 document.getElementById(
-"historyList"
+
+"apiButton"
+
+);
+
+
+
+
+
+if(apiButton){
+
+
+
+apiButton.addEventListener(
+
+"click",
+
+()=>{
+
+
+openPage("api");
+
+
+
+loadApi();
+
+
+
+}
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// Получить ключ API
+
+
+const createApi =
+
+document.getElementById(
+
+"createApi"
+
 );
 
 
@@ -166,7 +166,92 @@ document.getElementById(
 
 
 
-if(!box)
+if(createApi){
+
+
+
+createApi.addEventListener(
+
+"click",
+
+()=>{
+
+
+
+const key =
+
+Storage.generateApiKey();
+
+
+
+
+
+
+const result =
+
+document.getElementById(
+
+"apiResult"
+
+);
+
+
+
+
+
+
+if(result){
+
+
+
+result.innerText = key;
+
+
+
+}
+
+
+
+}
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// показать существующий ключ
+
+
+function loadApi(){
+
+
+
+const result =
+
+document.getElementById(
+
+"apiResult"
+
+);
+
+
+
+
+
+
+if(!result)
+
 return;
 
 
@@ -174,7 +259,82 @@ return;
 
 
 
-let history =
+
+const key =
+
+Storage.getApiKey();
+
+
+
+
+
+
+if(key){
+
+
+
+result.innerText = key;
+
+
+
+}
+
+else{
+
+
+
+result.innerText =
+
+"Ключ еще не создан";
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// история
+
+
+function renderHistory(){
+
+
+
+const list =
+
+document.getElementById(
+
+"historyList"
+
+);
+
+
+
+
+
+
+if(!list)
+
+return;
+
+
+
+
+
+
+const history =
 
 Storage.getHistory();
 
@@ -184,15 +344,17 @@ Storage.getHistory();
 
 
 
-
 if(
-history.length === 0
+
+!history ||
+
+history.length===0
 
 ){
 
 
 
-box.innerHTML =
+list.innerHTML =
 
 "Пока операций нет";
 
@@ -211,8 +373,7 @@ return;
 
 
 
-box.innerHTML = "";
-
+list.innerHTML="";
 
 
 
@@ -221,59 +382,45 @@ box.innerHTML = "";
 
 
 history
+
 .slice()
+
 .reverse()
+
 .forEach(
-(item)=>{
+
+item=>{
 
 
 
-let div =
+const div =
 
 document.createElement(
+
 "div"
+
 );
 
 
 
+div.className=
 
-
-div.className =
 "history-item";
 
 
 
 
 
-div.innerHTML = `
 
+div.innerHTML =
 
+`
 
-<b>
-${item.type}
-</b>
-
+${item.text || "Перевод"}
 
 <br>
 
-
-${item.amount} U
-
-
-<br>
-
-
-${item.to || ""}
-
-
-<br>
-
-
-<small>
-${item.date}
-</small>
-
-
+${item.date || ""}
 
 `;
 
@@ -281,9 +428,12 @@ ${item.date}
 
 
 
+list.appendChild(div);
 
-box.appendChild(
-div
+
+
+}
+
 );
 
 
@@ -292,11 +442,42 @@ div
 
 
 
+
+
+
+
+
+
+// переключение страниц
+
+
+function openPage(page){
+
+
+
+document
+
+.querySelectorAll(
+
+".page"
+
+)
+
+.forEach(
+
+item=>{
+
+
+
+item.classList.remove(
+
+"active"
+
 );
 
 
 
-}
+});
 
 
 
@@ -304,16 +485,12 @@ div
 
 
 
-
-
-// API
-
-
-
-const apiButton =
+const target =
 
 document.getElementById(
-"apiButton"
+
+page
+
 );
 
 
@@ -321,21 +498,15 @@ document.getElementById(
 
 
 
-if(apiButton){
+if(target){
 
 
 
-apiButton.onclick = ()=>{
+target.classList.add(
 
+"active"
 
-
-openMorePage(
-"api"
 );
-
-
-
-};
 
 
 
@@ -346,80 +517,29 @@ openMorePage(
 
 
 
+document
+
+.querySelectorAll(
+
+".nav"
+
+)
+
+.forEach(
+
+btn=>{
 
 
-const createApi =
 
-document.getElementById(
-"createApi"
+btn.classList.remove(
+
+"active"
+
 );
 
 
 
-
-
-
-if(createApi){
-
-
-
-createApi.onclick = ()=>{
-
-
-
-let key =
-
-Storage.generateApiKey();
-
-
-
-
-
-
-const box =
-
-document.getElementById(
-"apiResult"
-);
-
-
-
-
-
-
-
-if(box){
-
-
-
-box.innerHTML = `
-
-
-
-Ваш API ключ:
-
-
-<br><br>
-
-
-<b>
-${key}
-</b>
-
-
-
-`;
-
-
-
-}
-
-
-
-
-
-
-};
+});
 
 
 
