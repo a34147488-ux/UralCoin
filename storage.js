@@ -1,7 +1,8 @@
 // ===================================
 // URALcoin STORAGE v10
-// Stable Storage + Upgrades + Referrals
+// Player + Referrals + Upgrades
 // ===================================
+
 
 
 const Storage = {
@@ -11,21 +12,39 @@ const Storage = {
 getPlayer(){
 
 
+
 let player =
+
 JSON.parse(
-localStorage.getItem("ural_player")
+
+localStorage.getItem(
+"ural_player"
+)
+
 );
+
+
+
 
 
 
 if(!player){
 
 
+
 player = {
 
 
 id:
-localStorage.getItem("telegram_id") || "guest",
+
+localStorage.getItem(
+"telegram_id"
+)
+
+||
+
+"guest",
+
 
 
 username:"",
@@ -37,13 +56,20 @@ name:"Игрок",
 photo:"",
 
 
+
+
 balance:0,
+
+
 
 
 clickPower:0.01,
 
 
+
 autoPower:0,
+
+
 
 
 friends:0,
@@ -52,27 +78,128 @@ friends:0,
 invited:0,
 
 
+
 referrer:null,
+
 
 
 workers:[],
 
 
+
+referralRewarded:[],
+
+
+
 history:[],
 
 
+
 usedPromos:[],
+
 
 
 apiKey:null,
 
 
 
-upgrades:{}
+
+
+// улучшения
+
+upgrades:{
+
+
+PURGANIS:{
+
+level:0,
+
+price:100,
+
+power:0.05
+
+},
+
+
+
+PURLES:{
+
+level:0,
+
+price:500,
+
+power:0.10
+
+},
+
+
+
+VLADESTOK:{
+
+level:0,
+
+price:2500,
+
+power:0.50
+
+},
+
+
+
+PURPUR:{
+
+level:0,
+
+price:10000,
+
+power:1
+
+},
+
+
+
+PURUS:{
+
+level:0,
+
+price:25000,
+
+power:3
+
+},
+
+
+
+VLADET:{
+
+level:0,
+
+price:75000,
+
+power:8
+
+},
+
+
+
+VLADIKAZ:{
+
+level:0,
+
+price:200000,
+
+power:20
+
+}
+
+
+
+}
 
 
 
 };
+
 
 
 }
@@ -81,32 +208,36 @@ upgrades:{}
 
 
 
-player.id =
-player.id || "guest";
-
-
-player.name =
-player.name || "Игрок";
+// защита данных
 
 
 player.balance =
 Number(player.balance || 0);
 
 
+
 player.clickPower =
 Number(player.clickPower || 0.01);
+
 
 
 player.autoPower =
 Number(player.autoPower || 0);
 
 
+
+
+
 player.friends =
 Number(player.friends || 0);
 
 
+
 player.invited =
 Number(player.invited || 0);
+
+
+
 
 
 
@@ -125,8 +256,108 @@ player.usedPromos || [];
 
 
 
-player.upgrades =
-player.upgrades || {};
+
+
+
+if(!player.upgrades){
+
+
+
+player.upgrades={};
+
+
+
+}
+
+
+
+
+
+
+
+const defaultUpgrades={
+
+
+PURGANIS:{
+level:0,
+price:100,
+power:0.05
+},
+
+
+PURLES:{
+level:0,
+price:500,
+power:0.10
+},
+
+
+VLADESTOK:{
+level:0,
+price:2500,
+power:0.50
+},
+
+
+PURPUR:{
+level:0,
+price:10000,
+power:1
+},
+
+
+PURUS:{
+level:0,
+price:25000,
+power:3
+},
+
+
+VLADET:{
+level:0,
+price:75000,
+power:8
+},
+
+
+VLADIKAZ:{
+level:0,
+price:200000,
+power:20
+}
+
+
+};
+
+
+
+
+
+
+
+Object.keys(defaultUpgrades)
+
+.forEach(key=>{
+
+
+
+if(!player.upgrades[key]){
+
+
+player.upgrades[key]=
+
+defaultUpgrades[key];
+
+
+}
+
+
+
+});
+
+
+
+
 
 
 
@@ -135,6 +366,7 @@ this.savePlayer(player);
 
 
 return player;
+
 
 
 },
@@ -148,6 +380,7 @@ return player;
 savePlayer(player){
 
 
+
 localStorage.setItem(
 
 "ural_player",
@@ -157,43 +390,63 @@ JSON.stringify(player)
 );
 
 
+
+localStorage.setItem(
+
+"player",
+
+JSON.stringify(player)
+
+);
+
+
+
 },
 
 
 
 
+
+
+
+// ===============================
+// TELEGRAM
+// ===============================
 
 
 
 updateTelegram(data){
 
 
-let player =
-this.getPlayer();
+
+let player=this.getPlayer();
 
 
 
 if(data.id)
-player.id =
-String(data.id);
+
+player.id=String(data.id);
 
 
 
 if(data.username)
-player.username =
-data.username;
+
+player.username=data.username;
 
 
 
 if(data.name)
-player.name =
-data.name;
+
+player.name=data.name;
 
 
 
 if(data.photo)
-player.photo =
-data.photo;
+
+player.photo=data.photo;
+
+
+
 
 
 
@@ -202,72 +455,6 @@ this.savePlayer(player);
 
 
 },
-
-
-
-
-
-
-
-
-
-// ===============================
-// BALANCE
-// ===============================
-
-
-
-addBalance(amount){
-
-
-let player =
-this.getPlayer();
-
-
-player.balance +=
-Number(amount);
-
-
-
-this.savePlayer(player);
-
-
-},
-
-
-
-
-
-
-removeBalance(amount){
-
-
-let player =
-this.getPlayer();
-
-
-
-if(player.balance < amount)
-
-return false;
-
-
-
-player.balance -=
-Number(amount);
-
-
-
-this.savePlayer(player);
-
-
-
-return true;
-
-
-},
-
-
 
 
 
@@ -284,8 +471,8 @@ return true;
 setReferrer(id){
 
 
-let player =
-this.getPlayer();
+
+let player=this.getPlayer();
 
 
 
@@ -295,13 +482,12 @@ return false;
 
 
 
-if(
-String(player.id)
-===
-String(id)
-)
+if(String(id)===String(player.id))
 
 return false;
+
+
+
 
 
 
@@ -317,6 +503,7 @@ this.savePlayer(player);
 return true;
 
 
+
 },
 
 
@@ -325,29 +512,37 @@ return true;
 
 
 
-addFriend(data){
-
-
-let player =
-this.getPlayer();
+addReferral(worker){
 
 
 
-let exists =
+let player=this.getPlayer();
+
+
+
+let exist =
+
 player.workers.find(
 
-w =>
+w=>
+
 String(w.id)
+
 ===
-String(data.id)
+
+String(worker.id)
 
 );
 
 
 
-if(exists)
+
+
+if(exist)
 
 return false;
+
+
 
 
 
@@ -355,16 +550,20 @@ return false;
 player.workers.push({
 
 
-id:String(data.id),
+id:String(worker.id),
 
 
-name:data.name || "Игрок",
+name:worker.name || "Игрок",
 
 
-photo:data.photo || "",
+photo:worker.photo || "",
 
 
-level:1
+
+level:1,
+
+
+joined:Date.now()
 
 
 
@@ -372,9 +571,17 @@ level:1
 
 
 
+
+
+
 player.friends++;
 
+
+
 player.invited++;
+
+
+
 
 
 
@@ -385,6 +592,7 @@ this.savePlayer(player);
 return true;
 
 
+
 },
 
 
@@ -393,51 +601,68 @@ return true;
 
 
 
-giveReferralBonus(id){
+giveReferralBonus(id,amount=5000){
 
 
-let player =
-this.getPlayer();
+
+let player=this.getPlayer();
+
+
 
 
 
 if(
-player.workersBonus &&
-player.workersBonus.includes(String(id))
+
+player.referralRewarded.includes(
+String(id)
+)
+
 )
 
 return false;
 
 
 
-player.balance += 5000;
 
 
 
-if(!player.workersBonus)
+player.balance +=
 
-player.workersBonus=[];
+Number(amount);
 
 
 
-player.workersBonus.push(
+
+
+
+player.referralRewarded.push(
 String(id)
 );
 
 
 
+
+
+
 this.addHistory({
 
-
 text:
-"Бонус за реферала +5000 U",
+
+"Бонус за реферала +"+amount+" U",
 
 
 date:
+
 new Date()
-.toLocaleString()
+
+.toLocaleString(
+"ru-RU"
+)
+
 
 });
+
+
 
 
 
@@ -448,10 +673,8 @@ this.savePlayer(player);
 return true;
 
 
+
 },
-
-
-
 
 
 
@@ -460,124 +683,87 @@ return true;
 
 
 // ===============================
-// UPGRADE SYSTEM
+// UPGRADES
 // ===============================
-
-
-
-getUpgrades(){
-
-
-return {
-
-
-PURGANIS:{
-power:0.01,
-price:100
-},
-
-
-PURLES:{
-power:0.025,
-price:500
-},
-
-
-VLADESTOK:{
-power:0.05,
-price:2500
-},
-
-
-PURPUR:{
-power:0.1,
-price:10000
-},
-
-
-PURUS:{
-power:0.25,
-price:50000
-},
-
-
-VLADET:{
-power:0.5,
-price:150000
-},
-
-
-VLADIKAZ:{
-power:1,
-price:500000
-}
-
-
-};
-
-
-},
-
-
-
-
 
 
 
 buyUpgrade(name){
 
 
-let player =
-this.getPlayer();
 
-
-
-let list =
-this.getUpgrades();
-
-
-
-let upgrade =
-list[name];
-
-
-
-if(!upgrade)
-
-return false;
-
-
-
-let level =
-player.upgrades[name] || 0;
-
-
-
-let price =
-upgrade.price *
-(level+1);
+let player=this.getPlayer();
 
 
 
 
 
-if(player.balance < price)
+let up =
+
+player.upgrades[name];
+
+
+
+
+
+
+
+if(!up)
 
 return false;
 
 
 
-player.balance -= price;
+
+
+
+
+if(player.balance < up.price)
+
+return false;
+
+
+
+
+
+
+
+player.balance -=
+
+up.price;
+
+
+
+
 
 
 
 player.clickPower +=
-upgrade.power;
+
+up.power;
 
 
 
-player.upgrades[name] =
-level+1;
+
+
+
+
+up.level++;
+
+
+
+
+
+
+up.price =
+
+Math.floor(
+up.price * 1.8
+);
+
+
+
+
 
 
 
@@ -585,31 +771,29 @@ this.savePlayer(player);
 
 
 
+
+
 return true;
 
 
-},
-
-
-
-
-
-
-
-getUpgradeLevel(name){
-
-
-let player =
-this.getPlayer();
-
-
-
-return player.upgrades[name] || 0;
-
 
 },
 
 
+
+
+
+
+
+getUpgrades(){
+
+
+
+return this.getPlayer().upgrades;
+
+
+
+},
 
 
 
@@ -622,11 +806,12 @@ return player.upgrades[name] || 0;
 // ===============================
 
 
+
 addHistory(data){
 
 
-let player =
-this.getPlayer();
+
+let player=this.getPlayer();
 
 
 
@@ -637,7 +822,9 @@ player.history.push(data);
 this.savePlayer(player);
 
 
+
 },
+
 
 
 
@@ -647,12 +834,12 @@ this.savePlayer(player);
 getHistory(){
 
 
+
 return this.getPlayer().history;
 
 
+
 },
-
-
 
 
 
@@ -665,27 +852,34 @@ return this.getPlayer().history;
 // ===============================
 
 
+
 generateApiKey(){
+
 
 
 let key =
 
-"URAL-" +
+"URAL-"
+
++
 
 Math.random()
+
 .toString(36)
+
 .substring(2,12)
+
 .toUpperCase();
 
 
 
-let player =
-this.getPlayer();
+
+
+let player=this.getPlayer();
 
 
 
-player.apiKey =
-key;
+player.apiKey=key;
 
 
 
@@ -696,7 +890,9 @@ this.savePlayer(player);
 return key;
 
 
+
 },
+
 
 
 
@@ -706,7 +902,9 @@ return key;
 getApiKey(){
 
 
+
 return this.getPlayer().apiKey || null;
+
 
 
 }
@@ -714,6 +912,7 @@ return this.getPlayer().apiKey || null;
 
 
 };
+
 
 
 
