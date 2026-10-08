@@ -1,111 +1,200 @@
-let transfers = JSON.parse(
-    localStorage.getItem("transfers")
-) || [];
+const sendButton =
+document.getElementById(
+"sendTransfer"
+);
 
 
 
 
-const transferButton = 
-document.querySelector("#transfer button");
+
+
+if(sendButton){
 
 
 
-if(transferButton){
-
-
-transferButton.addEventListener("click",()=>{
-
-
-    const inputs =
-    document.querySelectorAll("#transfer input");
-
-
-    const username = inputs[0].value.trim();
-
-    const amount = Number(inputs[1].value);
+sendButton.onclick = ()=>{
 
 
 
-    let balance =
-    Number(localStorage.getItem("balance")) || 0;
+const receiver =
+document.getElementById(
+"transferUser"
+)
+.value
+.trim();
 
 
 
 
-    if(username === ""){
-
-        alert("Введите получателя");
-        return;
-
-    }
-
-
-
-    if(amount <= 0){
-
-        alert("Введите сумму");
-        return;
-
-    }
-
-
-
-    if(amount > balance){
-
-        alert("Недостаточно U");
-        return;
-
-    }
+const amount =
+Number(
+document.getElementById(
+"transferAmount"
+)
+.value
+);
 
 
 
 
-    balance -= amount;
 
 
-    localStorage.setItem(
-        "balance",
-        balance
-    );
+if(!receiver){
 
 
+alert(
+"Введите Username получателя"
+);
 
-    let transfer = {
 
-        user: username,
+return;
 
-        amount: amount,
 
-        date: new Date()
-        .toLocaleString()
-
-    };
+}
 
 
 
-    transfers.push(transfer);
+
+
+if(!amount || amount <= 0){
+
+
+alert(
+"Введите корректное количество U"
+);
+
+
+return;
+
+
+}
 
 
 
-    localStorage.setItem(
-        "transfers",
-        JSON.stringify(transfers)
-    );
 
 
 
-    alert(
-        "Перевод выполнен"
-    );
+
+
+let user =
+Storage.getUser();
 
 
 
-    inputs[0].value="";
-    inputs[1].value="";
 
+
+
+if(user.balance < amount){
+
+
+alert(
+"Недостаточно U"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+user.balance -= amount;
+
+
+
+
+
+Storage.saveUser(
+user
+);
+
+
+
+
+
+
+Storage.addHistory({
+
+
+type:"send",
+
+
+to:receiver,
+
+
+amount:amount,
+
+
+date:new Date()
+.toLocaleString()
 
 
 });
+
+
+
+
+
+
+
+
+// обновляем главный баланс
+
+
+let balance =
+document.getElementById(
+"balance"
+);
+
+
+
+if(balance){
+
+
+balance.innerText =
+user.balance.toFixed(2);
+
+
+}
+
+
+
+
+
+
+
+alert(
+
+`Переведено ${amount} U пользователю ${receiver}`
+
+);
+
+
+
+
+
+
+document.getElementById(
+"transferUser"
+).value="";
+
+
+
+document.getElementById(
+"transferAmount"
+).value="";
+
+
+
+
+};
+
 
 
 }
