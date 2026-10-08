@@ -3,9 +3,6 @@ let balance = Number(localStorage.getItem("balance")) || 0;
 let clickPower = Number(localStorage.getItem("clickPower")) || 0.01;
 
 
-let level = Number(localStorage.getItem("level")) || 1;
-
-
 
 const coin = document.querySelector(".coin");
 
@@ -20,8 +17,12 @@ const powerText = document.querySelector(".stats span");
 function updateScreen(){
 
 
-    balanceText.innerHTML =
-    balance.toFixed(2) + " U";
+    if(balanceText){
+
+        balanceText.innerHTML =
+        balance.toFixed(2) + " U";
+
+    }
 
 
 
@@ -31,6 +32,7 @@ function updateScreen(){
         "+" + clickPower.toFixed(2) + " U / клик";
 
     }
+
 
 
     localStorage.setItem(
@@ -45,11 +47,6 @@ function updateScreen(){
     );
 
 
-    localStorage.setItem(
-        "level",
-        level
-    );
-
 }
 
 
@@ -57,10 +54,13 @@ function updateScreen(){
 
 
 
-// клик по монете
+// КЛИК ПО КНОПКЕ U
 
 
-coin.addEventListener("click",()=>{
+if(coin){
+
+
+coin.addEventListener("click",function(){
 
 
     balance += clickPower;
@@ -72,81 +72,75 @@ coin.addEventListener("click",()=>{
 });
 
 
+}
 
 
 
 
 
 
-// улучшения
 
 
-const upgradeButtons =
+// УЛУЧШЕНИЯ
+
+
+const upgrades =
 document.querySelectorAll(".upgrade-card button");
 
 
 
-
-upgradeButtons.forEach(button=>{
-
-
-button.addEventListener("click",()=>{
+upgrades.forEach(button=>{
 
 
-
-    let price =
-    Number(button.dataset.price);
+button.onclick=function(){
 
 
+let price =
+Number(button.dataset.price);
 
-    let power =
-    Number(button.dataset.power);
+
+let power =
+Number(button.dataset.power);
 
 
 
 
-    if(balance >= price){
+if(balance >= price){
 
 
 
-        balance -= price;
+balance -= price;
+
+
+clickPower += power;
 
 
 
-        clickPower += power;
+button.innerHTML =
+"Куплено";
+
+
+button.disabled = true;
 
 
 
-        level++;
+updateScreen();
 
 
 
-        button.innerHTML =
-        "Куплено";
+}else{
+
+
+alert(
+"Недостаточно U"
+);
+
+
+}
 
 
 
-        button.disabled=true;
-
-
-
-        updateScreen();
-
-
-
-    }else{
-
-
-        alert(
-        "Недостаточно U"
-        );
-
-
-    }
-
-
-
-});
+};
 
 
 
@@ -159,39 +153,54 @@ button.addEventListener("click",()=>{
 
 
 
-// переключение страниц
+
+// ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
 
 
 function openPage(page,btn){
 
 
 
-document.querySelectorAll(".page")
-.forEach(p=>{
+document
+.querySelectorAll(".page")
+.forEach(item=>{
 
-p.classList.remove("active");
+item.classList.remove("active");
+
+});
+
+
+
+
+let current =
+document.getElementById(page);
+
+
+
+if(current){
+
+current.classList.add("active");
+
+}
+
+
+
+
+document
+.querySelectorAll("nav button")
+.forEach(item=>{
+
+item.classList.remove("active");
 
 });
 
 
 
-document.getElementById(page)
-.classList.add("active");
-
-
-
-
-
-document.querySelectorAll("nav button")
-.forEach(b=>{
-
-b.classList.remove("active");
-
-});
-
-
+if(btn){
 
 btn.classList.add("active");
+
+}
 
 
 
