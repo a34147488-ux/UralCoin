@@ -1,33 +1,54 @@
 <!DOCTYPE html>
+
 <html lang="ru">
+
 
 <head>
 
+
 <meta charset="UTF-8">
+
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
-<title>UralCoin</title>
+<title>URALcoin</title>
+
 
 
 <link rel="stylesheet" href="style.css">
 
 
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 
 
 </head>
 
 
+
+
 <body>
+
 
 
 <div class="app">
 
 
-<!-- зимний декор -->
+
+
+
+
+<div class="city-bg"></div>
+
+
+
+
+
+
+<!-- ГИРЛЯНДА -->
 
 <div class="garland">
 
@@ -41,14 +62,17 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 </div>
 
 
-<div class="snow">
-
-</div>
 
 
 
 
-<div class="city-bg"></div>
+<!-- СНЕГ -->
+
+<div class="snow"></div>
+
+
+
+
 
 
 
@@ -63,13 +87,11 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="avatar">
 
 
-<img id="userAvatar" src="">
+<img id="userAvatar">
 
 
 <span id="avatarLetter">
-
 U
-
 </span>
 
 
@@ -86,7 +108,14 @@ U
 
 
 
+
+
+
 <main class="content">
+
+
+
+
 
 
 
@@ -101,10 +130,9 @@ U
 
 
 <span id="balance">
-
 0,000
-
 </span>
+
 
 
 <div class="coin-small">
@@ -112,6 +140,7 @@ U
 U
 
 </div>
+
 
 
 </div>
@@ -122,8 +151,9 @@ U
 
 <div class="click-power">
 
++
 
-+<span id="clickPower">
+<span id="clickPower">
 
 0,010
 
@@ -144,11 +174,15 @@ U
 
 
 
+
 <button class="main-coin" id="clickButton">
+
 
 U
 
+
 </button>
+
 
 
 
@@ -179,8 +213,12 @@ U
 
 <div class="info-row">
 
+<span>
 
 Приглашено:
+
+</span>
+
 
 <b id="friendsCount">
 
@@ -194,10 +232,16 @@ U
 
 
 
+
+
 <div class="info-row">
 
+<span>
 
 За человека:
+
+</span>
+
 
 <b>
 
@@ -207,6 +251,7 @@ U
 
 
 </div>
+
 
 
 
@@ -263,6 +308,7 @@ placeholder="@username">
 
 
 
+
 <input id="transferSum"
 
 placeholder="Количество U"
@@ -312,6 +358,7 @@ id="transferButton">
 
 
 
+
 <div id="topList">
 
 
@@ -319,8 +366,8 @@ id="transferButton">
 
 
 
-</div>
 
+</div>
 
 
 </section>
@@ -344,7 +391,6 @@ id="transferButton">
 Еще
 
 </h2>
-
 
 
 
@@ -419,11 +465,16 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
+
+
+
+
 <h2>
 
 Улучшения
 
 </h2>
+
 
 
 
@@ -455,8 +506,8 @@ data-value="0.01">
 </button>
 
 
-
 </div>
+
 
 
 
@@ -471,6 +522,7 @@ data-value="0.01">
 Автокликер +1 U/мин
 
 </span>
+
 
 
 
@@ -495,8 +547,9 @@ data-value="1">
 
 
 
-</div>
 
+
+</div>
 
 </section>
 
@@ -523,9 +576,12 @@ data-value="1">
 
 
 
+
 <input id="promoName"
 
 placeholder="Название">
+
+
 
 
 
@@ -534,6 +590,8 @@ placeholder="Название">
 placeholder="Награда U"
 
 type="number">
+
+
 
 
 
@@ -561,7 +619,11 @@ id="createPromo">
 
 
 
+
+
 <hr>
+
+
 
 
 
@@ -584,7 +646,6 @@ id="usePromo">
 
 
 </button>
-
 
 
 
@@ -627,7 +688,6 @@ id="usePromo">
 
 </div>
 
-
 </section>
 
 
@@ -655,7 +715,9 @@ API ключ
 
 <div id="apiResult">
 
+
 Ключ еще не создан
+
 
 </div>
 
@@ -684,6 +746,7 @@ id="createApi">
 
 
 
+
 </main>
 
 
@@ -693,8 +756,8 @@ id="createApi">
 
 
 
-
 <nav class="bottom-nav">
+
 
 
 <button class="nav active"
@@ -773,6 +836,8 @@ data-page="more">
 
 
 
+
+
 </div>
 
 
@@ -781,30 +846,29 @@ data-page="more">
 
 
 
+<!-- СКРИПТЫ -->
+
 
 
 <script src="config.js"></script>
 
 
-<script src="storage.js"></script>
-
-
 <script src="telegram.js"></script>
 
 
-<script src="api.js"></script>
+<script src="storage.js"></script>
 
 
 <script src="app.js"></script>
-
-
-<script src="top.js"></script>
 
 
 <script src="referrals.js"></script>
 
 
 <script src="promo.js"></script>
+
+
+<script src="top.js"></script>
 
 
 <script src="transfer.js"></script>
@@ -817,6 +881,5 @@ data-page="more">
 
 
 </body>
-
 
 </html>
