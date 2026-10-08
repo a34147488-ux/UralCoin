@@ -1,5 +1,5 @@
 // =================================
-// URALcoin UPGRADE v13.2
+// URALcoin UPGRADE v13.3
 // =================================
 
 
@@ -10,7 +10,7 @@ const upgrades = [
 name:"PURGANIS",
 price:5000,
 type:"click",
-value:0.005
+power:0.005
 },
 
 
@@ -18,7 +18,7 @@ value:0.005
 name:"PURLES",
 price:25000,
 type:"click",
-value:0.010
+power:0.010
 },
 
 
@@ -26,7 +26,7 @@ value:0.010
 name:"VLADESTOK",
 price:100000,
 type:"click",
-value:0.020
+power:0.020
 },
 
 
@@ -34,7 +34,7 @@ value:0.020
 name:"PURPUR",
 price:300000,
 type:"auto",
-value:2
+power:1
 },
 
 
@@ -42,7 +42,7 @@ value:2
 name:"PURUS",
 price:750000,
 type:"auto",
-value:5
+power:3
 },
 
 
@@ -50,7 +50,7 @@ value:5
 name:"VLADET",
 price:1500000,
 type:"click",
-value:0.050
+power:0.050
 },
 
 
@@ -58,7 +58,7 @@ value:0.050
 name:"VLADIKAZ",
 price:3000000,
 type:"auto",
-value:15
+power:10
 }
 
 
@@ -72,23 +72,26 @@ value:15
 
 
 
+
 function drawUpgrades(){
 
 
-let box =
-document.getElementById("upgradeList");
+
+let list =
+
+document.getElementById(
+"upgradeList"
+);
 
 
 
-if(!box)
+
+
+if(!list)
 
 return;
 
 
-
-
-
-box.innerHTML="";
 
 
 
@@ -100,21 +103,41 @@ Storage.getPlayer();
 
 
 
+if(!player.upgrades){
 
-upgrades.forEach((u,index)=>{
+player.upgrades=[];
+
+Storage.savePlayer(player);
+
+}
+
+
+
+
+
+list.innerHTML="";
+
+
+
+
+
+
+
+upgrades.forEach((item,index)=>{
 
 
 
 let level =
+
 player.upgrades[index] || 0;
 
 
 
 
 
-let currentPrice =
+let price =
 
-u.price *
+item.price *
 
 (level+1);
 
@@ -123,29 +146,51 @@ u.price *
 
 
 
-box.innerHTML += `
+let div =
+
+document.createElement(
+"div"
+);
 
 
-<div class="upgrade-card">
+
+div.className =
+"upgrade-card";
 
 
-<h3>${u.name}</h3>
+
+
+
+div.innerHTML = `
+
+
+<h3>
+
+${item.name}
+
+</h3>
 
 
 <p>
-Уровень: ${level}
+
+Уровень:
+<b>${level}</b>
+
 </p>
 
 
 <p>
+
 Цена:
-${currentPrice.toLocaleString()} U
-</p>
+<b>${price.toLocaleString()} U</b>
 
+</p>
 
 
 <button 
+
 class="gold-button upgrade-buy"
+
 data-id="${index}">
 
 Купить
@@ -153,11 +198,13 @@ data-id="${index}">
 </button>
 
 
-
-</div>
-
-
 `;
+
+
+
+
+
+list.appendChild(div);
 
 
 
@@ -168,18 +215,27 @@ data-id="${index}">
 
 
 
+
+
+
 document
+
 .querySelectorAll(".upgrade-buy")
-.forEach(btn=>{
+
+.forEach(button=>{
 
 
 
-btn.onclick=function(){
+button.onclick=function(){
 
 
 
 buyUpgrade(
-Number(this.dataset.id)
+
+Number(
+this.dataset.id
+)
+
 );
 
 
@@ -207,12 +263,15 @@ function buyUpgrade(id){
 
 
 let player =
+
 Storage.getPlayer();
 
 
 
 
-let upgrade =
+
+let item =
+
 upgrades[id];
 
 
@@ -220,15 +279,19 @@ upgrades[id];
 
 
 let level =
+
 player.upgrades[id] || 0;
 
 
 
 
 
-
 let price =
-upgrade.price*(level+1);
+
+item.price *
+
+(level+1);
+
 
 
 
@@ -265,7 +328,9 @@ player.balance -= price;
 
 
 
-player.upgrades[id]=level+1;
+player.upgrades[id]=
+
+level+1;
 
 
 
@@ -273,11 +338,17 @@ player.upgrades[id]=level+1;
 
 
 
-if(upgrade.type==="click"){
+if(item.type==="click"){
 
 
 
-player.clickPower += upgrade.value;
+player.clickPower =
+
+Number(player.clickPower)
+
++
+
+Number(item.power);
 
 
 
@@ -288,11 +359,17 @@ player.clickPower += upgrade.value;
 
 
 
-if(upgrade.type==="auto"){
+if(item.type==="auto"){
 
 
 
-player.autoPower += upgrade.value;
+player.autoPower =
+
+Number(player.autoPower)
+
++
+
+Number(item.power);
 
 
 
@@ -311,20 +388,13 @@ Storage.savePlayer(player);
 
 
 
-
 updateScreen();
+
+
 
 drawUpgrades();
 
 
-
-
-
-
-
-alert(
-upgrade.name+" улучшен"
-);
 
 
 
@@ -335,4 +405,6 @@ upgrade.name+" улучшен"
 
 
 
-window.drawUpgrades=drawUpgrades;
+
+
+window.drawUpgrades = drawUpgrades;
