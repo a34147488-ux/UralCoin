@@ -1,39 +1,178 @@
-// ===================================
-// URALcoin PROMO SYSTEM v13.1
-// Personal Code Activation
-// ===================================
+// =================================
+// URALcoin PROMO v13.2
+// PERSONAL INVITE BONUS
+// +5000 U
+// =================================
 
 
 
-const promoButton =
-
-document.getElementById(
-"promoButton"
-);
+function createPromoCode(){
 
 
+let chars =
+"ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 
 
+let result="URAL-";
 
 
 
-async function activatePromo(){
+for(let i=0;i<6;i++){
+
+
+result += chars[
+Math.floor(
+Math.random()*chars.length
+)
+];
+
+
+}
 
 
 
-const input =
+return result;
 
-document.getElementById(
-"promoInput"
-);
 
+}
 
 
 
 
 
-if(!input)
+
+
+
+
+function checkPromo(){
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+if(!player.promoCode){
+
+
+
+player.promoCode =
+createPromoCode();
+
+
+
+Storage.savePlayer(player);
+
+
+
+}
+
+
+
+
+
+
+
+let code =
+document.getElementById("myPromo");
+
+
+
+
+
+if(code){
+
+
+code.value =
+player.promoCode;
+
+
+}
+
+
+
+
+
+
+
+let count =
+document.getElementById("activatedCount");
+
+
+
+if(count){
+
+
+count.innerText =
+player.friends || 0;
+
+
+}
+
+
+
+
+
+
+
+let earned =
+document.getElementById("promoEarn");
+
+
+
+if(earned){
+
+
+earned.innerText =
+(player.earnedFromPromo || 0)
++
+" U";
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// COPY CODE
+// ===============================
+
+
+
+let copy =
+document.getElementById("copyCode");
+
+
+
+if(copy){
+
+
+
+copy.onclick=function(){
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+if(!player.promoCode)
 
 return;
 
@@ -41,8 +180,65 @@ return;
 
 
 
+navigator.clipboard.writeText(
 
-const code =
+player.promoCode
+
+);
+
+
+
+
+
+alert(
+"Ваш код скопирован"
+);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// ACTIVATE CODE
+// ===============================
+
+
+
+let activate =
+document.getElementById("activatePromo");
+
+
+
+
+
+if(activate){
+
+
+
+activate.onclick=function(){
+
+
+
+let input =
+document.getElementById("promoInput");
+
+
+
+
+
+let code =
 
 input.value
 
@@ -55,21 +251,15 @@ input.value
 
 
 
-
 if(!code){
 
 
-
 alert(
-
 "Введите код"
-
 );
 
 
-
 return;
-
 
 
 }
@@ -81,7 +271,6 @@ return;
 
 
 let player =
-
 Storage.getPlayer();
 
 
@@ -91,133 +280,43 @@ Storage.getPlayer();
 
 
 
-try{
-
-
-
-const response = await fetch(
-
-CONFIG.API_URL +
-
-"/promo/activate",
-
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-
-
-userId:player.id,
-
-
-
-code:code
-
-
-
-})
-
-
-}
-
-);
-
-
-
-
-
-
-
-const data = await response.json();
-
-
-
-
-
-
-
-
-
-if(!data.success){
-
-
-
-if(data.error==="SELF"){
-
+if(code===player.promoCode){
 
 
 alert(
-
 "Нельзя активировать свой код"
-
 );
 
+
+return;
 
 
 }
 
 
 
-else if(data.error==="USED"){
+
+
+
+
+if(!player.usedPromos)
+
+player.usedPromos=[];
+
+
+
+
+
+
+
+
+if(player.usedPromos.includes(code)){
 
 
 
 alert(
-
 "Этот код уже использован"
-
 );
-
-
-
-}
-
-
-
-else if(data.error==="NOT_FOUND"){
-
-
-
-alert(
-
-"Такого кода нет"
-
-);
-
-
-
-}
-
-
-
-else{
-
-
-
-alert(
-
-"Ошибка активации"
-
-);
-
-
-
-}
 
 
 
@@ -234,14 +333,12 @@ return;
 
 
 
+// ищем владельца кода
 
-// добавляем награду локально
+let owner =
 
-
-player.activatedCodes.push(
-
-code
-
+localStorage.getItem(
+"promo_"+code
 );
 
 
@@ -250,15 +347,33 @@ code
 
 
 
-player.balance +=
+if(!owner){
 
-Number(
 
-data.reward || 5000
 
+alert(
+"Код не найден"
 );
 
 
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+// сохраняем использование
+
+
+player.usedPromos.push(code);
 
 
 
@@ -274,43 +389,52 @@ Storage.savePlayer(player);
 
 
 
-Storage.addHistory({
+// бонус игроку с кодом
 
 
+let ownerData =
 
-type:"Промокод",
-
-
-
-amount:data.reward || 5000,
-
-
-
-date:new Date()
-
-.toLocaleString("ru-RU")
-
-
-
-});
+JSON.parse(owner);
 
 
 
 
 
 
+ownerData.balance += 5000;
+
+
+ownerData.friends =
+(ownerData.friends || 0)+1;
+
+
+ownerData.earnedFromPromo =
+(ownerData.earnedFromPromo || 0)+5000;
 
 
 
-if(typeof updateScreen==="function"){
 
 
 
-updateScreen();
+
+localStorage.setItem(
+
+"promo_"+code,
+
+JSON.stringify(ownerData)
+
+);
 
 
 
-}
+
+
+
+
+
+alert(
+"Код активирован\nВладелец получил +5000 U"
+);
 
 
 
@@ -322,56 +446,75 @@ input.value="";
 
 
 
+updateScreen();
+
+
+
+};
+
+
+
+}
 
 
 
 
 
-alert(
 
-"Код активирован\n+"
 
-+
 
-(data.reward || 5000)
 
-+
+// ===============================
+// REGISTER CODE
+// ===============================
 
-" U"
+
+
+function registerPromo(){
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+
+if(!player.promoCode){
+
+
+
+player.promoCode =
+createPromoCode();
+
+
+
+}
+
+
+
+
+
+
+
+
+localStorage.setItem(
+
+"promo_"+player.promoCode,
+
+JSON.stringify(player)
 
 );
 
 
 
-}
-
-catch(error){
-
-
-
-console.log(
-
-"PROMO ERROR",
-
-error
-
-);
 
 
 
 
-
-
-alert(
-
-"Сервер недоступен"
-
-);
-
-
-
-}
-
+Storage.savePlayer(player);
 
 
 
@@ -384,26 +527,6 @@ alert(
 
 
 
-if(promoButton){
+registerPromo();
 
-
-
-promoButton.onclick =
-
-activatePromo;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-window.activatePromo =
-
-activatePromo;
+checkPromo();
