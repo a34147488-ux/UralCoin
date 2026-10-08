@@ -1,45 +1,7 @@
 // ===================================
-// URALcoin REFERRAL SYSTEM v12
-// Telegram Invite + Bonus
+// URALcoin REFERRAL v13
+// Personal Promo Code
 // ===================================
-
-
-
-function getReferralLink(){
-
-
-let player = Storage.getPlayer();
-
-
-
-if(!player.id)
-
-return "";
-
-
-
-
-
-
-return (
-
-"https://t.me/" +
-
-BOT_USERNAME +
-
-"?start=" +
-
-player.id
-
-);
-
-
-
-}
-
-
-
-
 
 
 
@@ -49,191 +11,34 @@ function updateReferral(){
 
 
 
-const input =
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+
+const code =
 
 document.getElementById(
-"refLink"
+
+"personalCode"
+
 );
 
 
 
 
 
-const count =
+
+const friends =
 
 document.getElementById(
-"friendsCount"
-);
 
-
-
-
-
-
-let player =
-
-Storage.getPlayer();
-
-
-
-
-
-
-if(input){
-
-
-
-input.value =
-
-getReferralLink();
-
-
-
-}
-
-
-
-
-
-
-
-if(count){
-
-
-
-count.innerText =
-
-player.invited ||
-
-player.friends ||
-
-0;
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-async function sendReferral(referrerId){
-
-
-
-let player =
-
-Storage.getPlayer();
-
-
-
-
-
-
-
-try{
-
-
-
-await fetch(
-
-CONFIG.API_URL + "/referral",
-
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-
-
-userId:player.id,
-
-
-referrerId:String(referrerId),
-
-
-name:player.name,
-
-
-photo:player.photo
-
-
-
-})
-
-
-
-}
-
-);
-
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-
-console.log(
-
-"REFERRAL ERROR",
-
-error
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function checkTelegramStart(){
-
-
-
-const params =
-
-new URLSearchParams(
-
-window.location.search
+"promoFriends"
 
 );
 
@@ -242,22 +47,13 @@ window.location.search
 
 
 
-const start =
+const earned =
 
-params.get("tgWebAppStartParam")
+document.getElementById(
 
-||
+"promoEarned"
 
-params.get("start");
-
-
-
-
-
-
-if(!start)
-
-return;
+);
 
 
 
@@ -265,72 +61,62 @@ return;
 
 
 
-
-let player =
-
-Storage.getPlayer();
+if(code){
 
 
 
+code.value =
+
+player.promoCode ||
+
+"Создание...";
+
+
+
+}
 
 
 
 
-if(
 
-String(start)===String(player.id)
+
+
+if(friends){
+
+
+
+friends.innerText =
+
+player.friends || 0;
+
+
+
+}
+
+
+
+
+
+
+
+if(earned){
+
+
+
+earned.innerText =
+
+
+(
+
+player.earnedFromPromo ||
+
+0
 
 )
 
-return;
++
 
-
-
-
-
-
-
-
-if(
-
-player.referrer
-
-)
-
-return;
-
-
-
-
-
-
-
-
-player.referrer =
-
-String(start);
-
-
-
-
-
-
-
-
-Storage.savePlayer(
-player
-);
-
-
-
-
-
-
-
-sendReferral(start);
-
-
-
+" U";
 
 
 
@@ -338,6 +124,7 @@ sendReferral(start);
 
 
 
+}
 
 
 
@@ -348,16 +135,18 @@ sendReferral(start);
 
 
 // ===============================
-// COPY BUTTON
+// COPY CODE
 // ===============================
+
 
 
 const copyReferral =
 
 document.getElementById(
-"copyReferral"
-);
 
+"copyReferral"
+
+);
 
 
 
@@ -368,15 +157,23 @@ if(copyReferral){
 
 
 
-copyReferral.onclick=
-
-()=>{
+copyReferral.onclick=()=>{
 
 
 
-const link =
+let player =
 
-getReferralLink();
+Storage.getPlayer();
+
+
+
+
+
+
+if(!player.promoCode)
+
+return;
+
 
 
 
@@ -384,8 +181,11 @@ getReferralLink();
 
 
 navigator.clipboard.writeText(
-link
+
+player.promoCode
+
 );
+
 
 
 
@@ -393,7 +193,7 @@ link
 
 alert(
 
-"Ссылка скопирована"
+"Код скопирован"
 
 );
 
@@ -413,6 +213,11 @@ alert(
 
 
 
+
+
+// обновление
+
+
 document.addEventListener(
 
 "DOMContentLoaded",
@@ -425,8 +230,19 @@ updateReferral();
 
 
 
-checkTelegramStart();
-
-
-
 });
+
+
+
+
+
+
+
+
+
+// при обновлении экрана
+
+
+window.updateReferral =
+
+updateReferral;
