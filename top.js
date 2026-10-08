@@ -1,7 +1,6 @@
-
 // ===================================
 // URALcoin TOP v10
-// Server Leaderboard + Avatars
+// Telegram Leaderboard
 // ===================================
 
 
@@ -32,9 +31,12 @@ async function loadTop(){
 
 
 const list =
+
 document.getElementById(
 "topList"
 );
+
+
 
 
 
@@ -67,11 +69,17 @@ CONFIG.API_URL +
 
 
 
-if(!response.ok)
+
+if(!response.ok){
+
 
 throw new Error(
 "TOP ERROR"
 );
+
+
+}
+
 
 
 
@@ -79,6 +87,7 @@ throw new Error(
 
 
 let players =
+
 await response.json();
 
 
@@ -87,10 +96,15 @@ await response.json();
 
 
 
+
 if(
+
 !Array.isArray(players)
+
 ||
+
 players.length===0
+
 ){
 
 
@@ -112,7 +126,9 @@ list.innerHTML =
 return;
 
 
+
 }
+
 
 
 
@@ -143,7 +159,10 @@ Number(a.balance || 0)
 
 
 
+
+
 list.innerHTML = "";
+
 
 
 
@@ -160,6 +179,7 @@ players.forEach(
 
 
 let card =
+
 document.createElement(
 "div"
 );
@@ -174,7 +194,15 @@ card.className =
 
 
 
-let avatar;
+
+
+let avatarHTML;
+
+
+
+
+
+
 
 
 
@@ -182,7 +210,7 @@ if(player.photo){
 
 
 
-avatar =
+avatarHTML =
 
 `
 
@@ -192,8 +220,9 @@ class="top-avatar-img"
 
 src="${player.photo}"
 
->
+onerror="this.style.display='none'"
 
+>
 
 `;
 
@@ -205,25 +234,23 @@ else{
 
 
 
-avatar =
+avatarHTML =
 
 `
 
 <div class="top-avatar">
-
 
 ${
 
 (player.name || "U")
 
 .charAt(0)
+
 .toUpperCase()
 
 }
 
-
 </div>
-
 
 `;
 
@@ -241,8 +268,6 @@ ${
 
 card.innerHTML =
 
-
-
 `
 
 <div class="top-position">
@@ -253,7 +278,11 @@ ${index+1}
 
 
 
-${avatar}
+
+
+${avatarHTML}
+
+
 
 
 
@@ -266,6 +295,7 @@ ${avatar}
 ${player.name || "Игрок"}
 
 </div>
+
 
 
 
@@ -305,6 +335,26 @@ ${player.invited || player.friends || 0}
 
 
 
+
+// профиль игрока по нажатию
+
+
+card.onclick = ()=>{
+
+
+showPlayerProfile(player);
+
+
+
+};
+
+
+
+
+
+
+
+
 list.appendChild(card);
 
 
@@ -314,11 +364,10 @@ list.appendChild(card);
 
 
 
-
-
-
-
 );
+
+
+
 
 
 
@@ -340,7 +389,7 @@ list.innerHTML =
 
 <div class="top-empty">
 
-Ошибка загрузки
+Ошибка загрузки топа
 
 </div>
 
@@ -362,7 +411,181 @@ list.innerHTML =
 
 
 
+// ===============================
+// PLAYER PROFILE
+// ===============================
+
+
+function showPlayerProfile(player){
+
+
+
+let old =
+
+document.getElementById(
+"playerProfilePopup"
+);
+
+
+
+if(old)
+
+old.remove();
+
+
+
+
+
+
+let popup =
+
+document.createElement(
+"div"
+);
+
+
+
+popup.id =
+"playerProfilePopup";
+
+
+
+popup.className =
+"profile-popup";
+
+
+
+
+
+
+
+
+popup.innerHTML =
+
+`
+
+<div class="panel">
+
+
+
+<div class="avatar big">
+
+
+
+${
+player.photo ?
+
+`
+
+<img src="${player.photo}">
+
+`
+
+:
+
+(player.name || "U")
+
+.charAt(0)
+
+}
+
+
+
+</div>
+
+
+
+
+
+<h2>
+
+${player.name || "Игрок"}
+
+</h2>
+
+
+
+
+
+<p>
+
+Баланс:
+
+${formatTopBalance(player.balance)}
+
+ U
+
+</p>
+
+
+
+
+<p>
+
+Приглашено:
+
+${player.invited || 0}
+
+</p>
+
+
+
+
+
+<button class="gold-button">
+
+Закрыть
+
+</button>
+
+
+
+
+</div>
+
+`;
+
+
+
+
+
+
+
+document.body.appendChild(
+popup
+);
+
+
+
+
+
+
+popup.querySelector(
+"button"
+).onclick = ()=>{
+
+
+popup.remove();
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
 loadTop();
+
+
+
 
 
 
