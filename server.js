@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin SERVER v7
-// Users + Balance Sync + Top + Referrals
+// URALcoin SERVER v8
+// Users + Balance + Top + Referrals
 // ===================================
 
 
@@ -13,14 +13,13 @@ const fs = require("fs");
 const app = express();
 
 
-
 app.use(cors());
 
 app.use(express.json());
 
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 const DB = "users.json";
@@ -32,9 +31,10 @@ let users = [];
 
 
 
-// ===================================
+
+// ===============================
 // DATABASE
-// ===================================
+// ===============================
 
 
 function loadUsers(){
@@ -61,11 +61,10 @@ DB,
 catch(e){
 
 
-users = [];
+users=[];
 
 
 }
-
 
 
 }
@@ -87,20 +86,15 @@ fs.writeFileSync(
 DB,
 
 JSON.stringify(
-
 users,
-
 null,
-
 2
-
 )
 
 );
 
 
 }
-
 
 
 
@@ -116,16 +110,15 @@ loadUsers();
 
 
 
-// ===================================
-// CREATE / UPDATE USER
-// ===================================
-
+// ===============================
+// CREATE USER
+// ===============================
 
 
 app.post("/user",(req,res)=>{
 
 
-const data = req.body;
+const data=req.body;
 
 
 
@@ -146,19 +139,11 @@ error:"no id"
 
 
 
-
 let user = users.find(
 
-u =>
-
-String(u.id)
-
-===
-
-String(data.id)
+u=>String(u.id)===String(data.id)
 
 );
-
 
 
 
@@ -170,25 +155,16 @@ if(!user){
 
 
 
-user = {
+user={
 
 
 id:String(data.id),
 
 
-name:
-
-data.name ||
-
-"Игрок",
+name:data.name || "Игрок",
 
 
-photo:
-
-data.photo ||
-
-"",
-
+photo:data.photo || "",
 
 
 balance:0,
@@ -206,16 +182,10 @@ clickPower:0.01,
 autoPower:0,
 
 
-referrer:
-
-data.referrer ||
-
-null,
+referrer:null,
 
 
-created:
-
-Date.now()
+created:Date.now()
 
 
 
@@ -232,7 +202,6 @@ users.push(user);
 else{
 
 
-
 if(data.name)
 
 user.name=data.name;
@@ -245,22 +214,11 @@ user.photo=data.photo;
 
 
 
-if(data.referrer)
-
-user.referrer=data.referrer;
-
-
-
 }
 
 
 
-
-
-
 saveUsers();
-
-
 
 
 
@@ -278,35 +236,23 @@ res.json(user);
 
 
 
-// ===================================
+// ===============================
 // GET USER
-// ===================================
-
+// ===============================
 
 
 app.get("/user/:id",(req,res)=>{
 
 
-
 const user = users.find(
 
-u =>
-
-String(u.id)
-
-===
-
-String(req.params.id)
+u=>String(u.id)===String(req.params.id)
 
 );
 
 
 
-res.json(
-
-user || null
-
-);
+res.json(user || null);
 
 
 
@@ -320,111 +266,29 @@ user || null
 
 
 
-// ===================================
+// ===============================
 // SYNC BALANCE
-// ===================================
-
+// ===============================
 
 
 app.post("/sync",(req,res)=>{
 
 
-
-const id = req.body.id;
-
-
-
-const balance = Number(
-
-req.body.balance || 0
-
-);
-
-
-
-
-
-let user = users.find(
-
-u =>
-
-String(u.id)
-
-===
-
-String(id)
-
-);
-
-
-
-
-
-
-if(user){
-
-
-
-user.balance = balance;
-
-
-
-saveUsers();
-
-
-
-}
-
-
-
-
-res.json({
-
-success:true,
-
-user:user || null
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===================================
-// OLD BALANCE ROUTE
-// ===================================
-
-
-
-app.post("/balance",(req,res)=>{
-
-
 const id=req.body.id;
+
 
 
 const balance=
 
-Number(req.body.balance);
+Number(req.body.balance || 0);
 
 
 
-const user=users.find(
 
-u=>
 
-String(u.id)
+const user = users.find(
 
-===
-
-String(id)
+u=>String(u.id)===String(id)
 
 );
 
@@ -433,12 +297,14 @@ String(id)
 
 
 if(user){
+
 
 
 user.balance=balance;
 
 
 saveUsers();
+
 
 
 }
@@ -462,10 +328,9 @@ success:true
 
 
 
-// ===================================
-// TOP PLAYERS
-// ===================================
-
+// ===============================
+// TOP
+// ===============================
 
 
 app.get("/top",(req,res)=>{
@@ -480,19 +345,16 @@ const top =
 
 (a,b)=>
 
-Number(b.balance || 0)
+Number(b.balance||0)
 
 -
 
-Number(a.balance || 0)
+Number(a.balance||0)
 
 )
 
 
-
 .slice(0,50);
-
-
 
 
 
@@ -511,10 +373,9 @@ res.json(top);
 
 
 
-// ===================================
-// REFERRAL ADD
-// ===================================
-
+// ===============================
+// REFERRALS
+// ===============================
 
 
 app.post("/referral",(req,res)=>{
@@ -525,7 +386,9 @@ const {
 
 userId,
 
-referrerId
+referrerId,
+
+name
 
 }=req.body;
 
@@ -533,15 +396,9 @@ referrerId
 
 
 
-const user = users.find(
+let user = users.find(
 
-u =>
-
-String(u.id)
-
-===
-
-String(userId)
+u=>String(u.id)===String(userId)
 
 );
 
@@ -549,17 +406,69 @@ String(userId)
 
 
 
-const referrer = users.find(
 
-u =>
+let referrer = users.find(
 
-String(u.id)
-
-===
-
-String(referrerId)
+u=>String(u.id)===String(referrerId)
 
 );
+
+
+
+
+
+
+// создаём нового игрока
+
+if(!user){
+
+
+
+user={
+
+
+id:String(userId),
+
+
+name:name || "Игрок",
+
+
+photo:"",
+
+
+balance:0,
+
+
+friends:0,
+
+
+invited:0,
+
+
+clickPower:0.01,
+
+
+autoPower:0,
+
+
+referrer:null,
+
+
+created:Date.now()
+
+
+
+};
+
+
+
+users.push(user);
+
+
+
+}
+
+
 
 
 
@@ -568,29 +477,49 @@ String(referrerId)
 
 if(
 
-user &&
 
 referrer &&
 
+
 !user.referrer &&
 
-user.id !== referrer.id
+
+String(user.id)!==String(referrer.id)
 
 ){
 
 
 
-user.referrer = referrer.id;
+user.referrer =
+String(referrer.id);
 
 
 
-referrer.friends += 1;
 
 
-referrer.invited += 1;
+referrer.friends =
+
+Number(referrer.friends||0)+1;
 
 
-referrer.balance += 5000;
+
+
+
+referrer.invited =
+
+Number(referrer.invited||0)+1;
+
+
+
+
+
+
+referrer.balance =
+
+Number(referrer.balance||0)+5000;
+
+
+
 
 
 
@@ -605,7 +534,9 @@ saveUsers();
 
 res.json({
 
-success:true
+success:true,
+
+user:user
 
 });
 
@@ -621,9 +552,9 @@ success:true
 
 
 
-// ===================================
-// SERVER STATUS
-// ===================================
+// ===============================
+// STATUS
+// ===============================
 
 
 app.get("/",(req,res)=>{
@@ -631,7 +562,7 @@ app.get("/",(req,res)=>{
 
 res.send(
 
-"URALcoin server v7 online"
+"URALcoin server v8 online"
 
 );
 
@@ -651,7 +582,7 @@ app.listen(PORT,()=>{
 
 console.log(
 
-"URALcoin server v7 started"
+"URALcoin server started on "+PORT
 
 );
 
