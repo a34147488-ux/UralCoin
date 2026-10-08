@@ -1,0 +1,394 @@
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+
+body{
+
+    margin:0;
+    background:#ffffff;
+    color:#111;
+}
+
+
+.app{
+
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    position:relative;
+    background:white;
+
+}
+
+
+
+/* страницы */
+
+.page{
+
+    display:none;
+    height:calc(100vh - 90px);
+    padding:25px;
+
+}
+
+
+.page.active{
+
+    display:block;
+
+}
+
+
+
+
+
+/* верх */
+
+.top{
+
+    text-align:center;
+
+}
+
+
+.top h1{
+
+    font-size:34px;
+    margin:10px 0;
+
+}
+
+
+
+.balance{
+
+    font-size:55px;
+    font-weight:800;
+    margin-top:20px;
+
+}
+
+
+
+.stats{
+
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    margin-top:15px;
+
+}
+
+
+.stats span{
+
+    color:#e7aa00;
+    font-size:18px;
+    font-weight:700;
+
+}
+
+
+
+
+/* кнопка U */
+
+.coin{
+
+    width:280px;
+    height:280px;
+
+    margin:70px auto 30px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle at 30% 25%,
+    #fff59b,
+    #ffd21c 45%,
+    #e7a600);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+
+    box-shadow:
+    0 15px 35px rgba(230,170,0,.35),
+    inset 0 0 25px white;
+
+
+    cursor:pointer;
+
+    transition:.15s;
+
+}
+
+
+.coin:active{
+
+    transform:scale(.94);
+
+}
+
+
+
+.u{
+
+    font-size:170px;
+    font-weight:900;
+
+    color:white;
+
+    text-shadow:
+    5px 5px 0 #d89a00;
+
+}
+
+
+
+
+
+
+/* карточки */
+
+
+.card{
+
+    background:#f7f7f7;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    margin-top:25px;
+
+}
+
+
+.card p{
+
+    font-size:20px;
+
+}
+
+
+
+button{
+
+    border:0;
+
+    background:#ffc400;
+
+    padding:15px 25px;
+
+    border-radius:18px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+
+
+
+.upgrade h2{
+
+    margin-top:20px;
+
+}
+
+
+
+.upgrade-card{
+
+    background:#f7f7f7;
+
+    border-radius:22px;
+
+    padding:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+.upgrade-card h3{
+
+    margin:0;
+
+}
+
+
+
+
+/* поля */
+
+
+input{
+
+    width:100%;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    border-radius:15px;
+
+    border:1px solid #ddd;
+
+    font-size:18px;
+
+}
+
+
+
+
+
+
+
+/* игроки */
+
+
+.player{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    background:#f7f7f7;
+
+    padding:20px;
+
+    border-radius:20px;
+
+}
+
+
+
+.avatar{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    background:#ffd000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:35px;
+
+    font-weight:800;
+
+}
+
+
+
+
+
+/* ссылки */
+
+
+.menu-more{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+
+
+.menu-more a{
+
+    text-decoration:none;
+
+    color:#111;
+
+    background:#ffc400;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    font-weight:700;
+
+}
+
+
+
+
+
+
+
+/* нижнее меню */
+
+
+nav{
+
+    position:absolute;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:90px;
+
+    background:white;
+
+    border-top:1px solid #eee;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+}
+
+
+
+nav button{
+
+    background:none;
+
+    padding:10px;
+
+    font-size:15px;
+
+    color:#777;
+
+}
+
+
+
+nav button.active{
+
+    color:#e5a900;
+
+    font-weight:800;
+
+}
