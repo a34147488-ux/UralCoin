@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin STORAGE v6
-// Stable Player Storage
+// URALcoin STORAGE v7
+// Referral + Workers + Stable Player
 // ===================================
 
 
@@ -11,25 +11,18 @@ getPlayer(){
 
 
 let player = JSON.parse(
-
 localStorage.getItem("ural_player")
-
 );
 
 
 
 if(!player){
 
-
 player = JSON.parse(
-
 localStorage.getItem("player")
-
 );
 
-
 }
-
 
 
 
@@ -43,12 +36,13 @@ id:
 localStorage.getItem("telegram_id") || "guest",
 
 
-name:
-"Игрок",
+username:"",
 
 
-photo:
-"",
+name:"Игрок",
+
+
+photo:"",
 
 
 balance:0,
@@ -69,6 +63,12 @@ invited:0,
 referrer:null,
 
 
+workers:[],
+
+
+referralRewarded:[],
+
+
 history:[],
 
 
@@ -78,12 +78,11 @@ usedPromos:[],
 apiKey:null
 
 
+
 };
 
 
-
 }
-
 
 
 
@@ -115,6 +114,14 @@ player.invited =
 Number(player.invited || 0);
 
 
+player.workers =
+player.workers || [];
+
+
+player.referralRewarded =
+player.referralRewarded || [];
+
+
 player.history =
 player.history || [];
 
@@ -125,7 +132,6 @@ player.usedPromos || [];
 
 
 this.savePlayer(player);
-
 
 
 return player;
@@ -142,7 +148,6 @@ return player;
 savePlayer(player){
 
 
-
 localStorage.setItem(
 
 "ural_player",
@@ -150,7 +155,6 @@ localStorage.setItem(
 JSON.stringify(player)
 
 );
-
 
 
 localStorage.setItem(
@@ -162,7 +166,6 @@ JSON.stringify(player)
 );
 
 
-
 },
 
 
@@ -171,23 +174,36 @@ JSON.stringify(player)
 
 
 
-setReferrer(id){
+// ===============================
+// TELEGRAM PROFILE
+// ===============================
+
+
+updateTelegramProfile(data){
 
 
 let player=this.getPlayer();
 
 
 
-if(
-player.referrer
-)
+if(data.id)
 
-return;
+player.id=String(data.id);
 
 
+if(data.username)
 
-player.referrer =
-String(id);
+player.username=data.username;
+
+
+if(data.first_name)
+
+player.name=data.first_name;
+
+
+if(data.photo_url)
+
+player.photo=data.photo_url;
 
 
 
@@ -201,6 +217,288 @@ this.savePlayer(player);
 
 
 
+
+
+// ===============================
+// REFERRAL SYSTEM
+// ===============================
+
+
+setReferrer(id){
+
+
+let player=this.getPlayer();
+
+
+
+if(player.referrer)
+
+return false;
+
+
+
+if(String(id)===String(player.id))
+
+return false;
+
+
+
+player.referrer=String(id);
+
+
+
+this.savePlayer(player);
+
+
+
+return true;
+
+
+
+},
+
+
+
+
+
+
+
+addReferral(worker){
+
+
+let player=this.getPlayer();
+
+
+
+let exists = player.workers.find(
+
+w=>String(w.id)===String(worker.id)
+
+);
+
+
+
+if(exists)
+
+return false;
+
+
+
+player.workers.push({
+
+
+id:String(worker.id),
+
+
+name:worker.name || "Игрок",
+
+
+photo:worker.photo || "",
+
+
+level:1,
+
+
+earned:0,
+
+
+joined:Date.now()
+
+
+
+});
+
+
+
+player.friends++;
+
+
+player.invited++;
+
+
+
+this.savePlayer(player);
+
+
+
+return true;
+
+
+
+},
+
+
+
+
+
+
+
+giveReferralBonus(workerId, amount=5000){
+
+
+let player=this.getPlayer();
+
+
+
+if(
+player.referralRewarded.includes(
+String(workerId)
+)
+
+)
+
+return false;
+
+
+
+player.balance += Number(amount);
+
+
+
+player.referralRewarded.push(
+String(workerId)
+);
+
+
+
+this.addHistory({
+
+type:"referral",
+
+
+amount:amount,
+
+
+date:new Date().toLocaleString()
+
+
+
+});
+
+
+
+this.savePlayer(player);
+
+
+
+return true;
+
+
+
+},
+
+
+
+
+
+
+
+getWorkers(){
+
+
+return this.getPlayer().workers;
+
+
+},
+
+
+
+
+
+
+
+upgradeWorker(id){
+
+
+let player=this.getPlayer();
+
+
+
+let worker =
+player.workers.find(
+
+w=>String(w.id)===String(id)
+
+);
+
+
+
+if(!worker)
+
+return false;
+
+
+
+if(worker.level>=50)
+
+return false;
+
+
+
+worker.level++;
+
+
+
+this.savePlayer(player);
+
+
+
+return worker;
+
+
+
+},
+
+
+
+
+
+
+
+getReferralCount(){
+
+
+return this.getPlayer().workers.length;
+
+
+},
+
+
+
+
+
+
+
+getTopReferrals(){
+
+
+let player=this.getPlayer();
+
+
+
+return player.workers
+
+.sort(
+
+(a,b)=>
+
+b.level-a.level
+
+);
+
+
+
+},
+
+
+
+
+
+
+
+// ===============================
+// BALANCE
+// ===============================
 
 
 addBalance(amount){
@@ -239,7 +537,7 @@ return false;
 
 
 
-player.balance -= Number(amount);
+player.balance-=Number(amount);
 
 
 
@@ -259,29 +557,9 @@ return true;
 
 
 
-addFriend(){
-
-
-let player=this.getPlayer();
-
-
-
-player.friends++;
-
-player.invited++;
-
-
-
-this.savePlayer(player);
-
-
-
-},
-
-
-
-
-
+// ===============================
+// HISTORY
+// ===============================
 
 
 addHistory(data){
@@ -313,13 +591,17 @@ getHistory(){
 return this.getPlayer().history;
 
 
-
 },
 
 
 
 
 
+
+
+// ===============================
+// API KEY
+// ===============================
 
 
 generateApiKey(){
@@ -391,7 +673,9 @@ null;
 }
 
 
+
 };
+
 
 
 
