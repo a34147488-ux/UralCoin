@@ -2,7 +2,7 @@ const tg = window.Telegram.WebApp;
 
 
 
-// запускаем Telegram WebApp
+// запуск Telegram приложения
 
 tg.ready();
 
@@ -10,22 +10,19 @@ tg.expand();
 
 
 
-
 // цвета Telegram
 
-tg.setHeaderColor("#ffffff");
+tg.setHeaderColor("#090414");
 
-tg.setBackgroundColor("#ffffff");
-
-
+tg.setBackgroundColor("#090414");
 
 
 
-// получаем пользователя
 
 
 const user =
 tg.initDataUnsafe?.user;
+
 
 
 
@@ -39,9 +36,11 @@ if(user){
 
 
 localStorage.setItem(
-"user_id",
+"telegram_id",
 user.id
 );
+
+
 
 
 
@@ -49,19 +48,15 @@ user.id
 // имя
 
 
-const name =
-document.getElementById(
-"nickname"
-);
+const nickname =
+document.querySelector(".brand");
 
 
 
-if(name){
+if(nickname){
 
-
-name.innerText =
-user.first_name || "Игрок";
-
+nickname.innerText =
+"URALcoin";
 
 }
 
@@ -74,9 +69,9 @@ user.first_name || "Игрок";
 // аватар
 
 
-const img =
+const avatar =
 document.getElementById(
-"telegramAvatar"
+"userAvatar"
 );
 
 
@@ -90,17 +85,18 @@ document.getElementById(
 
 
 
-if(
-user.photo_url
-){
 
 
-img.src =
+if(user.photo_url){
+
+
+
+avatar.src =
 user.photo_url;
 
 
 
-img.style.display =
+avatar.style.display =
 "block";
 
 
@@ -121,10 +117,16 @@ letter.style.display =
 else{
 
 
+
 if(letter){
 
+
 letter.innerText =
-(user.first_name || "U")
+(
+user.first_name ||
+"U"
+
+)
 .charAt(0)
 .toUpperCase();
 
@@ -132,26 +134,114 @@ letter.innerText =
 }
 
 
-
-}
-
-
-
 }
 
 
 
 
 
-// если открыли не через Telegram
+
+
+
+// сохраняем пользователя
+
+
+let player =
+
+JSON.parse(
+
+localStorage.getItem(
+"player"
+)
+
+)
+
+|| {};
+
+
+
+
+
+player.id =
+user.id;
+
+
+
+player.name =
+user.first_name ||
+"Игрок";
+
+
+
+player.photo =
+user.photo_url ||
+"";
+
+
+
+
+
+localStorage.setItem(
+
+"player",
+
+JSON.stringify(player)
+
+);
+
+
+
+
+
+}
+
+
+
+
+
 
 else{
 
 
+// если открыт не в Telegram
+
+
+let player =
+
+JSON.parse(
+
+localStorage.getItem(
+"player"
+)
+
+)
+
+|| {};
+
+
+
+if(!player.id){
+
+
+
+player.id =
+"guest";
+
+player.name =
+"Игрок";
+
+
 localStorage.setItem(
-"user_id",
-"guest"
+
+"player",
+
+JSON.stringify(player)
+
 );
+
+
+
+}
 
 
 
