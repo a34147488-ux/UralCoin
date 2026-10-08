@@ -1,20 +1,13 @@
-// =================================
-// URALcoin Telegram WebApp v5
-// Связь Telegram + Storage
-// =================================
-
+// UralCoin Telegram Connect v2
 
 
 const tg = window.Telegram.WebApp;
 
 
 
-// запуск Telegram Mini App
-
 tg.ready();
 
 tg.expand();
-
 
 
 
@@ -28,9 +21,7 @@ tg.setBackgroundColor("#090414");
 
 
 
-
-
-const telegramUser =
+const user =
 
 tg.initDataUnsafe?.user;
 
@@ -40,20 +31,83 @@ tg.initDataUnsafe?.user;
 
 
 
-
-if(telegramUser){
-
+async function connectPlayerToServer(player){
 
 
+try{
 
 
-// сохраняем ID отдельно
+await fetch(
+
+CONFIG.API_URL + "/user",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify(player)
+
+
+}
+
+);
+
+
+
+console.log(
+
+"Игрок подключен к серверу"
+
+);
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(
+
+"Ошибка сервера:",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if(user){
+
+
 
 localStorage.setItem(
 
 "telegram_id",
 
-String(telegramUser.id)
+user.id
 
 );
 
@@ -61,43 +115,6 @@ String(telegramUser.id)
 
 
 
-
-
-// передаем данные в единое хранилище
-
-Storage.setTelegramUser({
-
-id:
-
-telegramUser.id,
-
-
-first_name:
-
-telegramUser.first_name,
-
-
-username:
-
-telegramUser.username,
-
-
-photo_url:
-
-telegramUser.photo_url
-
-
-
-});
-
-
-
-
-
-
-
-
-// аватар
 
 
 const avatar =
@@ -107,6 +124,7 @@ document.getElementById(
 "userAvatar"
 
 );
+
 
 
 
@@ -124,16 +142,13 @@ document.getElementById(
 
 
 
-if(
-avatar &&
-telegramUser.photo_url
-){
+if(user.photo_url){
 
 
 
 avatar.src =
 
-telegramUser.photo_url;
+user.photo_url;
 
 
 
@@ -143,29 +158,23 @@ avatar.style.display =
 
 
 
-
-
-
 if(letter){
-
 
 letter.style.display =
 
 "none";
 
-
 }
 
 
 
 }
 
+else{
 
 
 
-
-
-else if(letter){
+if(letter){
 
 
 
@@ -173,7 +182,7 @@ letter.innerText =
 
 (
 
-telegramUser.first_name ||
+user.first_name ||
 
 "U"
 
@@ -189,59 +198,103 @@ telegramUser.first_name ||
 
 
 
+}
 
 
 
 
 
 
-// проверяем реферальную ссылку Telegram
-
-
-
-const startParam =
-
-tg.initDataUnsafe?.start_param;
-
-
-
-
-
-if(startParam){
 
 
 
 let player =
 
-Storage.getPlayer();
+JSON.parse(
+
+localStorage.getItem(
+
+"player"
+
+)
+
+)
+
+|| {};
 
 
 
 
 
-if(
 
-!player.referrer &&
 
-String(startParam)!==String(player.id)
+player.id =
 
-){
+user.id;
 
 
 
-Storage.setReferrer(
 
-startParam
+
+player.name =
+
+user.first_name ||
+
+"Игрок";
+
+
+
+
+
+player.photo =
+
+user.photo_url ||
+
+"";
+
+
+
+
+
+
+
+localStorage.setItem(
+
+"player",
+
+JSON.stringify(player)
 
 );
 
 
 
+
+
+
+
+
+// отправка на Railway
+
+
+connectPlayerToServer(
+
+{
+
+id:player.id,
+
+
+name:player.name,
+
+
+photo:player.photo
+
+
 }
 
+);
 
 
-}
+
 
 
 
@@ -259,13 +312,21 @@ else{
 
 
 
-// если открыт вне Telegram
-
 
 
 let player =
 
-Storage.getPlayer();
+JSON.parse(
+
+localStorage.getItem(
+
+"player"
+
+)
+
+)
+
+|| {};
 
 
 
@@ -282,7 +343,21 @@ player.id =
 
 
 
-Storage.savePlayer(player);
+player.name =
+
+"Игрок";
+
+
+
+
+
+localStorage.setItem(
+
+"player",
+
+JSON.stringify(player)
+
+);
 
 
 
