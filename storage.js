@@ -1,11 +1,12 @@
-// =================================
-// URALcoin Storage v5
-// Единое хранилище игрока
-// =================================
-
+// ===================================
+// URALcoin STORAGE v3
+// Единственный профиль игрока
+// ===================================
 
 
 const Storage = {
+
+
 
 
 
@@ -18,10 +19,15 @@ let player =
 JSON.parse(
 
 localStorage.getItem(
+
 "ural_player"
+
 )
 
 );
+
+
+
 
 
 
@@ -34,15 +40,21 @@ if(!player){
 player = {
 
 
+
 id:
 
 localStorage.getItem(
+
 "telegram_id"
+
 )
 
 ||
 
 "guest",
+
+
+
 
 
 
@@ -52,9 +64,6 @@ name:
 
 
 
-username:
-
-"",
 
 
 
@@ -64,15 +73,24 @@ photo:
 
 
 
+
+
+
 balance:
 
 0,
 
 
 
+
+
+
 clickPower:
 
-0.010,
+0.01,
+
+
+
 
 
 
@@ -82,9 +100,24 @@ autoPower:
 
 
 
+
+
+
 friends:
 
 0,
+
+
+
+
+
+
+invited:
+
+0,
+
+
+
 
 
 
@@ -94,9 +127,15 @@ null,
 
 
 
+
+
+
 history:
 
 [],
+
+
+
 
 
 
@@ -106,13 +145,19 @@ usedPromos:
 
 
 
-createdPromos:
 
-[]
+
+
+apiKey:
+
+null
 
 
 
 };
+
+
+
 
 
 
@@ -127,11 +172,19 @@ this.savePlayer(player);
 
 
 
+
+
+
 return player;
 
 
 
 },
+
+
+
+
+
 
 
 
@@ -161,13 +214,21 @@ JSON.stringify(player)
 
 
 
-setTelegramUser(data){
+
+
+
+// обновление Telegram данных
+
+
+
+setTelegramUser(user){
 
 
 
 let player =
 
 this.getPlayer();
+
 
 
 
@@ -175,15 +236,15 @@ this.getPlayer();
 
 player.id =
 
-String(data.id);
+String(user.id);
+
+
 
 
 
 player.name =
 
-data.first_name ||
-
-data.name ||
+user.first_name ||
 
 "Игрок";
 
@@ -191,27 +252,28 @@ data.name ||
 
 
 
-player.username =
-
-data.username ||
-
-"";
-
-
-
-
-
 player.photo =
 
-data.photo_url ||
+user.photo_url ||
 
-"";
+player.photo;
+
+
+
 
 
 
 
 
 this.savePlayer(player);
+
+
+
+
+
+
+
+return player;
 
 
 
@@ -223,13 +285,21 @@ this.savePlayer(player);
 
 
 
-updateBalance(value){
+
+
+
+// баланс
+
+
+
+updateBalance(amount){
 
 
 
 let player =
 
 this.getPlayer();
+
 
 
 
@@ -237,7 +307,10 @@ this.getPlayer();
 
 player.balance =
 
-Number(value);
+Number(amount);
+
+
+
 
 
 
@@ -253,13 +326,17 @@ this.savePlayer(player);
 
 
 
-addBalance(value){
+
+
+
+addBalance(amount){
 
 
 
 let player =
 
 this.getPlayer();
+
 
 
 
@@ -267,7 +344,10 @@ this.getPlayer();
 
 player.balance +=
 
-Number(value);
+Number(amount);
+
+
+
 
 
 
@@ -283,7 +363,10 @@ this.savePlayer(player);
 
 
 
-removeBalance(value){
+
+
+
+removeBalance(amount){
 
 
 
@@ -295,26 +378,36 @@ this.getPlayer();
 
 
 
+
 if(
-player.balance < value
+
+player.balance < amount
+
 ){
 
-
 return false;
-
 
 }
 
 
 
 
+
+
 player.balance -=
 
-Number(value);
+Number(amount);
+
+
+
 
 
 
 this.savePlayer(player);
+
+
+
+
 
 
 
@@ -330,6 +423,13 @@ return true;
 
 
 
+
+
+
+// рефералы
+
+
+
 addFriend(){
 
 
@@ -340,10 +440,23 @@ this.getPlayer();
 
 
 
+
+
+
 player.friends += 1;
 
 
 
+
+
+
+player.invited += 1;
+
+
+
+
+
+
 this.savePlayer(player);
 
 
@@ -356,7 +469,14 @@ this.savePlayer(player);
 
 
 
-setReferrer(id){
+
+
+
+// история
+
+
+
+addHistory(data){
 
 
 
@@ -368,53 +488,11 @@ this.getPlayer();
 
 
 
-if(
 
-!player.referrer
-
-&&
-
-String(id)!==String(player.id)
-
-){
+player.history.push(data);
 
 
 
-player.referrer =
-
-String(id);
-
-
-
-this.savePlayer(player);
-
-
-
-}
-
-
-
-},
-
-
-
-
-
-
-
-addHistory(item){
-
-
-
-let player =
-
-this.getPlayer();
-
-
-
-
-
-player.history.unshift(item);
 
 
 
@@ -435,7 +513,8 @@ getHistory(){
 
 
 return this.getPlayer()
-.history || [];
+
+.history;
 
 
 
@@ -447,11 +526,20 @@ return this.getPlayer()
 
 
 
-createApiKey(){
+
+
+
+// API ключ
+
+
+
+generateApiKey(){
 
 
 
 const key =
+
+
 
 "URAL-"
 
@@ -469,6 +557,34 @@ Math.random()
 
 
 
+
+
+let player =
+
+this.getPlayer();
+
+
+
+
+
+
+
+player.apiKey = key;
+
+
+
+
+
+
+
+this.savePlayer(player);
+
+
+
+
+
+
+
 localStorage.setItem(
 
 "ural_api",
@@ -476,6 +592,9 @@ localStorage.setItem(
 key
 
 );
+
+
+
 
 
 
@@ -491,11 +610,29 @@ return key;
 
 
 
+
+
 getApiKey(){
 
 
 
-return localStorage.getItem(
+let player =
+
+this.getPlayer();
+
+
+
+
+
+
+
+return (
+
+player.apiKey
+
+||
+
+localStorage.getItem(
 
 "ural_api"
 
@@ -503,25 +640,7 @@ return localStorage.getItem(
 
 ||
 
-null;
-
-
-
-},
-
-
-
-
-
-
-
-clear(){
-
-
-
-localStorage.removeItem(
-
-"ural_player"
+null
 
 );
 
@@ -534,7 +653,6 @@ localStorage.removeItem(
 
 
 };
-
 
 
 
