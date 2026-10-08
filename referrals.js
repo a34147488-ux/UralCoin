@@ -1,15 +1,10 @@
-// UralCoin v2
-// Реферальная система
+// UralCoin Referrals v3
+// Настоящая реферальная система Telegram
 
 
 
-const BOT_USERNAME =
-"uralscoin_bot";
 
-
-
-const REF_REWARD =
-5000;
+const BOT_USERNAME = "ТВОЙ_USERNAME_БОТА";
 
 
 
@@ -17,43 +12,49 @@ const REF_REWARD =
 
 
 
-
-
-function getMyId(){
+function createReferralLink(){
 
 
 
-return localStorage.getItem(
-"telegram_id"
-)
-||
-"guest";
+const player =
+
+Storage.getPlayer();
 
 
+
+
+
+
+if(
+!player.id ||
+player.id === "guest"
+){
+
+return "";
 
 }
 
 
 
 
-
-
-
-
-
-function getReferralLink(){
 
 
 
 return (
 
 "https://t.me/"
+
 +
+
 BOT_USERNAME
+
 +
+
 "?start="
+
 +
-getMyId()
+
+player.id
 
 );
 
@@ -69,34 +70,27 @@ getMyId()
 
 
 
-function updateReferralScreen(){
+function loadReferral(){
 
 
 
-const link =
+const input =
+
 document.getElementById(
 "refLink"
 );
 
 
 
-const count =
-document.getElementById(
-"friendsCount"
-);
+
+
+if(input){
 
 
 
+input.value =
 
-
-
-
-if(link){
-
-
-
-link.value =
-getReferralLink();
+createReferralLink();
 
 
 
@@ -107,9 +101,11 @@ getReferralLink();
 
 
 
-let player =
-Storage.getPlayer();
+const count =
 
+document.getElementById(
+"friendsCount"
+);
 
 
 
@@ -120,7 +116,9 @@ if(count){
 
 
 count.innerText =
-player.friends || 0;
+
+Storage.getPlayer()
+.friends || 0;
 
 
 
@@ -138,11 +136,104 @@ player.friends || 0;
 
 
 
-// КНОПКА КОПИРОВАНИЯ
+// получение приглашения через Telegram start
+
+
+function checkStartReferral(){
 
 
 
-const copyReferral =
+const params =
+
+new URLSearchParams(
+window.location.search
+);
+
+
+
+
+
+const start =
+
+params.get("tgWebAppStartParam")
+
+||
+
+params.get("start");
+
+
+
+
+
+
+
+if(
+start
+){
+
+
+
+const player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+
+if(
+player.id !== String(start)
+){
+
+
+
+Storage.setReferrer(start);
+
+
+
+
+
+
+if(
+window.API
+){
+
+
+
+API.sendReferral(start);
+
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// копирование ссылки
+
+
+const copyButton =
+
 document.getElementById(
 "copyReferral"
 );
@@ -152,19 +243,29 @@ document.getElementById(
 
 
 
-if(copyReferral){
+if(copyButton){
 
 
 
-copyReferral.onclick =
+copyButton.addEventListener(
+
+"click",
+
 ()=>{
 
 
 
 const link =
-getReferralLink();
+
+createReferralLink();
 
 
+
+
+
+if(
+navigator.clipboard
+){
 
 
 
@@ -174,15 +275,39 @@ link
 
 
 
+}
 
 
-alert(
-"Ссылка скопирована"
+
+
+
+copyButton.innerText =
+
+"Скопировано";
+
+
+
+
+
+setTimeout(()=>{
+
+
+copyButton.innerText =
+
+"Копировать ссылку";
+
+
+},1500);
+
+
+
+
+
+}
+
+
+
 );
-
-
-
-};
 
 
 
@@ -196,98 +321,24 @@ alert(
 
 
 
-// ПРОВЕРКА ВХОДА ПО ССЫЛКЕ
+checkStartReferral();
 
+loadReferral();
 
 
-function checkIncomingReferral(){
 
 
 
-const params =
-new URLSearchParams(
-window.location.search
-);
 
 
 
+// обновление счётчика
 
 
-const ref =
-params.get(
-"start"
-);
+setInterval(()=>{
 
 
+loadReferral();
 
 
-
-
-
-if(
-!ref ||
-ref === getMyId()
-
-){
-
-return;
-
-}
-
-
-
-
-
-
-
-
-let player =
-Storage.getPlayer();
-
-
-
-
-
-
-
-
-if(
-!player.referrer
-){
-
-
-
-player.referrer =
-ref;
-
-
-
-Storage.savePlayer(
-player
-);
-
-
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// запуск
-
-
-
-checkIncomingReferral();
-
-updateReferralScreen();
+},5000);
