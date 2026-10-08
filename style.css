@@ -1,21 +1,7 @@
-/* ===== НОВЫЕ ТОПЫ URALCOIN ===== */
-
-
-#topList{
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
-}
-
+/* ===== ТОП ИГРОКОВ ===== */
 
 
 .top-card{
-
-width:100%;
 
 display:flex;
 
@@ -23,7 +9,13 @@ align-items:center;
 
 gap:15px;
 
+width:100%;
+
+
 padding:18px;
+
+
+margin-bottom:15px;
 
 
 background:
@@ -31,23 +23,21 @@ background:
 linear-gradient(
 135deg,
 rgba(255,215,0,.25),
-rgba(125,40,220,.35)
+rgba(120,40,220,.35)
 );
 
 
 border:
 
-1px solid rgba(255,255,255,.25);
+1px solid rgba(255,215,0,.45);
 
 
 border-radius:25px;
 
 
-backdrop-filter:blur(15px);
+backdrop-filter:
 
-
-animation:
-topShow .3s;
+blur(15px);
 
 
 transition:.2s;
@@ -65,39 +55,17 @@ transform:scale(.96);
 
 
 
-
-@keyframes topShow{
-
-from{
-
-opacity:0;
-
-transform:translateY(20px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:none;
-
-}
-
-}
-
-
-
-
-
-.top-place{
+.top-position{
 
 
 width:35px;
 
-font-size:30px;
+
+font-size:28px;
+
 
 font-weight:900;
+
 
 color:#ffd700;
 
@@ -109,9 +77,60 @@ text-align:center;
 
 
 
-
-.top-avatar-img,
 .top-avatar{
+
+
+width:65px;
+
+height:65px;
+
+
+border-radius:50%;
+
+
+background:
+
+linear-gradient(
+135deg,
+#ffd700,
+#7b2cff
+);
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+font-size:26px;
+
+
+font-weight:900;
+
+
+overflow:hidden;
+
+
+border:
+
+2px solid #ffd700;
+
+
+box-shadow:
+
+0 0 20px rgba(255,215,0,.6);
+
+
+}
+
+
+
+.top-avatar-img{
 
 
 width:65px;
@@ -125,46 +144,20 @@ border-radius:50%;
 object-fit:cover;
 
 
-background:
-
-linear-gradient(
-135deg,
-#ffd700,
-#7b2cff
-);
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-font-size:28px;
-
-font-weight:900;
-
-
 border:
 
 2px solid #ffd700;
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.7);
 
 
 }
 
 
 
+.top-data{
 
-
-.top-info{
 
 flex:1;
+
 
 }
 
@@ -173,7 +166,8 @@ flex:1;
 .top-name{
 
 
-font-size:22px;
+font-size:21px;
+
 
 font-weight:900;
 
@@ -188,13 +182,13 @@ color:white;
 .top-balance{
 
 
+margin-top:5px;
+
+
 font-size:20px;
 
 
 font-weight:900;
-
-
-margin-top:5px;
 
 
 color:#ffd85c;
@@ -204,49 +198,13 @@ color:#ffd85c;
 
 
 
-.top-balance span{
-
-
-display:inline-flex;
-
-
-align-items:center;
-
-justify-content:center;
-
-
-width:22px;
-
-height:22px;
-
-
-border-radius:50%;
-
-
-background:#ffd700;
-
-
-color:#6b2cff;
-
-
-font-size:13px;
-
-
-margin-left:5px;
-
-
-}
-
-
-
-
 .top-friends{
 
 
 margin-top:5px;
 
 
-font-size:15px;
+font-size:14px;
 
 
 color:rgba(255,255,255,.8);
