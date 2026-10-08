@@ -1,14 +1,11 @@
 // ===================================
-// URALcoin TELEGRAM CONNECT v3
-// Telegram User + Server Sync
+// URALcoin TELEGRAM v10
+// Telegram Profile Connect
 // ===================================
 
 
 
-const tg =
-
-window.Telegram.WebApp;
-
+const tg = window.Telegram.WebApp;
 
 
 
@@ -25,9 +22,11 @@ tg.setHeaderColor(
 );
 
 
+
 tg.setBackgroundColor(
 "#090414"
 );
+
 
 
 
@@ -48,7 +47,7 @@ tg.initDataUnsafe?.user;
 
 
 
-async function sendUserToServer(player){
+async function sendUser(player){
 
 
 
@@ -80,20 +79,24 @@ headers:{
 body:JSON.stringify({
 
 
+
 id:player.id,
+
 
 
 name:player.name,
 
 
-photo:player.photo,
+
+username:player.username,
 
 
-username:player.username || ""
+
+photo:player.photo
+
 
 
 })
-
 
 }
 
@@ -105,7 +108,7 @@ username:player.username || ""
 
 
 console.log(
-"USER SYNC OK"
+"Telegram user synced"
 );
 
 
@@ -137,15 +140,11 @@ error
 
 
 
-function connectTelegram(){
+function loadTelegramProfile(){
 
 
 
-if(!telegramUser){
-
-
-
-let guest =
+let player =
 
 Storage.getPlayer();
 
@@ -153,21 +152,14 @@ Storage.getPlayer();
 
 
 
-if(!guest.id){
-
-
-guest.id="guest";
-
-
-}
 
 
 
+if(!telegramUser){
 
 
-Storage.savePlayer(
-guest
-);
+
+Storage.savePlayer(player);
 
 
 
@@ -177,35 +169,6 @@ return;
 
 }
 
-
-
-
-
-
-
-
-// сохраняем Telegram ID
-
-
-localStorage.setItem(
-
-"telegram_id",
-
-telegramUser.id
-
-);
-
-
-
-
-
-
-
-
-
-let player =
-
-Storage.getPlayer();
 
 
 
@@ -224,17 +187,23 @@ telegramUser.id
 
 
 
-player.username =
-
-telegramUser.username || "";
-
-
-
-
-
 player.name =
 
-telegramUser.first_name || "Игрок";
+telegramUser.first_name ||
+
+"Игрок";
+
+
+
+
+
+
+player.username =
+
+telegramUser.username ||
+
+"";
+
 
 
 
@@ -242,7 +211,18 @@ telegramUser.first_name || "Игрок";
 
 player.photo =
 
-telegramUser.photo_url || "";
+telegramUser.photo_url ||
+
+"";
+
+
+
+
+
+
+
+
+Storage.savePlayer(player);
 
 
 
@@ -252,18 +232,10 @@ telegramUser.photo_url || "";
 
 
 
-Storage.savePlayer(
-player
-);
 
 
+// аватар
 
-
-
-
-
-
-// обновление аватара
 
 
 const avatar =
@@ -289,15 +261,14 @@ document.getElementById(
 
 
 if(
-player.photo &&
-avatar
+avatar &&
+player.photo
 
 ){
 
 
 
 avatar.src =
-
 player.photo;
 
 
@@ -309,20 +280,18 @@ avatar.style.display =
 
 
 
-if(letter)
+if(letter){
 
 letter.style.display =
 "none";
+
+}
 
 
 
 }
 
-else{
-
-
-
-if(letter){
+else if(letter){
 
 
 
@@ -340,20 +309,12 @@ player.name
 
 
 
-}
 
 
 
 
 
-
-
-
-
-sendUserToServer(
-player
-);
-
+sendUser(player);
 
 
 
@@ -367,4 +328,4 @@ player
 
 
 
-connectTelegram();
+loadTelegramProfile();
