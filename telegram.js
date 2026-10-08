@@ -1,16 +1,14 @@
+// UralCoin Telegram CONNECT v3
+
+
 const tg = window.Telegram.WebApp;
 
-
-
-// запуск Telegram приложения
 
 tg.ready();
 
 tg.expand();
 
 
-
-// цвета Telegram
 
 tg.setHeaderColor("#090414");
 
@@ -20,43 +18,99 @@ tg.setBackgroundColor("#090414");
 
 
 
-const user =
+const tgUser =
 tg.initDataUnsafe?.user;
 
 
 
 
 
-
-if(user){
-
+function connectTelegram(){
 
 
-// сохраняем ID
+
+if(!tgUser){
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+if(!player.id){
+
+
+player.id="guest";
+
+
+Storage.savePlayer(player);
+
+
+}
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+player.id =
+tgUser.id;
+
+
+
+player.name =
+tgUser.first_name ||
+"Игрок";
+
+
+
+player.username =
+tgUser.username ||
+"";
+
+
+
+player.photo =
+tgUser.photo_url ||
+"";
+
+
+
+
+
+Storage.savePlayer(player);
+
+
+
 
 
 localStorage.setItem(
 "telegram_id",
-user.id
+tgUser.id
 );
 
 
 
 
 
-
-// имя
-
-
-const nickname =
-document.querySelector(".brand");
+updateTelegramProfile();
 
 
-
-if(nickname){
-
-nickname.innerText =
-"URALcoin";
 
 }
 
@@ -66,7 +120,10 @@ nickname.innerText =
 
 
 
-// аватар
+
+
+function updateTelegramProfile(){
+
 
 
 const avatar =
@@ -85,45 +142,44 @@ document.getElementById(
 
 
 
+if(!tgUser)
+return;
 
 
-if(user.photo_url){
+
+
+
+
+if(tgUser.photo_url && avatar){
 
 
 
 avatar.src =
-user.photo_url;
+tgUser.photo_url;
 
 
 
-avatar.style.display =
-"block";
-
-
-
-if(letter){
-
-letter.style.display =
-"none";
-
-}
-
-
-
-}
-
-
-
-else{
+avatar.style.display="block";
 
 
 
 if(letter){
+
+letter.style.display="none";
+
+}
+
+
+}
+
+else if(letter){
+
 
 
 letter.innerText =
+
 (
-user.first_name ||
+tgUser.first_name ||
 "U"
 
 )
@@ -131,8 +187,6 @@ user.first_name ||
 .toUpperCase();
 
 
-}
-
 
 }
 
@@ -140,105 +194,18 @@ user.first_name ||
 
 
 
-
-
-
-// сохраняем пользователя
-
-
-let player =
-
-JSON.parse(
-
-localStorage.getItem(
-"player"
-)
-
-)
-
-|| {};
-
-
-
-
-
-player.id =
-user.id;
-
-
-
-player.name =
-user.first_name ||
-"Игрок";
-
-
-
-player.photo =
-user.photo_url ||
-"";
-
-
-
-
-
-localStorage.setItem(
-
-"player",
-
-JSON.stringify(player)
-
+const brand =
+document.querySelector(
+".brand"
 );
 
 
 
+if(brand){
 
 
-}
-
-
-
-
-
-
-else{
-
-
-// если открыт не в Telegram
-
-
-let player =
-
-JSON.parse(
-
-localStorage.getItem(
-"player"
-)
-
-)
-
-|| {};
-
-
-
-if(!player.id){
-
-
-
-player.id =
-"guest";
-
-player.name =
-"Игрок";
-
-
-localStorage.setItem(
-
-"player",
-
-JSON.stringify(player)
-
-);
-
+brand.innerText =
+"URALcoin";
 
 
 }
@@ -246,3 +213,9 @@ JSON.stringify(player)
 
 
 }
+
+
+
+
+
+connectTelegram();
