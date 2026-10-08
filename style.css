@@ -1,34 +1,92 @@
-*{
-
-box-sizing:border-box;
-
-margin:0;
-
-padding:0;
-
--webkit-tap-highlight-color:transparent;
-
-}
+/* ========================= */
+/* ЗИМНИЙ ЭФФЕКТ URALCOIN */
+/* ========================= */
 
 
-html,
-body{
+
+.garland{
+
+position:absolute;
+
+top:0;
+
+left:0;
 
 width:100%;
 
-height:100%;
+height:25px;
 
-overflow:hidden;
+z-index:20;
 
-font-family:Arial, sans-serif;
+display:flex;
 
-background:#090414;
+justify-content:space-around;
 
-color:white;
+pointer-events:none;
 
-touch-action:manipulation;
+}
 
-user-select:none;
+
+
+.garland span{
+
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+
+background:#ffd700;
+
+
+box-shadow:
+
+0 0 15px gold;
+
+
+animation:
+
+lampGlow 1.5s infinite alternate;
+
+
+}
+
+
+
+
+.garland span:nth-child(2){
+
+animation-delay:.2s;
+
+}
+
+
+.garland span:nth-child(3){
+
+animation-delay:.4s;
+
+}
+
+
+.garland span:nth-child(4){
+
+animation-delay:.6s;
+
+}
+
+
+.garland span:nth-child(5){
+
+animation-delay:.8s;
+
+}
+
+
+.garland span:nth-child(6){
+
+animation-delay:1s;
 
 }
 
@@ -36,15 +94,27 @@ user-select:none;
 
 
 
-.app{
+@keyframes lampGlow{
 
-width:100%;
 
-height:100vh;
+from{
 
-position:relative;
+transform:scale(.8);
 
-overflow:hidden;
+opacity:.5;
+
+}
+
+
+
+to{
+
+transform:scale(1.2);
+
+opacity:1;
+
+}
+
 
 }
 
@@ -52,238 +122,58 @@ overflow:hidden;
 
 
 
-.city-bg{
+
+
+/* СНЕГ */
+
+
+.snow{
+
 
 position:absolute;
 
 inset:0;
 
+z-index:15;
 
-background:
-
-linear-gradient(
-135deg,
-rgba(255,215,0,.45),
-rgba(120,40,220,.65)
-),
-
-url("ekaterinburg.jpg");
-
-
-background-size:cover;
-
-background-position:center;
-
-
-animation:
-
-cityMove 10s infinite alternate;
-
-
-z-index:0;
-
-}
-
-
-
-
-
-@keyframes cityMove{
-
-
-from{
-
-filter:
-
-brightness(.8)
-saturate(1);
-
-
-}
-
-
-to{
-
-
-filter:
-
-brightness(1)
-saturate(1.4);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-.header{
-
-
-height:80px;
-
-
-position:relative;
-
-
-z-index:2;
-
-
-padding:15px;
-
-
-}
-
-
-
-
-
-
-.user-profile{
-
-
-position:absolute;
-
-
-left:20px;
-
-
-top:15px;
-
-
-}
-
-
-
-
-
-
-.avatar{
-
-
-width:55px;
-
-
-height:55px;
-
-
-border-radius:50%;
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-background:
-
-
-linear-gradient(
-135deg,
-#ffd700,
-#7b2cff
-);
-
-
-font-size:25px;
-
-
-font-weight:900;
-
+pointer-events:none;
 
 overflow:hidden;
 
 
-box-shadow:
-
-
-0 0 20px gold;
-
-
 }
 
 
 
-.avatar img{
+.snow::before{
 
+
+content:"❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅";
+
+
+position:absolute;
+
+top:-50px;
+
+left:0;
 
 width:100%;
 
 
-height:100%;
+font-size:28px;
+
+letter-spacing:40px;
 
 
-object-fit:cover;
+color:white;
 
 
-}
-
-
-
-
-
-
-
-
-.content{
-
-
-height:calc(100vh - 80px);
-
-
-overflow-y:auto;
-
-
-position:relative;
-
-
-z-index:2;
-
-
-padding-bottom:100px;
-
-
-}
-
-
-
-
-
-
-.page{
-
-
-display:none;
-
-
-padding:20px;
+opacity:.8;
 
 
 animation:
 
-
-pageShow .25s;
-
-
-}
-
-
-
-
-
-.page.active{
-
-
-display:block;
+snowFall 12s linear infinite;
 
 
 }
@@ -292,17 +182,16 @@ display:block;
 
 
 
-
-@keyframes pageShow{
+@keyframes snowFall{
 
 
 from{
 
 
-opacity:0;
+transform:
 
-
-transform:translateY(15px);
+translateY(-100px)
+translateX(0);
 
 
 }
@@ -312,327 +201,13 @@ transform:translateY(15px);
 to{
 
 
-opacity:1;
+transform:
 
-
-transform:none;
-
-
-}
-
+translateY(110vh)
+translateX(80px);
 
 
 }
-
-
-
-
-
-
-
-
-/* БАЛАНС */
-
-
-.balance-box{
-
-
-text-align:center;
-
-
-margin-top:35px;
-
-
-}
-
-
-
-
-
-
-.balance{
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-gap:10px;
-
-
-font-size:46px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-.coin-small{
-
-
-width:30px;
-
-
-height:30px;
-
-
-border-radius:50%;
-
-
-background:
-
-
-linear-gradient(
-135deg,
-#fff000,
-#d58b00
-);
-
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-font-size:17px;
-
-
-font-weight:900;
-
-
-box-shadow:
-
-
-0 0 15px gold;
-
-
-}
-
-
-
-
-
-
-
-.click-power{
-
-
-margin-top:15px;
-
-
-display:inline-block;
-
-
-padding:10px 20px;
-
-
-border-radius:20px;
-
-
-background:
-
-
-linear-gradient(
-90deg,
-#ffd700,
-#7b2cff
-);
-
-
-
-font-weight:800;
-
-
-}
-
-
-
-
-
-
-
-
-/* ГЛАВНАЯ КНОПКА */
-
-
-.main-coin{
-
-
-width:250px;
-
-
-height:250px;
-
-
-margin:90px auto 0;
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-border-radius:50%;
-
-
-border:
-
-
-10px solid #ffd700;
-
-
-background:
-
-
-radial-gradient(
-circle,
-#fff59b,
-#ffc400,
-#6d22cc
-);
-
-
-
-font-size:120px;
-
-
-font-weight:900;
-
-
-color:white;
-
-
-box-shadow:
-
-
-0 0 45px gold;
-
-
-transition:.15s;
-
-
-}
-
-
-
-
-
-.main-coin:active{
-
-
-transform:scale(.93);
-
-
-}
-/* ПАНЕЛИ */
-
-
-.panel{
-
-
-background:
-
-
-rgba(255,255,255,.12);
-
-
-backdrop-filter:
-
-
-blur(15px);
-
-
-
-border-radius:25px;
-
-
-
-padding:25px;
-
-
-
-border:
-
-
-1px solid rgba(255,215,0,.4);
-
-
-
-}
-
-
-
-
-
-.panel h2{
-
-
-font-size:30px;
-
-
-margin-bottom:25px;
-
-
-color:#ffd85c;
-
-
-}
-
-
-
-
-
-
-
-
-input{
-
-
-width:100%;
-
-
-height:55px;
-
-
-
-border:none;
-
-
-
-border-radius:15px;
-
-
-
-padding:0 15px;
-
-
-
-margin-bottom:15px;
-
-
-
-font-size:17px;
 
 
 }
@@ -645,197 +220,9 @@ font-size:17px;
 
 
 
-button,
-.menu-card{
-
-
-transition:.15s;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-
-button:active,
-.menu-card:active{
-
-
-transform:scale(.94);
-
-
-}
-
-
-
-
-
-
-
-.gold-button,
-.menu-card{
-
-
-width:100%;
-
-
-
-padding:17px;
-
-
-
-border-radius:18px;
-
-
-
-border:
-
-
-1px solid #ffd700;
-
-
-
-background:
-
-
-linear-gradient(
-90deg,
-#ffd700,
-#7b2cff
-);
-
-
-
-color:white;
-
-
-
-font-size:18px;
-
-
-
-font-weight:900;
-
-
-
-margin-bottom:15px;
-
-
-
-text-align:center;
-
-
-
-display:block;
-
-
-
-text-decoration:none;
-
-
-}
-
-
-
-
-
-
-
-
-/* УЛУЧШЕНИЯ */
-
-
-.upgrade-card{
-
-
-display:flex;
-
-
-justify-content:space-between;
-
-
-align-items:center;
-
-
-
-padding:15px;
-
-
-
-margin-bottom:15px;
-
-
-
-border-radius:18px;
-
-
-
-background:
-
-
-rgba(0,0,0,.25);
-
-
-
-border:
-
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-
-
-.upgrade-card button{
-
-
-background:
-
-
-linear-gradient(
-135deg,
-#ffd700,
-#7b2cff
-);
-
-
-
-border:none;
-
-
-
-padding:12px;
-
-
-
-border-radius:12px;
-
-
-
-color:white;
-
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===== ТОП ИГРОКОВ ===== */
+/* ========================= */
+/* НОВЫЙ ТОП */
+/* ========================= */
 
 
 
@@ -844,16 +231,12 @@ font-weight:900;
 
 display:flex;
 
-
 flex-direction:column;
 
-
-gap:15px;
+gap:12px;
 
 
 }
-
-
 
 
 
@@ -861,80 +244,48 @@ gap:15px;
 .top-card{
 
 
-width:100%;
-
-
-
 display:flex;
-
-
 
 align-items:center;
 
+gap:12px;
 
 
-gap:15px;
+padding:15px;
 
 
-
-padding:18px;
-
-
+border-radius:22px;
 
 
 background:
 
-
 linear-gradient(
-135deg,
-rgba(255,215,0,.25),
-rgba(120,40,220,.35)
-);
 
+135deg,
+
+rgba(255,215,0,.25),
+
+rgba(120,40,220,.35)
+
+);
 
 
 border:
 
-
-1px solid rgba(255,215,0,.45);
-
-
-
-border-radius:25px;
-
+1px solid rgba(255,215,0,.5);
 
 
 backdrop-filter:
 
-
-blur(15px);
-
-
-
-transition:.2s;
-
+blur(12px);
 
 
 animation:
 
-
-topShow .3s;
-
-
-}
-
-
-
-
-.top-card:active{
-
-
-transform:scale(.96);
+topShow .35s;
 
 
 }
-
-
 
 
 
@@ -948,8 +299,9 @@ from{
 
 opacity:0;
 
+transform:
 
-transform:translateY(20px);
+translateY(20px);
 
 
 }
@@ -959,7 +311,6 @@ to{
 
 
 opacity:1;
-
 
 transform:none;
 
@@ -973,106 +324,70 @@ transform:none;
 
 
 
-
-
-
 .top-position{
 
 
 width:35px;
 
+height:35px;
 
 
-font-size:28px;
+display:flex;
 
+align-items:center;
 
-
-font-weight:900;
-
-
-
-color:#ffd700;
-
-
-
-text-align:center;
-
-
-}
-
-
-
-
-
-
-
-.top-avatar,
-.top-avatar-img{
-
-
-width:65px;
-
-
-
-height:65px;
-
+justify-content:center;
 
 
 border-radius:50%;
 
 
-
-object-fit:cover;
-
-
-
 background:
 
-
 linear-gradient(
+
 135deg,
+
 #ffd700,
+
 #7b2cff
+
 );
-
-
-
-display:flex;
-
-
-
-align-items:center;
-
-
-
-justify-content:center;
-
-
-
-font-size:26px;
-
 
 
 font-weight:900;
 
 
+}
+
+
+
+
+.top-avatar-img{
+
+
+width:55px;
+
+height:55px;
+
+
+border-radius:50%;
+
+
+object-fit:cover;
+
 
 border:
 
-
-2px solid #ffd700;
-
+2px solid gold;
 
 
 box-shadow:
 
-
-0 0 20px rgba(255,215,0,.6);
+0 0 15px gold;
 
 
 }
-
-
 
 
 
@@ -1089,67 +404,54 @@ flex:1;
 
 
 
-
 .top-name{
 
 
-font-size:21px;
-
-
+font-size:18px;
 
 font-weight:900;
 
 
-
-color:white;
-
-
 }
-
-
-
-
 
 
 
 .top-balance{
 
 
-margin-top:5px;
+font-size:17px;
 
-
-
-font-size:20px;
-
-
+color:#ffd85c;
 
 font-weight:900;
 
 
-
-color:#ffd85c;
-
-
 }
-
-
-
-
 
 
 
 .top-friends{
 
 
-margin-top:5px;
+font-size:13px;
+
+opacity:.8;
+
+
+}
 
 
 
-font-size:14px;
 
 
+.top-empty{
 
-color:rgba(255,255,255,.8);
+
+text-align:center;
+
+padding:30px;
+
+opacity:.7;
 
 
 }
@@ -1161,203 +463,21 @@ color:rgba(255,255,255,.8);
 
 
 
-
-/* ИСТОРИЯ */
-
-
-
-.history-item{
-
-
-background:
-
-
-rgba(255,255,255,.15);
-
-
-
-border:
-
-
-1px solid rgba(255,215,0,.4);
-
-
-
-border-radius:18px;
-
-
-
-padding:15px;
-
-
-
-margin-bottom:12px;
-
-
-}
-
-
-
-
-
-
-
-
-/* API */
-
-
-
-#apiResult{
-
-
-background:
-
-
-rgba(0,0,0,.3);
-
-
-
-border-radius:15px;
-
-
-
-padding:20px;
-
-
-
-word-break:break-all;
-
-
-
-margin-bottom:20px;
-
-
-}
-/* АНИМАЦИЯ КЛИКА */
-
-
-.click-number{
-
-
-position:fixed;
-
-
-left:50%;
-
-
-top:55%;
-
-
-
-transform:
-
-
-translateX(-50%);
-
-
-
-font-size:30px;
-
-
-
-font-weight:900;
-
-
-
-color:#ffd700;
-
-
-
-text-shadow:
-
-
-0 0 15px gold;
-
-
-
-animation:
-
-
-clickUp .8s forwards;
-
-
-
-pointer-events:none;
-
-
-
-z-index:100;
-
-
-
-}
-
-
-
-
-
-@keyframes clickUp{
-
-
-0%{
-
-
-opacity:1;
-
-
-
-transform:
-
-
-translate(-50%,0)
-scale(1);
-
-
-
-}
-
-
-
-100%{
-
-
-opacity:0;
-
-
-
-transform:
-
-
-translate(-50%,-100px)
-scale(1.3);
-
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
+/* ========================= */
 /* АНИМАЦИЯ КНОПОК */
+/* ========================= */
+
 
 
 button,
-.menu-card,
-.gold-button{
+.menu-card{
 
 
-position:relative;
+transition:
 
+transform .15s,
 
-overflow:hidden;
+box-shadow .15s;
 
 
 }
@@ -1365,319 +485,18 @@ overflow:hidden;
 
 
 
-button::after,
-.menu-card::after,
-.gold-button::after{
-
-
-content:"";
-
-
-position:absolute;
-
-
-inset:0;
-
-
-
-background:
-
-
-linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,.35),
-transparent
-);
-
+button:active,
+.menu-card:active{
 
 
 transform:
 
-
-translateX(-100%);
-
-
-
-transition:.5s;
-
-
-
-}
-
-
-
-button:hover::after,
-.menu-card:hover::after,
-.gold-button:hover::after{
-
-
-transform:
-
-
-translateX(100%);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* НИЖНЕЕ МЕНЮ */
-
-
-
-.bottom-nav{
-
-
-position:absolute;
-
-
-
-bottom:0;
-
-
-
-left:0;
-
-
-
-width:100%;
-
-
-
-height:80px;
-
-
-
-display:flex;
-
-
-
-justify-content:space-around;
-
-
-
-align-items:center;
-
-
-
-z-index:5;
-
-
-
-background:
-
-
-rgba(0,0,0,.55);
-
-
-
-backdrop-filter:
-
-
-blur(15px);
-
-
-
-border-top:
-
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-
-
-.nav{
-
-
-background:none;
-
-
-
-border:none;
-
-
-
-color:white;
-
-
-
-font-size:14px;
-
-
-
-font-weight:900;
-
-
-
-padding:10px;
-
-
-
-}
-
-
-
-
-.nav.active{
-
-
-color:#ffd700;
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ОБЩИЕ ЭФФЕКТЫ КАРТОЧЕК */
-
-
-.panel,
-.top-card,
-.upgrade-card,
-.history-item{
+scale(.94);
 
 
 box-shadow:
 
-
-0 10px 30px rgba(0,0,0,.25);
-
-
-
-}
-
-
-
-
-
-
-
-
-/* СКРОЛЛ */
-
-
-.content::-webkit-scrollbar{
-
-
-width:0;
-
-
-}
-
-
-
-
-
-/* ЗАЩИТА ОТ ЗУМА IOS */
-
-
-input,
-button,
-textarea,
-select{
-
-
-font-size:16px;
-
-
-}
-
-
-
-
-
-/* ПЛАВНЫЙ ВИД */
-
-
-*{
-
-
--webkit-user-select:none;
-
-
-user-select:none;
-
-
-}
-
-
-
-
-
-/* МОБИЛЬНАЯ АДАПТАЦИЯ */
-
-
-@media(max-width:420px){
-
-
-
-.main-coin{
-
-
-width:220px;
-
-
-height:220px;
-
-
-
-font-size:100px;
-
-
-
-margin-top:70px;
-
-
-}
-
-
-
-
-.balance{
-
-
-font-size:40px;
-
-
-}
-
-
-
-.panel h2{
-
-
-font-size:26px;
-
-
-}
-
-
-
-.top-name{
-
-
-font-size:18px;
-
-
-}
+0 0 25px gold;
 
 
 }
