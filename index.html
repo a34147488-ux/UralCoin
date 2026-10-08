@@ -5,71 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="
-width=device-width,
-initial-scale=1,
-maximum-scale=1,
-minimum-scale=1,
-user-scalable=no,
-viewport-fit=cover
-">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>UralCoin</title>
 
 <link rel="stylesheet" href="style.css">
 
-
-<script>
-
-document.addEventListener(
-"touchstart",
-function(event){
-
-if(event.touches.length > 1){
-
-event.preventDefault();
-
-}
-
-},
-{
-passive:false
-}
-);
-
-
-
-let lastTouchEnd = 0;
-
-
-document.addEventListener(
-"touchend",
-function(event){
-
-
-let now = Date.now();
-
-
-if(now-lastTouchEnd <= 300){
-
-event.preventDefault();
-
-}
-
-
-lastTouchEnd = now;
-
-
-},
-false
-);
-
-
-</script>
-
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 
 </head>
 
@@ -103,10 +45,11 @@ U
 
 
 
+<div class="top">
+
+
 <div class="balance">
-
 0.00 U
-
 </div>
 
 
@@ -126,6 +69,11 @@ U
 
 
 </div>
+
+
+
+</div>
+
 
 
 
@@ -152,12 +100,14 @@ U
 
 
 
+
 <section id="referrals" class="page">
 
 
 <h2>
 Рефералы
 </h2>
+
 
 
 <div class="card">
@@ -175,17 +125,23 @@ U
 </p>
 
 
+
 <button>
 Пригласить друзей
 </button>
 
 
+
 <div class="ref-link">
+
 Ваша ссылка
+
 </div>
 
 
+
 </div>
+
 
 
 </section>
@@ -206,6 +162,7 @@ U
 </h2>
 
 
+
 <div class="card">
 
 
@@ -215,12 +172,15 @@ U
 <input placeholder="Количество U">
 
 
+
 <button>
 Перевести
 </button>
 
 
+
 </div>
+
 
 
 </section>
@@ -237,13 +197,15 @@ U
 
 
 <h2>
-Топы
+Топ игроков
 </h2>
 
 
 <div class="players">
 
+
 </div>
+
 
 
 </section>
@@ -265,6 +227,8 @@ U
 
 
 
+
+
 <div class="card">
 
 
@@ -274,79 +238,187 @@ U
 
 
 
+
 <div class="upgrade-card">
 
-<span>
-Уровень 1<br>
-+0.01 U
-</span>
 
-<button>
+<div>
+
+<b>
+Уровень 1
+</b>
+
+
+<p>
++0.01 U за клик
+</p>
+
+
+</div>
+
+
+<button data-price="10" data-power="0.01">
 10 U
 </button>
 
+
 </div>
+
+
+
 
 
 
 <div class="upgrade-card">
 
-<span>
-Уровень 2<br>
-+0.05 U
-</span>
 
-<button>
+<div>
+
+<b>
+Уровень 2
+</b>
+
+
+<p>
++0.05 U за клик
+</p>
+
+
+</div>
+
+
+<button data-price="100" data-power="0.05">
 100 U
 </button>
 
+
 </div>
+
+
+
+
 
 
 
 <div class="upgrade-card">
 
-<span>
-Уровень 3<br>
-+0.10 U
-</span>
 
-<button>
+<div>
+
+<b>
+Уровень 3
+</b>
+
+
+<p>
++0.10 U за клик
+</p>
+
+
+</div>
+
+
+<button data-price="500" data-power="0.10">
 500 U
 </button>
 
+
 </div>
+
+
+
 
 
 
 <div class="upgrade-card">
 
-<span>
-Уровень 4<br>
-+0.50 U
-</span>
 
-<button>
+<div>
+
+<b>
+Уровень 4
+</b>
+
+
+<p>
++0.50 U за клик
+</p>
+
+
+</div>
+
+
+<button data-price="2500" data-power="0.50">
 2500 U
 </button>
 
+
 </div>
+
+
+
 
 
 
 <div class="upgrade-card">
 
-<span>
-Уровень 5<br>
-+1.00 U
-</span>
 
-<button>
-10000 U
-</button>
+<div>
+
+<b>
+Уровень 5
+</b>
+
+
+<p>
++1.00 U за клик
+</p>
+
 
 </div>
 
+
+<button data-price="10000" data-power="1">
+10000 U
+</button>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card menu-more">
+
+
+<button>
+Получить ключ API
+</button>
+
+
+<button>
+История переводов
+</button>
+
+
+
+<a href="https://t.me/+NyqTkXAU-H5hNDky">
+Наш канал
+</a>
+
+
+
+<a href="https://t.me/BuysStarsBot?start=8265611469">
+Купить прем
+</a>
 
 
 </div>
@@ -354,7 +426,6 @@ U
 
 
 </section>
-
 
 
 
@@ -391,8 +462,8 @@ U
 </button>
 
 
-
 </nav>
+
 
 
 
@@ -403,11 +474,14 @@ U
 
 
 
-
 <script src="app.js"></script>
+
 <script src="telegram.js"></script>
+
 <script src="referrals.js"></script>
+
 <script src="tops.js"></script>
+
 <script src="transfer.js"></script>
 
 
