@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin SERVER v14
-// Promo + Top + Users
+// URALcoin SERVER v14.1 FINAL
+// Promo + Top + Sync
 // JSON DATABASE
 // ===================================
 
@@ -8,7 +8,6 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-
 
 
 const app = express();
@@ -32,12 +31,9 @@ let users = [];
 
 
 
-
-
 // ===============================
 // DATABASE
 // ===============================
-
 
 
 function loadUsers(){
@@ -59,7 +55,6 @@ DB,
 );
 
 
-
 }
 
 
@@ -70,7 +65,7 @@ catch(error){
 
 
 console.log(
-"DB LOAD ERROR",
+"LOAD ERROR",
 error
 );
 
@@ -81,7 +76,6 @@ users=[];
 }
 
 
-
 }
 
 
@@ -90,6 +84,7 @@ users=[];
 
 
 function saveUsers(){
+
 
 
 fs.writeFileSync(
@@ -114,9 +109,6 @@ null,
 
 
 
-
-
-
 loadUsers();
 
 
@@ -128,17 +120,14 @@ loadUsers();
 
 
 // ===============================
-// CREATE PROMO
+// PROMO GENERATOR
 // ===============================
-
 
 
 function createPromoCode(){
 
 
-
 let code;
-
 
 
 do{
@@ -172,9 +161,7 @@ u=>u.promoCode===code
 
 
 
-
 return code;
-
 
 
 }
@@ -188,9 +175,8 @@ return code;
 
 
 // ===============================
-// CREATE USER
+// CREATE / UPDATE USER
 // ===============================
-
 
 
 app.post("/user",(req,res)=>{
@@ -233,9 +219,6 @@ String(u.id)===String(data.id)
 
 
 
-
-
-
 if(!user){
 
 
@@ -252,46 +235,31 @@ name:data.name || "Игрок",
 photo:data.photo || "",
 
 
-
-
 balance:0,
-
 
 
 clickPower:0.01,
 
 
-
 autoPower:0,
-
 
 
 friends:0,
 
 
-
 earnedFromPromo:0,
-
 
 
 promoCode:createPromoCode(),
 
 
-
 activatedCodes:[],
-
 
 
 upgrades:{},
 
 
-
 apiKey:"",
-
-
-
-crystals:0,
-
 
 
 created:Date.now()
@@ -314,16 +282,19 @@ else{
 
 
 
-if(data.name)
+user.name =
 
-user.name=data.name;
+data.name ||
+
+user.name;
 
 
 
+user.photo =
 
-if(data.photo)
+data.photo ||
 
-user.photo=data.photo;
+user.photo;
 
 
 
@@ -336,17 +307,9 @@ user.promoCode=createPromoCode();
 
 
 
-
-
 if(!user.activatedCodes)
 
 user.activatedCodes=[];
-
-
-
-if(!user.upgrades)
-
-user.upgrades={};
 
 
 
@@ -357,8 +320,8 @@ user.upgrades={};
 
 
 
-saveUsers();
 
+saveUsers();
 
 
 
@@ -384,7 +347,6 @@ res.json(user);
 // ===============================
 
 
-
 app.get("/user/:id",(req,res)=>{
 
 
@@ -404,22 +366,12 @@ res.json(user || null);
 
 
 });
-
-
-
-
-
-
-
-
 // ===============================
 // SYNC BALANCE
 // ===============================
 
 
-
 app.post("/sync",(req,res)=>{
-
 
 
 let user = users.find(
@@ -441,7 +393,7 @@ if(user){
 
 user.balance =
 
-Number(req.body.balance || 0);
+Number(req.body.balance || user.balance);
 
 
 
@@ -455,6 +407,7 @@ saveUsers();
 
 
 
+
 res.json({
 
 success:true
@@ -462,27 +415,29 @@ success:true
 });
 
 
-
 });
+
+
+
+
+
+
+
+
+
 // ===============================
-// CREATE PROMO ROUTE
+// CREATE PROMO
 // ===============================
 
 
 app.post("/create-promo",(req,res)=>{
 
 
-let id = req.body.id;
-
-
-
-
-
 let user = users.find(
 
 u=>
 
-String(u.id)===String(id)
+String(u.id)===String(req.body.id)
 
 );
 
@@ -490,7 +445,10 @@ String(u.id)===String(id)
 
 
 
+
+
 if(!user){
+
 
 
 return res.json({
@@ -513,11 +471,13 @@ message:"USER_NOT_FOUND"
 if(!user.promoCode){
 
 
+
 user.promoCode=createPromoCode();
 
 
 
 saveUsers();
+
 
 
 }
@@ -529,14 +489,10 @@ saveUsers();
 
 res.json({
 
-
 success:true,
-
 
 code:user.promoCode
 
-
-
 });
 
 
@@ -552,17 +508,18 @@ code:user.promoCode
 
 
 // ===============================
-// ACTIVATE PROMO v14
+// ACTIVATE PROMO
 // +5000 U OWNER
 // ===============================
-
 
 
 app.post("/activate-promo",(req,res)=>{
 
 
+
 let userId =
-req.body.userId;
+
+String(req.body.userId);
 
 
 
@@ -579,13 +536,15 @@ String(req.body.code || "")
 
 
 
+
 let user = users.find(
 
 u=>
 
-String(u.id)===String(userId)
+String(u.id)===userId
 
 );
+
 
 
 
@@ -601,6 +560,8 @@ String(u.promoCode)
 ===code
 
 );
+
+
 
 
 
@@ -630,6 +591,7 @@ message:"Пользователь не найден"
 if(!owner){
 
 
+
 return res.json({
 
 success:false,
@@ -649,25 +611,23 @@ message:"Промокод не существует"
 
 if(
 
-String(user.id)
-
-===
-
-String(owner.id)
+String(owner.id)===String(user.id)
 
 ){
+
 
 
 return res.json({
 
 success:false,
 
-message:"Нельзя использовать свой код"
+message:"Нельзя активировать свой код"
 
 });
 
 
 }
+
 
 
 
@@ -711,7 +671,6 @@ message:"Код уже использован"
 
 
 
-
 user.activatedCodes.push(code);
 
 
@@ -732,7 +691,6 @@ Number(owner.balance || 0)
 
 
 
-
 owner.friends =
 
 Number(owner.friends || 0)
@@ -746,7 +704,6 @@ Number(owner.friends || 0)
 
 
 
-
 owner.earnedFromPromo =
 
 Number(owner.earnedFromPromo || 0)
@@ -754,7 +711,6 @@ Number(owner.earnedFromPromo || 0)
 +
 
 5000;
-
 
 
 
@@ -790,41 +746,15 @@ reward:5000
 
 
 // ===============================
-// OLD COMPATIBILITY
+// TOP
 // ===============================
-
-
-
-app.post("/promo/activate",(req,res)=>{
-
-
-req.url="/activate-promo";
-
-
-res.redirect(307,"/activate-promo");
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// TOP PLAYERS
-// ===============================
-
 
 
 app.get("/top",(req,res)=>{
 
 
 
-let top =
+let players =
 
 [...users]
 
@@ -850,8 +780,9 @@ name:u.name || "Игрок",
 
 photo:u.photo || "",
 
-balance:u.balance || 0
+balance:u.balance || 0,
 
+friends:u.friends || 0
 
 }));
 
@@ -860,13 +791,49 @@ balance:u.balance || 0
 
 
 
+res.json({
+
+players:players
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// DEBUG
+// ===============================
+
+
+app.get("/debug-users",(req,res)=>{
+
 
 res.json({
 
-players:top
+count:users.length,
+
+users:users.map(u=>({
+
+id:u.id,
+
+name:u.name,
+
+balance:u.balance,
+
+promoCode:u.promoCode
+
+}))
 
 });
-
 
 
 });
@@ -880,9 +847,8 @@ players:top
 
 
 // ===============================
-// SERVER STATUS
+// STATUS
 // ===============================
-
 
 
 app.get("/",(req,res)=>{
@@ -890,7 +856,7 @@ app.get("/",(req,res)=>{
 
 res.send(
 
-"URALcoin server v14 online"
+"URALcoin server v14.1 FINAL online"
 
 );
 
@@ -910,9 +876,7 @@ app.listen(PORT,()=>{
 
 console.log(
 
-"URALcoin v14 started on "
-
-+
+"URALcoin v14.1 started:",
 
 PORT
 
@@ -920,3 +884,4 @@ PORT
 
 
 });
+
