@@ -1,7 +1,7 @@
 const CONFIG = {
 
 
-// Telegram бот
+// Telegram
 
 BOT_USERNAME:
 
@@ -11,12 +11,11 @@ BOT_USERNAME:
 
 
 
-// Ссылки
-
-
 CHANNEL:
 
 "https://t.me/+NyqTkXAU-H5hNDky",
+
+
 
 
 
@@ -28,8 +27,8 @@ PREMIUM:
 
 
 
-
 // Экономика
+
 
 
 START_BALANCE:
@@ -38,9 +37,12 @@ START_BALANCE:
 
 
 
+
 START_CLICK:
 
 0.01,
+
+
 
 
 
@@ -53,16 +55,16 @@ REFERRAL_REWARD:
 
 
 
+// Улучшения клика
 
-// Улучшения
 
 
-UPGRADES:[
+CLICK_UPGRADES:[
 
 
 {
 
-level:1,
+id:1,
 
 price:10,
 
@@ -74,7 +76,7 @@ power:0.01
 
 {
 
-level:2,
+id:2,
 
 price:100,
 
@@ -86,7 +88,7 @@ power:0.05
 
 {
 
-level:3,
+id:3,
 
 price:500,
 
@@ -98,7 +100,7 @@ power:0.10
 
 {
 
-level:4,
+id:4,
 
 price:2500,
 
@@ -110,7 +112,7 @@ power:0.50
 
 {
 
-level:5,
+id:5,
 
 price:10000,
 
@@ -120,12 +122,90 @@ power:1
 
 
 
-]
+],
+
+
+
+
+
+
+// Автокликеры
+
+
+
+AUTO_UPGRADES:[
+
+
+{
+
+id:1,
+
+price:100,
+
+power:1
+
+},
+
+
+
+{
+
+id:2,
+
+price:500,
+
+power:5
+
+},
+
+
+
+{
+
+id:3,
+
+price:2500,
+
+power:20
+
+},
+
+
+
+{
+
+id:4,
+
+price:10000,
+
+power:100
+
+}
+
+
+
+],
+
+
+
+
+
+
+
+// Промокоды
+
+
+
+PROMO_LIMIT:
+
+100,
+
 
 
 
 
 };
+
 
 
 
