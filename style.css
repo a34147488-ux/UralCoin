@@ -1,8 +1,7 @@
-/* ============================= */
-/* URALCOIN STYLE V5 */
-/* GOLD + PURPLE + WINTER CITY */
-/* ============================= */
-
+/* ===================================
+URALcoin V5
+GOLD PURPLE WINTER STYLE
+=================================== */
 
 
 *{
@@ -29,20 +28,13 @@ height:100%;
 
 overflow:hidden;
 
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 
 background:#090414;
 
-color:white;
-
-touch-action:manipulation;
-
+color:#fff;
 
 }
-
-
-
-
 
 
 
@@ -57,18 +49,13 @@ position:relative;
 
 overflow:hidden;
 
-
 }
 
 
 
 
 
-
-
-
-/* ГОРОДСКОЙ ФОН */
-
+/* ФОН ГОРОДА */
 
 
 .city-bg{
@@ -81,7 +68,6 @@ inset:0;
 
 background:
 
-
 linear-gradient(
 
 135deg,
@@ -92,61 +78,45 @@ rgba(100,30,220,.65)
 
 ),
 
-
 url("ekaterinburg.jpg");
 
 
 
 background-size:cover;
 
-
 background-position:center;
-
-
-
-z-index:0;
 
 
 
 animation:
 
-cityGlow 12s infinite alternate;
-
-
-}
+cityLight 10s infinite alternate;
 
 
 
-
-
-
-@keyframes cityGlow{
-
-
-0%{
-
-
-filter:
-
-brightness(.75)
-saturate(1);
-
+z-index:0;
 
 }
 
 
 
-100%{
+
+@keyframes cityLight{
 
 
-filter:
+from{
 
-brightness(1.1)
-saturate(1.5);
-
+filter:brightness(.7) saturate(1);
 
 }
 
+
+
+to{
+
+filter:brightness(1.1) saturate(1.5);
+
+}
 
 
 }
@@ -157,9 +127,7 @@ saturate(1.5);
 
 
 
-
-/* ЗИМНИЕ СЛОИ */
-
+/* ГИРЛЯНДА */
 
 
 .garland{
@@ -175,15 +143,15 @@ width:100%;
 
 height:35px;
 
+
 display:flex;
 
 justify-content:space-around;
 
 align-items:center;
 
-z-index:20;
 
-pointer-events:none;
+z-index:20;
 
 
 }
@@ -197,6 +165,7 @@ width:12px;
 
 height:12px;
 
+
 border-radius:50%;
 
 
@@ -205,17 +174,16 @@ background:#ffd700;
 
 box-shadow:
 
+0 0 20px gold;
 
-0 0 15px gold;
 
 
 animation:
 
-lamp 1.5s infinite alternate;
+blink 1.5s infinite alternate;
 
 
 }
-
 
 
 
@@ -226,13 +194,11 @@ animation-delay:.2s;
 
 }
 
-
 .garland span:nth-child(3){
 
 animation-delay:.4s;
 
 }
-
 
 .garland span:nth-child(4){
 
@@ -240,13 +206,11 @@ animation-delay:.6s;
 
 }
 
-
 .garland span:nth-child(5){
 
 animation-delay:.8s;
 
 }
-
 
 .garland span:nth-child(6){
 
@@ -256,30 +220,24 @@ animation-delay:1s;
 
 
 
-
-
-@keyframes lamp{
+@keyframes blink{
 
 
 from{
 
-
 opacity:.4;
 
 transform:scale(.8);
-
 
 }
 
 
 to{
 
-
 opacity:1;
 
 transform:scale(1.2);
 
-
 }
 
 
@@ -290,6 +248,7 @@ transform:scale(1.2);
 
 
 
+/* СНЕГ */
 
 
 .snow{
@@ -299,55 +258,48 @@ position:absolute;
 
 inset:0;
 
-overflow:hidden;
-
 z-index:15;
 
 pointer-events:none;
+
+overflow:hidden;
 
 
 }
 
 
 
+.snow:before{
 
 
-.snow::before{
-
-
-content:
-
-"❄  ❅  ❆  ❄  ❅  ❆  ❄  ❅";
-
+content:"❄  ❅  ❆  ❄  ❅  ❆";
 
 position:absolute;
 
 
-top:-80px;
-
-
-left:-50px;
+top:-50px;
 
 
 width:120%;
 
 
-font-size:28px;
+font-size:30px;
 
 
-letter-spacing:35px;
+letter-spacing:50px;
 
 
 color:white;
 
 
-opacity:.75;
+opacity:.8;
 
 
 
 animation:
 
-snowMove 12s linear infinite;
+snow 12s linear infinite;
+
 
 
 }
@@ -355,8 +307,7 @@ snowMove 12s linear infinite;
 
 
 
-
-@keyframes snowMove{
+@keyframes snow{
 
 
 from{
@@ -364,12 +315,10 @@ from{
 
 transform:
 
-translateY(-100px)
-translateX(0);
+translateY(-100px);
 
 
 }
-
 
 
 to{
@@ -378,24 +327,22 @@ to{
 transform:
 
 translateY(110vh)
-translateX(100px);
+
+translateX(80px);
+
+
+}
 
 
 }
 
 
 
-}
 
 
 
 
-
-
-
-
-/* ШАПКА */
-
+/* HEADER */
 
 
 .header{
@@ -407,9 +354,6 @@ position:relative;
 
 z-index:5;
 
-padding:15px;
-
-
 }
 
 
@@ -420,15 +364,12 @@ padding:15px;
 
 position:absolute;
 
-left:20px;
-
 top:15px;
+
+left:20px;
 
 
 }
-
-
-
 
 
 
@@ -443,22 +384,17 @@ height:55px;
 border-radius:50%;
 
 
+overflow:hidden;
+
+
 display:flex;
 
-
 align-items:center;
-
 
 justify-content:center;
 
 
-
-overflow:hidden;
-
-
-
 background:
-
 
 linear-gradient(
 
@@ -472,21 +408,17 @@ linear-gradient(
 
 
 
-
 font-size:25px;
 
 font-weight:900;
 
 
-
 box-shadow:
-
 
 0 0 25px gold;
 
 
 }
-
 
 
 
@@ -496,6 +428,7 @@ box-shadow:
 width:100%;
 
 height:100%;
+
 
 object-fit:cover;
 
@@ -507,23 +440,9 @@ object-fit:cover;
 
 
 
-#avatarLetter{
 
 
-position:absolute;
-
-
-}
-
-
-
-
-
-
-
-
-/* ОСНОВНОЙ КОНТЕНТ */
-
+/* КОНТЕНТ */
 
 
 .content{
@@ -534,9 +453,7 @@ height:
 calc(100vh - 80px);
 
 
-
 overflow-y:auto;
-
 
 
 position:relative;
@@ -545,14 +462,10 @@ position:relative;
 z-index:3;
 
 
-
 padding-bottom:90px;
 
 
 }
-
-
-
 
 
 
@@ -566,66 +479,53 @@ display:none;
 padding:20px;
 
 
-
 animation:
 
-pageShow .3s;
+show .3s;
 
 
 }
-
 
 
 
 .page.active{
 
-
 display:block;
-
 
 }
 
 
 
-
-
-
-
-
-@keyframes pageShow{
+@keyframes show{
 
 
 from{
 
-
 opacity:0;
 
-transform:
-
-translateY(15px);
-
+transform:translateY(15px);
 
 }
 
 
-
 to{
-
 
 opacity:1;
 
 transform:none;
 
+}
+
 
 }
 
 
 
-}
-/* ============================= */
+
+
+
+
 /* БАЛАНС */
-/* ============================= */
-
 
 
 .balance-box{
@@ -633,12 +533,10 @@ transform:none;
 
 text-align:center;
 
-
 margin-top:35px;
 
 
 }
-
 
 
 
@@ -648,13 +546,13 @@ margin-top:35px;
 display:flex;
 
 
-align-items:center;
-
-
 justify-content:center;
 
 
-gap:8px;
+align-items:center;
+
+
+gap:10px;
 
 
 font-size:42px;
@@ -663,18 +561,7 @@ font-size:42px;
 font-weight:900;
 
 
-letter-spacing:1px;
-
-
-text-shadow:
-
-
-0 0 15px rgba(255,215,0,.6);
-
-
 }
-
-
 
 
 
@@ -682,7 +569,6 @@ text-shadow:
 
 
 width:28px;
-
 
 height:28px;
 
@@ -699,7 +585,6 @@ align-items:center;
 justify-content:center;
 
 
-
 font-size:15px;
 
 
@@ -707,12 +592,7 @@ font-weight:900;
 
 
 
-color:#fff;
-
-
-
 background:
-
 
 linear-gradient(
 
@@ -728,7 +608,6 @@ linear-gradient(
 
 box-shadow:
 
-
 0 0 15px gold;
 
 
@@ -741,20 +620,19 @@ box-shadow:
 .click-power{
 
 
-display:inline-block;
-
-
 margin-top:15px;
 
 
-padding:10px 18px;
+display:inline-block;
 
 
-border-radius:18px;
+padding:10px 20px;
+
+
+border-radius:20px;
 
 
 background:
-
 
 linear-gradient(
 
@@ -767,17 +645,7 @@ linear-gradient(
 );
 
 
-
 font-weight:900;
-
-
-font-size:16px;
-
-
-box-shadow:
-
-
-0 0 20px rgba(255,215,0,.4);
 
 
 }
@@ -788,12 +656,7 @@ box-shadow:
 
 
 
-
-
-/* ============================= */
 /* ГЛАВНАЯ КНОПКА */
-/* ============================= */
-
 
 
 .main-coin{
@@ -801,44 +664,35 @@ box-shadow:
 
 width:250px;
 
-
 height:250px;
 
 
 margin:80px auto 0;
 
 
-
 display:flex;
-
 
 align-items:center;
 
-
 justify-content:center;
-
 
 
 border-radius:50%;
 
 
-
-border:
-
-8px solid #ffd700;
+border:8px solid gold;
 
 
 
 background:
 
-
 radial-gradient(
 
 circle,
 
-#fff8a0,
+#fff59b,
 
-#ffc400 40%,
+#ffc400,
 
 #6d22cc
 
@@ -855,80 +709,23 @@ font-weight:900;
 color:white;
 
 
-
 box-shadow:
 
-
-0 0 50px gold,
-
-inset 0 0 30px rgba(255,255,255,.4);
+0 0 50px gold;
 
 
 
 transition:.15s;
 
 
-
-animation:
-
-coinPulse 3s infinite;
-
-
 }
-
 
 
 
 .main-coin:active{
 
 
-transform:
-
-scale(.9);
-
-
-}
-
-
-
-
-@keyframes coinPulse{
-
-
-0%{
-
-
-box-shadow:
-
-0 0 40px gold;
-
-
-}
-
-
-
-50%{
-
-
-box-shadow:
-
-0 0 70px #7b2cff;
-
-
-}
-
-
-
-100%{
-
-
-box-shadow:
-
-0 0 40px gold;
-
-
-}
-
+transform:scale(.9);
 
 
 }
@@ -940,11 +737,7 @@ box-shadow:
 
 
 
-
-/* ============================= */
 /* ПАНЕЛИ */
-/* ============================= */
-
 
 
 .panel{
@@ -952,16 +745,11 @@ box-shadow:
 
 background:
 
-
 rgba(255,255,255,.12);
 
 
 
-backdrop-filter:
-
-
-blur(18px);
-
+backdrop-filter:blur(15px);
 
 
 border-radius:25px;
@@ -973,74 +761,30 @@ padding:22px;
 
 border:
 
-1px solid rgba(255,215,0,.45);
-
-
-
-box-shadow:
-
-
-0 0 30px rgba(0,0,0,.3);
-
+1px solid rgba(255,215,0,.5);
 
 
 }
+
 
 
 
 .panel h2{
 
 
+text-align:center;
+
+
 font-size:28px;
-
-
-margin-bottom:20px;
 
 
 color:#ffd85c;
 
 
-text-align:center;
+margin-bottom:20px;
 
 
 }
-
-
-
-
-
-
-
-
-.info-row{
-
-
-display:flex;
-
-
-justify-content:space-between;
-
-
-padding:15px;
-
-
-
-background:
-
-
-rgba(0,0,0,.25);
-
-
-
-border-radius:15px;
-
-
-margin-bottom:12px;
-
-
-}
-
-
 
 
 
@@ -1055,33 +799,19 @@ width:100%;
 height:55px;
 
 
-border:none;
-
-
-outline:none;
-
-
 border-radius:15px;
 
 
-padding:0 18px;
+border:none;
+
+
+padding:0 15px;
 
 
 margin-bottom:15px;
 
 
-
 font-size:17px;
-
-
-background:
-
-
-rgba(255,255,255,.9);
-
-
-
-color:#222;
 
 
 }
@@ -1091,24 +821,14 @@ color:#222;
 
 
 
-
-
-
-/* ============================= */
 /* КНОПКИ */
-/* ============================= */
-
 
 
 button,
 .menu-card{
 
 
-transition:
-
-transform .15s,
-
-box-shadow .15s;
+transition:.15s;
 
 
 cursor:pointer;
@@ -1118,28 +838,17 @@ cursor:pointer;
 
 
 
-
 button:active,
 .menu-card:active{
 
 
-transform:
-
-scale(.94);
+transform:scale(.94);
 
 
-
-box-shadow:
-
-
-0 0 25px gold;
+box-shadow:0 0 25px gold;
 
 
 }
-
-
-
-
 
 
 
@@ -1151,25 +860,20 @@ box-shadow:
 width:100%;
 
 
-padding:16px;
+padding:17px;
 
 
 margin-bottom:15px;
 
 
-
 border-radius:18px;
 
 
-
-border:
-
-1px solid #ffd700;
+border:1px solid gold;
 
 
 
 background:
-
 
 linear-gradient(
 
@@ -1186,41 +890,25 @@ linear-gradient(
 color:white;
 
 
-
 font-size:18px;
-
 
 
 font-weight:900;
 
 
-
 text-align:center;
-
 
 
 display:block;
 
 
-
 text-decoration:none;
 
 
-
 }
-
-
-
-
-
-
-
-
-
-/* ============================= */
-/* УЛУЧШЕНИЯ */
-/* ============================= */
-
+/* ===================================
+   УЛУЧШЕНИЯ
+=================================== */
 
 
 .upgrade-card{
@@ -1249,29 +937,28 @@ border-radius:18px;
 
 background:
 
-
-rgba(0,0,0,.3);
+rgba(0,0,0,.35);
 
 
 
 border:
 
-
-1px solid rgba(255,215,0,.3);
-
+1px solid rgba(255,215,0,.35);
 
 
 }
+
 
 
 
 .upgrade-card span{
 
 
-font-weight:700;
+font-weight:800;
 
 
 }
+
 
 
 
@@ -1287,9 +974,7 @@ border:none;
 border-radius:14px;
 
 
-
 background:#ffd700;
-
 
 
 font-weight:900;
@@ -1303,11 +988,513 @@ font-weight:900;
 
 
 
+/* ===================================
+   ТОП ИГРОКОВ
+=================================== */
 
 
-/* ============================= */
-/* НИЖНЕЕ МЕНЮ */
-/* ============================= */
+#topList{
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:12px;
+
+
+}
+
+
+
+
+
+.top-card{
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:12px;
+
+
+
+padding:15px;
+
+
+border-radius:22px;
+
+
+
+background:
+
+
+linear-gradient(
+
+135deg,
+
+rgba(255,215,0,.25),
+
+rgba(120,40,220,.35)
+
+);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.5);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+animation:
+
+topAppear .3s;
+
+
+}
+
+
+
+
+
+@keyframes topAppear{
+
+
+from{
+
+
+opacity:0;
+
+
+transform:translateY(20px);
+
+
+}
+
+
+
+to{
+
+
+opacity:1;
+
+
+transform:none;
+
+
+}
+
+
+}
+
+
+
+
+
+.top-position{
+
+
+width:36px;
+
+
+height:36px;
+
+
+border-radius:50%;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#ffd700,
+
+#7b2cff
+
+);
+
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+.top-avatar{
+
+
+width:55px;
+
+
+height:55px;
+
+
+border-radius:50%;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+overflow:hidden;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#ffd700,
+
+#7b2cff
+
+);
+
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+.top-avatar-img{
+
+
+width:55px;
+
+
+height:55px;
+
+
+object-fit:cover;
+
+
+border-radius:50%;
+
+
+
+border:
+
+2px solid gold;
+
+
+
+}
+
+
+
+
+.top-data{
+
+
+flex:1;
+
+
+}
+
+
+
+
+.top-name{
+
+
+font-size:18px;
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+.top-balance{
+
+
+font-size:17px;
+
+
+font-weight:900;
+
+
+color:#ffd85c;
+
+
+}
+
+
+
+.top-friends{
+
+
+font-size:13px;
+
+
+opacity:.8;
+
+
+}
+
+
+
+
+.top-empty{
+
+
+text-align:center;
+
+
+padding:30px;
+
+
+opacity:.7;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===================================
+   ИСТОРИЯ
+=================================== */
+
+
+
+.history-item{
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.4);
+
+
+
+border-radius:18px;
+
+
+padding:15px;
+
+
+margin-bottom:12px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===================================
+   API
+=================================== */
+
+
+
+#apiResult{
+
+
+background:
+
+rgba(0,0,0,.35);
+
+
+
+padding:20px;
+
+
+
+border-radius:15px;
+
+
+
+color:#ffd85c;
+
+
+
+font-weight:900;
+
+
+
+word-break:break-all;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===================================
+   + U АНИМАЦИЯ
+=================================== */
+
+
+.click-number{
+
+
+position:fixed;
+
+
+left:50%;
+
+
+top:55%;
+
+
+transform:
+
+translateX(-50%);
+
+
+
+font-size:30px;
+
+
+
+font-weight:900;
+
+
+
+color:#ffd700;
+
+
+
+text-shadow:
+
+0 0 20px gold;
+
+
+
+z-index:100;
+
+
+
+pointer-events:none;
+
+
+
+animation:
+
+coinUp .8s forwards;
+
+
+}
+
+
+
+
+
+
+
+@keyframes coinUp{
+
+
+0%{
+
+
+opacity:1;
+
+
+transform:
+
+translate(-50%,0)
+
+scale(1);
+
+
+}
+
+
+
+100%{
+
+
+opacity:0;
+
+
+
+transform:
+
+translate(-50%,-120px)
+
+scale(1.4);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===================================
+   НИЖНЕЕ МЕНЮ
+=================================== */
 
 
 
@@ -1342,25 +1529,23 @@ align-items:center;
 
 
 
-z-index:10;
-
-
-
 background:
 
 
-rgba(0,0,0,.6);
+rgba(0,0,0,.65);
 
 
 
 backdrop-filter:
 
-
 blur(15px);
 
 
-}
 
+z-index:20;
+
+
+}
 
 
 
@@ -1391,6 +1576,8 @@ font-weight:900;
 
 
 
+
+
 .nav.active{
 
 
@@ -1398,582 +1585,30 @@ color:#ffd700;
 
 
 }
-/* ============================= */
-/* ТОП ИГРОКОВ */
-/* ============================= */
 
 
-#topList{
 
 
-display:flex;
 
 
-flex-direction:column;
 
 
-gap:12px;
+/* ===================================
+   ПЛАВНОСТЬ
+=================================== */
 
 
-}
 
-
-
-
-.top-card{
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:12px;
-
-
-
-padding:15px;
-
-
-
-border-radius:22px;
-
-
-
-background:
-
-
-linear-gradient(
-
-135deg,
-
-rgba(255,215,0,.25),
-
-rgba(120,40,220,.35)
-
-);
-
-
-
-border:
-
-
-1px solid rgba(255,215,0,.5);
-
-
-
-backdrop-filter:
-
-
-blur(15px);
-
-
-
-animation:
-
-
-topShow .35s;
-
-
-
-}
-
-
-
-@keyframes topShow{
-
-
-from{
-
-
-opacity:0;
-
-
-transform:
-
-
-translateY(20px);
-
-
-}
-
-
-to{
-
-
-opacity:1;
-
-
-transform:none;
-
-
-}
-
-
-}
-
-
-
-
-
-.top-position{
-
-
-width:35px;
-
-
-height:35px;
-
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-
-border-radius:50%;
-
-
-
-background:
-
-
-linear-gradient(
-
-135deg,
-
-#ffd700,
-
-#7b2cff
-
-);
-
-
-
-font-weight:900;
-
-
-
-}
-
-
-
-
-
-.top-avatar{
-
-
-width:55px;
-
-
-height:55px;
-
-
-
-border-radius:50%;
-
-
-
-overflow:hidden;
-
-
-
-display:flex;
-
-
-
-align-items:center;
-
-
-
-justify-content:center;
-
-
-
-background:
-
-
-linear-gradient(
-
-135deg,
-
-#ffd700,
-
-#7b2cff
-
-);
-
-
-
-font-weight:900;
-
-
-
-}
-
-
-
-.top-avatar-img{
-
-
-width:100%;
-
-
-height:100%;
-
-
-
-object-fit:cover;
-
-
-
-border-radius:50%;
-
-
-
-}
-
-
-
-
-
-.top-data{
-
-
-flex:1;
-
-
-
-}
-
-
-
-
-
-.top-name{
-
-
-font-size:18px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-.top-balance{
-
-
-font-size:17px;
-
-
-font-weight:900;
-
-
-
-color:#ffd85c;
-
-
-
-}
-
-
-
-
-.top-friends{
-
-
-font-size:13px;
-
-
-opacity:.8;
-
-
-}
-
-
-
-
-
-.top-empty{
-
-
-padding:30px;
-
-
-text-align:center;
-
-
-opacity:.7;
-
-
-}
-
-
-
-
-
-
-
-
-/* ============================= */
-/* ИСТОРИЯ */
-/* ============================= */
-
-
-
-.history-item{
-
-
-padding:15px;
-
-
-margin-bottom:12px;
-
-
-
-border-radius:18px;
-
-
-
-background:
-
-
-rgba(255,255,255,.12);
-
-
-
-border:
-
-
-1px solid rgba(255,215,0,.35);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ============================= */
-/* API */
-/* ============================= */
-
-
-
-#apiResult{
-
-
-padding:20px;
-
-
-border-radius:15px;
-
-
-
-background:
-
-
-rgba(0,0,0,.35);
-
-
-
-word-break:break-all;
-
-
-
-margin-bottom:20px;
-
-
-
-font-weight:700;
-
-
-
-color:#ffd85c;
-
-
-}
-
-
-
-
-
-
-
-
-/* ============================= */
-/* АНИМАЦИЯ КЛИКА */
-/* ============================= */
-
-
-
-.click-number{
-
-
-position:fixed;
-
-
-
-left:50%;
-
-
-
-top:55%;
-
-
-
-transform:
-
-
-translateX(-50%);
-
-
-
-font-size:30px;
-
-
-
-font-weight:900;
-
-
-
-color:#ffd700;
-
-
-
-text-shadow:
-
-
-0 0 20px gold;
-
-
-
-pointer-events:none;
-
-
-
-z-index:100;
-
-
-
-animation:
-
-
-clickUp .8s forwards;
-
-
-
-}
-
-
-
-
-
-
-
-@keyframes clickUp{
-
-
-0%{
-
-
-opacity:1;
-
-
-
-transform:
-
-
-translate(-50%,0)
-
-scale(1);
-
-
-
-}
-
-
-
-100%{
-
-
-opacity:0;
-
-
-
-transform:
-
-
-translate(-50%,-100px)
-
-scale(1.4);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ============================= */
-/* ДОПОЛНИТЕЛЬНЫЙ БЛЕСК */
-/* ============================= */
-
-
-
-.gold-button:hover,
+button:hover,
 .menu-card:hover{
 
 
 box-shadow:
 
-
 0 0 25px rgba(255,215,0,.7);
 
 
-
 }
-
-
-
-
-
-.main-coin:hover{
-
-
-filter:
-
-
-brightness(1.15);
-
-
-
-}
-
 
 
 
@@ -1985,6 +1620,7 @@ width:4px;
 
 
 }
+
 
 
 
