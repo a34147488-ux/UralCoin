@@ -1,22 +1,18 @@
 // ===================================
-// URALcoin REFERRALS v10
-// Telegram Referral System
+// URALcoin REFERRAL SYSTEM v12
+// Telegram Invite + Bonus
 // ===================================
 
 
 
-function createReferralLink(){
+function getReferralLink(){
 
 
-let player =
-Storage.getPlayer();
+let player = Storage.getPlayer();
 
 
 
-if(
-!player.id ||
-player.id==="guest"
-)
+if(!player.id)
 
 return "";
 
@@ -24,19 +20,14 @@ return "";
 
 
 
+
 return (
 
-"https://t.me/"
+"https://t.me/" +
 
-+
+BOT_USERNAME +
 
-CONFIG.BOT_USERNAME
-
-+
-
-"?start="
-
-+
+"?start=" +
 
 player.id
 
@@ -54,28 +45,22 @@ player.id
 
 
 
-function loadReferral(){
+function updateReferral(){
 
 
 
-let input =
+const input =
+
 document.getElementById(
 "refLink"
 );
 
 
 
-if(input){
-
-input.value =
-createReferralLink();
-
-}
 
 
+const count =
 
-
-let count =
 document.getElementById(
 "friendsCount"
 );
@@ -84,16 +69,49 @@ document.getElementById(
 
 
 
-if(count){
-
 
 let player =
+
 Storage.getPlayer();
 
 
 
+
+
+
+if(input){
+
+
+
+input.value =
+
+getReferralLink();
+
+
+
+}
+
+
+
+
+
+
+
+if(count){
+
+
+
 count.innerText =
-player.friends || 0;
+
+player.invited ||
+
+player.friends ||
+
+0;
+
+
+
+}
 
 
 
@@ -102,174 +120,98 @@ player.friends || 0;
 
 
 
-renderWorkers();
+
+
+
+
+
+async function sendReferral(referrerId){
+
+
+
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+
+try{
+
+
+
+await fetch(
+
+CONFIG.API_URL + "/referral",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+
+userId:player.id,
+
+
+referrerId:String(referrerId),
+
+
+name:player.name,
+
+
+photo:player.photo
+
+
+
+})
+
 
 
 }
 
-
-
-
-
-
-
-
-
-function renderWorkers(){
-
-
-
-let box =
-document.getElementById(
-"workersList"
 );
 
 
 
-if(!box)
-
-return;
-
-
-
-
-
-let workers =
-Storage.getPlayer().workers;
-
-
-
-
-if(!workers.length){
-
-
-
-box.innerHTML =
-
-`
-<div class="top-empty">
-Пока нет приглашённых
-</div>
-`;
-
-
-
-return;
 
 
 }
 
 
 
+catch(error){
 
 
 
+console.log(
 
-box.innerHTML="";
+"REFERRAL ERROR",
 
+error
 
-
-
-
-
-
-workers.forEach(worker=>{
-
-
-
-let div =
-document.createElement(
-"div"
 );
 
 
 
-div.className =
-"worker-card";
-
-
-
-
-
-
-let avatar = "";
-
-
-
-if(worker.photo){
-
-
-
-avatar =
-
-`
-<img src="${worker.photo}">
-`;
-
-
-
 }
-
-else{
-
-
-
-avatar =
-
-`
-<div class="worker-letter">
-${worker.name[0]}
-</div>
-`;
-
-
-
-}
-
-
-
-
-
-
-div.innerHTML =
-
-`
-
-${avatar}
-
-
-<div>
-
-
-<b>
-${worker.name}
-</b>
-
-
-<br>
-
-
-<span>
-Уровень:
-${worker.level || 1}
-</span>
-
-
-</div>
-
-
-`;
-
-
-
-
-box.appendChild(div);
-
-
-
-});
-
-
 
 
 
@@ -283,70 +225,30 @@ box.appendChild(div);
 
 
 
-
-// ===============================
-// CHECK START PARAM
-// ===============================
-
-
-async function checkReferralStart(){
+function checkTelegramStart(){
 
 
 
-let start = "";
+const params =
 
-
-
-
-
-
-const tg =
-window.Telegram?.WebApp;
-
-
-
-
-
-
-if(
-tg &&
-tg.initDataUnsafe &&
-tg.initDataUnsafe.start_param
-){
-
-
-start =
-tg.initDataUnsafe.start_param;
-
-
-}
-
-
-
-
-
-
-
-
-if(!start){
-
-
-
-let params =
 new URLSearchParams(
+
 window.location.search
+
 );
 
 
 
-start =
-params.get("start") || "";
 
 
 
-}
+const start =
 
+params.get("tgWebAppStartParam")
 
+||
+
+params.get("start");
 
 
 
@@ -363,7 +265,9 @@ return;
 
 
 
+
 let player =
+
 Storage.getPlayer();
 
 
@@ -373,9 +277,9 @@ Storage.getPlayer();
 
 
 if(
-String(start)
-===
-String(player.id)
+
+String(start)===String(player.id)
+
 )
 
 return;
@@ -386,73 +290,47 @@ return;
 
 
 
-let saved =
-Storage.setReferrer(start);
+
+if(
+
+player.referrer
+
+)
+
+return;
 
 
 
 
 
 
-if(saved){
+
+
+player.referrer =
+
+String(start);
 
 
 
-try{
 
 
 
-await fetch(
-
-CONFIG.API_URL+
-"/referral",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json"
-
-},
 
 
-body:JSON.stringify({
-
-userId:player.id,
-
-referrerId:start,
-
-name:player.name
-
-
-})
-
-
-}
-
+Storage.savePlayer(
+player
 );
 
 
 
-console.log(
-"Referral sent"
-);
 
 
 
-}
 
-catch(e){
-
+sendReferral(start);
 
 
-console.log(
-"Referral error",
-e
-);
+
 
 
 
@@ -460,11 +338,6 @@ e
 
 
 
-}
-
-
-
-}
 
 
 
@@ -479,23 +352,34 @@ e
 // ===============================
 
 
-let copy =
+const copyReferral =
+
 document.getElementById(
 "copyReferral"
 );
 
 
 
-if(copy){
 
 
 
-copy.onclick = ()=>{
+
+if(copyReferral){
 
 
 
-let link =
-createReferralLink();
+copyReferral.onclick=
+
+()=>{
+
+
+
+const link =
+
+getReferralLink();
+
+
+
 
 
 
@@ -505,19 +389,13 @@ link
 
 
 
-copy.innerText =
-"Скопировано";
 
 
+alert(
 
-setTimeout(()=>{
+"Ссылка скопирована"
 
-
-copy.innerText =
-"Копировать ссылку";
-
-
-},1500);
+);
 
 
 
@@ -535,18 +413,20 @@ copy.innerText =
 
 
 
-checkReferralStart();
+document.addEventListener(
 
-loadReferral();
+"DOMContentLoaded",
+
+()=>{
 
 
 
+updateReferral();
 
 
-setInterval(
 
-loadReferral,
+checkTelegramStart();
 
-5000
 
-);
+
+});
