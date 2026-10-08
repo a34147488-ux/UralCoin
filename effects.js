@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin WINTER EFFECTS v3
-// CSS Santa + Snow Bonus
+// URALcoin WINTER EFFECTS v4
+// Santa + Small Bonus
 // ===================================
 
 
@@ -9,8 +9,6 @@ let clickHistory = [];
 
 
 
-
-// отслеживание быстрых кликов
 
 function registerFastClick(){
 
@@ -37,9 +35,6 @@ now - time < 2000
 
 
 
-// 10 быстрых кликов для проверки
-
-
 if(clickHistory.length >= 10){
 
 
@@ -62,7 +57,6 @@ clickHistory = [];
 
 
 
-// запуск Санты
 
 function showAngrySanta(){
 
@@ -75,9 +69,11 @@ const santa = document.getElementById(
 
 
 
+
 if(!santa)
 
 return;
+
 
 
 
@@ -89,10 +85,7 @@ santa.classList.remove(
 
 
 
-
-
 void santa.offsetWidth;
-
 
 
 
@@ -106,9 +99,7 @@ santa.classList.add(
 
 
 
-// шанс бонуса
-
-if(Math.random() < 0.3){
+if(Math.random() < 0.25){
 
 
 giveSantaBonus();
@@ -127,7 +118,6 @@ giveSantaBonus();
 
 
 
-// бонус Санты
 
 function giveSantaBonus(){
 
@@ -139,13 +129,30 @@ let player = Storage.getPlayer();
 
 
 
+// бонус от 0.050 до 0.500 U
+
+
 const bonus =
 
-Math.floor(
+Number(
 
-Math.random() * 400
+(
 
-) + 100;
+Math.random()
+
+*
+
+0.450
+
++
+
+0.050
+
+)
+
+.toFixed(3)
+
+);
 
 
 
@@ -175,17 +182,23 @@ const effect = document.getElementById(
 
 
 
+
 if(effect){
 
 
 
 effect.innerText =
 
-"+" +
+"+"
 
-bonus +
++
+
+bonus.toFixed(3)
+
++
 
 " U";
+
 
 
 
@@ -199,6 +212,7 @@ effect.classList.remove(
 
 
 void effect.offsetWidth;
+
 
 
 
@@ -248,8 +262,6 @@ syncBalance();
 
 
 
-
-// подключение к кнопке
 
 document.addEventListener(
 
