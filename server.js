@@ -1,6 +1,6 @@
 // ===================================
 // URALcoin SERVER v10
-// Users + Top + Referrals + Promos
+// Users + Balance + Top + Referrals + Promo
 // ===================================
 
 
@@ -13,73 +13,64 @@ const fs = require("fs");
 const app = express();
 
 
+
 app.use(cors());
 
 app.use(express.json());
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT =
+process.env.PORT || 3000;
 
 
 
-const USERS_DB = "users.json";
-
-const PROMO_DB = "promos.json";
+const DB =
+"users.json";
 
 
 
 let users = [];
+
+
 
 let promos = [];
 
 
 
 
-// ===================================
+
+// ===============================
 // DATABASE
-// ===================================
+// ===============================
 
 
-function loadDatabase(){
+function loadDB(){
+
+
+if(fs.existsSync(DB)){
 
 
 try{
 
 
-if(fs.existsSync(USERS_DB)){
-
-
-users = JSON.parse(
-
+let data =
+JSON.parse(
 fs.readFileSync(
-USERS_DB,
+DB,
 "utf8"
 )
-
 );
 
 
 
-}
+users =
+data.users || data;
 
 
 
-if(fs.existsSync(PROMO_DB)){
-
-
-promos = JSON.parse(
-
-fs.readFileSync(
-PROMO_DB,
-"utf8"
-)
-
-);
-
-
-
-}
+promos =
+data.promos || [];
 
 
 
@@ -93,6 +84,8 @@ users=[];
 promos=[];
 
 
+}
+
 
 }
 
@@ -104,23 +97,30 @@ promos=[];
 
 
 
-
-
-function saveUsers(){
+function saveDB(){
 
 
 fs.writeFileSync(
 
-USERS_DB,
+DB,
 
 JSON.stringify(
+
+{
+
 users,
+
+promos
+
+},
+
 null,
+
 2
+
 )
 
 );
-
 
 
 }
@@ -128,30 +128,7 @@ null,
 
 
 
-
-function savePromos(){
-
-
-fs.writeFileSync(
-
-PROMO_DB,
-
-JSON.stringify(
-promos,
-null,
-2
-)
-
-);
-
-
-
-}
-
-
-
-
-loadDatabase();
+loadDB();
 
 
 
@@ -161,28 +138,30 @@ loadDatabase();
 
 
 
-// ===================================
-// CREATE / UPDATE USER
-// ===================================
-
-
-app.post("/user",(req,res)=>{
+// ===============================
+// CREATE USER
+// ===============================
 
 
 
-const data=req.body;
+app.post(
+"/user",
+(req,res)=>{
 
+
+const data =
+req.body;
 
 
 
 if(!data.id){
 
 
-return res.json({
-
-error:"NO_ID"
-
-});
+return res.json(
+{
+error:"no id"
+}
+);
 
 
 }
@@ -191,17 +170,18 @@ error:"NO_ID"
 
 
 
-let user = users.find(
 
-u=>
 
+let user =
+users.find(
+
+u =>
 String(u.id)
-
 ===
-
 String(data.id)
 
 );
+
 
 
 
@@ -213,23 +193,31 @@ if(!user){
 
 
 
-user={
+user = {
 
 
 id:String(data.id),
 
 
-name:data.name || "Игрок",
+name:
+data.name ||
+"Игрок",
 
 
-username:data.username || "",
-
-
-photo:data.photo || "",
+photo:
+data.photo ||
+"",
 
 
 
 balance:0,
+
+
+friends:0,
+
+
+invited:0,
+
 
 
 clickPower:0.01,
@@ -239,26 +227,19 @@ autoPower:0,
 
 
 
-friends:0,
-
-
-invited:0,
-
-
 referrer:null,
+
 
 
 referralRewarded:[],
 
 
-
-usedPromos:[],
-
-
-history:[],
+upgrades:{},
 
 
-created:Date.now()
+
+created:
+Date.now()
 
 
 
@@ -275,22 +256,17 @@ users.push(user);
 else{
 
 
-
 if(data.name)
 
-user.name=data.name;
-
-
-
-if(data.username)
-
-user.username=data.username;
+user.name =
+data.name;
 
 
 
 if(data.photo)
 
-user.photo=data.photo;
+user.photo =
+data.photo;
 
 
 
@@ -300,7 +276,7 @@ user.photo=data.photo;
 
 
 
-saveUsers();
+saveDB();
 
 
 
@@ -318,30 +294,31 @@ res.json(user);
 
 
 
-// ===================================
+// ===============================
 // GET USER
-// ===================================
+// ===============================
 
 
-app.get("/user/:id",(req,res)=>{
+app.get(
+"/user/:id",
+(req,res)=>{
 
 
-const user = users.find(
+let user =
+users.find(
 
-u=>
-
+u =>
 String(u.id)
-
 ===
-
 String(req.params.id)
 
 );
 
 
 
-res.json(user || null);
-
+res.json(
+user || null
+);
 
 
 });
@@ -354,27 +331,23 @@ res.json(user || null);
 
 
 
-// ===================================
+// ===============================
 // BALANCE SYNC
-// ===================================
+// ===============================
 
 
-app.post("/sync",(req,res)=>{
+app.post(
+"/sync",
+(req,res)=>{
 
 
-const id=req.body.id;
+let user =
+users.find(
 
-
-
-const user = users.find(
-
-u=>
-
+u =>
 String(u.id)
-
 ===
-
-String(id)
+String(req.body.id)
 
 );
 
@@ -386,15 +359,14 @@ if(user){
 
 
 
-user.balance = Number(
-
+user.balance =
+Number(
 req.body.balance || 0
-
 );
 
 
 
-saveUsers();
+saveDB();
 
 
 
@@ -402,36 +374,37 @@ saveUsers();
 
 
 
-res.json({
 
-success:true,
+res.json(
+{
+success:true
+}
+);
 
-user:user || null
+
 
 });
 
 
 
-});
 
 
 
 
 
 
-
-
-
-// ===================================
+// ===============================
 // TOP
-// ===================================
+// ===============================
 
 
-app.get("/top",(req,res)=>{
+app.get(
+"/top",
+(req,res)=>{
 
 
 
-const top =
+let top =
 
 [...users]
 
@@ -439,15 +412,13 @@ const top =
 
 (a,b)=>
 
-Number(b.balance||0)
+Number(b.balance || 0)
 
 -
 
-Number(a.balance||0)
+Number(a.balance || 0)
 
 )
-
-
 
 .slice(0,50);
 
@@ -470,12 +441,15 @@ res.json(top);
 
 
 
-// ===================================
+// ===============================
 // REFERRAL
-// ===================================
+// ===============================
 
 
-app.post("/referral",(req,res)=>{
+
+app.post(
+"/referral",
+(req,res)=>{
 
 
 
@@ -485,9 +459,7 @@ userId,
 
 referrerId,
 
-name,
-
-photo
+name
 
 }=req.body;
 
@@ -496,33 +468,14 @@ photo
 
 
 
-let user = users.find(
 
-u=>
+let user =
+users.find(
 
+u =>
 String(u.id)
-
 ===
-
 String(userId)
-
-);
-
-
-
-
-
-
-
-let referrer = users.find(
-
-u=>
-
-String(u.id)
-
-===
-
-String(referrerId)
 
 );
 
@@ -536,7 +489,7 @@ if(!user){
 
 
 
-user={
+user = {
 
 
 id:String(userId),
@@ -545,16 +498,10 @@ id:String(userId),
 name:name || "Игрок",
 
 
-photo:photo || "",
+photo:"",
 
 
 balance:0,
-
-
-clickPower:0.01,
-
-
-autoPower:0,
 
 
 friends:0,
@@ -566,17 +513,7 @@ invited:0,
 referrer:null,
 
 
-referralRewarded:[],
-
-
-usedPromos:[],
-
-
-history:[],
-
-
-created:Date.now()
-
+referralRewarded:[]
 
 
 };
@@ -595,70 +532,70 @@ users.push(user);
 
 
 
+
+let referrer =
+users.find(
+
+u =>
+String(u.id)
+===
+String(referrerId)
+
+);
+
+
+
+
+
+
+
+
+
 if(
+referrer
+&&
+!user.referrer
+&&
+String(user.id)
+!==
 
-
-referrer &&
-
-
-!user.referrer &&
-
-
-String(user.id)!==String(referrer.id)
+String(referrer.id)
 
 ){
 
 
 
 user.referrer =
-
 String(referrer.id);
 
 
 
 
 
-referrer.friends =
+referrer.balance +=
+5000;
 
+
+
+referrer.friends =
 Number(referrer.friends || 0)+1;
 
 
 
-
-
-
 referrer.invited =
-
 Number(referrer.invited || 0)+1;
 
 
 
+if(!referrer.referralRewarded)
+
+referrer.referralRewarded=[];
 
 
 
-referrer.balance =
-
-Number(referrer.balance || 0)+5000;
-
-
-
-
-
-referrer.history.push({
-
-
-type:"Реферал",
-
-
-amount:5000,
-
-
-date:new Date().toLocaleString()
-
-
-});
-
-
+referrer.referralRewarded.push(
+String(user.id)
+);
 
 
 
@@ -666,10 +603,9 @@ date:new Date().toLocaleString()
 
 
 
-saveUsers();
 
 
-
+saveDB();
 
 
 
@@ -677,7 +613,7 @@ res.json({
 
 success:true,
 
-user:user
+user
 
 });
 
@@ -693,59 +629,30 @@ user:user
 
 
 
-// ===================================
-// CREATE PROMO
-// ===================================
-
-
-app.post("/promo/create",(req,res)=>{
-
-
-const {
-
-name,
-
-reward,
-
-limit,
-
-owner
-
-}=req.body;
+// ===============================
+// PROMO CREATE
+// ===============================
 
 
 
+app.post(
+"/promo/create",
+(req,res)=>{
 
 
-if(!name || !reward){
+let promo = {
 
 
-return res.json({
-
-success:false
-
-});
-
-}
+name:req.body.name,
 
 
-
-const promo={
-
-
-name:String(name).toUpperCase(),
+reward:Number(req.body.reward || 0),
 
 
-reward:Number(reward),
+limit:Number(req.body.limit || 1),
 
 
-limit:Number(limit || 1),
-
-
-used:[],
-
-
-owner:owner || null
+used:[]
 
 
 };
@@ -758,39 +665,38 @@ promos.push(promo);
 
 
 
-savePromos();
+saveDB();
 
 
 
-res.json({
-
-success:true,
-
+res.json(
 promo
+);
+
+
 
 });
 
 
 
-});
 
 
 
 
 
 
+// ===============================
+// PROMO USE
+// ===============================
 
 
 
-// ===================================
-// USE PROMO
-// ===================================
+app.post(
+"/promo/use",
+(req,res)=>{
 
 
-app.post("/promo/use",(req,res)=>{
-
-
-const {
+let {
 
 id,
 
@@ -802,92 +708,12 @@ code
 
 
 
-const promo = promos.find(
+let user =
+users.find(
 
-p=>
-
-p.name === String(code).toUpperCase()
-
-);
-
-
-
-
-
-if(!promo){
-
-
-return res.json({
-
-success:false,
-
-message:"Промокод не найден"
-
-});
-
-
-}
-
-
-
-
-
-
-if(
-
-promo.used.includes(String(id))
-
-){
-
-
-return res.json({
-
-success:false,
-
-message:"Уже использован"
-
-});
-
-
-}
-
-
-
-
-
-
-if(
-
-promo.used.length >= promo.limit
-
-){
-
-
-return res.json({
-
-success:false,
-
-message:"Лимит закончился"
-
-});
-
-
-}
-
-
-
-
-
-
-
-const user = users.find(
-
-u=>
-
+u =>
 String(u.id)
-
 ===
-
 String(id)
 
 );
@@ -896,33 +722,89 @@ String(id)
 
 
 
-if(user){
+let promo =
+promos.find(
 
-
-
-user.balance += Number(promo.reward);
-
-
-
-promo.used.push(String(id));
-
-
-
-user.usedPromos.push(
-
-promo.name
+p =>
+p.name === code
 
 );
 
 
 
-saveUsers();
-
-savePromos();
 
 
 
-}
+
+if(
+!user ||
+!promo
+)
+
+return res.json({
+
+success:false
+
+});
+
+
+
+
+
+
+
+if(
+promo.used.includes(
+String(id)
+)
+
+)
+
+return res.json({
+
+success:false
+
+});
+
+
+
+
+
+
+
+if(
+promo.used.length >=
+promo.limit
+)
+
+return res.json({
+
+success:false
+
+});
+
+
+
+
+
+
+
+user.balance +=
+promo.reward;
+
+
+
+promo.used.push(
+String(id)
+);
+
+
+
+
+
+saveDB();
+
+
 
 
 
@@ -946,12 +828,14 @@ reward:promo.reward
 
 
 
-// ===================================
+// ===============================
 // STATUS
-// ===================================
+// ===============================
 
 
-app.get("/",(req,res)=>{
+app.get(
+"/",
+(req,res)=>{
 
 
 res.send(
@@ -967,15 +851,15 @@ res.send(
 
 
 
-app.listen(PORT,()=>{
+
+app.listen(
+PORT,
+()=>{
 
 
 console.log(
-
-"URALcoin v10 started"
-
+"URALcoin server v10 started"
 );
-
 
 
 });
