@@ -1,8 +1,7 @@
 // ===================================
-// URALcoin APP v3
-// Click + Balance Sync
+// URALcoin APP v4
+// Click + Server Sync
 // ===================================
-
 
 
 let player = Storage.getPlayer();
@@ -18,7 +17,7 @@ return Number(value || 0)
 
 .toFixed(3)
 
-.replace(".", ",");
+.replace(".",",");
 
 
 }
@@ -30,15 +29,7 @@ return Number(value || 0)
 
 
 
-
-// ================================
-// Обновление экрана
-// ================================
-
-
-
 function updateScreen(){
-
 
 
 player = Storage.getPlayer();
@@ -46,13 +37,10 @@ player = Storage.getPlayer();
 
 
 
-
 const balance =
 
 document.getElementById(
-
 "balance"
-
 );
 
 
@@ -62,9 +50,7 @@ document.getElementById(
 const power =
 
 document.getElementById(
-
 "clickPower"
-
 );
 
 
@@ -76,15 +62,11 @@ document.getElementById(
 if(balance){
 
 
-
 balance.innerText =
 
 formatNumber(
-
 player.balance
-
 );
-
 
 
 }
@@ -96,17 +78,13 @@ player.balance
 if(power){
 
 
-
 power.innerText =
 
 formatNumber(
-
 player.clickPower
-
 );
 
 
-
 }
 
 
@@ -121,10 +99,9 @@ player.clickPower
 
 
 
-// ================================
-// Синхронизация с сервером
-// ================================
-
+// ===================================
+// Отправка баланса на сервер
+// ===================================
 
 
 async function syncBalance(){
@@ -141,11 +118,9 @@ player = Storage.getPlayer();
 
 
 
-
-
 await fetch(
 
-CONFIG.API_URL + "/balance",
+CONFIG.API_URL + "/sync",
 
 {
 
@@ -180,9 +155,7 @@ balance:player.balance
 }
 
 
-
 );
-
 
 
 
@@ -190,7 +163,7 @@ balance:player.balance
 
 console.log(
 
-"Баланс отправлен"
+"Баланс синхронизирован"
 
 );
 
@@ -228,10 +201,9 @@ error
 
 
 
-// ================================
-// Кнопка клика
-// ================================
-
+// ===================================
+// Клик
+// ===================================
 
 
 const clickButton =
@@ -241,6 +213,8 @@ document.getElementById(
 "clickButton"
 
 );
+
+
 
 
 
@@ -273,11 +247,7 @@ Number(player.clickPower);
 
 
 
-Storage.savePlayer(
-
-player
-
-);
+Storage.savePlayer(player);
 
 
 
@@ -300,8 +270,12 @@ updateScreen();
 
 
 
-}
 
+syncBalance();
+
+
+
+}
 
 
 );
@@ -318,9 +292,9 @@ updateScreen();
 
 
 
-// ================================
-// Анимация +U
-// ================================
+// ===================================
+// Анимация клика
+// ===================================
 
 
 
@@ -328,7 +302,7 @@ function showClickAnimation(value){
 
 
 
-const text =
+let text =
 
 document.createElement(
 
@@ -348,12 +322,9 @@ text.className =
 
 
 
-
 text.innerText =
 
-"+"
-
-+
+"+" +
 
 formatNumber(value)
 
@@ -367,32 +338,21 @@ formatNumber(value)
 
 
 
-document.body.appendChild(
-
-text
-
-);
+document.body.appendChild(text);
 
 
 
 
 
 
-
-setTimeout(
-
-()=>{
+setTimeout(()=>{
 
 
 text.remove();
 
 
 
-},
-
-800
-
-);
+},800);
 
 
 
@@ -406,20 +366,17 @@ text.remove();
 
 
 
-// ================================
-// Автокликер
-// ================================
+// ===================================
+// Автоклик
+// ===================================
 
 
 
-setInterval(
-
-()=>{
+setInterval(()=>{
 
 
 
 player = Storage.getPlayer();
-
 
 
 
@@ -438,13 +395,7 @@ Number(player.autoPower) / 60;
 
 
 
-Storage.savePlayer(
-
-player
-
-);
-
-
+Storage.savePlayer(player);
 
 
 
@@ -456,11 +407,7 @@ updateScreen();
 
 
 
-},
-
-1000
-
-);
+},1000);
 
 
 
@@ -470,10 +417,8 @@ updateScreen();
 
 
 
-// ================================
-// Отправка баланса
-// ================================
 
+// синхронизация каждые 5 секунд
 
 
 setInterval(
@@ -492,10 +437,9 @@ syncBalance,
 
 
 
-// ================================
+// ===================================
 // Улучшения
-// ================================
-
+// ===================================
 
 
 document
@@ -537,13 +481,9 @@ button.dataset.price
 
 
 
-
-
 const type =
 
 button.dataset.type;
-
-
 
 
 
@@ -561,9 +501,7 @@ button.dataset.value
 
 
 
-
 if(player.balance < price){
-
 
 
 alert(
@@ -586,8 +524,8 @@ return;
 
 
 
-
 player.balance -= price;
+
 
 
 
@@ -610,8 +548,6 @@ player.clickPower += value;
 
 
 
-
-
 if(type==="auto"){
 
 
@@ -628,13 +564,7 @@ player.autoPower += value;
 
 
 
-Storage.savePlayer(
-
-player
-
-);
-
-
+Storage.savePlayer(player);
 
 
 
@@ -644,8 +574,6 @@ player
 button.innerText =
 
 "Куплено";
-
-
 
 
 
@@ -661,9 +589,12 @@ updateScreen();
 
 
 
+syncBalance();
+
 
 
 }
+
 
 );
 
