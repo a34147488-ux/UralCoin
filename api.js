@@ -1,15 +1,28 @@
-// UralCoin API CONNECT v1
+// UralCoin API CONNECT v2
+// Связь приложения с сервером
 
 
-const API_URL = "https://ТВОЙ-RAILWAY-АДРЕС.up.railway.app";
+const API_URL =
+
+"https://ТВОЙ-АДРЕС-RAILWAY.up.railway.app";
 
 
 
 
-// создание или получение игрока
 
 
-async function syncUser(){
+
+const API = {
+
+
+
+
+
+async syncUser(){
+
+
+
+try{
 
 
 
@@ -20,19 +33,31 @@ Storage.getPlayer();
 
 
 
-if(!player.id)
+if(
+!player.id
+){
+
 return null;
+
+}
+
+
 
 
 
 
 
 const response =
+
 await fetch(
+
 API_URL + "/user",
+
 {
 
+
 method:"POST",
+
 
 
 headers:{
@@ -44,13 +69,18 @@ headers:{
 },
 
 
+
 body:JSON.stringify({
+
 
 id:player.id,
 
+
 name:player.name,
 
+
 username:player.username,
+
 
 photo:player.photo
 
@@ -58,15 +88,20 @@ photo:player.photo
 })
 
 
-
-});
-
+}
 
 
 
+);
 
 
-const user =
+
+
+
+
+
+
+const serverPlayer =
 await response.json();
 
 
@@ -75,17 +110,34 @@ await response.json();
 
 
 player.balance =
-user.balance;
+
+Number(
+serverPlayer.balance || 0
+);
+
+
+
 
 
 
 player.friends =
-user.friends;
+
+Number(
+serverPlayer.friends || 0
+);
+
+
+
 
 
 
 player.referrer =
-user.referrer;
+
+serverPlayer.referrer ||
+null;
+
+
+
 
 
 
@@ -94,29 +146,57 @@ Storage.savePlayer(player);
 
 
 
-return user;
 
+
+return serverPlayer;
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(
+
+"API sync error",
+
+error
+
+);
+
+
+
+return null;
 
 
 }
 
 
 
+},
 
 
 
 
 
 
-// отправка баланса на сервер
 
 
-async function syncBalance(){
+
+
+async syncBalance(){
+
+
+
+try{
 
 
 
 const player =
 Storage.getPlayer();
+
 
 
 
@@ -132,6 +212,7 @@ API_URL + "/balance",
 method:"POST",
 
 
+
 headers:{
 
 
@@ -141,9 +222,12 @@ headers:{
 },
 
 
+
 body:JSON.stringify({
 
+
 id:player.id,
+
 
 balance:player.balance
 
@@ -159,29 +243,55 @@ balance:player.balance
 
 
 
+
+
+}
+
+catch(error){
+
+
+console.log(
+
+"Balance sync error",
+
+error
+
+);
+
+
+
 }
 
 
 
+},
 
 
 
 
 
 
-// получить топ
 
 
-async function getTop(){
+
+
+async getTop(){
+
+
+
+try{
 
 
 
 const response =
+
 await fetch(
 
 API_URL + "/top"
 
 );
+
+
 
 
 
@@ -191,6 +301,27 @@ return await response.json();
 
 }
 
+catch(error){
+
+
+
+console.log(
+
+"Top error",
+
+error
+
+);
+
+
+
+return [];
+
+}
+
+
+
+},
 
 
 
@@ -199,12 +330,13 @@ return await response.json();
 
 
 
-// отправить реферала
 
 
-async function sendReferral(
-referrerId
-){
+async sendReferral(referrerId){
+
+
+
+try{
 
 
 
@@ -215,14 +347,16 @@ Storage.getPlayer();
 
 
 
+
 await fetch(
 
-API_URL+"/referral",
+API_URL + "/referral",
 
 {
 
 
 method:"POST",
+
 
 
 headers:{
@@ -234,11 +368,14 @@ headers:{
 },
 
 
+
 body:JSON.stringify({
+
 
 userId:player.id,
 
-referrerId:referrerId
+
+referrerId:String(referrerId)
 
 
 })
@@ -252,28 +389,41 @@ referrerId:referrerId
 
 
 
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(
+
+"Referral error",
+
+error
+
+);
+
+
+
+}
+
+
+
 }
 
 
 
 
 
-
-
-
-window.API = {
-
-
-syncUser,
-
-
-syncBalance,
-
-
-getTop,
-
-
-sendReferral
-
-
 };
+
+
+
+
+
+
+
+window.API = API;
