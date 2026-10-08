@@ -1,70 +1,137 @@
 /* ===================================
-URALcoin STYLE v6
-Clean Gold Glass UI
+URALcoin V12
+GLASS GOLD WINTER
+NO SANTA
 =================================== */
 
 
 *{
+
 box-sizing:border-box;
 margin:0;
 padding:0;
+
 -webkit-tap-highlight-color:transparent;
+
 }
 
 
+html,
+body{
 
-html,body{
 
 width:100%;
 height:100%;
+
+
 overflow:hidden;
+
 
 font-family:Arial,sans-serif;
 
+
 background:#090414;
+
+
 color:white;
 
+
 }
+
 
 
 
 
 .app{
 
+
 width:100%;
 height:100vh;
+
+
 position:relative;
+
+
 overflow:hidden;
+
 
 }
 
 
 
 
-/* ФОН */
+
+
+/* ===============================
+ФОН
+=============================== */
 
 
 .city-bg{
 
+
 position:absolute;
+
+
 inset:0;
+
+
 
 background:
 
+
 linear-gradient(
+
 135deg,
-rgba(255,215,0,.25),
-rgba(100,30,220,.55)
+
+rgba(255,215,0,.30),
+
+rgba(80,20,160,.75)
+
 ),
+
 
 url("ekaterinburg.jpg");
 
 
+
 background-size:cover;
+
+
 background-position:center;
+
+
+
+animation:
+
+cityMove 12s infinite alternate;
+
+
 
 z-index:0;
 
+
+}
+
+
+
+@keyframes cityMove{
+
+
+from{
+
+filter:brightness(.75);
+
+}
+
+
+to{
+
+filter:brightness(1.15);
+
+}
+
+
 }
 
 
@@ -73,41 +140,189 @@ z-index:0;
 
 
 
-/* СНЕГ */
+
+
+/* ===============================
+ГИРЛЯНДА
+=============================== */
+
+
+.garland{
+
+
+position:absolute;
+
+
+top:0;
+
+
+left:0;
+
+
+
+height:40px;
+
+
+width:100%;
+
+
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+align-items:center;
+
+
+
+z-index:30;
+
+
+}
+
+
+
+
+.garland span{
+
+
+width:12px;
+
+
+height:12px;
+
+
+
+border-radius:50%;
+
+
+
+background:#ffd700;
+
+
+
+box-shadow:
+
+0 0 20px gold;
+
+
+
+animation:
+
+lightBlink 1.5s infinite alternate;
+
+
+}
+
+
+
+
+.garland span:nth-child(even){
+
+
+background:white;
+
+
+animation-delay:.3s;
+
+
+}
+
+
+
+@keyframes lightBlink{
+
+
+from{
+
+opacity:.4;
+
+transform:scale(.8);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:scale(1.3);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+СНЕГ
+=============================== */
+
 
 .snow{
 
+
 position:absolute;
+
+
 inset:0;
+
+
 pointer-events:none;
+
+
+z-index:15;
+
+
 overflow:hidden;
-z-index:5;
+
 
 }
+
 
 
 .snow:before{
 
-content:"❄  ❅  ❆  ❄  ❅";
+
+content:"❄ ❅ ❆ ❄ ❅ ❆";
+
 
 position:absolute;
 
+
 top:-50px;
 
-width:150%;
 
-font-size:28px;
+width:130%;
 
-letter-spacing:40px;
 
-color:white;
 
-opacity:.6;
+font-size:32px;
 
-animation:snowMove 12s linear infinite;
+
+letter-spacing:45px;
+
+
+
+opacity:.75;
+
+
+
+animation:
+
+snowMove 12s linear infinite;
+
 
 }
-
 
 
 
@@ -116,14 +331,18 @@ animation:snowMove 12s linear infinite;
 
 from{
 
-transform:translateY(-50px);
+transform:translateY(-100px);
 
 }
 
 
 to{
 
-transform:translateY(110vh);
+transform:
+
+translateY(110vh)
+
+translateX(70px);
 
 }
 
@@ -136,403 +355,94 @@ transform:translateY(110vh);
 
 
 
-/* HEADER */
+
+
+/* ===============================
+HEADER
+=============================== */
 
 
 .header{
 
-height:70px;
+
+height:80px;
+
+
 position:relative;
-z-index:10;
+
+
+z-index:5;
+
 
 }
+
 
 
 
 .user-profile{
 
+
 position:absolute;
+
+
 top:15px;
-left:15px;
+
+
+left:20px;
+
 
 }
+
 
 
 
 .avatar{
 
+
 width:55px;
+
+
 height:55px;
+
+
 
 border-radius:50%;
 
+
 overflow:hidden;
 
+
+
 display:flex;
-align-items:center;
+
+
 justify-content:center;
+
+
+align-items:center;
+
+
+
+font-size:25px;
+
+
+font-weight:900;
+
+
 
 background:
 
 linear-gradient(
+
 135deg,
-#ffd700,
+
+gold,
+
 #7b2cff
+
 );
 
 
-font-size:25px;
-font-weight:900;
-
-border:2px solid gold;
-
-box-shadow:0 0 20px gold;
-
-}
-
-
-
-
-.avatar img{
-
-width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-
-
-
-
-
-
-/* CONTENT */
-
-
-.content{
-
-height:calc(100vh - 150px);
-
-overflow-y:auto;
-
-position:relative;
-
-z-index:10;
-
-padding-bottom:20px;
-
-}
-
-
-
-
-
-.page{
-
-display:none;
-
-padding:15px;
-
-}
-
-
-
-.page.active{
-
-display:block;
-
-}
-
-
-
-
-
-
-
-
-
-/* БАЛАНС */
-
-
-.balance-box{
-
-text-align:center;
-
-margin-top:15px;
-
-}
-
-
-
-.balance{
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:10px;
-
-font-size:38px;
-
-font-weight:900;
-
-}
-
-
-
-.coin-small{
-
-width:28px;
-height:28px;
-
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:#ffd700;
-
-color:#6b3500;
-
-font-weight:900;
-
-}
-
-
-
-
-/* СТАТИСТИКА */
-
-
-.click-power{
-
-margin:15px auto;
-
-display:flex;
-
-justify-content:center;
-
-gap:20px;
-
-padding:15px;
-
-max-width:330px;
-
-
-border-radius:22px;
-
-background:
-
-rgba(255,255,255,.15);
-
-
-backdrop-filter:blur(15px);
-
-border:1px solid rgba(255,215,0,.5);
-
-font-weight:900;
-
-}
-
-
-
-.stat{
-
-display:flex;
-
-flex-direction:column;
-
-}
-
-
-
-.stat span{
-
-color:#ffd700;
-
-font-size:22px;
-
-}
-
-
-
-
-
-
-
-
-
-/* КНОПКА КЛИКА */
-
-
-.main-coin{
-
-width:220px;
-height:220px;
-
-margin:35px auto 0;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-border-radius:50%;
-
-
-border:7px solid gold;
-
-
-background:
-
-radial-gradient(
-circle,
-#fff59b,
-#ffc400,
-#6d22cc
-);
-
-
-
-font-size:100px;
-
-font-weight:900;
-
-color:white;
-
-
-box-shadow:
-
-0 0 45px gold;
-
-
-transition:.12s;
-
-}
-
-
-
-
-.main-coin:active{
-
-transform:scale(.9);
-
-}
-
-
-
-
-
-
-
-
-
-
-/* ПАНЕЛИ */
-
-
-.panel{
-
-
-background:
-
-rgba(255,255,255,.12);
-
-
-backdrop-filter:blur(15px);
-
-
-border-radius:25px;
-
-
-padding:20px;
-
-
-border:
-
-1px solid rgba(255,215,0,.4);
-
-
-}
-
-
-
-
-
-.panel h2{
-
-text-align:center;
-
-color:#ffd85c;
-
-margin-bottom:20px;
-
-}
-
-
-
-
-
-
-
-
-
-input{
-
-width:100%;
-
-height:52px;
-
-border-radius:16px;
-
-border:none;
-
-padding:0 15px;
-
-margin-bottom:12px;
-
-font-size:16px;
-
-}
-
-
-
-
-
-
-
-
-
-/* КНОПКИ */
-
-
-button,
-.menu-card{
-
-
-font-weight:900;
-
-cursor:pointer;
-
-transition:.15s;
-
-}
-
-
-
-
-
-button:active,
-.menu-card:active{
-
-
-transform:scale(.94);
 
 box-shadow:
 
@@ -543,6 +453,613 @@ box-shadow:
 
 
 
+.avatar img{
+
+
+width:100%;
+
+
+height:100%;
+
+
+object-fit:cover;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+CONTENT
+=============================== */
+
+
+.content{
+
+
+height:
+
+calc(100vh - 80px);
+
+
+
+overflow-y:auto;
+
+
+
+padding-bottom:110px;
+
+
+
+position:relative;
+
+
+z-index:3;
+
+
+}
+
+
+
+.page{
+
+
+display:none;
+
+
+padding:20px;
+
+
+}
+
+
+.page.active{
+
+
+display:block;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+БАЛАНС
+=============================== */
+
+
+.balance-box{
+
+
+margin-top:30px;
+
+
+text-align:center;
+
+
+}
+
+
+
+.balance{
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+gap:12px;
+
+
+
+font-size:42px;
+
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+
+
+/* ЖЕЛТАЯ МОНЕТА U */
+
+
+.coin-balance{
+
+
+width:42px;
+
+
+height:42px;
+
+
+
+border-radius:50%;
+
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#fff36b,
+
+#ffb700
+
+);
+
+
+
+color:white;
+
+
+
+font-size:22px;
+
+
+font-weight:900;
+
+
+
+border:2px solid rgba(255,255,255,.5);
+
+
+
+box-shadow:
+
+
+0 0 25px gold,
+
+
+inset 0 0 10px white;
+
+
+}
+
+
+
+
+
+
+
+/* КРИСТАЛЛЫ */
+
+
+.crystals-box{
+
+
+margin-top:12px;
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+align-items:center;
+
+
+}
+
+
+
+.crystal-count{
+
+
+font-size:25px;
+
+
+}
+
+
+
+.crystals-box small{
+
+
+font-size:11px;
+
+
+opacity:.6;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* СИЛА КЛИКА */
+
+
+.click-power{
+
+
+margin-top:15px;
+
+
+
+display:inline-flex;
+
+
+
+align-items:center;
+
+
+
+gap:8px;
+
+
+
+padding:12px 22px;
+
+
+
+border-radius:30px;
+
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.5);
+
+
+
+backdrop-filter:blur(15px);
+
+
+
+font-weight:900;
+
+
+}
+
+
+
+#heartPower{
+
+
+font-size:26px;
+
+
+
+transition:.4s;
+
+
+}
+
+
+
+
+
+
+.second-power{
+
+
+margin-top:10px;
+
+
+font-size:13px;
+
+
+
+opacity:.8;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+ГЛАВНЫЙ КЛИК
+=============================== */
+
+
+.fire-zone{
+
+
+position:relative;
+
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+
+margin-top:65px;
+
+
+}
+
+
+
+
+.main-coin{
+
+
+width:250px;
+
+
+height:250px;
+
+
+
+border-radius:50%;
+
+
+
+border:8px solid gold;
+
+
+
+
+background:
+
+
+radial-gradient(
+
+circle,
+
+#fff59b,
+
+#ffc400,
+
+#7020d0
+
+);
+
+
+
+
+font-size:120px;
+
+
+
+font-weight:900;
+
+
+
+color:white;
+
+
+
+
+box-shadow:
+
+
+
+0 0 50px gold;
+
+
+
+transition:.15s;
+
+
+}
+
+
+
+
+.main-coin:active{
+
+
+transform:scale(.90);
+
+
+}
+
+
+
+
+
+
+
+
+/* ОГОНЬ */
+
+
+.fire-effect{
+
+
+position:absolute;
+
+
+
+font-size:160px;
+
+
+
+opacity:0;
+
+
+
+pointer-events:none;
+
+
+
+transition:.5s;
+
+
+}
+
+
+
+.fire-zone.fire-mode .fire-effect{
+
+
+opacity:1;
+
+
+
+animation:
+
+firePulse .6s infinite alternate;
+
+
+}
+
+
+
+@keyframes firePulse{
+
+
+from{
+
+transform:scale(.9);
+
+}
+
+
+to{
+
+transform:scale(1.15);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ГОД */
+
+
+.year-label{
+
+
+text-align:center;
+
+
+
+margin-top:30px;
+
+
+
+font-size:13px;
+
+
+
+opacity:.45;
+
+
+
+letter-spacing:2px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+ПАНЕЛИ
+=============================== */
+
+
+.panel{
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border-radius:25px;
+
+
+
+padding:20px;
+
+
+
+border:
+
+1px solid rgba(255,215,0,.4);
+
+
+
+backdrop-filter:blur(18px);
+
+
+}
+
+
+
+
+
+/* ===============================
+КНОПКИ
+=============================== */
 
 
 .gold-button,
@@ -551,76 +1068,57 @@ box-shadow:
 
 width:100%;
 
-padding:16px;
-
-margin-bottom:12px;
 
 
-border-radius:20px;
+padding:17px;
+
+
+
+margin-bottom:15px;
+
+
+
+border-radius:22px;
+
 
 
 border:1px solid gold;
 
 
+
+
 background:
 
 linear-gradient(
+
 90deg,
+
 #ffd700,
+
 #7b2cff
+
 );
 
 
 
 color:white;
 
+
+
+font-weight:900;
+
+
+
 font-size:17px;
+
+
+
+text-align:center;
+
 
 
 display:block;
 
-text-align:center;
-
-text-decoration:none;
-
-}
-
-
-
-
-
-
-
-
-
-/* УЛУЧШЕНИЯ */
-
-
-.upgrade-card{
-
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-
-padding:15px;
-
-margin-bottom:12px;
-
-
-border-radius:20px;
-
-
-background:
-
-rgba(0,0,0,.35);
-
-
-
-border:1px solid rgba(255,215,0,.4);
 
 
 }
@@ -629,149 +1127,13 @@ border:1px solid rgba(255,215,0,.4);
 
 
 
-.upgrade-card button{
 
 
-background:#ffd700;
 
-color:#4a2600;
 
-border:none;
-
-padding:12px;
-
-border-radius:15px;
-
-}
-
-
-
-
-
-
-
-
-/* TOP */
-
-
-.top-card{
-
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-
-padding:14px;
-
-
-margin-bottom:10px;
-
-
-border-radius:22px;
-
-
-background:
-
-rgba(255,255,255,.12);
-
-
-backdrop-filter:blur(15px);
-
-
-border:1px solid rgba(255,215,0,.4);
-
-
-}
-
-
-
-
-.top-avatar{
-
-
-width:55px;
-
-height:55px;
-
-
-border-radius:50%;
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-background:
-
-linear-gradient(
-135deg,
-#ffd700,
-#7b2cff
-);
-
-
-font-weight:900;
-
-font-size:22px;
-
-}
-
-
-
-.top-avatar-img{
-
-width:55px;
-height:55px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-border:2px solid gold;
-
-}
-
-
-
-.top-data{
-
-flex:1;
-
-}
-
-
-
-.top-name{
-
-font-weight:900;
-
-}
-
-
-
-.top-balance{
-
-color:#ffd700;
-
-font-weight:900;
-
-}
-
-
-
-
-
-
-
-
-
-/* НИЖНЕЕ МЕНЮ */
+/* ===============================
+НИЖНЕЕ МЕНЮ
+=============================== */
 
 
 .bottom-nav{
@@ -780,41 +1142,57 @@ font-weight:900;
 position:absolute;
 
 
-bottom:10px;
 
 left:10px;
+
 
 right:10px;
 
 
-height:65px;
-
-
-border-radius:35px;
-
-
-background:
-
-rgba(0,0,0,.45);
+bottom:10px;
 
 
 
-backdrop-filter:blur(20px);
+height:75px;
+
+
+
+border-radius:45px;
+
 
 
 display:flex;
 
+
+
 align-items:center;
+
+
 
 justify-content:space-around;
 
 
-z-index:50;
+
+background:
+
+
+rgba(255,255,255,.13);
+
 
 
 border:
 
-1px solid rgba(255,215,0,.3);
+1px solid rgba(255,215,0,.35);
+
+
+
+backdrop-filter:
+
+blur(20px);
+
+
+
+z-index:50;
 
 
 }
@@ -823,26 +1201,46 @@ border:
 
 
 
+
 .nav{
 
 
-width:55px;
-
-height:45px;
+height:50px;
 
 
-border-radius:25px;
+
+min-width:58px;
+
+
+
+border-radius:30px;
+
+
+
+border:none;
+
 
 
 background:
 
+
 rgba(255,255,255,.08);
 
 
-border:1px solid rgba(255,215,0,.25);
-
 
 color:white;
+
+
+
+font-size:12px;
+
+
+
+font-weight:900;
+
+
+
+transition:.25s;
 
 
 }
@@ -854,23 +1252,125 @@ color:white;
 
 background:
 
-rgba(255,215,0,.25);
+linear-gradient(
+
+135deg,
+
+gold,
+
+#7b2cff
+
+);
 
 
-color:#ffd700;
+
+box-shadow:
+
+0 0 25px gold;
 
 
 }
+
 
 
 
 .nav:active{
 
-transform:scale(.88);
+
+transform:scale(.85);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+TOP
+=============================== */
+
+
+.top-card{
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:12px;
+
+
+
+padding:15px;
+
+
+
+margin-bottom:12px;
+
+
+
+border-radius:22px;
+
+
 
 background:
 
-rgba(255,215,0,.5);
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+1px solid rgba(255,215,0,.4);
+
+
+
+backdrop-filter:blur(15px);
+
+
+}
+
+
+
+
+.top-avatar,
+.top-avatar-img{
+
+
+width:55px;
+
+
+height:55px;
+
+
+
+border-radius:50%;
+
+
+
+object-fit:cover;
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+gold,
+
+purple
+
+);
+
 
 }
 
@@ -878,77 +1378,41 @@ rgba(255,215,0,.5);
 
 
 
+.top-balance{
 
 
-/* АНИМАЦИЯ КЛИКА */
+color:#ffd85c;
 
-
-.click-number{
-
-
-position:fixed;
-
-left:50%;
-top:55%;
-
-
-font-size:30px;
 
 font-weight:900;
 
-color:#ffd700;
-
-
-text-shadow:
-
-0 0 20px gold;
-
-
-z-index:100;
-
-
-animation:coinUp .8s forwards;
 
 }
 
 
 
-@keyframes coinUp{
 
 
-from{
-
-opacity:1;
-
-transform:translate(-50%,0);
-
-}
-
-
-to{
-
-opacity:0;
-
-transform:translate(-50%,-120px);
-
-}
-
-
-}
 
 
 
 
 ::-webkit-scrollbar{
 
-width:3px;
+
+width:4px;
+
 
 }
 
 
-
 ::-webkit-scrollbar-thumb{
 
-background:#ffd700;
+
+background:gold;
+
+
+border-radius:20px;
+
 
 }
