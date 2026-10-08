@@ -1,59 +1,165 @@
 function loadTop(){
 
 
-const box =
-document.querySelector(".players");
+const box = document.querySelector(".players");
 
 
 if(!box) return;
 
 
 
-box.innerHTML = `
+let users = JSON.parse(
+localStorage.getItem("users")
+) || [];
 
 
-<div class="player">
 
-<div class="place">
-1
+
+
+/*
+Тестовые игроки.
+Потом заменим на данные Railway.
+*/
+
+
+if(users.length === 0){
+
+
+users = [
+
+
+{
+name:"Александр",
+balance:25000,
+invited:12,
+avatar:"A"
+},
+
+
+{
+name:"Максим",
+balance:18000,
+invited:8,
+avatar:"M"
+},
+
+
+{
+name:"Евгений",
+balance:12000,
+invited:5,
+avatar:"E"
+}
+
+
+
+];
+
+
+}
+
+
+
+
+
+
+users.sort(
+(a,b)=> b.balance - a.balance
+);
+
+
+
+
+
+box.innerHTML = "";
+
+
+
+
+
+users.slice(0,10).forEach((user,index)=>{
+
+
+
+box.innerHTML += `
+
+
+
+<div class="player-card">
+
+
+
+<div class="rank">
+
+${index + 1}
+
 </div>
 
 
-<div class="avatar">
-U
+
+
+
+<div class="top-avatar">
+
+${user.avatar || user.name[0]}
+
 </div>
 
 
-<div>
+
+
+
+<div class="player-info">
+
+
 
 <b>
-Игрок
+
+${user.name}
+
 </b>
 
 
-<br>
-
-0.00 U
 
 
-<br>
+<span>
+
+${Number(user.balance).toFixed(2)} U
+
+</span>
+
+
+
 
 <small>
-Приглашено: 0
+
+Приглашено: ${user.invited || 0}
+
 </small>
 
 
-</div>
 
 
 </div>
+
+
+
+
+</div>
+
 
 
 `;
 
 
 
+});
+
+
+
 }
+
+
 
 
 loadTop();
