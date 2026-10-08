@@ -1,30 +1,19 @@
-const BOT_USERNAME = "uralscoin_bot";
+const BOT_USERNAME = "uralscoin";
+
+const REF_REWARD = 5000;
 
 
 
 
 
-function getUserId(){
+function getTelegramID(){
 
 
-let id =
-localStorage.getItem(
-"user_id"
-);
-
-
-
-if(!id){
-
-id = "guest";
-
-
-}
-
-
-
-return id;
-
+return localStorage.getItem(
+"telegram_id"
+)
+||
+"guest";
 
 
 }
@@ -41,7 +30,23 @@ function createReferralLink(){
 
 
 
-return `https://t.me/${BOT_USERNAME}?start=${getUserId()}`;
+let id =
+getTelegramID();
+
+
+
+
+return (
+
+"https://t.me/"
++
+BOT_USERNAME
++
+"?start="
++
+id
+
+);
 
 
 
@@ -59,7 +64,7 @@ function loadReferral(){
 
 
 
-const linkInput =
+const link =
 document.getElementById(
 "refLink"
 );
@@ -68,18 +73,19 @@ document.getElementById(
 
 const count =
 document.getElementById(
-"refCount"
+"friendsCount"
 );
 
 
 
 
 
-if(linkInput){
+if(link){
 
 
-linkInput.value =
+link.value =
 createReferralLink();
+
 
 
 }
@@ -88,8 +94,9 @@ createReferralLink();
 
 
 
-let user =
-Storage.getUser();
+
+let player =
+Storage.getPlayer();
 
 
 
@@ -99,7 +106,10 @@ if(count){
 
 
 count.innerText =
-user.friends || 0;
+player.friends
+||
+0;
+
 
 
 }
@@ -116,25 +126,28 @@ user.friends || 0;
 
 
 
-// КОПИРОВАНИЕ ССЫЛКИ
+// КОПИРОВАТЬ ССЫЛКУ
 
 
-const copyButton =
+
+const copyBtn =
 document.getElementById(
-"copyRef"
+"copyReferral"
 );
 
 
 
 
-if(copyButton){
+
+if(copyBtn){
 
 
 
-copyButton.onclick = ()=>{
+copyBtn.onclick = ()=>{
 
 
-let link =
+
+const link =
 document.getElementById(
 "refLink"
 );
@@ -142,6 +155,7 @@ document.getElementById(
 
 
 if(link){
+
 
 
 navigator.clipboard.writeText(
@@ -174,7 +188,8 @@ alert(
 
 
 
-// проверка входа по рефералу
+// ПРОВЕРКА РЕФЕРАЛА
+
 
 
 function checkReferral(){
@@ -185,6 +200,7 @@ const params =
 new URLSearchParams(
 window.location.search
 );
+
 
 
 
@@ -199,36 +215,100 @@ params.get(
 
 if(
 ref &&
-ref !== getUserId()
+ref !== getTelegramID()
+
 ){
 
 
 
-let user =
-Storage.getUser();
+let player =
+Storage.getPlayer();
 
 
 
 
-if(!user.referrer){
+
+if(!player.referrer){
 
 
-user.referrer =
+
+player.referrer =
 ref;
 
 
 
-Storage.saveUser(
-user
+Storage.savePlayer(
+player
 );
 
 
 
+
+
+// награда пригласившему
+// будет выполняться через сервер
+
+
+
+}
+
+
+
 }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+// открытие страницы промокодов
+
+
+const promoOpen =
+document.getElementById(
+"openPromo"
+);
+
+
+
+if(promoOpen){
+
+
+
+promoOpen.onclick = ()=>{
+
+
+
+document
+.querySelectorAll(".page")
+.forEach(
+p=>
+p.classList.remove("active")
+);
+
+
+
+document
+.getElementById(
+"promo"
+)
+.classList.add(
+"active"
+);
+
+
+
+};
+
 
 
 
@@ -243,6 +323,5 @@ user
 
 
 checkReferral();
-
 
 loadReferral();
