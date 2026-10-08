@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UralCoin</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- ГЛАВНЫЙ ЭКРАН -->
+
+<section id="game" class="page active">
+
+
+<div class="top">
+
+<h1>UralCoin</h1>
+
+
+<div class="balance">
+0.00 U
+</div>
+
+
+<div class="stats">
+
+<span>
++0.01 U / клик
+</span>
+
+
+<span>
+0 U / сек
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="coin">
+
+<div class="u">
+U
+</div>
+
+</div>
+
+
+
+
+
+<div class="upgrade">
+
+<h2>
+Улучшения
+</h2>
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+<h3>
+Уровень 1
+</h3>
+
+
+<p>
++0.01 U за клик
+</p>
+
+
+</div>
+
+
+<button>
+10 U
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- РЕФЕРАЛЫ -->
+
+<section id="referrals" class="page">
+
+
+<h2>
+Рефералы
+</h2>
+
+
+<div class="card">
+
+
+<p>
+Приглашено:
+<b>0</b>
+</p>
+
+
+<p>
+За каждого друга:
+<b>5000 U</b>
+</p>
+
+
+<button>
+Пригласить друзей
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ПЕРЕВОДЫ -->
+
+<section id="transfer" class="page">
+
+
+<h2>
+Переводы
+</h2>
+
+
+<div class="card">
+
+
+<input placeholder="Username получателя">
+
+
+<input placeholder="Количество U">
+
+
+<button>
+Перевести
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ТОПЫ -->
+
+<section id="tops" class="page">
+
+
+<h2>
+Топ игроков
+</h2>
+
+
+<div class="players">
+
+
+<div class="player">
+
+
+<div class="avatar">
+U
+</div>
+
+
+<div>
+
+<b>
+Игрок
+</b>
+
+<p>
+10000 U
+</p>
+
+<p>
+Приглашено: 5
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ЕЩЕ -->
+
+<section id="more" class="page">
+
+
+<h2>
+Еще
+</h2>
+
+
+<div class="card menu-more">
+
+
+<button>
+Получить ключ API
+</button>
+
+
+<button>
+История переводов
+</button>
+
+
+<a href="https://t.me/+NyqTkXAU-H5hNDky">
+Наш канал
+</a>
+
+
+<a href="https://t.me/BuysStarsBot?start=8265611469">
+Купить прем
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- НИЖНЕЕ МЕНЮ -->
+
+
+<nav>
+
+
+<button class="active" onclick="openPage('game',this)">
+Играть
+</button>
+
+
+<button onclick="openPage('referrals',this)">
+Рефералы
+</button>
+
+
+<button onclick="openPage('transfer',this)">
+Переводы
+</button>
+
+
+<button onclick="openPage('tops',this)">
+Топы
+</button>
+
+
+<button onclick="openPage('more',this)">
+Еще
+</button>
+
+
+</nav>
+
+
+
+
+</div>
+
+
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
