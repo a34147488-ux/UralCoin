@@ -1,21 +1,12 @@
-<!-- ===================================
-URALcoin INDEX v6
-Clean Interface
-=================================== -->
-
-
 <!DOCTYPE html>
-
 <html lang="ru">
-
 
 <head>
 
 <meta charset="UTF-8">
 
-
 <meta name="viewport"
-content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
 <title>URALcoin</title>
@@ -28,7 +19,6 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
 
 
 </head>
-
 
 
 <body>
@@ -56,7 +46,8 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
 <div class="avatar">
 
 
-<img id="userAvatar">
+<img id="userAvatar"
+style="display:none;">
 
 
 <span id="avatarLetter">
@@ -76,12 +67,16 @@ U
 
 
 
-
-
 <main class="content">
 
 
 
+
+
+
+<!-- =========================
+ИГРА
+========================= -->
 
 
 <section class="page active" id="game">
@@ -97,64 +92,72 @@ U
 <div class="balance">
 
 
+
 <span id="balance">
-
 0,000
-
 </span>
 
 
-<div class="coin-small">
+
+<div class="u-coin">
 
 U
 
 </div>
 
 
+
 </div>
 
 
 
 
 
+<div class="stats-box">
 
 
 
-<div class="click-power">
+<div class="stat-card">
 
 
-
-<div class="stat">
-
-
-<span id="clickPower">
-
-0,010
-
-</span>
-
-
+<span>
 За клик
-
-
-</div>
-
-
-
-
-
-
-<div class="stat">
-
-
-<span id="autoPower">
-
-0,000
-
 </span>
 
 
+<b>
++
+<span id="clickPower">
+0,010
+</span>
+U
+</b>
+
+
+
+</div>
+
+
+
+
+
+<div class="stat-card">
+
+
+<span>
 В секунду
+</span>
+
+
+
+<b>
++
+<span id="secondPower">
+0,000
+</span>
+U
+</b>
+
 
 
 </div>
@@ -168,7 +171,6 @@ U
 
 
 
-
 </div>
 
 
@@ -178,18 +180,28 @@ U
 
 
 
-
-<button
-
-class="main-coin"
-
+<button class="main-coin"
 id="clickButton">
 
 
+<div class="big-u">
+
 U
+
+</div>
 
 
 </button>
+
+
+
+
+
+
+
+<div id="bonusEffect"
+class="bonus-effect"></div>
+
 
 
 
@@ -206,18 +218,23 @@ U
 
 
 
-<section class="page" id="referrals">
+
+<!-- =========================
+РЕФЕРАЛЫ
+========================= -->
+
+
+
+<section class="page"
+id="referrals">
 
 
 
 <div class="panel">
 
 
-
 <h2>
-
 Рефералы
-
 </h2>
 
 
@@ -226,18 +243,17 @@ U
 
 <div class="info-row">
 
+<span>
+Приглашено
+</span>
 
-Приглашено:
 
 <b id="friendsCount">
-
 0
-
 </b>
 
 
 </div>
-
 
 
 
@@ -245,13 +261,13 @@ U
 
 <div class="info-row">
 
+<span>
+Награда
+</span>
 
-За человека:
 
 <b>
-
 5000 U
-
 </b>
 
 
@@ -262,25 +278,28 @@ U
 
 
 
-<input id="refLink" readonly>
+
+<div id="workersList"></div>
 
 
 
 
 
 
-<button
 
-class="gold-button"
+<input id="refLink"
+readonly>
 
+
+
+
+
+<button class="gold-button"
 id="copyReferral">
-
 
 Копировать ссылку
 
-
 </button>
-
 
 
 
@@ -297,7 +316,16 @@ id="copyReferral">
 
 
 
-<section class="page" id="transfer">
+
+<!-- =========================
+ПЕРЕВОДЫ
+========================= -->
+
+
+
+<section class="page"
+id="transfer">
+
 
 
 <div class="panel">
@@ -305,30 +333,23 @@ id="copyReferral">
 
 
 <h2>
-
 Переводы
-
 </h2>
 
 
 
 
-<input
 
-id="transferName"
-
+<input id="transferName"
 placeholder="@username">
 
 
 
 
 
-<input
 
-id="transferSum"
-
+<input id="transferSum"
 type="number"
-
 placeholder="Количество U">
 
 
@@ -336,10 +357,7 @@ placeholder="Количество U">
 
 
 
-<button
-
-class="gold-button"
-
+<button class="gold-button"
 id="transferButton">
 
 
@@ -350,30 +368,26 @@ id="transferButton">
 
 
 
+
 </div>
 
 
+
 </section>
+<!-- =========================
+ТОПЫ
+========================= -->
 
 
-
-
-
-
-
-
-
-<section class="page" id="tops">
+<section class="page"
+id="tops">
 
 
 <div class="panel">
 
 
-
 <h2>
-
 Топ игроков
-
 </h2>
 
 
@@ -386,6 +400,7 @@ id="transferButton">
 
 
 
+
 </div>
 
 
@@ -399,8 +414,13 @@ id="transferButton">
 
 
 
-<section class="page" id="more">
+<!-- =========================
+ЕЩЁ
+========================= -->
 
+
+<section class="page"
+id="more">
 
 
 <div class="panel">
@@ -408,9 +428,7 @@ id="transferButton">
 
 
 <h2>
-
 Ещё
-
 </h2>
 
 
@@ -418,17 +436,11 @@ id="transferButton">
 
 
 
-
-<button
-
-class="menu-card"
-
+<button class="menu-card"
 id="promoButton">
-
 
 Промокоды
 
-
 </button>
 
 
@@ -437,15 +449,10 @@ id="promoButton">
 
 
 
-<button
-
-class="menu-card"
-
+<button class="menu-card"
 id="historyButton">
 
-
-История
-
+История переводов
 
 </button>
 
@@ -455,16 +462,11 @@ id="historyButton">
 
 
 
-<button
-
-class="menu-card"
-
+<button class="menu-card"
 id="apiButton">
-
 
 API ключ
 
-
 </button>
 
 
@@ -474,33 +476,296 @@ API ключ
 
 
 
-<a
-
-class="menu-card"
-
+<a class="menu-card"
 href="https://t.me/+NyqTkXAU-H5hNDky">
-
 
 Наш канал
 
-
 </a>
 
 
 
 
 
-<a
-
-class="menu-card"
-
-href="https://t.me/BuysStarsBot?start=8265611469">
 
 
-Купить U
+
+<h2 class="upgrade-title">
+
+Улучшения
+
+</h2>
 
 
-</a>
+
+
+
+
+
+<div id="upgradeList">
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+PURGANIS
+</h3>
+
+
+<span>
++0.010 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="PURGANIS">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+PURLES
+</h3>
+
+
+<span>
++0.025 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="PURLES">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+VLADESTOK
+</h3>
+
+
+<span>
++0.050 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="VLADESTOK">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+PURPUR
+</h3>
+
+
+<span>
++0.100 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="PURPUR">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+PURUS
+</h3>
+
+
+<span>
++0.250 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="PURUS">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+VLADET
+</h3>
+
+
+<span>
++0.500 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="VLADET">
+
+Купить
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="upgrade-card">
+
+
+<div>
+
+
+<h3>
+VLADIKAZ
+</h3>
+
+
+<span>
++1.000 U к клику
+</span>
+
+
+</div>
+
+
+
+<button class="upgrade-buy"
+data-upgrade="VLADIKAZ">
+
+Купить
+
+</button>
+
+
+</div>
+
 
 
 
@@ -510,6 +775,9 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 </div>
 
+
+
+</div>
 
 
 </section>
@@ -522,34 +790,87 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
-<section class="page" id="promo">
+
+
+
+
+<!-- =========================
+ПРОМОКОДЫ
+========================= -->
+
+
+<section class="page"
+id="promo">
 
 
 <div class="panel">
 
 
 <h2>
-
 Промокоды
-
 </h2>
 
 
 
-<input
 
-id="promoInput"
 
+<input id="promoName"
+placeholder="Название">
+
+
+
+
+
+<input id="promoReward"
+type="number"
+placeholder="Награда U">
+
+
+
+
+
+<input id="promoLimit"
+type="number"
+placeholder="Количество активаций">
+
+
+
+
+
+
+<button class="gold-button"
+id="createPromo">
+
+
+Создать промокод
+
+
+</button>
+
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+
+
+<input id="promoInput"
 placeholder="Введите промокод">
 
 
 
 
 
-<button
-
-class="gold-button"
-
+<button class="gold-button"
 id="usePromo">
 
 
@@ -560,28 +881,27 @@ id="usePromo">
 
 
 
+
+
+
 </div>
 
+
 </section>
+<!-- =========================
+ИСТОРИЯ
+========================= -->
 
 
-
-
-
-
-
-
-
-<section class="page" id="history">
+<section class="page"
+id="history">
 
 
 <div class="panel">
 
 
 <h2>
-
 История
-
 </h2>
 
 
@@ -589,9 +909,7 @@ id="usePromo">
 
 <div id="historyList">
 
-
-Пока операций нет
-
+Операций нет
 
 </div>
 
@@ -610,22 +928,26 @@ id="usePromo">
 
 
 
-<section class="page" id="api">
+<!-- =========================
+API
+========================= -->
+
+
+<section class="page"
+id="api">
 
 
 <div class="panel">
 
 
 <h2>
-
 API ключ
-
 </h2>
 
 
 
-<div id="apiResult">
 
+<div id="apiResult">
 
 Ключ не создан
 
@@ -634,17 +956,13 @@ API ключ
 
 
 
-<button
-
-class="gold-button"
-
+<button class="gold-button"
 id="createApi">
 
-
-Получить ключ
-
+Создать ключ
 
 </button>
+
 
 
 
@@ -652,8 +970,6 @@ id="createApi">
 
 
 </section>
-
-
 
 
 
@@ -668,36 +984,30 @@ id="createApi">
 
 
 
+<!-- =========================
+НИЖНЕЕ МЕНЮ
+========================= -->
+
 
 <nav class="bottom-nav">
 
 
 
-<button
-
-class="nav active"
-
+<button class="nav active"
 data-page="game">
-
 
 Играть
 
-
 </button>
 
 
 
 
 
-<button
-
-class="nav"
-
+<button class="nav"
 data-page="referrals">
 
-
-Реф
-
+Рефералы
 
 </button>
 
@@ -705,15 +1015,10 @@ data-page="referrals">
 
 
 
-<button
-
-class="nav"
-
+<button class="nav"
 data-page="transfer">
 
-
-U
-
+Переводы
 
 </button>
 
@@ -721,15 +1026,10 @@ U
 
 
 
-<button
-
-class="nav"
-
+<button class="nav"
 data-page="tops">
 
-
-Топ
-
+Топы
 
 </button>
 
@@ -737,17 +1037,13 @@ data-page="tops">
 
 
 
-<button
-
-class="nav"
-
+<button class="nav"
 data-page="more">
-
 
 Ещё
 
-
 </button>
+
 
 
 
@@ -759,6 +1055,17 @@ data-page="more">
 
 
 
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+SCRIPTS
+========================= -->
 
 
 <script src="config.js"></script>
@@ -779,10 +1086,10 @@ data-page="more">
 
 <script src="more.js"></script>
 
-<script src="profile.js"></script>
+
+
 
 
 </body>
-
 
 </html>
