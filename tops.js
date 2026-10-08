@@ -1,100 +1,64 @@
-const demoPlayers = [
+function loadTop(){
 
-    {
-        name:"Александр",
-        avatar:"A",
-        balance:25000,
-        invited:12
-    },
 
-    {
-        name:"Максим",
-        avatar:"M",
-        balance:18000,
-        invited:8
-    },
+let box =
+document.querySelector(".players");
 
-    {
-        name:"Евгений",
-        avatar:"E",
-        balance:12000,
-        invited:5
-    }
 
-];
+if(!box) return;
 
 
 
 
-
-function loadTopPlayers(){
-
-
-    const container =
-    document.querySelector(".players");
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
 
 
 
-    if(!container) return;
+
+users.sort(
+(a,b)=>b.balance-a.balance
+);
 
 
 
-    container.innerHTML = "";
+box.innerHTML="";
 
 
 
-    demoPlayers.forEach((player,index)=>{
 
-
-        let position = index + 1;
-
-
-
-        container.innerHTML += `
-
-        <div class="player">
-
-
-            <div class="place">
-            ${position}
-            </div>
-
-
-            <div class="avatar">
-            ${player.avatar}
-            </div>
+users.slice(0,10)
+.forEach((user,index)=>{
 
 
 
-            <div class="player-info">
-
-
-            <b>
-            ${player.name}
-            </b>
-
-
-            <p>
-            Баланс: ${player.balance} U
-            </p>
-
-
-            <p>
-            Приглашено: ${player.invited}
-            </p>
-
-
-            </div>
+let avatar;
 
 
 
-        </div>
-
-        `;
+if(user.avatar){
 
 
+avatar =
+`
+<img 
+src="${user.avatar}"
+class="top-avatar">
+`;
 
-    });
+
+
+}else{
+
+
+avatar =
+`
+<div class="top-avatar">
+${user.name[0]}
+</div>
+`;
 
 
 
@@ -102,4 +66,71 @@ function loadTopPlayers(){
 
 
 
-loadTopPlayers();
+
+
+box.innerHTML += `
+
+
+<div class="player">
+
+
+<div class="place">
+
+${index+1}
+
+</div>
+
+
+
+${avatar}
+
+
+
+<div>
+
+
+<b>
+${user.name}
+</b>
+
+
+<br>
+
+
+<span>
+${user.balance.toFixed(2)} U
+</span>
+
+
+<br>
+
+
+<small>
+Приглашено: ${user.invited}
+</small>
+
+
+</div>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+
+
+});
+
+
+
+}
+
+
+
+
+loadTop();
