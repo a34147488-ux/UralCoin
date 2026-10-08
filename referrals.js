@@ -1,12 +1,26 @@
-const BOT_USERNAME = "uralscoin";
-
-const REF_REWARD = 5000;
-
+// UralCoin v2
+// Реферальная система
 
 
 
+const BOT_USERNAME =
+"uralscoin_bot";
 
-function getTelegramID(){
+
+
+const REF_REWARD =
+5000;
+
+
+
+
+
+
+
+
+
+function getMyId(){
+
 
 
 return localStorage.getItem(
@@ -14,6 +28,7 @@ return localStorage.getItem(
 )
 ||
 "guest";
+
 
 
 }
@@ -26,13 +41,7 @@ return localStorage.getItem(
 
 
 
-function createReferralLink(){
-
-
-
-let id =
-getTelegramID();
-
+function getReferralLink(){
 
 
 
@@ -44,7 +53,7 @@ BOT_USERNAME
 +
 "?start="
 +
-id
+getMyId()
 
 );
 
@@ -60,7 +69,7 @@ id
 
 
 
-function loadReferral(){
+function updateReferralScreen(){
 
 
 
@@ -80,11 +89,14 @@ document.getElementById(
 
 
 
+
+
 if(link){
 
 
+
 link.value =
-createReferralLink();
+getReferralLink();
 
 
 
@@ -102,13 +114,13 @@ Storage.getPlayer();
 
 
 
+
 if(count){
 
 
+
 count.innerText =
-player.friends
-||
-0;
+player.friends || 0;
 
 
 
@@ -126,11 +138,11 @@ player.friends
 
 
 
-// КОПИРОВАТЬ ССЫЛКУ
+// КНОПКА КОПИРОВАНИЯ
 
 
 
-const copyBtn =
+const copyReferral =
 document.getElementById(
 "copyReferral"
 );
@@ -139,38 +151,34 @@ document.getElementById(
 
 
 
-if(copyBtn){
+
+if(copyReferral){
 
 
 
-copyBtn.onclick = ()=>{
+copyReferral.onclick =
+()=>{
 
 
 
 const link =
-document.getElementById(
-"refLink"
-);
+getReferralLink();
 
 
-
-if(link){
 
 
 
 navigator.clipboard.writeText(
-link.value
+link
 );
+
+
 
 
 
 alert(
 "Ссылка скопирована"
 );
-
-
-
-}
 
 
 
@@ -188,11 +196,11 @@ alert(
 
 
 
-// ПРОВЕРКА РЕФЕРАЛА
+// ПРОВЕРКА ВХОДА ПО ССЫЛКЕ
 
 
 
-function checkReferral(){
+function checkIncomingReferral(){
 
 
 
@@ -200,6 +208,7 @@ const params =
 new URLSearchParams(
 window.location.search
 );
+
 
 
 
@@ -213,11 +222,22 @@ params.get(
 
 
 
+
+
 if(
-ref &&
-ref !== getTelegramID()
+!ref ||
+ref === getMyId()
 
 ){
+
+return;
+
+}
+
+
+
+
+
 
 
 
@@ -228,7 +248,12 @@ Storage.getPlayer();
 
 
 
-if(!player.referrer){
+
+
+
+if(
+!player.referrer
+){
 
 
 
@@ -245,15 +270,6 @@ player
 
 
 
-// награда пригласившему
-// будет выполняться через сервер
-
-
-
-}
-
-
-
 }
 
 
@@ -268,60 +284,10 @@ player
 
 
 
-
-
-// открытие страницы промокодов
-
-
-const promoOpen =
-document.getElementById(
-"openPromo"
-);
+// запуск
 
 
 
-if(promoOpen){
+checkIncomingReferral();
 
-
-
-promoOpen.onclick = ()=>{
-
-
-
-document
-.querySelectorAll(".page")
-.forEach(
-p=>
-p.classList.remove("active")
-);
-
-
-
-document
-.getElementById(
-"promo"
-)
-.classList.add(
-"active"
-);
-
-
-
-};
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-checkReferral();
-
-loadReferral();
+updateReferralScreen();
