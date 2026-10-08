@@ -23,8 +23,6 @@
 
 
 
-<!-- ИГРАТЬ -->
-
 <section id="game" class="page active">
 
 
@@ -50,11 +48,9 @@ U
 
 
 
-
 <div class="balance">
 0.00 U
 </div>
-
 
 
 
@@ -72,9 +68,7 @@ U
 </span>
 
 
-
 </div>
-
 
 
 </div>
@@ -88,21 +82,12 @@ U
 <div class="coin">
 
 
-<div class="online">
-● 12 458 ONLINE
-</div>
-
-
-
 <div class="u">
 U
 </div>
 
 
-
 </div>
-
-
 
 
 
@@ -116,16 +101,12 @@ U
 
 
 
-<!-- РЕФЕРАЛЫ -->
-
-
 <section id="referrals" class="page">
 
 
 <h2>
 Рефералы
 </h2>
-
 
 
 <div class="card">
@@ -137,20 +118,15 @@ U
 </p>
 
 
-
 <p>
 За человека:
 <b>5000 U</b>
 </p>
 
 
-
-
 <button>
 Пригласить друзей
 </button>
-
-
 
 
 <div class="ref-link">
@@ -160,9 +136,7 @@ U
 </div>
 
 
-
 </div>
-
 
 
 </section>
@@ -173,9 +147,6 @@ U
 
 
 
-
-
-<!-- ПЕРЕВОДЫ -->
 
 
 <section id="transfer" class="page">
@@ -186,20 +157,13 @@ U
 </h2>
 
 
-
-
 <div class="card">
 
 
-<input 
-placeholder="Username получателя"
->
+<input placeholder="Username получателя">
 
 
-<input 
-placeholder="Количество U"
->
-
+<input placeholder="Количество U">
 
 
 <button>
@@ -207,15 +171,11 @@ placeholder="Количество U"
 </button>
 
 
-
 </div>
 
 
 
-
-
 <div class="card">
-
 
 <h3>
 История переводов
@@ -223,15 +183,11 @@ placeholder="Количество U"
 
 
 <div id="history">
-
 Нет переводов
-
 </div>
 
 
-
 </div>
-
 
 
 
@@ -243,9 +199,6 @@ placeholder="Количество U"
 
 
 
-
-
-<!-- ТОПЫ -->
 
 
 <section id="tops" class="page">
@@ -256,12 +209,10 @@ placeholder="Количество U"
 </h2>
 
 
-
 <div class="players">
 
 
 </div>
-
 
 
 </section>
@@ -272,9 +223,6 @@ placeholder="Количество U"
 
 
 
-
-
-<!-- ЕЩЕ -->
 
 
 <section id="more" class="page">
@@ -297,32 +245,121 @@ placeholder="Количество U"
 
 
 
+
 <div class="upgrade-card">
 
-
 <div>
-
 
 <b>
 Уровень 1
 </b>
 
-
 <p>
 +0.01 U за клик
 </p>
 
+</div>
+
+<button data-power="0.01" data-price="10">
+10 U
+</button>
 
 </div>
 
 
 
 
-<button>
-10 U
+<div class="upgrade-card">
+
+<div>
+
+<b>
+Уровень 2
+</b>
+
+<p>
++0.05 U за клик
+</p>
+
+</div>
+
+<button data-power="0.05" data-price="100">
+100 U
 </button>
 
+</div>
 
+
+
+
+
+<div class="upgrade-card">
+
+<div>
+
+<b>
+Уровень 3
+</b>
+
+<p>
++0.10 U за клик
+</p>
+
+</div>
+
+<button data-power="0.10" data-price="500">
+500 U
+</button>
+
+</div>
+
+
+
+
+
+
+<div class="upgrade-card">
+
+<div>
+
+<b>
+Уровень 4
+</b>
+
+<p>
++0.50 U за клик
+</p>
+
+</div>
+
+<button data-power="0.50" data-price="2500">
+2500 U
+</button>
+
+</div>
+
+
+
+
+
+
+<div class="upgrade-card">
+
+<div>
+
+<b>
+Уровень 5
+</b>
+
+<p>
++1.00 U за клик
+</p>
+
+</div>
+
+<button data-power="1" data-price="10000">
+10000 U
+</button>
 
 </div>
 
@@ -345,11 +382,9 @@ placeholder="Количество U"
 </button>
 
 
-
 <button>
 История переводов
 </button>
-
 
 
 
@@ -360,11 +395,9 @@ placeholder="Количество U"
 
 
 
-
 <a href="https://t.me/BuysStarsBot?start=8265611469">
 Купить прем
 </a>
-
 
 
 </div>
@@ -380,48 +413,30 @@ placeholder="Количество U"
 
 
 
-
-<!-- НИЖНЕЕ МЕНЮ -->
-
-
 <nav>
 
 
-<button 
-class="active"
-onclick="openPage('game',this)">
+<button class="active" onclick="openPage('game',this)">
 Играть
 </button>
 
 
-
-
-<button 
-onclick="openPage('referrals',this)">
+<button onclick="openPage('referrals',this)">
 Рефералы
 </button>
 
 
-
-
-<button 
-onclick="openPage('transfer',this)">
+<button onclick="openPage('transfer',this)">
 Переводы
 </button>
 
 
-
-
-<button 
-onclick="openPage('tops',this)">
+<button onclick="openPage('tops',this)">
 Топы
 </button>
 
 
-
-
-<button 
-onclick="openPage('more',this)">
+<button onclick="openPage('more',this)">
 Еще
 </button>
 
@@ -440,19 +455,11 @@ onclick="openPage('more',this)">
 
 
 
-
 <script src="app.js"></script>
-
 <script src="telegram.js"></script>
-
 <script src="referrals.js"></script>
-
 <script src="tops.js"></script>
-
 <script src="transfer.js"></script>
-
-<script src="profile.js"></script>
-
 
 
 </body>
