@@ -1,4 +1,10 @@
+// UralCoin v2
+// Переводы игроков
+
+
+
 const transferButton =
+
 document.getElementById(
 "transferButton"
 );
@@ -18,9 +24,13 @@ transferButton.onclick = ()=>{
 
 
 
+
+
+
 const username =
 
-document.getElementById(
+document
+.getElementById(
 "transferName"
 )
 .value
@@ -30,11 +40,13 @@ document.getElementById(
 
 
 
+
 const amount =
 
 Number(
 
-document.getElementById(
+document
+.getElementById(
 "transferSum"
 )
 .value
@@ -46,7 +58,9 @@ document.getElementById(
 
 
 
+
 if(!username){
+
 
 
 alert(
@@ -54,7 +68,9 @@ alert(
 );
 
 
+
 return;
+
 
 
 }
@@ -65,7 +81,13 @@ return;
 
 
 
-if(!amount || amount <= 0){
+
+if(
+!amount ||
+amount <= 0
+
+){
+
 
 
 alert(
@@ -77,6 +99,7 @@ alert(
 return;
 
 
+
 }
 
 
@@ -85,8 +108,8 @@ return;
 
 
 
-
 let player =
+
 Storage.getPlayer();
 
 
@@ -96,19 +119,21 @@ Storage.getPlayer();
 
 
 
-if(player.balance < amount){
+if(
+player.balance < amount
+
+){
 
 
 
 alert(
-
-"Недостаточно средств"
-
+"Недостаточно U"
 );
 
 
 
 return;
+
 
 
 }
@@ -124,6 +149,7 @@ return;
 
 
 player.balance -= amount;
+
 
 
 
@@ -151,17 +177,22 @@ type:
 "Перевод",
 
 
+
 to:
 username,
+
 
 
 amount:
 amount,
 
 
+
 date:
 new Date()
-.toLocaleString()
+.toLocaleString(
+"ru-RU"
+)
 
 
 
@@ -173,13 +204,48 @@ new Date()
 
 
 
+alert(
+
+"Переведено "
++
+amount
++
+" U"
+
+);
 
 
-// обновление баланса на экране
 
+
+
+
+
+
+document
+.getElementById(
+"transferName"
+)
+.value="";
+
+
+
+document
+.getElementById(
+"transferSum"
+)
+.value="";
+
+
+
+
+
+
+
+// обновление баланса
 
 
 const balance =
+
 document.getElementById(
 "balance"
 );
@@ -208,50 +274,7 @@ Number(player.balance)
 
 
 
-
-
-
-
-alert(
-
-"Переведено "
-
-+
-amount
-+
-" U пользователю "
-
-+
-username
-
-
-);
-
-
-
-
-
-
-
-document.getElementById(
-"transferName"
-)
-.value="";
-
-
-
-document.getElementById(
-"transferSum"
-)
-.value="";
-
-
-
-
-
-
 };
-
 
 
 
