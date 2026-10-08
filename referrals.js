@@ -1,21 +1,23 @@
 // ===================================
 // URALcoin REFERRALS v5
-// Real Server Referral System
+// Working Referral System
 // ===================================
 
 
 
-
-// ================================
+// ===============================
 // Создание ссылки
-// ================================
+// ===============================
 
 
 function createReferralLink(){
 
 
+
 const player =
 Storage.getPlayer();
+
+
 
 
 
@@ -24,9 +26,11 @@ if(
 player.id==="guest"
 ){
 
+
 return "";
 
 }
+
 
 
 
@@ -60,26 +64,34 @@ player.id
 
 
 
-// ================================
-// Показ ссылки
-// ================================
+
+
+// ===============================
+// Отображение ссылки
+// ===============================
+
 
 
 function loadReferral(){
 
 
 
-const link =
+const input =
+
 document.getElementById(
 "refLink"
 );
 
 
 
-if(link){
 
-link.value =
+
+if(input){
+
+
+input.value =
 createReferralLink();
+
 
 }
 
@@ -87,10 +99,16 @@ createReferralLink();
 
 
 
+
+
 const count =
+
 document.getElementById(
 "friendsCount"
 );
+
+
+
 
 
 
@@ -103,46 +121,133 @@ Storage.getPlayer();
 
 
 count.innerText =
+
 player.friends || 0;
 
 
-}
-
-
 
 }
 
 
 
+}
 
 
 
 
 
 
-// ================================
-// Отправка реферала на сервер
-// ================================
 
 
-async function sendReferral(
-referrerId
-){
 
 
-const player =
-Storage.getPlayer();
+
+// ===============================
+// Проверка старта
+// ===============================
+
+
+async function checkReferral(){
+
+
+
+let refId = "";
+
+
+
+
+
+// Telegram start_param
+
+
+const tg =
+
+window.Telegram?.WebApp;
+
 
 
 
 
 
 if(
+tg?.initDataUnsafe?.start_param
+){
 
-!player.id ||
 
-player.id==="guest"
 
+refId =
+
+tg.initDataUnsafe.start_param;
+
+
+
+}
+
+
+
+
+
+
+
+// запасной вариант
+
+
+if(!refId){
+
+
+
+const params =
+
+new URLSearchParams(
+
+window.location.search
+
+);
+
+
+
+refId =
+
+params.get("start")
+
+|| "";
+
+
+
+}
+
+
+
+
+
+
+if(!refId)
+
+return;
+
+
+
+
+
+
+
+
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+// нельзя самому себе
+
+
+if(
+String(player.id)
+===
+String(refId)
 )
 
 return;
@@ -153,7 +258,54 @@ return;
 
 
 
+
+
+// если уже был приглашён
+
+
+if(player.referrer)
+
+return;
+
+
+
+
+
+
+
+
+
+// сохраняем
+
+
+const saved =
+
+Storage.setReferrer(
+refId
+);
+
+
+
+
+
+
+if(!saved)
+
+return;
+
+
+
+
+
+
+
+
+
+// отправляем серверу
+
+
 try{
+
 
 
 await fetch(
@@ -162,7 +314,9 @@ CONFIG.API_URL + "/referral",
 
 {
 
+
 method:"POST",
+
 
 headers:{
 
@@ -177,15 +331,21 @@ headers:{
 
 body:JSON.stringify({
 
-userId:
-player.id,
+
+userId:player.id,
 
 
-referrerId:
-referrerId
+referrerId:refId,
+
+
+name:player.name,
+
+
+photo:player.photo
 
 
 })
+
 
 }
 
@@ -194,11 +354,8 @@ referrerId
 
 
 
-
-
-
 console.log(
-"Referral sent"
+"Referral complete"
 );
 
 
@@ -206,6 +363,7 @@ console.log(
 }
 
 catch(e){
+
 
 
 console.log(
@@ -229,173 +387,62 @@ e
 
 
 
-// ================================
-// Проверка /start
-// ================================
+// ===============================
+// Копирование ссылки
+// ===============================
 
 
-function checkStartReferral(){
 
-
-
-let start="";
-
-
-
-
-
-
-const tg =
-window.Telegram?.WebApp;
-
-
-
-
-
-
-if(
-tg &&
-tg.initDataUnsafe &&
-tg.initDataUnsafe.start_param
-){
-
-
-start =
-tg.initDataUnsafe.start_param;
-
-
-}
-
-
-
-
-
-
-if(!start){
-
-
-
-const params =
-
-new URLSearchParams(
-
-window.location.search
-
-);
-
-
-
-start =
-params.get("start") || "";
-
-
-
-}
-
-
-
-
-
-
-if(start){
-
-
-
-const player =
-Storage.getPlayer();
-
-
-
-
-
-
-if(
-
-String(player.id)
-
-!==
-
-String(start)
-
-){
-
-
-
-
-
-if(
-!player.referrer
-){
-
-
-
-Storage.setReferrer(start);
-
-
-
-sendReferral(start);
-
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// Копирование
-// ================================
-
-
-const copyButton =
+const copyReferral =
 
 document.getElementById(
+
 "copyReferral"
+
 );
 
 
 
 
 
-if(copyButton){
+
+if(copyReferral){
 
 
 
-copyButton.onclick=()=>{
+copyReferral.onclick = ()=>{
 
 
 
 const link =
+
 createReferralLink();
 
 
 
 
 
-navigator.clipboard.writeText(link);
+if(
+navigator.clipboard
+){
+
+
+
+navigator.clipboard.writeText(
+link
+);
+
+
+
+}
 
 
 
 
-copyButton.innerText =
+
+copyReferral.innerText =
 "Скопировано";
+
 
 
 
@@ -404,8 +451,10 @@ copyButton.innerText =
 setTimeout(()=>{
 
 
-copyButton.innerText =
+
+copyReferral.innerText =
 "Копировать ссылку";
+
 
 
 },1500);
@@ -426,12 +475,17 @@ copyButton.innerText =
 
 
 
-// старт
+// ===============================
+// Запуск
+// ===============================
 
 
-checkStartReferral();
+
+checkReferral();
+
 
 loadReferral();
+
 
 
 
