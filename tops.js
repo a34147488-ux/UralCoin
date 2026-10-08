@@ -1,7 +1,7 @@
 function loadTop(){
 
 
-let box =
+const box =
 document.querySelector(".players");
 
 
@@ -9,128 +9,51 @@ if(!box) return;
 
 
 
-
-let users =
-JSON.parse(
-localStorage.getItem("users")
-) || [];
-
-
-
-
-users.sort(
-(a,b)=>b.balance-a.balance
-);
-
-
-
-box.innerHTML="";
-
-
-
-
-users.slice(0,10)
-.forEach((user,index)=>{
-
-
-
-let avatar;
-
-
-
-if(user.avatar){
-
-
-avatar =
-`
-<img 
-src="${user.avatar}"
-class="top-avatar">
-`;
-
-
-
-}else{
-
-
-avatar =
-`
-<div class="top-avatar">
-${user.name[0]}
-</div>
-`;
-
-
-
-}
-
-
-
-
-
-box.innerHTML += `
+box.innerHTML = `
 
 
 <div class="player">
 
-
 <div class="place">
-
-${index+1}
-
+1
 </div>
 
 
-
-${avatar}
-
+<div class="avatar">
+U
+</div>
 
 
 <div>
 
-
 <b>
-${user.name}
+Игрок
 </b>
 
 
 <br>
 
-
-<span>
-${user.balance.toFixed(2)} U
-</span>
+0.00 U
 
 
 <br>
 
-
 <small>
-Приглашено: ${user.invited}
+Приглашено: 0
 </small>
 
 
 </div>
 
 
-
 </div>
-
 
 
 `;
 
 
 
-
-
-});
-
-
-
 }
-
-
 
 
 loadTop();
