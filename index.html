@@ -22,10 +22,33 @@
 <div class="app">
 
 
+
+<!-- ИГРАТЬ -->
+
 <section id="game" class="page active">
 
 
 <div class="top">
+
+
+
+<div class="profile-mini">
+
+
+<div class="avatar-mini">
+U
+</div>
+
+
+<div class="profile-name">
+Игрок
+</div>
+
+
+</div>
+
+
+
 
 
 <div class="balance">
@@ -33,7 +56,11 @@
 </div>
 
 
+
+
+
 <div class="stats">
+
 
 <span>
 +0.01 U / клик
@@ -44,10 +71,16 @@
 0 U / сек
 </span>
 
-</div>
 
 
 </div>
+
+
+
+</div>
+
+
+
 
 
 
@@ -71,11 +104,19 @@ U
 
 
 
+
+
 </section>
 
 
 
 
+
+
+
+
+
+<!-- РЕФЕРАЛЫ -->
 
 
 <section id="referrals" class="page">
@@ -84,6 +125,7 @@ U
 <h2>
 Рефералы
 </h2>
+
 
 
 <div class="card">
@@ -95,10 +137,13 @@ U
 </p>
 
 
+
 <p>
 За человека:
 <b>5000 U</b>
 </p>
+
+
 
 
 <button>
@@ -106,12 +151,18 @@ U
 </button>
 
 
+
+
 <div class="ref-link">
+
 Ваша ссылка
+
 </div>
 
 
+
 </div>
+
 
 
 </section>
@@ -121,6 +172,10 @@ U
 
 
 
+
+
+
+<!-- ПЕРЕВОДЫ -->
 
 
 <section id="transfer" class="page">
@@ -131,13 +186,20 @@ U
 </h2>
 
 
+
+
 <div class="card">
 
 
-<input placeholder="Username">
+<input 
+placeholder="Username получателя"
+>
 
 
-<input placeholder="Количество U">
+<input 
+placeholder="Количество U"
+>
+
 
 
 <button>
@@ -145,11 +207,15 @@ U
 </button>
 
 
+
 </div>
 
 
 
+
+
 <div class="card">
+
 
 <h3>
 История переводов
@@ -157,11 +223,15 @@ U
 
 
 <div id="history">
+
 Нет переводов
+
 </div>
 
 
+
 </div>
+
 
 
 
@@ -172,6 +242,10 @@ U
 
 
 
+
+
+
+<!-- ТОПЫ -->
 
 
 <section id="tops" class="page">
@@ -182,9 +256,12 @@ U
 </h2>
 
 
+
 <div class="players">
 
+
 </div>
+
 
 
 </section>
@@ -195,6 +272,9 @@ U
 
 
 
+
+
+<!-- ЕЩЕ -->
 
 
 <section id="more" class="page">
@@ -216,10 +296,12 @@ U
 </h3>
 
 
+
 <div class="upgrade-card">
 
 
 <div>
+
 
 <b>
 Уровень 1
@@ -234,6 +316,8 @@ U
 </div>
 
 
+
+
 <button>
 10 U
 </button>
@@ -243,7 +327,9 @@ U
 </div>
 
 
+
 </div>
+
 
 
 
@@ -266,9 +352,12 @@ U
 
 
 
+
 <a href="https://t.me/+NyqTkXAU-H5hNDky">
 Наш канал
 </a>
+
+
 
 
 
@@ -291,31 +380,48 @@ U
 
 
 
+
+<!-- НИЖНЕЕ МЕНЮ -->
+
+
 <nav>
 
 
-<button class="active"
+<button 
+class="active"
 onclick="openPage('game',this)">
 Играть
 </button>
 
 
-<button onclick="openPage('referrals',this)">
+
+
+<button 
+onclick="openPage('referrals',this)">
 Рефералы
 </button>
 
 
-<button onclick="openPage('transfer',this)">
+
+
+<button 
+onclick="openPage('transfer',this)">
 Переводы
 </button>
 
 
-<button onclick="openPage('tops',this)">
+
+
+<button 
+onclick="openPage('tops',this)">
 Топы
 </button>
 
 
-<button onclick="openPage('more',this)">
+
+
+<button 
+onclick="openPage('more',this)">
 Еще
 </button>
 
@@ -325,7 +431,11 @@ onclick="openPage('game',this)">
 
 
 
+
+
 </div>
+
+
 
 
 
@@ -342,6 +452,7 @@ onclick="openPage('game',this)">
 <script src="transfer.js"></script>
 
 <script src="profile.js"></script>
+
 
 
 </body>
