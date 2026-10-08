@@ -3,28 +3,28 @@ const botUsername = "uralscoin_bot";
 const reward = 5000;
 
 
-const tg = window.Telegram.WebApp;
 
+const tg = window.Telegram.WebApp;
 
 tg.ready();
 
 
 
-function getUserId(){
+
+function getTelegramUser(){
 
 
-if(tg.initDataUnsafe && tg.initDataUnsafe.user){
+if(
+tg.initDataUnsafe &&
+tg.initDataUnsafe.user
+){
 
-
-return tg.initDataUnsafe.user.id;
-
+return tg.initDataUnsafe.user;
 
 }
 
 
-
 return null;
-
 
 }
 
@@ -35,22 +35,91 @@ return null;
 function getReferralLink(){
 
 
-const id = getUserId();
+const user = getTelegramUser();
 
 
 
-if(!id){
+if(!user){
 
-return "Откройте приложение внутри Telegram";
+
+return "Откройте приложение через Telegram";
+
+
+}
+
+
+
+return `https://t.me/${botUsername}?start=${user.id}`;
+
 
 }
 
 
 
-return `https://t.me/${botUsername}?start=${id}`;
+
+
+
+
+
+function saveUser(){
+
+
+const user = getTelegramUser();
+
+
+if(!user) return;
+
+
+
+
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+
+
+let exists =
+users.find(
+u=>u.id===user.id
+);
+
+
+
+
+if(!exists){
+
+
+users.push({
+
+id:user.id,
+
+name:user.first_name || "Игрок",
+
+avatar:user.photo_url || "",
+
+balance:0,
+
+invited:0
+
+
+});
+
+
+localStorage.setItem(
+"users",
+JSON.stringify(users)
+);
+
 
 
 }
+
+
+}
+
+
+
 
 
 
@@ -59,24 +128,74 @@ return `https://t.me/${botUsername}?start=${id}`;
 function updateReferral(){
 
 
-let linkBlock =
+saveUser();
+
+
+
+let link =
 document.querySelector(".ref-link");
 
 
 
-if(linkBlock){
+if(link){
 
 
-linkBlock.innerHTML = `
+link.innerHTML = `
+
 
 Ваша ссылка:
 
+
 <br><br>
+
 
 ${getReferralLink()}
 
+
 `;
 
+
+
+}
+
+
+
+
+let data =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+
+
+let user =
+getTelegramUser();
+
+
+
+let current =
+data.find(
+u=>u.id===user?.id
+);
+
+
+
+let blocks =
+document.querySelectorAll("#referrals b");
+
+
+
+if(current && blocks.length>=2){
+
+
+blocks[0].innerHTML =
+current.invited;
+
+
+blocks[1].innerHTML =
+reward+" U";
+
+
 }
 
 
@@ -87,30 +206,30 @@ ${getReferralLink()}
 
 
 
-const inviteButton =
+const btn =
 document.querySelector("#referrals button");
 
 
 
-if(inviteButton){
+if(btn){
 
 
-inviteButton.onclick=()=>{
+btn.onclick=function(){
 
 
-const link =
-getReferralLink();
-
-
-
-navigator.clipboard.writeText(link);
+navigator.clipboard.writeText(
+getReferralLink()
+);
 
 
 
-alert("Ссылка скопирована");
+alert(
+"Ссылка скопирована"
+);
 
 
 };
+
 
 
 }
