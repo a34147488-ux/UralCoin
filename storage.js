@@ -2,75 +2,29 @@ const Storage = {
 
 
 
-get(key, defaultValue){
-
-
-let data =
-localStorage.getItem(key);
-
-
-
-if(data === null){
-
-return defaultValue;
-
-}
-
-
-
-try{
-
-
-return JSON.parse(data);
-
-
-}
-
-catch{
-
-
-return data;
-
-
-}
-
-
-
-},
-
-
-
-
-
-
-set(key,value){
-
-
-
-localStorage.setItem(
-
-key,
-
-JSON.stringify(value)
-
-);
-
-
-},
-
-
-
-
-
-
 
 getPlayer(){
 
 
 
-return this.get(
-"player",
-{
+let player =
+
+JSON.parse(
+
+localStorage.getItem(
+"ural_player"
+)
+
+);
+
+
+
+if(!player){
+
+
+
+player = {
+
 
 id:
 localStorage.getItem(
@@ -80,35 +34,69 @@ localStorage.getItem(
 "guest",
 
 
+
 name:
 "Игрок",
+
+
+
+photo:
+"",
+
 
 
 balance:
 0,
 
 
+
 clickPower:
 0.01,
+
 
 
 autoPower:
 0,
 
 
+
 friends:
 0,
 
 
-promos:[],
+
+referrer:
+null,
 
 
-history:[]
+
+history:
+[],
+
+
+
+usedPromos:
+[]
+
+
+};
+
+
+
+
+
+this.savePlayer(
+player
+);
+
 
 
 }
 
-);
+
+
+
+return player;
 
 
 
@@ -124,15 +112,45 @@ savePlayer(player){
 
 
 
-this.set(
-"player",
-player
+localStorage.setItem(
+
+"ural_player",
+
+JSON.stringify(player)
+
 );
 
 
 
 },
 
+
+
+
+
+
+
+updateBalance(amount){
+
+
+
+let player =
+this.getPlayer();
+
+
+
+player.balance =
+amount;
+
+
+
+this.savePlayer(
+player
+);
+
+
+
+},
 
 
 
@@ -149,17 +167,14 @@ this.getPlayer();
 
 
 
-player.balance += amount;
+player.balance +=
+amount;
 
 
 
 this.savePlayer(
 player
 );
-
-
-
-return player.balance;
 
 
 
@@ -180,16 +195,22 @@ this.getPlayer();
 
 
 
-if(player.balance < amount){
+
+
+if(
+player.balance < amount
+){
 
 return false;
-
 
 }
 
 
 
-player.balance -= amount;
+
+
+player.balance -=
+amount;
 
 
 
@@ -200,6 +221,7 @@ player
 
 
 return true;
+
 
 
 },
@@ -219,7 +241,7 @@ this.getPlayer();
 
 
 
-player.friends++;
+player.friends += 1;
 
 
 
@@ -246,7 +268,9 @@ this.getPlayer();
 
 
 
-player.history.push(data);
+player.history.push(
+data
+);
 
 
 
@@ -281,7 +305,6 @@ return this.getPlayer()
 
 
 
-
 generateApiKey(){
 
 
@@ -298,9 +321,10 @@ Math.random()
 
 
 
+
 localStorage.setItem(
 
-"api_key",
+"ural_api",
 
 key
 
@@ -308,10 +332,13 @@ key
 
 
 
+
 return key;
 
 
+
 },
+
 
 
 
@@ -323,8 +350,10 @@ getApiKey(){
 
 
 return localStorage.getItem(
-"api_key"
-);
+"ural_api"
+)
+||
+null;
 
 
 
@@ -336,6 +365,7 @@ return localStorage.getItem(
 
 
 };
+
 
 
 
