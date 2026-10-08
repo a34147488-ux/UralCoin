@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin TOP v10
-// Telegram Leaderboard
+// URALcoin TOP v12
+// Stable Leaderboard + Avatars
 // ===================================
 
 
@@ -33,9 +33,10 @@ async function loadTop(){
 const list =
 
 document.getElementById(
-"topList"
-);
 
+"topList"
+
+);
 
 
 
@@ -51,19 +52,16 @@ return;
 
 
 
+
 try{
 
 
 
-const response =
+const response = await fetch(
 
-await fetch(
-
-CONFIG.API_URL +
-"/top"
+CONFIG.API_URL + "/top"
 
 );
-
 
 
 
@@ -73,9 +71,11 @@ CONFIG.API_URL +
 if(!response.ok){
 
 
+
 throw new Error(
-"TOP ERROR"
+"TOP SERVER ERROR"
 );
+
 
 
 }
@@ -86,10 +86,7 @@ throw new Error(
 
 
 
-let players =
-
-await response.json();
-
+let players = await response.json();
 
 
 
@@ -109,9 +106,7 @@ players.length===0
 
 
 
-list.innerHTML =
-
-`
+list.innerHTML = `
 
 <div class="top-empty">
 
@@ -161,7 +156,9 @@ Number(a.balance || 0)
 
 
 
-list.innerHTML = "";
+
+list.innerHTML="";
+
 
 
 
@@ -178,11 +175,14 @@ players.forEach(
 
 
 
-let card =
+const card =
 
 document.createElement(
 "div"
 );
+
+
+
 
 
 
@@ -205,14 +205,18 @@ let avatarHTML;
 
 
 
+if(
 
-if(player.photo){
+player.photo &&
+
+player.photo.length > 5
+
+){
 
 
 
-avatarHTML =
+avatarHTML = `
 
-`
 
 <img
 
@@ -220,25 +224,19 @@ class="top-avatar-img"
 
 src="${player.photo}"
 
-onerror="this.style.display='none'"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+
+
 
 >
 
-`;
 
 
+<div class="top-avatar fallback-avatar"
 
-}
+style="display:none"
 
-else{
-
-
-
-avatarHTML =
-
-`
-
-<div class="top-avatar">
+>
 
 ${
 
@@ -252,6 +250,41 @@ ${
 
 </div>
 
+
+
+`;
+
+
+
+}
+
+else{
+
+
+
+avatarHTML = `
+
+
+
+<div class="top-avatar">
+
+
+${
+
+(player.name || "U")
+
+.charAt(0)
+
+.toUpperCase()
+
+}
+
+
+
+</div>
+
+
+
 `;
 
 
@@ -266,9 +299,10 @@ ${
 
 
 
-card.innerHTML =
 
-`
+card.innerHTML = `
+
+
 
 <div class="top-position">
 
@@ -279,9 +313,7 @@ ${index+1}
 
 
 
-
 ${avatarHTML}
-
 
 
 
@@ -292,17 +324,30 @@ ${avatarHTML}
 
 <div class="top-name">
 
-${player.name || "Игрок"}
+${
+
+player.name ||
+
+"Игрок"
+
+}
 
 </div>
 
 
 
 
-
 <div class="top-balance">
 
-${formatTopBalance(player.balance)}
+${
+
+formatTopBalance(
+
+player.balance
+
+)
+
+}
 
  U
 
@@ -314,9 +359,20 @@ ${formatTopBalance(player.balance)}
 
 <div class="top-friends">
 
+
 Приглашено:
 
-${player.invited || player.friends || 0}
+${
+
+player.invited ||
+
+player.friends ||
+
+0
+
+}
+
+
 
 </div>
 
@@ -327,27 +383,6 @@ ${player.invited || player.friends || 0}
 
 
 `;
-
-
-
-
-
-
-
-
-
-// профиль игрока по нажатию
-
-
-card.onclick = ()=>{
-
-
-showPlayerProfile(player);
-
-
-
-};
-
 
 
 
@@ -360,9 +395,8 @@ list.appendChild(card);
 
 
 
+
 }
-
-
 
 );
 
@@ -371,21 +405,29 @@ list.appendChild(card);
 
 
 
+
 }
+
+
 
 catch(error){
 
 
 
 console.log(
+
+"TOP ERROR",
+
 error
+
 );
 
 
 
-list.innerHTML =
 
-`
+
+
+list.innerHTML = `
 
 <div class="top-empty">
 
@@ -401,185 +443,18 @@ list.innerHTML =
 
 
 
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// PLAYER PROFILE
-// ===============================
-
-
-function showPlayerProfile(player){
-
-
-
-let old =
-
-document.getElementById(
-"playerProfilePopup"
-);
-
-
-
-if(old)
-
-old.remove();
-
-
-
-
-
-
-let popup =
-
-document.createElement(
-"div"
-);
-
-
-
-popup.id =
-"playerProfilePopup";
-
-
-
-popup.className =
-"profile-popup";
-
-
-
-
-
-
-
-
-popup.innerHTML =
-
-`
-
-<div class="panel">
-
-
-
-<div class="avatar big">
-
-
-
-${
-player.photo ?
-
-`
-
-<img src="${player.photo}">
-
-`
-
-:
-
-(player.name || "U")
-
-.charAt(0)
 
 }
 
 
 
-</div>
-
-
-
-
-
-<h2>
-
-${player.name || "Игрок"}
-
-</h2>
-
-
-
-
-
-<p>
-
-Баланс:
-
-${formatTopBalance(player.balance)}
-
- U
-
-</p>
-
-
-
-
-<p>
-
-Приглашено:
-
-${player.invited || 0}
-
-</p>
-
-
-
-
-
-<button class="gold-button">
-
-Закрыть
-
-</button>
-
-
-
-
-</div>
-
-`;
 
 
 
 
 
 
-
-document.body.appendChild(
-popup
-);
-
-
-
-
-
-
-popup.querySelector(
-"button"
-).onclick = ()=>{
-
-
-popup.remove();
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
+// первая загрузка
 
 
 loadTop();
@@ -587,6 +462,11 @@ loadTop();
 
 
 
+
+
+
+
+// обновление
 
 
 setInterval(
