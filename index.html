@@ -30,8 +30,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <div class="city-bg"></div>
 
 
-<!-- ГИРЛЯНДА -->
-
 <div class="garland">
 
 <span></span>
@@ -47,11 +45,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 
 
-
-<!-- СНЕГ -->
-
 <div class="snow"></div>
-
 
 
 
@@ -71,9 +65,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 
 <span id="avatarLetter">
-
 U
-
 </span>
 
 
@@ -91,19 +83,13 @@ U
 
 
 
-
 <main class="content">
 
 
 
 
 
-<!-- ИГРА -->
-
-
 <section class="page active" id="game">
-
-
 
 
 
@@ -121,7 +107,6 @@ U
 </div>
 
 
-
 <span id="balance">
 
 0,000
@@ -137,16 +122,14 @@ U
 
 
 
-
 <div class="crystals-box">
 
 
 <div class="crystal-count">
 
-
 💎
 
-<span>
+<span id="crystals">
 
 0
 
@@ -154,7 +137,6 @@ U
 
 
 </div>
-
 
 
 <small>
@@ -165,7 +147,6 @@ U
 
 
 </div>
-
 
 
 
@@ -201,15 +182,12 @@ U
 
 
 
+
+
 <div class="second-power">
 
 
-<span>
-
 В секунду:
-
-</span>
-
 
 <b id="secondPower">
 
@@ -217,31 +195,23 @@ U
 
 </b>
 
+
+</div>
+
+
 </div>
 
 
 
 
 
-</div>
+
+
+<div class="fire-zone" id="fireZone">
 
 
 
-
-
-
-
-
-
-<div class="fire-zone"
-
-id="fireZone">
-
-
-
-<div class="fire-effect"
-
-id="fireEffect">
+<div class="fire-effect" id="fireEffect">
 
 🔥
 
@@ -250,16 +220,9 @@ id="fireEffect">
 
 
 
-
-<button
-
-class="main-coin"
-
-id="clickButton">
-
+<button class="main-coin" id="clickButton">
 
 U
-
 
 </button>
 
@@ -283,17 +246,6 @@ U
 
 
 
-
-<div id="bonusEffect"
-
-class="bonus-effect">
-
-</div>
-
-
-
-
-
 </section>
 
 
@@ -302,9 +254,6 @@ class="bonus-effect">
 
 
 
-
-
-<!-- РЕФЕРАЛЫ -->
 
 
 <section class="page" id="referrals">
@@ -337,14 +286,11 @@ class="bonus-effect">
 
 
 
-<input id="refLink"
-
-readonly>
+<input id="refLink" readonly>
 
 
-<button class="gold-button"
 
-id="copyReferral">
+<button class="gold-button" id="copyReferral">
 
 Копировать ссылку
 
@@ -365,12 +311,7 @@ id="copyReferral">
 
 
 
-<!-- ПЕРЕВОДЫ -->
-
-
-<section class="page"
-
-id="transfer">
+<section class="page" id="transfer">
 
 
 <div class="panel">
@@ -385,21 +326,17 @@ id="transfer">
 
 
 <input id="transferName"
-
 placeholder="@username">
 
 
 
 <input id="transferSum"
-
 placeholder="Количество U"
-
 type="number">
 
 
 
 <button class="gold-button"
-
 id="transferButton">
 
 Перевести
@@ -421,12 +358,7 @@ id="transferButton">
 
 
 
-<!-- ТОП -->
-
-
-<section class="page"
-
-id="tops">
+<section class="page" id="tops">
 
 
 <div class="panel">
@@ -439,11 +371,9 @@ id="tops">
 </h2>
 
 
-
 <div id="topList">
 
 </div>
-
 
 
 </div>
@@ -459,12 +389,7 @@ id="tops">
 
 
 
-<!-- ЕЩЕ -->
-
-
-<section class="page"
-
-id="more">
+<section class="page" id="more">
 
 
 <div class="panel">
@@ -472,14 +397,44 @@ id="more">
 
 <h2>
 
-Еще
+Ещё
 
 </h2>
 
 
 
 
-<button class="menu-card">
+
+
+<a class="menu-card"
+href="https://t.me/+NyqTkXAU-H5hNDky"
+target="_blank">
+
+Подписаться на канал
+
+</a>
+
+
+
+
+
+
+<a class="menu-card premium"
+href="https://t.me/BuysStarsBot?start=8265611469"
+target="_blank">
+
+Оплатить PREMIUM
+
+</a>
+
+
+
+
+
+
+
+<button class="menu-card"
+id="promoOpen">
 
 Промокоды
 
@@ -487,7 +442,10 @@ id="more">
 
 
 
-<button class="menu-card">
+
+
+<button class="menu-card"
+id="historyOpen">
 
 История
 
@@ -495,11 +453,15 @@ id="more">
 
 
 
-<button class="menu-card">
+
+
+<button class="menu-card"
+id="apiOpen">
 
 API ключ
 
 </button>
+
 
 
 
@@ -543,14 +505,10 @@ API ключ
 
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
-
-
 <nav class="bottom-nav">
 
 
 <button class="nav active"
-
 data-page="game">
 
 Главная
@@ -559,9 +517,7 @@ data-page="game">
 
 
 
-
 <button class="nav"
-
 data-page="referrals">
 
 Рефералы
@@ -570,10 +526,7 @@ data-page="referrals">
 
 
 
-
-
 <button class="nav"
-
 data-page="transfer">
 
 Перевод
@@ -582,10 +535,7 @@ data-page="transfer">
 
 
 
-
-
 <button class="nav"
-
 data-page="tops">
 
 Топ
@@ -594,10 +544,7 @@ data-page="tops">
 
 
 
-
-
 <button class="nav"
-
 data-page="more">
 
 Еще
@@ -606,11 +553,7 @@ data-page="more">
 
 
 
-
 </nav>
-
-
-
 
 
 
@@ -626,6 +569,7 @@ data-page="more">
 
 
 
+
 <script src="config.js"></script>
 
 <script src="telegram.js"></script>
@@ -633,6 +577,14 @@ data-page="more">
 <script src="storage.js"></script>
 
 <script src="app.js"></script>
+
+<script src="upgrade.js"></script>
+
+<script src="promo.js"></script>
+
+<script src="referral.js"></script>
+
+<script src="transfer.js"></script>
 
 <script src="top.js"></script>
 
