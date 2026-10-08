@@ -1,10 +1,11 @@
-// UralCoin Storage v4
-// Единый профиль игрока
+// =================================
+// URALcoin Storage v5
+// Единое хранилище игрока
+// =================================
+
 
 
 const Storage = {
-
-
 
 
 
@@ -21,7 +22,6 @@ localStorage.getItem(
 )
 
 );
-
 
 
 
@@ -72,7 +72,7 @@ balance:
 
 clickPower:
 
-0.01,
+0.010,
 
 
 
@@ -106,15 +106,13 @@ usedPromos:
 
 
 
-created:
+createdPromos:
 
-Date.now()
+[]
 
 
 
 };
-
-
 
 
 
@@ -134,9 +132,6 @@ return player;
 
 
 },
-
-
-
 
 
 
@@ -166,47 +161,51 @@ JSON.stringify(player)
 
 
 
-
-
-
-updateProfile(data){
+setTelegramUser(data){
 
 
 
 let player =
+
 this.getPlayer();
 
 
 
 
 
-if(data.id)
 player.id =
+
 String(data.id);
 
 
 
-
-if(data.name)
 player.name =
-data.name;
+
+data.first_name ||
+
+data.name ||
+
+"Игрок";
 
 
 
 
 
-if(data.username)
 player.username =
-data.username;
+
+data.username ||
+
+"";
 
 
 
 
 
-if(data.photo)
 player.photo =
-data.photo;
 
+data.photo_url ||
+
+"";
 
 
 
@@ -224,20 +223,21 @@ this.savePlayer(player);
 
 
 
-
-
-
-updateBalance(amount){
+updateBalance(value){
 
 
 
 let player =
+
 this.getPlayer();
+
+
 
 
 
 player.balance =
-Number(amount);
+
+Number(value);
 
 
 
@@ -253,20 +253,21 @@ this.savePlayer(player);
 
 
 
-
-
-
-addBalance(amount){
+addBalance(value){
 
 
 
 let player =
+
 this.getPlayer();
 
 
 
+
+
 player.balance +=
-Number(amount);
+
+Number(value);
 
 
 
@@ -282,14 +283,12 @@ this.savePlayer(player);
 
 
 
-
-
-
-removeBalance(amount){
+removeBalance(value){
 
 
 
 let player =
+
 this.getPlayer();
 
 
@@ -297,7 +296,7 @@ this.getPlayer();
 
 
 if(
-player.balance < Number(amount)
+player.balance < value
 ){
 
 
@@ -309,9 +308,9 @@ return false;
 
 
 
-
 player.balance -=
-Number(amount);
+
+Number(value);
 
 
 
@@ -331,19 +330,17 @@ return true;
 
 
 
-
-
-
 addFriend(){
 
 
 
 let player =
+
 this.getPlayer();
 
 
 
-player.friends +=1;
+player.friends += 1;
 
 
 
@@ -359,28 +356,32 @@ this.savePlayer(player);
 
 
 
-
-
-
 setReferrer(id){
 
 
 
 let player =
+
 this.getPlayer();
 
 
 
 
 
-
 if(
+
 !player.referrer
+
+&&
+
+String(id)!==String(player.id)
+
 ){
 
 
 
 player.referrer =
+
 String(id);
 
 
@@ -401,32 +402,19 @@ this.savePlayer(player);
 
 
 
-
-
-
-addHistory(data){
+addHistory(item){
 
 
 
 let player =
+
 this.getPlayer();
 
 
 
 
 
-player.history.push({
-
-...data,
-
-date:
-Date.now()
-
-
-});
-
-
-
+player.history.unshift(item);
 
 
 
@@ -435,9 +423,6 @@ this.savePlayer(player);
 
 
 },
-
-
-
 
 
 
@@ -450,7 +435,7 @@ getHistory(){
 
 
 return this.getPlayer()
-.history;
+.history || [];
 
 
 
@@ -462,66 +447,7 @@ return this.getPlayer()
 
 
 
-
-
-
-savePromo(code){
-
-
-
-let player =
-this.getPlayer();
-
-
-
-
-
-player.usedPromos.push(code);
-
-
-
-this.savePlayer(player);
-
-
-
-},
-
-
-
-
-
-
-
-
-
-
-hasPromo(code){
-
-
-
-let player =
-this.getPlayer();
-
-
-
-
-
-return player.usedPromos.includes(code);
-
-
-
-},
-
-
-
-
-
-
-
-
-
-
-generateApiKey(){
+createApiKey(){
 
 
 
@@ -532,10 +458,12 @@ const key =
 +
 
 Math.random()
-.toString(36)
-.substring(2,12)
-.toUpperCase();
 
+.toString(36)
+
+.substring(2,12)
+
+.toUpperCase();
 
 
 
@@ -551,16 +479,11 @@ key
 
 
 
-
-
 return key;
 
 
 
 },
-
-
-
 
 
 
@@ -584,6 +507,26 @@ null;
 
 
 
+},
+
+
+
+
+
+
+
+clear(){
+
+
+
+localStorage.removeItem(
+
+"ural_player"
+
+);
+
+
+
 }
 
 
@@ -598,5 +541,5 @@ null;
 
 
 
-window.Storage =
-Storage;
+
+window.Storage = Storage;
