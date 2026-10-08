@@ -1,106 +1,69 @@
 /* ===================================
-   URALcoin V6
-   GOLD PURPLE WINTER STYLE
-   CLEAN VERSION
+URALcoin STYLE v6
+Clean Gold Glass UI
 =================================== */
 
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
+box-sizing:border-box;
+margin:0;
+padding:0;
+-webkit-tap-highlight-color:transparent;
 }
 
 
-html,
-body{
 
-    width:100%;
-    height:100%;
+html,body{
 
-    overflow:hidden;
+width:100%;
+height:100%;
+overflow:hidden;
 
-    font-family:
-    Arial,
-    sans-serif;
+font-family:Arial,sans-serif;
 
-    background:#090414;
-
-    color:white;
+background:#090414;
+color:white;
 
 }
+
+
 
 
 .app{
 
-    width:100%;
-    height:100vh;
-
-    position:relative;
-
-    overflow:hidden;
+width:100%;
+height:100vh;
+position:relative;
+overflow:hidden;
 
 }
 
 
 
 
-
-/* ===============================
-   ФОН
-================================ */
+/* ФОН */
 
 
 .city-bg{
 
-    position:absolute;
+position:absolute;
+inset:0;
 
-    inset:0;
+background:
 
-    background:
+linear-gradient(
+135deg,
+rgba(255,215,0,.25),
+rgba(100,30,220,.55)
+),
 
-    linear-gradient(
-        135deg,
-        rgba(255,215,0,.35),
-        rgba(90,20,180,.75)
-    ),
-
-    url("ekaterinburg.jpg");
-
-
-    background-size:cover;
-
-    background-position:center;
-
-    animation:
-
-    cityMove 12s infinite alternate;
-
-    z-index:0;
-
-}
+url("ekaterinburg.jpg");
 
 
+background-size:cover;
+background-position:center;
 
-@keyframes cityMove{
-
-    from{
-
-        filter:
-        brightness(.75)
-        saturate(1);
-
-    }
-
-
-    to{
-
-        filter:
-        brightness(1)
-        saturate(1.4);
-
-    }
+z-index:0;
 
 }
 
@@ -108,71 +71,59 @@ body{
 
 
 
-/* ===============================
-   СНЕГ
-================================ */
 
+
+/* СНЕГ */
 
 .snow{
 
-    position:absolute;
-
-    inset:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
-    z-index:20;
+position:absolute;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+z-index:5;
 
 }
-
 
 
 .snow:before{
 
-    content:
-    "❄ ❅ ❆ ❄ ❅ ❆";
+content:"❄  ❅  ❆  ❄  ❅";
 
-    position:absolute;
+position:absolute;
 
-    top:-80px;
+top:-50px;
 
-    width:120%;
+width:150%;
 
-    font-size:32px;
+font-size:28px;
 
-    letter-spacing:55px;
+letter-spacing:40px;
 
-    color:white;
+color:white;
 
-    opacity:.75;
+opacity:.6;
 
-
-    animation:
-    snowFall 14s linear infinite;
+animation:snowMove 12s linear infinite;
 
 }
 
 
 
 
-@keyframes snowFall{
+@keyframes snowMove{
 
 
 from{
 
-    transform:
-    translateY(-100px);
+transform:translateY(-50px);
 
 }
 
 
 to{
 
-    transform:
-    translateY(110vh)
-    translateX(80px);
+transform:translateY(110vh);
 
 }
 
@@ -184,105 +135,15 @@ to{
 
 
 
-/* ===============================
-   ГИРЛЯНДА
-================================ */
 
-
-.garland{
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:35px;
-
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-
-    z-index:30;
-
-}
-
-
-
-
-.garland span{
-
-
-    width:12px;
-
-    height:12px;
-
-    border-radius:50%;
-
-
-    background:#ffd700;
-
-
-    box-shadow:
-
-    0 0 20px gold;
-
-
-    animation:
-
-    lamp 1.5s infinite alternate;
-
-}
-
-
-
-
-
-@keyframes lamp{
-
-
-from{
-
-    opacity:.4;
-
-    transform:scale(.8);
-
-}
-
-
-to{
-
-    opacity:1;
-
-    transform:scale(1.25);
-
-}
-
-
-}
-
-
-
-
-
-/* ===============================
- HEADER
-================================ */
+/* HEADER */
 
 
 .header{
 
-    height:75px;
-
-    position:relative;
-
-    z-index:40;
+height:70px;
+position:relative;
+z-index:10;
 
 }
 
@@ -290,11 +151,9 @@ to{
 
 .user-profile{
 
-    position:absolute;
-
-    left:18px;
-
-    top:12px;
+position:absolute;
+top:15px;
+left:15px;
 
 }
 
@@ -302,88 +161,78 @@ to{
 
 .avatar{
 
+width:55px;
+height:55px;
 
-    width:55px;
+border-radius:50%;
 
-    height:55px;
+overflow:hidden;
 
-    border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
 
+background:
 
-    overflow:hidden;
-
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #ffd700,
-        #7b2cff
-    );
+linear-gradient(
+135deg,
+#ffd700,
+#7b2cff
+);
 
 
-    color:white;
+font-size:25px;
+font-weight:900;
 
-    font-size:25px;
+border:2px solid gold;
 
-    font-weight:900;
-
-
-    box-shadow:
-
-    0 0 25px gold;
+box-shadow:0 0 20px gold;
 
 }
+
 
 
 
 .avatar img{
 
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
+width:100%;
+height:100%;
+object-fit:cover;
 
 }
-/* ===============================
-   CONTENT
-================================ */
+
+
+
+
+
+
+
+/* CONTENT */
 
 
 .content{
 
-    height:
-    calc(100vh - 75px);
+height:calc(100vh - 150px);
 
-    overflow-y:auto;
+overflow-y:auto;
 
-    position:relative;
+position:relative;
 
-    z-index:10;
+z-index:10;
 
-    padding-bottom:85px;
+padding-bottom:20px;
 
 }
+
 
 
 
 
 .page{
 
-    display:none;
+display:none;
 
-    padding:18px;
-
-    animation:
-    pageShow .25s ease;
+padding:15px;
 
 }
 
@@ -391,32 +240,7 @@ to{
 
 .page.active{
 
-    display:block;
-
-}
-
-
-
-
-@keyframes pageShow{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(15px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
+display:block;
 
 }
 
@@ -424,16 +248,18 @@ to{
 
 
 
-/* ===============================
-   БАЛАНС
-================================ */
+
+
+
+
+/* БАЛАНС */
 
 
 .balance-box{
 
-    text-align:center;
+text-align:center;
 
-    margin-top:25px;
+margin-top:15px;
 
 }
 
@@ -441,69 +267,94 @@ to{
 
 .balance{
 
+display:flex;
 
-    display:flex;
+justify-content:center;
 
-    justify-content:center;
+align-items:center;
 
-    align-items:center;
+gap:10px;
 
+font-size:38px;
 
-    gap:10px;
-
-
-    font-size:40px;
-
-    font-weight:900;
-
-
-    text-shadow:
-
-    0 0 20px gold;
-
+font-weight:900;
 
 }
-
 
 
 
 .coin-small{
 
+width:28px;
+height:28px;
 
-    width:30px;
+border-radius:50%;
 
-    height:30px;
+display:flex;
+align-items:center;
+justify-content:center;
 
+background:#ffd700;
 
-    border-radius:50%;
+color:#6b3500;
 
+font-weight:900;
 
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #fff27a,
-        #d58b00
-    );
+}
 
 
-    color:white;
 
 
-    font-weight:900;
+/* СТАТИСТИКА */
 
 
-    box-shadow:
+.click-power{
 
-    0 0 15px gold;
+margin:15px auto;
 
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+padding:15px;
+
+max-width:330px;
+
+
+border-radius:22px;
+
+background:
+
+rgba(255,255,255,.15);
+
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,215,0,.5);
+
+font-weight:900;
+
+}
+
+
+
+.stat{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+
+
+.stat span{
+
+color:#ffd700;
+
+font-size:22px;
 
 }
 
@@ -511,185 +362,66 @@ to{
 
 
 
-/* ===============================
-   ПОКАЗАТЕЛИ
-================================ */
-
-
-
-.stats-box{
-
-
-    margin-top:15px;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:10px;
-
-
-    flex-wrap:wrap;
-
-
-}
 
 
 
 
-
-.stat-card{
-
-
-    padding:10px 15px;
-
-
-    border-radius:18px;
-
-
-    background:
-
-    rgba(255,255,255,.12);
-
-
-    border:
-
-    1px solid rgba(255,215,0,.45);
-
-
-    backdrop-filter:
-
-    blur(12px);
-
-
-    font-weight:800;
-
-
-    font-size:15px;
-
-
-}
-
-
-
-
-/* ===============================
-   ГЛАВНАЯ КНОПКА
-================================ */
+/* КНОПКА КЛИКА */
 
 
 .main-coin{
 
+width:220px;
+height:220px;
 
-    width:240px;
+margin:35px auto 0;
 
-    height:240px;
+display:flex;
 
+align-items:center;
 
-    margin:70px auto 0;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-    align-items:center;
+justify-content:center;
 
 
-
-    border-radius:50%;
-
-
-    border:
-
-    8px solid #ffd700;
+border-radius:50%;
 
 
-    background:
+border:7px solid gold;
 
 
-    radial-gradient(
+background:
 
-        circle,
-
-        #fff9a0,
-
-        #ffc400,
-
-        #7625d8
-
-    );
-
-
-    color:white;
-
-
-    font-size:120px;
-
-
-    font-weight:900;
+radial-gradient(
+circle,
+#fff59b,
+#ffc400,
+#6d22cc
+);
 
 
 
-    box-shadow:
+font-size:100px;
+
+font-weight:900;
+
+color:white;
 
 
-    0 0 45px gold;
+box-shadow:
+
+0 0 45px gold;
 
 
-    cursor:pointer;
-
-
-    transition:
-
-    transform .12s ease,
-
-    box-shadow .12s ease;
-
+transition:.12s;
 
 }
 
 
 
-
-/* отдельная анимация */
 
 .main-coin:active{
 
-
-    transform:
-
-    scale(.92);
-
-
-    opacity:1;
-
-
-    background:
-
-
-    radial-gradient(
-
-        circle,
-
-        #fff9a0,
-
-        #ffc400,
-
-        #7625d8
-
-    );
-
-
-    box-shadow:
-
-
-    0 0 60px gold;
-
+transform:scale(.9);
 
 }
 
@@ -698,33 +430,33 @@ to{
 
 
 
-/* ===============================
- ПАНЕЛИ
-================================ */
+
+
+
+
+/* ПАНЕЛИ */
 
 
 .panel{
 
 
-    background:
+background:
 
-    rgba(255,255,255,.12);
-
-
-    backdrop-filter:
-
-    blur(18px);
+rgba(255,255,255,.12);
 
 
-    border-radius:25px;
+backdrop-filter:blur(15px);
 
 
-    padding:20px;
+border-radius:25px;
 
 
-    border:
+padding:20px;
 
-    1px solid rgba(255,215,0,.45);
+
+border:
+
+1px solid rgba(255,215,0,.4);
 
 
 }
@@ -735,18 +467,11 @@ to{
 
 .panel h2{
 
+text-align:center;
 
-    text-align:center;
+color:#ffd85c;
 
-
-    color:#ffd85c;
-
-
-    font-size:26px;
-
-
-    margin-bottom:20px;
-
+margin-bottom:20px;
 
 }
 
@@ -755,157 +480,108 @@ to{
 
 
 
-/* ===============================
- INPUT
-================================ */
 
 
 
 input{
 
+width:100%;
 
-    width:100%;
+height:52px;
 
+border-radius:16px;
 
-    height:52px;
+border:none;
 
+padding:0 15px;
 
-    border:none;
+margin-bottom:12px;
 
-
-    outline:none;
-
-
-    border-radius:16px;
-
-
-    padding:0 15px;
-
-
-    margin-bottom:14px;
-
-
-    font-size:16px;
-
+font-size:16px;
 
 }
-/* ===============================
-   КНОПКИ
-================================ */
 
+
+
+
+
+
+
+
+
+/* КНОПКИ */
 
 
 button,
 .menu-card{
 
 
-    cursor:pointer;
+font-weight:900;
 
+cursor:pointer;
 
-    transition:
-
-    transform .15s ease,
-
-    box-shadow .15s ease;
-
+transition:.15s;
 
 }
 
 
 
 
-
-/* обычное нажатие */
 
 button:active,
 .menu-card:active{
 
 
-    transform:
+transform:scale(.94);
 
-    scale(.95);
+box-shadow:
+
+0 0 25px gold;
 
 
 }
 
 
 
-
-
-/* золотая кнопка */
 
 
 .gold-button,
 .menu-card{
 
 
-    width:100%;
+width:100%;
+
+padding:16px;
+
+margin-bottom:12px;
 
 
-    min-height:52px;
+border-radius:20px;
 
 
-    margin-bottom:14px;
+border:1px solid gold;
 
 
-    border-radius:22px;
+background:
 
-
-    border:
-
-    1px solid rgba(255,215,0,.7);
-
-
-
-    background:
-
-
-    rgba(255,215,0,.18);
-
-
-
-    backdrop-filter:
-
-    blur(15px);
+linear-gradient(
+90deg,
+#ffd700,
+#7b2cff
+);
 
 
 
-    color:white;
+color:white;
+
+font-size:17px;
 
 
-    font-size:17px;
+display:block;
 
+text-align:center;
 
-    font-weight:900;
-
-
-    text-decoration:none;
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    justify-content:center;
-
-
-
-}
-
-
-
-
-.gold-button:hover,
-.menu-card:hover{
-
-
-    box-shadow:
-
-
-    0 0 25px gold;
-
+text-decoration:none;
 
 }
 
@@ -916,61 +592,35 @@ button:active,
 
 
 
-/* ===============================
-   УЛУЧШЕНИЯ
-================================ */
 
+/* УЛУЧШЕНИЯ */
 
 
 .upgrade-card{
 
 
-    display:flex;
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
 
 
-    align-items:center;
+padding:15px;
+
+margin-bottom:12px;
 
 
-    justify-content:space-between;
+border-radius:20px;
 
 
-    gap:10px;
+background:
 
-
-    padding:15px;
-
-
-    margin-bottom:12px;
-
-
-    border-radius:20px;
-
-
-    background:
-
-
-    rgba(0,0,0,.35);
-
-
-    border:
-
-
-    1px solid rgba(255,215,0,.35);
-
-
-}
+rgba(0,0,0,.35);
 
 
 
-
-
-.upgrade-card span{
-
-
-    font-size:15px;
-
-
-    font-weight:800;
+border:1px solid rgba(255,215,0,.4);
 
 
 }
@@ -982,37 +632,15 @@ button:active,
 .upgrade-card button{
 
 
-    min-width:75px;
+background:#ffd700;
 
+color:#4a2600;
 
-    height:42px;
+border:none;
 
+padding:12px;
 
-    border-radius:15px;
-
-
-    border:none;
-
-
-    background:
-
-
-    linear-gradient(
-
-        135deg,
-
-        #ffd700,
-
-        #d28a00
-
-    );
-
-
-    color:white;
-
-
-    font-weight:900;
-
+border-radius:15px;
 
 }
 
@@ -1022,120 +650,41 @@ button:active,
 
 
 
-/* ===============================
-   TOP PLAYERS
-================================ */
 
-
-
-#topList{
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:12px;
-
-
-}
-
-
-
-
+/* TOP */
 
 
 .top-card{
 
 
-    display:flex;
+display:flex;
+
+align-items:center;
+
+gap:12px;
 
 
-    align-items:center;
+padding:14px;
 
 
-    gap:12px;
+margin-bottom:10px;
 
 
-    padding:12px;
+border-radius:22px;
 
 
-    border-radius:22px;
+background:
+
+rgba(255,255,255,.12);
 
 
-    background:
+backdrop-filter:blur(15px);
 
 
-    rgba(255,255,255,.12);
-
-
-
-    border:
-
-
-    1px solid rgba(255,215,0,.35);
-
-
-    backdrop-filter:
-
-
-    blur(15px);
+border:1px solid rgba(255,215,0,.4);
 
 
 }
-
-
-
-
-
-.top-position{
-
-
-    width:35px;
-
-
-    height:35px;
-
-
-    border-radius:50%;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-    flex-shrink:0;
-
-
-
-    background:
-
-
-    linear-gradient(
-
-        135deg,
-
-        #ffd700,
-
-        #7b2cff
-
-    );
-
-
-    font-weight:900;
-
-
-}
-
-
-
 
 
 
@@ -1143,140 +692,74 @@ button:active,
 .top-avatar{
 
 
-    width:45px;
+width:55px;
+
+height:55px;
 
 
-    height:45px;
+border-radius:50%;
 
 
-    border-radius:50%;
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 
-    display:flex;
+background:
+
+linear-gradient(
+135deg,
+#ffd700,
+#7b2cff
+);
 
 
-    justify-content:center;
+font-weight:900;
 
-
-    align-items:center;
-
-
-    overflow:hidden;
-
-
-    flex-shrink:0;
-
-
-    background:
-
-
-    linear-gradient(
-
-        135deg,
-
-        #ffd700,
-
-        #7b2cff
-
-    );
-
-
-    font-weight:900;
-
+font-size:22px;
 
 }
-
 
 
 
 .top-avatar-img{
 
+width:55px;
+height:55px;
 
-    width:45px;
+border-radius:50%;
 
+object-fit:cover;
 
-    height:45px;
-
-
-    border-radius:50%;
-
-
-    object-fit:cover;
-
-
-    border:
-
-    2px solid gold;
-
+border:2px solid gold;
 
 }
-
-
 
 
 
 .top-data{
 
-
-    flex:1;
-
-
-    min-width:0;
-
+flex:1;
 
 }
-
-
 
 
 
 .top-name{
 
-
-    font-size:16px;
-
-
-    font-weight:900;
-
-
-    white-space:nowrap;
-
-
-    overflow:hidden;
-
-
-    text-overflow:ellipsis;
-
+font-weight:900;
 
 }
-
-
 
 
 
 .top-balance{
 
+color:#ffd700;
 
-    color:#ffd85c;
-
-
-    font-weight:900;
-
-
-}
-
-
-
-
-
-.top-friends{
-
-
-    font-size:13px;
-
-
-    opacity:.8;
-
+font-weight:900;
 
 }
 
@@ -1287,135 +770,54 @@ button:active,
 
 
 
-/* ===============================
-   HISTORY
-================================ */
 
-
-.history-item{
-
-
-    padding:15px;
-
-
-    margin-bottom:12px;
-
-
-    border-radius:18px;
-
-
-    background:
-
-
-    rgba(255,255,255,.12);
-
-
-    border:
-
-
-    1px solid rgba(255,215,0,.35);
-
-
-}
-
-
-
-
-
-
-/* ===============================
-   API
-================================ */
-
-
-
-#apiResult{
-
-
-    padding:18px;
-
-
-    border-radius:18px;
-
-
-    background:
-
-
-    rgba(0,0,0,.4);
-
-
-    color:#ffd85c;
-
-
-    font-weight:900;
-
-
-    word-break:break-all;
-
-
-}
-
-
-
-
-
-
-/* ===============================
-   НИЖНЕЕ МЕНЮ
-================================ */
-
+/* НИЖНЕЕ МЕНЮ */
 
 
 .bottom-nav{
 
 
-    position:absolute;
+position:absolute;
 
 
-    bottom:0;
+bottom:10px;
+
+left:10px;
+
+right:10px;
 
 
-    left:0;
+height:65px;
 
 
-    width:100%;
+border-radius:35px;
 
 
-    height:70px;
+background:
+
+rgba(0,0,0,.45);
 
 
-    display:flex;
+
+backdrop-filter:blur(20px);
 
 
-    align-items:center;
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
 
 
-    justify-content:space-around;
+z-index:50;
 
 
-    gap:5px;
+border:
 
-
-    padding:8px;
-
-
-    background:
-
-
-    rgba(0,0,0,.55);
-
-
-    backdrop-filter:
-
-
-    blur(18px);
-
-
-    z-index:100;
+1px solid rgba(255,215,0,.3);
 
 
 }
-
 
 
 
@@ -1424,365 +826,122 @@ button:active,
 .nav{
 
 
-    flex:1;
+width:55px;
+
+height:45px;
 
 
-    height:50px;
+border-radius:25px;
 
 
-    border-radius:30px;
+background:
+
+rgba(255,255,255,.08);
 
 
-    border:
-
-    1px solid rgba(255,215,0,.25);
+border:1px solid rgba(255,215,0,.25);
 
 
-
-    background:
-
-
-    rgba(255,255,255,.08);
-
-
-    color:white;
-
-
-    font-size:12px;
-
-
-    font-weight:900;
+color:white;
 
 
 }
-
-
 
 
 
 .nav.active{
 
 
-    background:
+background:
+
+rgba(255,215,0,.25);
 
 
-    rgba(255,215,0,.25);
-
-
-    color:#ffd700;
-
-
-    box-shadow:
-
-
-    0 0 20px rgba(255,215,0,.5);
+color:#ffd700;
 
 
 }
-/* ===============================
-   АНИМАЦИЯ +U
-================================ */
+
+
+
+.nav:active{
+
+transform:scale(.88);
+
+background:
+
+rgba(255,215,0,.5);
+
+}
+
+
+
+
+
+
+
+/* АНИМАЦИЯ КЛИКА */
 
 
 .click-number{
 
 
-    position:fixed;
+position:fixed;
+
+left:50%;
+top:55%;
 
 
-    left:50%;
+font-size:30px;
+
+font-weight:900;
+
+color:#ffd700;
 
 
-    top:55%;
+text-shadow:
+
+0 0 20px gold;
 
 
-    transform:
-
-    translateX(-50%);
+z-index:100;
 
 
-
-    color:#ffd700;
-
-
-    font-size:30px;
-
-
-    font-weight:900;
-
-
-
-    text-shadow:
-
-
-    0 0 20px gold;
-
-
-
-    pointer-events:none;
-
-
-    z-index:200;
-
-
-    animation:
-
-
-    coinFly .8s forwards;
-
+animation:coinUp .8s forwards;
 
 }
 
 
 
-
-@keyframes coinFly{
-
-
-    0%{
+@keyframes coinUp{
 
 
-        opacity:1;
+from{
 
+opacity:1;
 
-        transform:
-
-        translate(-50%,0)
-
-        scale(1);
-
-
-    }
-
-
-
-    100%{
-
-
-        opacity:0;
-
-
-        transform:
-
-        translate(-50%,-120px)
-
-        scale(1.5);
-
-
-    }
-
+transform:translate(-50%,0);
 
 }
 
 
+to{
 
+opacity:0;
 
-
-
-/* ===============================
-   ПРОФИЛЬ
-================================ */
-
-
-.profile-info{
-
-
-    text-align:center;
-
-
-    padding:20px;
-
-
-    border-radius:25px;
-
-
-    background:
-
-
-    rgba(255,255,255,.12);
-
-
-    border:
-
-
-    1px solid rgba(255,215,0,.35);
-
-
-    margin-bottom:20px;
-
+transform:translate(-50%,-120px);
 
 }
 
 
-
-
-
-.profile-avatar{
-
-
-    width:90px;
-
-
-    height:90px;
-
-
-    border-radius:50%;
-
-
-    object-fit:cover;
-
-
-    border:
-
-
-    3px solid gold;
-
-
-    box-shadow:
-
-
-    0 0 25px gold;
-
-
 }
 
-
-
-
-
-.avatar.big{
-
-
-    width:90px;
-
-
-    height:90px;
-
-
-    margin:auto;
-
-
-    font-size:40px;
-
-
-}
-
-
-
-
-
-
-
-/* ===============================
-   РЕФЕРАЛЫ
-================================ */
-
-
-
-.info-row{
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    padding:14px;
-
-
-    margin-bottom:10px;
-
-
-    border-radius:18px;
-
-
-    background:
-
-
-    rgba(255,255,255,.1);
-
-
-}
-
-
-
-
-
-.info-row b{
-
-
-    color:#ffd85c;
-
-
-}
-
-
-
-
-
-#refLink{
-
-
-    background:
-
-
-    rgba(0,0,0,.35);
-
-
-    color:white;
-
-
-}
-
-
-
-
-
-
-
-
-/* ===============================
-   ПУСТЫЕ СОСТОЯНИЯ
-================================ */
-
-
-
-.top-empty{
-
-
-    text-align:center;
-
-
-    opacity:.7;
-
-
-    padding:30px;
-
-
-    font-size:18px;
-
-
-}
-
-
-
-
-
-
-
-
-/* ===============================
-   ПРОКРУТКА
-================================ */
 
 
 
 ::-webkit-scrollbar{
 
-
-    width:4px;
-
+width:3px;
 
 }
 
@@ -1790,102 +949,6 @@ button:active,
 
 ::-webkit-scrollbar-thumb{
 
-
-    background:#ffd700;
-
-
-    border-radius:20px;
-
+background:#ffd700;
 
 }
-
-
-
-
-
-
-/* ===============================
-   МОБИЛЬНАЯ АДАПТАЦИЯ
-================================ */
-
-
-
-@media(max-width:380px){
-
-
-
-    .main-coin{
-
-
-        width:200px;
-
-
-        height:200px;
-
-
-        font-size:90px;
-
-
-        margin-top:50px;
-
-
-    }
-
-
-
-    .balance{
-
-
-        font-size:34px;
-
-
-    }
-
-
-
-
-    .nav{
-
-
-        font-size:11px;
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-/* ===============================
-   УБРАННЫЕ ЭФФЕКТЫ
-================================ */
-
-
-/*
-Санта удалён.
-
-Не использовать:
-
-.angry-santa
-.santa-face
-.santa-hat
-.bonus-effect
-
-Они больше не нужны.
-*/
-
-
-
-
-
-
-
-
-
-
-
