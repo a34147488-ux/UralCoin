@@ -1,24 +1,32 @@
 // ===================================
 // URALcoin APP v6
-// Click + Auto + Sync + Navigation
+// Click + Auto + Navigation
 // ===================================
 
 
-let player = Storage.getPlayer();
+
+let player =
+Storage.getPlayer();
 
 
 
 
-// ================================
+
+
+// ===============================
 // Формат чисел
-// ================================
+// ===============================
 
 
 function formatNumber(value){
 
+
 return Number(value || 0)
+
 .toFixed(3)
+
 .replace(".",",");
+
 
 }
 
@@ -27,35 +35,58 @@ return Number(value || 0)
 
 
 
-// ================================
+
+
+// ===============================
 // Обновление экрана
-// ================================
+// ===============================
 
 
 function updateScreen(){
 
 
-player = Storage.getPlayer();
+
+player =
+Storage.getPlayer();
+
+
 
 
 
 const balance =
-document.getElementById("balance");
+
+document.getElementById(
+"balance"
+);
 
 
 
-const power =
-document.getElementById("clickPower");
+
+const clickPower =
+
+document.getElementById(
+"clickPower"
+);
 
 
 
-const auto =
-document.getElementById("autoPower");
+
+const autoPower =
+
+document.getElementById(
+"autoPower"
+);
+
+
 
 
 
 const friends =
-document.getElementById("friendsCount");
+
+document.getElementById(
+"friendsCount"
+);
+
 
 
 
@@ -65,17 +96,9 @@ document.getElementById("friendsCount");
 if(balance){
 
 balance.innerText =
-formatNumber(player.balance);
-
-}
-
-
-
-
-if(power){
-
-power.innerText =
-formatNumber(player.clickPower);
+formatNumber(
+player.balance
+);
 
 }
 
@@ -83,12 +106,40 @@ formatNumber(player.clickPower);
 
 
 
-if(auto){
 
-auto.innerText =
-formatNumber(player.autoPower);
+if(clickPower){
+
+
+clickPower.innerText =
+
+formatNumber(
+player.clickPower
+);
+
+
 
 }
+
+
+
+
+
+
+
+if(autoPower){
+
+
+autoPower.innerText =
+
+formatNumber(
+player.autoPower / 60
+);
+
+
+
+}
+
+
 
 
 
@@ -96,35 +147,45 @@ formatNumber(player.autoPower);
 
 if(friends){
 
+
 friends.innerText =
+
 player.friends || 0;
 
-}
-
-
 
 }
 
 
 
 
+}
 
 
 
 
 
-// ================================
-// Синхронизация
-// ================================
+
+
+
+
+// ===============================
+// Серверная синхронизация
+// ===============================
+
 
 
 async function syncBalance(){
 
 
+
 try{
 
 
-player = Storage.getPlayer();
+
+player =
+Storage.getPlayer();
+
+
 
 
 
@@ -134,27 +195,36 @@ CONFIG.API_URL + "/sync",
 
 {
 
+
 method:"POST",
 
+
 headers:{
+
 
 "Content-Type":
 
 "application/json"
 
+
 },
+
 
 
 body:JSON.stringify({
 
+
 id:player.id,
 
+
 balance:player.balance
+
 
 })
 
 
 }
+
 
 );
 
@@ -165,29 +235,31 @@ balance:player.balance
 catch(e){
 
 
+
 console.log(
 "SYNC ERROR",
 e
 );
 
 
-}
-
-
 
 }
 
 
 
+}
 
 
 
 
 
 
-// ================================
-// Клик
-// ================================
+
+
+
+// ===============================
+// КЛИК
+// ===============================
 
 
 const clickButton =
@@ -198,6 +270,8 @@ document.getElementById(
 
 
 
+
+
 if(clickButton){
 
 
@@ -205,23 +279,51 @@ if(clickButton){
 clickButton.onclick = ()=>{
 
 
-player = Storage.getPlayer();
+
+player =
+Storage.getPlayer();
 
 
 
-player.balance +=
-
-Number(player.clickPower);
 
 
+const power =
 
-Storage.savePlayer(player);
-
-
-
-showClickAnimation(
+Number(
 player.clickPower
 );
+
+
+
+
+
+player.balance += power;
+
+
+
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
+
+
+
+if(window.ClickEffects){
+
+
+ClickEffects.show(power);
+
+
+
+}
+
+
+
 
 
 
@@ -229,7 +331,10 @@ updateScreen();
 
 
 
+
 syncBalance();
+
+
 
 
 
@@ -247,66 +352,14 @@ syncBalance();
 
 
 
-// ================================
-// Анимация +U
-// ================================
+// ===============================
+// АВТОДОХОД
+// ===============================
 
-
-function showClickAnimation(value){
-
-
-
-const text =
-document.createElement("div");
-
-
-
-text.className =
-"click-number";
-
-
-
-text.innerText =
-
-"+"+
-
-formatNumber(value)
-
-+
-
-" U";
-
-
-
-document.body.appendChild(text);
-
-
-
-
-setTimeout(()=>{
-
-text.remove();
-
-},800);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// АВТО ДОХОД
-// ================================
 
 
 setInterval(()=>{
+
 
 
 player =
@@ -314,23 +367,37 @@ Storage.getPlayer();
 
 
 
+
+
+
 if(
-Number(player.autoPower)>0
+player.autoPower > 0
 ){
 
 
 
 player.balance +=
 
-Number(player.autoPower)/60;
+Number(
+player.autoPower
+)
+/
+60;
 
 
 
-Storage.savePlayer(player);
+
+
+
+Storage.savePlayer(
+player
+);
+
 
 
 
 updateScreen();
+
 
 
 }
@@ -347,9 +414,11 @@ updateScreen();
 
 
 
-// ================================
-// Синхронизация каждые 5 сек
-// ================================
+
+
+// ===============================
+// СИНХРОНИЗАЦИЯ
+// ===============================
 
 
 setInterval(
@@ -368,21 +437,26 @@ syncBalance,
 
 
 
-// ================================
-// ПОКУПКА УЛУЧШЕНИЙ
-// ================================
+// ===============================
+// УЛУЧШЕНИЯ
+// ===============================
 
 
 document
 
 .querySelectorAll(
+
 ".upgrade-card button"
+
 )
 
 .forEach(button=>{
 
 
+
 button.onclick = ()=>{
+
+
 
 
 
@@ -393,32 +467,44 @@ Storage.getPlayer();
 
 
 
+
 const price =
-Number(button.dataset.price);
+
+Number(
+button.dataset.price
+);
+
 
 
 
 const type =
+
 button.dataset.type;
 
 
 
+
+
 const value =
-Number(button.dataset.value);
+
+Number(
+button.dataset.value
+);
 
 
 
 
 
 
-if(
-player.balance < price
-){
+
+if(player.balance < price){
+
 
 
 alert(
 "Недостаточно U"
 );
+
 
 
 return;
@@ -451,8 +537,6 @@ player.clickPower += value;
 
 
 
-
-
 if(type==="auto"){
 
 
@@ -466,8 +550,12 @@ player.autoPower += value;
 
 
 
+Storage.savePlayer(
+player
+);
 
-Storage.savePlayer(player);
+
+
 
 
 
@@ -475,7 +563,10 @@ updateScreen();
 
 
 
+
 syncBalance();
+
+
 
 
 
@@ -488,10 +579,13 @@ button.disabled=true;
 
 
 
+
+
 };
 
 
 
+
 });
 
 
@@ -502,25 +596,30 @@ button.disabled=true;
 
 
 
-// ================================
-// НАВИГАЦИЯ
-// ================================
+// ===============================
+// НИЖНЕЕ МЕНЮ
+// ===============================
 
 
 document
 
-.querySelectorAll(".nav")
+.querySelectorAll(
 
-.forEach(button=>{
+".nav"
+
+)
+
+.forEach(btn=>{
 
 
 
-button.onclick=()=>{
+btn.onclick = ()=>{
 
 
 
 const page =
-button.dataset.page;
+
+btn.dataset.page;
 
 
 
@@ -528,17 +627,23 @@ button.dataset.page;
 
 document
 
-.querySelectorAll(".page")
+.querySelectorAll(
 
-.forEach(item=>{
+".page"
+
+)
+
+.forEach(p=>{
 
 
-item.classList.remove(
+p.classList.remove(
 "active"
 );
 
 
+
 });
+
 
 
 
@@ -547,21 +652,18 @@ item.classList.remove(
 
 const target =
 
-document.getElementById(page);
+document.getElementById(
+page
+);
 
 
 
 
-
-if(target){
-
+if(target)
 
 target.classList.add(
 "active"
 );
-
-
-}
 
 
 
@@ -571,12 +673,14 @@ target.classList.add(
 
 document
 
-.querySelectorAll(".nav")
+.querySelectorAll(
+".nav"
+)
 
-.forEach(btn=>{
+.forEach(b=>{
 
 
-btn.classList.remove(
+b.classList.remove(
 "active"
 );
 
@@ -587,9 +691,12 @@ btn.classList.remove(
 
 
 
-button.classList.add(
+
+
+btn.classList.add(
 "active"
 );
+
 
 
 
@@ -603,11 +710,6 @@ button.classList.add(
 
 
 
-
-
-
-
-// старт
 
 
 updateScreen();
