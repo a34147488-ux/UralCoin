@@ -1,269 +1,80 @@
-*{
+/* ===== НОВЫЕ ТОПЫ URALCOIN ===== */
 
-box-sizing:border-box;
 
-margin:0;
+#topList{
 
-padding:0;
+display:flex;
 
--webkit-tap-highlight-color:transparent;
+flex-direction:column;
+
+gap:15px;
 
 }
 
 
-html,
-body{
+
+.top-card{
 
 width:100%;
-
-height:100%;
-
-overflow:hidden;
-
-font-family:Arial, sans-serif;
-
-background:#090414;
-
-color:white;
-
-touch-action:manipulation;
-
-}
-
-
-
-
-
-.app{
-
-width:100%;
-
-height:100vh;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-
-
-
-
-.city-bg{
-
-position:absolute;
-
-inset:0;
-
-
-background:
-
-linear-gradient(
-135deg,
-rgba(255,215,0,.45),
-rgba(120,40,220,.65)
-),
-
-url("ekaterinburg.jpg");
-
-
-background-size:cover;
-
-background-position:center;
-
-
-animation:
-
-cityMove 10s infinite alternate;
-
-
-z-index:0;
-
-}
-
-
-
-
-@keyframes cityMove{
-
-
-from{
-
-filter:
-
-brightness(.8)
-saturate(1);
-
-}
-
-
-to{
-
-filter:
-
-brightness(1)
-saturate(1.4);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-.header{
-
-height:80px;
-
-position:relative;
-
-z-index:2;
-
-padding:15px;
-
-
-}
-
-
-
-
-
-.user-profile{
-
-position:absolute;
-
-left:20px;
-
-top:15px;
-
-
-}
-
-
-
-
-
-.avatar{
-
-width:55px;
-
-height:55px;
-
-border-radius:50%;
-
 
 display:flex;
 
 align-items:center;
 
-justify-content:center;
+gap:15px;
+
+padding:18px;
 
 
 background:
 
 linear-gradient(
 135deg,
-#ffd700,
-#7b2cff
+rgba(255,215,0,.25),
+rgba(125,40,220,.35)
 );
 
 
-font-size:25px;
+border:
 
-font-weight:900;
-
-
-overflow:hidden;
+1px solid rgba(255,255,255,.25);
 
 
-box-shadow:
-
-0 0 20px gold;
+border-radius:25px;
 
 
-}
-
-
-
-
-.avatar img{
-
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-
-
-
-
-
-
-.content{
-
-height:calc(100vh - 80px);
-
-overflow-y:auto;
-
-position:relative;
-
-z-index:2;
-
-padding-bottom:90px;
-
-}
-
-
-
-
-
-.page{
-
-display:none;
-
-padding:20px;
+backdrop-filter:blur(15px);
 
 
 animation:
+topShow .3s;
 
-pageShow .25s;
+
+transition:.2s;
 
 
 }
 
 
 
-.page.active{
+.top-card:active{
 
-display:block;
+transform:scale(.96);
 
 }
 
 
 
-@keyframes pageShow{
 
+@keyframes topShow{
 
 from{
 
 opacity:0;
 
-transform:translateY(15px);
-
+transform:translateY(20px);
 
 }
-
 
 to{
 
@@ -271,152 +82,58 @@ opacity:1;
 
 transform:none;
 
-
 }
-
-
-}
-
-
-
-
-
-
-
-
-
-/* БАЛАНС */
-
-
-
-.balance-box{
-
-text-align:center;
-
-margin-top:35px;
-
 
 }
 
 
 
-.balance{
 
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+.top-place{
 
 
-gap:10px;
+width:35px;
 
-
-font-size:52px;
+font-size:30px;
 
 font-weight:900;
 
+color:#ffd700;
+
+
+text-align:center;
+
 
 }
 
 
 
-.coin-small{
+
+.top-avatar-img,
+.top-avatar{
 
 
-width:32px;
+width:65px;
 
-height:32px;
+height:65px;
 
 
 border-radius:50%;
+
+
+object-fit:cover;
 
 
 background:
 
 linear-gradient(
 135deg,
-#fff000,
-#d58b00
-);
-
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-font-size:18px;
-
-font-weight:900;
-
-
-box-shadow:
-
-0 0 15px gold;
-
-
-}
-
-
-
-
-
-.click-power{
-
-
-margin-top:15px;
-
-
-display:inline-block;
-
-
-padding:10px 20px;
-
-
-border-radius:20px;
-
-
-background:
-
-linear-gradient(
-90deg,
 #ffd700,
 #7b2cff
 );
 
 
-
-font-weight:800;
-
-}
-
-
-
-
-
-
-
-
-
-/* ГЛАВНАЯ КНОПКА */
-
-
-.main-coin{
-
-
-width:250px;
-
-height:250px;
-
-
-margin:90px auto 0;
-
-
 display:flex;
 
 align-items:center;
@@ -424,25 +141,39 @@ align-items:center;
 justify-content:center;
 
 
-border-radius:50%;
+font-size:28px;
+
+font-weight:900;
 
 
 border:
 
-10px solid #ffd700;
+2px solid #ffd700;
 
 
-background:
+box-shadow:
 
-radial-gradient(
-circle,
-#fff59b,
-#ffc400,
-#6d22cc
-);
+0 0 20px rgba(255,215,0,.7);
 
 
-font-size:120px;
+}
+
+
+
+
+
+.top-info{
+
+flex:1;
+
+}
+
+
+
+.top-name{
+
+
+font-size:22px;
 
 font-weight:900;
 
@@ -450,71 +181,21 @@ font-weight:900;
 color:white;
 
 
-box-shadow:
-
-0 0 45px gold;
-
-
-transition:.15s;
-
-
 }
 
 
 
-.main-coin:active{
+.top-balance{
 
 
-transform:scale(.93);
+font-size:20px;
 
 
-}
+font-weight:900;
 
 
+margin-top:5px;
 
-
-
-
-
-
-
-/* ПАНЕЛИ */
-
-
-.panel{
-
-
-background:
-
-rgba(255,255,255,.12);
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-border-radius:25px;
-
-
-padding:25px;
-
-
-border:
-
-1px solid rgba(255,215,0,.4);
-
-
-}
-
-
-
-.panel h2{
-
-
-font-size:30px;
-
-margin-bottom:25px;
 
 color:#ffd85c;
 
@@ -523,302 +204,35 @@ color:#ffd85c;
 
 
 
+.top-balance span{
 
 
+display:inline-flex;
 
-
-
-
-input{
-
-
-width:100%;
-
-height:55px;
-
-
-border:none;
-
-border-radius:15px;
-
-
-padding:0 15px;
-
-
-margin-bottom:15px;
-
-
-font-size:17px;
-
-
-}
-
-
-
-
-
-
-
-
-button,
-.menu-card{
-
-
-transition:.15s;
-
-cursor:pointer;
-
-}
-
-
-
-button:active,
-.menu-card:active{
-
-
-transform:scale(.94);
-
-
-}
-
-
-
-
-
-
-
-.gold-button,
-.menu-card{
-
-
-width:100%;
-
-
-padding:17px;
-
-
-border-radius:18px;
-
-
-border:
-
-1px solid #ffd700;
-
-
-background:
-
-linear-gradient(
-90deg,
-#ffd700,
-#7b2cff
-);
-
-
-
-color:white;
-
-
-font-size:18px;
-
-
-font-weight:900;
-
-
-margin-bottom:15px;
-
-
-text-align:center;
-
-
-display:block;
-
-
-text-decoration:none;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* УЛУЧШЕНИЯ */
-
-
-.upgrade-card{
-
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-
-padding:15px;
-
-
-margin-bottom:15px;
-
-
-border-radius:18px;
-
-
-background:
-
-rgba(0,0,0,.25);
-
-
-}
-
-
-
-.upgrade-card button{
-
-
-background:#ffd700;
-
-
-border:none;
-
-
-padding:12px;
-
-
-border-radius:12px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ТОП */
-
-
-.top-player{
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:15px;
-
-
-background:
-
-rgba(255,255,255,.12);
-
-
-border-radius:20px;
-
-
-padding:15px;
-
-
-margin-bottom:12px;
-
-
-}
-
-
-
-.top-avatar{
-
-
-width:50px;
-
-height:50px;
-
-
-border-radius:50%;
-
-
-background:
-
-linear-gradient(
-135deg,
-#ffd700,
-#7b2cff
-);
-
-
-display:flex;
 
 align-items:center;
 
 justify-content:center;
 
 
-font-weight:900;
+width:22px;
+
+height:22px;
 
 
-overflow:hidden;
+border-radius:50%;
 
 
-}
+background:#ffd700;
 
 
-
-.top-avatar img{
-
-
-width:100%;
-
-height:100%;
+color:#6b2cff;
 
 
-object-fit:cover;
+font-size:13px;
 
 
-}
-
-
-
-
-
-
-
-
-
-/* ИСТОРИЯ */
-
-
-.history-item{
-
-
-background:
-
-rgba(255,255,255,.15);
-
-
-border:
-
-1px solid rgba(255,215,0,.4);
-
-
-border-radius:18px;
-
-
-padding:15px;
-
-
-margin-bottom:12px;
+margin-left:5px;
 
 
 }
@@ -826,208 +240,16 @@ margin-bottom:12px;
 
 
 
+.top-friends{
 
 
+margin-top:5px;
 
 
+font-size:15px;
 
-/* API */
 
-
-#apiResult{
-
-
-background:
-
-rgba(0,0,0,.3);
-
-
-border-radius:15px;
-
-
-padding:20px;
-
-
-word-break:break-all;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* +U */
-
-
-.click-number{
-
-
-position:fixed;
-
-
-left:50%;
-
-
-top:55%;
-
-
-transform:translateX(-50%);
-
-
-font-size:30px;
-
-
-font-weight:900;
-
-
-color:#ffd700;
-
-
-text-shadow:
-
-0 0 15px gold;
-
-
-animation:
-
-clickUp .8s forwards;
-
-
-pointer-events:none;
-
-
-z-index:100;
-
-
-}
-
-
-
-@keyframes clickUp{
-
-
-0%{
-
-
-opacity:1;
-
-
-transform:
-
-translate(-50%,0)
-scale(1);
-
-
-}
-
-
-
-100%{
-
-
-opacity:0;
-
-
-transform:
-
-translate(-50%,-100px)
-scale(1.3);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* НИЖНЕЕ МЕНЮ */
-
-
-.bottom-nav{
-
-
-position:absolute;
-
-
-bottom:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:80px;
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-align-items:center;
-
-
-z-index:5;
-
-
-background:
-
-rgba(0,0,0,.55);
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-}
-
-
-
-.nav{
-
-
-background:none;
-
-
-border:none;
-
-
-color:white;
-
-
-font-size:14px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-.nav.active{
-
-
-color:#ffd700;
+color:rgba(255,255,255,.8);
 
 
 }
