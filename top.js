@@ -1,6 +1,6 @@
 // =================================
-// URALcoin TOP v13.2
-// PLAYERS RATING
+// URALcoin TOP v14
+// SERVER TOP FIX
 // =================================
 
 
@@ -8,14 +8,11 @@
 async function loadTop(){
 
 
-
 const box =
 
 document.getElementById(
 "topList"
 );
-
-
 
 
 
@@ -27,36 +24,13 @@ return;
 
 
 
-
 try{
 
 
 
-if(!CONFIG.API_URL){
+let response = await fetch(
 
-
-
-box.innerHTML =
-`
-<div class="top-card">
-Топ пока пуст
-</div>
-`;
-
-
-
-return;
-
-}
-
-
-
-
-
-const response = await fetch(
-
-CONFIG.API_URL+
-"/top"
+CONFIG.API_URL + "/top"
 
 );
 
@@ -64,8 +38,7 @@ CONFIG.API_URL+
 
 
 
-
-const data = await response.json();
+let data = await response.json();
 
 
 
@@ -74,7 +47,7 @@ const data = await response.json();
 
 let players =
 
-data.players || data || [];
+data.players || [];
 
 
 
@@ -86,41 +59,20 @@ if(!players.length){
 
 
 
-box.innerHTML =
-`
+box.innerHTML = `
+
 <div class="top-card">
+
 Игроков пока нет
+
 </div>
+
 `;
-
-
 
 return;
 
 
-
 }
-
-
-
-
-
-
-
-
-players.sort((a,b)=>{
-
-
-return Number(b.balance||0)
-
--
-
-Number(a.balance||0);
-
-
-});
-
-
 
 
 
@@ -135,21 +87,11 @@ box.innerHTML="";
 
 
 
-
-
-players.slice(0,50)
-
-.forEach((p,index)=>{
+players.forEach((player,index)=>{
 
 
 
-
-
-let avatar =
-
-p.photo ||
-
-"";
+let avatar = "";
 
 
 
@@ -157,23 +99,35 @@ p.photo ||
 
 
 
-let image = avatar ?
+if(player.photo){
+
+
+avatar = `
+
+<img class="top-avatar-img"
+
+src="${player.photo}">
+
+`;
+
+
+}
+
+else{
 
 
 
-`
-<img src="${avatar}">
-`
+avatar = `
 
-:
-
-`
 <div class="top-avatar">
 
 ${
 
-(p.name||"U")
+(player.name || "U")
+
 .charAt(0)
+
+.toUpperCase()
 
 }
 
@@ -183,19 +137,21 @@ ${
 
 
 
+}
 
 
 
 
 
 
-box.innerHTML +=
 
 
 
-`
+box.innerHTML += `
+
 
 <div class="top-card">
+
 
 
 <div class="place">
@@ -206,7 +162,9 @@ box.innerHTML +=
 
 
 
-${image}
+
+${avatar}
+
 
 
 
@@ -215,7 +173,7 @@ ${image}
 
 <b>
 
-${p.name || "Игрок"}
+${player.name || "Игрок"}
 
 </b>
 
@@ -223,7 +181,7 @@ ${p.name || "Игрок"}
 
 <div class="top-balance">
 
-${formatNumber(p.balance)} U
+${formatNumber(player.balance)} U
 
 </div>
 
@@ -255,21 +213,23 @@ catch(error){
 
 
 console.log(
+
 "TOP ERROR",
+
 error
+
 );
 
 
 
+box.innerHTML = `
 
-
-box.innerHTML =
-`
 <div class="top-card">
 
-Топ временно недоступен
+Ошибка загрузки топа
 
 </div>
+
 `;
 
 
@@ -286,10 +246,10 @@ box.innerHTML =
 
 
 
+loadTop();
 
 
 
-// обновление каждые 30 секунд
 
 setInterval(
 
@@ -298,11 +258,3 @@ loadTop,
 30000
 
 );
-
-
-
-
-
-
-
-loadTop();
