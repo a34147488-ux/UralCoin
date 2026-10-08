@@ -1,10 +1,7 @@
-// Подключение Telegram WebApp
-
 const tg = window.Telegram.WebApp;
 
 
 tg.ready();
-
 
 tg.expand();
 
@@ -12,42 +9,40 @@ tg.expand();
 
 // Получаем пользователя Telegram
 
-const user = tg.initDataUnsafe?.user;
+const user = tg.initDataUnsafe.user;
 
 
 
 if(user){
 
 
-    const name = user.first_name || "Игрок";
+    const name = document.querySelector(".top h1");
 
 
-    const avatar = document.querySelector(".avatar");
+    if(name){
 
-
-    const username = document.querySelector(".username");
-
-
-
-    if(avatar){
-
-        avatar.innerHTML = name[0].toUpperCase();
+        name.innerHTML = 
+        "UralCoin";
 
     }
 
 
 
-    if(username){
+    console.log("Telegram user:", user);
 
-        username.innerHTML = `
 
-        <h2>${name}</h2>
 
-        <p>UralCoin игрок</p>
+    localStorage.setItem(
+        "telegram_id",
+        user.id
+    );
 
-        `;
 
-    }
+    localStorage.setItem(
+        "telegram_name",
+        user.first_name
+    );
+
 
 
 }
