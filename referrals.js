@@ -1,14 +1,21 @@
 // ===================================
 // URALcoin REFERRALS v5
-// Server Referral System
+// Real Server Referral System
 // ===================================
 
+
+
+
+// ================================
+// Создание ссылки
+// ================================
 
 
 function createReferralLink(){
 
 
-const player = Storage.getPlayer();
+const player =
+Storage.getPlayer();
 
 
 
@@ -52,21 +59,26 @@ player.id
 
 
 
+
+// ================================
+// Показ ссылки
+// ================================
+
+
 function loadReferral(){
 
 
 
-const input =
-
+const link =
 document.getElementById(
 "refLink"
 );
 
 
 
-if(input){
+if(link){
 
-input.value =
+link.value =
 createReferralLink();
 
 }
@@ -75,18 +87,14 @@ createReferralLink();
 
 
 
-
 const count =
-
 document.getElementById(
 "friendsCount"
 );
 
 
 
-
 if(count){
-
 
 
 const player =
@@ -98,6 +106,114 @@ count.innerText =
 player.friends || 0;
 
 
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// Отправка реферала на сервер
+// ================================
+
+
+async function sendReferral(
+referrerId
+){
+
+
+const player =
+Storage.getPlayer();
+
+
+
+
+
+if(
+
+!player.id ||
+
+player.id==="guest"
+
+)
+
+return;
+
+
+
+
+
+
+
+try{
+
+
+await fetch(
+
+CONFIG.API_URL + "/referral",
+
+{
+
+method:"POST",
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+userId:
+player.id,
+
+
+referrerId:
+referrerId
+
+
+})
+
+}
+
+
+);
+
+
+
+
+
+
+console.log(
+"Referral sent"
+);
+
+
+
+}
+
+catch(e){
+
+
+console.log(
+"Referral error",
+e
+);
+
+
 
 }
 
@@ -113,22 +229,26 @@ player.friends || 0;
 
 
 
-// ===============================
-// ПРОВЕРКА ВХОДА ПО ССЫЛКЕ
-// ===============================
+// ================================
+// Проверка /start
+// ================================
 
 
-async function checkStartReferral(){
+function checkStartReferral(){
+
+
+
+let start="";
+
+
+
 
 
 
 const tg =
-
 window.Telegram?.WebApp;
 
 
-
-let start = "";
 
 
 
@@ -145,7 +265,6 @@ tg.initDataUnsafe.start_param;
 
 
 }
-
 
 
 
@@ -178,13 +297,7 @@ params.get("start") || "";
 
 
 
-if(!start)
-
-return;
-
-
-
-
+if(start){
 
 
 
@@ -196,105 +309,39 @@ Storage.getPlayer();
 
 
 
-
 if(
 
 String(player.id)
 
-===
+!==
 
 String(start)
 
-)
-
-return;
+){
 
 
 
 
 
+if(
+!player.referrer
+){
 
 
-// сохраняем локально
 
 Storage.setReferrer(start);
 
 
 
-
-
-
-
-// отправляем на сервер
-
-
-try{
-
-
-
-await fetch(
-
-CONFIG.API_URL +
-
-"/referral",
-
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-
-userId:
-
-player.id,
-
-
-referrerId:
-
-start
-
-
-})
-
-
-}
-
-
-
-);
-
-
-
-console.log(
-"Referral sent"
-);
+sendReferral(start);
 
 
 
 }
 
-catch(e){
 
 
-
-console.log(
-"Referral error",
-e
-);
+}
 
 
 
@@ -310,17 +357,18 @@ e
 
 
 
+
+
+// ================================
+// Копирование
+// ================================
 
 
 const copyButton =
 
 document.getElementById(
-
 "copyReferral"
-
 );
-
-
 
 
 
@@ -330,11 +378,7 @@ if(copyButton){
 
 
 
-copyButton.addEventListener(
-
-"click",
-
-()=>{
+copyButton.onclick=()=>{
 
 
 
@@ -346,7 +390,6 @@ createReferralLink();
 
 
 navigator.clipboard.writeText(link);
-
 
 
 
@@ -369,11 +412,7 @@ copyButton.innerText =
 
 
 
-}
-
-
-
-);
+};
 
 
 
@@ -385,12 +424,14 @@ copyButton.innerText =
 
 
 
+
+
+// старт
 
 
 checkStartReferral();
 
 loadReferral();
-
 
 
 
