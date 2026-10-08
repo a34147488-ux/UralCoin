@@ -8,11 +8,15 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+
 <title>UralCoin</title>
+
 
 <link rel="stylesheet" href="style.css">
 
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 
 </head>
 
@@ -23,7 +27,29 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="app">
 
 
+<!-- зимний декор -->
+
+<div class="garland">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+<div class="snow">
+
+</div>
+
+
+
+
 <div class="city-bg"></div>
+
 
 
 
@@ -37,11 +63,13 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="avatar">
 
 
-<img id="userAvatar">
+<img id="userAvatar" src="">
 
 
 <span id="avatarLetter">
+
 U
+
 </span>
 
 
@@ -58,10 +86,7 @@ U
 
 
 
-
 <main class="content">
-
-
 
 
 
@@ -76,26 +101,36 @@ U
 
 
 <span id="balance">
+
 0,000
+
 </span>
 
 
 <div class="coin-small">
+
 U
+
 </div>
 
 
 </div>
+
+
 
 
 
 <div class="click-power">
 
+
 +<span id="clickPower">
+
 0,010
+
 </span>
 
 за клик
+
 
 </div>
 
@@ -134,7 +169,9 @@ U
 
 
 <h2>
+
 Рефералы
+
 </h2>
 
 
@@ -142,11 +179,15 @@ U
 
 <div class="info-row">
 
+
 Приглашено:
 
 <b id="friendsCount">
+
 0
+
 </b>
+
 
 </div>
 
@@ -155,11 +196,15 @@ U
 
 <div class="info-row">
 
+
 За человека:
 
 <b>
+
 5000 U
+
 </b>
+
 
 </div>
 
@@ -174,7 +219,9 @@ U
 
 <button class="gold-button" id="copyReferral">
 
+
 Копировать ссылку
+
 
 </button>
 
@@ -200,27 +247,39 @@ U
 
 
 <h2>
+
 Переводы
+
 </h2>
 
 
 
 
 <input id="transferName"
+
 placeholder="@username">
 
 
 
+
+
 <input id="transferSum"
+
 placeholder="Количество U"
+
 type="number">
 
 
 
+
+
 <button class="gold-button"
+
 id="transferButton">
 
+
 Перевести
+
 
 </button>
 
@@ -246,7 +305,9 @@ id="transferButton">
 
 
 <h2>
+
 Топ игроков
+
 </h2>
 
 
@@ -279,7 +340,9 @@ id="transferButton">
 
 
 <h2>
+
 Еще
+
 </h2>
 
 
@@ -287,10 +350,13 @@ id="transferButton">
 
 
 <button class="menu-card"
+
 id="promoButton">
+
 
 Промокоды
 
+
 </button>
 
 
@@ -298,10 +364,13 @@ id="promoButton">
 
 
 <button class="menu-card"
+
 id="historyButton">
+
 
 История переводов
 
+
 </button>
 
 
@@ -309,9 +378,12 @@ id="historyButton">
 
 
 <button class="menu-card"
+
 id="apiButton">
 
+
 Получить ключ API
+
 
 </button>
 
@@ -320,9 +392,12 @@ id="apiButton">
 
 
 <a class="menu-card"
+
 href="https://t.me/+NyqTkXAU-H5hNDky">
 
+
 Наш канал
+
 
 </a>
 
@@ -331,12 +406,14 @@ href="https://t.me/+NyqTkXAU-H5hNDky">
 
 
 <a class="menu-card"
+
 href="https://t.me/BuysStarsBot?start=8265611469">
+
 
 Купить прем
 
-</a>
 
+</a>
 
 
 
@@ -351,7 +428,9 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
+
 <div class="upgrade-card">
+
 
 <span>
 
@@ -360,13 +439,21 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 </span>
 
 
-<button data-price="10"
+
+<button
+
+data-price="10"
+
 data-type="click"
+
 data-value="0.01">
+
 
 10 U
 
+
 </button>
+
 
 
 </div>
@@ -378,6 +465,7 @@ data-value="0.01">
 
 <div class="upgrade-card">
 
+
 <span>
 
 Автокликер +1 U/мин
@@ -385,17 +473,24 @@ data-value="0.01">
 </span>
 
 
-<button data-price="100"
+
+<button
+
+data-price="100"
+
 data-type="auto"
+
 data-value="1">
 
+
 100 U
+
 
 </button>
 
 
-</div>
 
+</div>
 
 
 
@@ -420,32 +515,45 @@ data-value="1">
 
 
 <h2>
+
 Промокоды
+
 </h2>
 
 
 
+
 <input id="promoName"
+
 placeholder="Название">
 
 
 
 <input id="promoReward"
+
 placeholder="Награда U"
+
 type="number">
 
 
 
 <input id="promoLimit"
+
 placeholder="Лимит"
+
 type="number">
 
 
 
+
+
 <button class="gold-button"
+
 id="createPromo">
 
+
 Создать промокод
+
 
 </button>
 
@@ -458,15 +566,22 @@ id="createPromo">
 
 
 
+
 <input id="promoInput"
+
 placeholder="Введите промокод">
 
 
 
+
+
 <button class="gold-button"
+
 id="usePromo">
 
+
 Активировать
+
 
 </button>
 
@@ -499,6 +614,7 @@ id="usePromo">
 </h2>
 
 
+
 <div id="historyList">
 
 
@@ -506,6 +622,7 @@ id="usePromo">
 
 
 </div>
+
 
 
 </div>
@@ -535,6 +652,7 @@ API ключ
 
 
 
+
 <div id="apiResult">
 
 Ключ еще не создан
@@ -543,10 +661,14 @@ API ключ
 
 
 
+
 <button class="gold-button"
+
 id="createApi">
 
+
 Получить ключ
+
 
 </button>
 
@@ -571,24 +693,32 @@ id="createApi">
 
 
 
+
 <nav class="bottom-nav">
 
 
 <button class="nav active"
+
 data-page="game">
+
 
 Играть
 
+
 </button>
 
 
 
 
+
 <button class="nav"
+
 data-page="referrals">
+
 
 Рефералы
 
+
 </button>
 
 
@@ -596,10 +726,13 @@ data-page="referrals">
 
 
 <button class="nav"
+
 data-page="transfer">
+
 
 Переводы
 
+
 </button>
 
 
@@ -607,10 +740,13 @@ data-page="transfer">
 
 
 <button class="nav"
+
 data-page="tops">
+
 
 Топы
 
+
 </button>
 
 
@@ -618,16 +754,19 @@ data-page="tops">
 
 
 <button class="nav"
+
 data-page="more">
+
 
 Еще
 
+
 </button>
+
 
 
 
 </nav>
-
 
 
 
@@ -642,25 +781,42 @@ data-page="more">
 
 
 
+
+
 <script src="config.js"></script>
 
-<script src="telegram.js"></script>
 
 <script src="storage.js"></script>
 
+
+<script src="telegram.js"></script>
+
+
+<script src="api.js"></script>
+
+
 <script src="app.js"></script>
 
-<script src="referrals.js"></script>
-
-<script src="promo.js"></script>
 
 <script src="top.js"></script>
 
+
+<script src="referrals.js"></script>
+
+
+<script src="promo.js"></script>
+
+
 <script src="transfer.js"></script>
+
 
 <script src="more.js"></script>
 
 
+
+
+
 </body>
+
 
 </html>
