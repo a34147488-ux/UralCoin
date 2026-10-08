@@ -1,11 +1,10 @@
 // ===================================
-// URALcoin STORAGE v4
-// Совместимость всех модулей
+// URALcoin STORAGE v5
+// Стабильная версия без конфликтов
 // ===================================
 
 
 const Storage = {
-
 
 
 getPlayer(){
@@ -13,42 +12,24 @@ getPlayer(){
 
 let player = JSON.parse(
 
-localStorage.getItem(
-"ural_player"
-)
+localStorage.getItem("ural_player")
 
 );
 
 
 
-
-// перенос старого профиля
+// перенос старых данных
 
 if(!player){
 
 
-let old = JSON.parse(
+player = JSON.parse(
 
-localStorage.getItem(
-"player"
-)
+localStorage.getItem("player")
 
 );
 
-
-
-if(old){
-
-
-player = old;
-
-
-
 }
-
-}
-
-
 
 
 
@@ -57,71 +38,32 @@ if(!player){
 
 player = {
 
-
 id:
-
-localStorage.getItem(
-"telegram_id"
-)
-||
-"guest",
-
+localStorage.getItem("telegram_id") || "guest",
 
 name:
-
 "Игрок",
 
-
 photo:
-
 "",
 
+balance:0,
 
-balance:
+clickPower:0.01,
 
-0,
+autoPower:0,
 
+friends:0,
 
-clickPower:
+invited:0,
 
-0.01,
+referrer:null,
 
+history:[],
 
-autoPower:
+usedPromos:[],
 
-0,
-
-
-friends:
-
-0,
-
-
-invited:
-
-0,
-
-
-referrer:
-
-null,
-
-
-history:
-
-[],
-
-
-usedPromos:
-
-[],
-
-
-apiKey:
-
-null
-
-
+apiKey:null
 
 };
 
@@ -130,43 +72,46 @@ null
 
 
 
+// защита полей
+
+player.id =
+player.id || "guest";
 
 
-// обязательные поля
-
-if(player.friends === undefined)
-
-player.friends = 0;
+player.name =
+player.name || "Игрок";
 
 
-
-if(player.invited === undefined)
-
-player.invited = player.friends;
+player.photo =
+player.photo || "";
 
 
-
-if(!player.history)
-
-player.history = [];
+player.balance =
+Number(player.balance || 0);
 
 
-
-if(!player.usedPromos)
-
-player.usedPromos = [];
+player.clickPower =
+Number(player.clickPower || 0.01);
 
 
-
-if(!player.clickPower)
-
-player.clickPower = 0.01;
+player.autoPower =
+Number(player.autoPower || 0);
 
 
+player.friends =
+Number(player.friends || 0);
 
-if(!player.balance)
 
-player.balance = 0;
+player.invited =
+Number(player.invited || player.friends);
+
+
+player.history =
+player.history || [];
+
+
+player.usedPromos =
+player.usedPromos || [];
 
 
 
@@ -199,7 +144,7 @@ JSON.stringify(player)
 
 
 
-// синхронизация для старых файлов
+// оставляем совместимость
 
 localStorage.setItem(
 
@@ -219,30 +164,25 @@ JSON.stringify(player)
 
 
 
-setTelegramUser(user){
+setUser(user){
 
 
 let player = this.getPlayer();
 
 
 
-player.id = String(user.id);
+player.id =
+String(user.id);
 
 
 
 player.name =
-
-user.first_name ||
-
-"Игрок";
+user.first_name || "Игрок";
 
 
 
 player.photo =
-
-user.photo_url ||
-
-player.photo;
+user.photo_url || "";
 
 
 
@@ -262,33 +202,10 @@ return player;
 
 
 
-updateBalance(amount){
-
-
-let player = this.getPlayer();
-
-
-
-player.balance = Number(amount);
-
-
-
-this.savePlayer(player);
-
-
-
-},
-
-
-
-
-
-
-
 addBalance(amount){
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
@@ -311,7 +228,7 @@ this.savePlayer(player);
 removeBalance(amount){
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
@@ -341,10 +258,34 @@ return true;
 
 
 
+updateBalance(amount){
+
+
+let player=this.getPlayer();
+
+
+
+player.balance =
+Number(amount);
+
+
+
+this.savePlayer(player);
+
+
+
+},
+
+
+
+
+
+
+
 addFriend(){
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
@@ -369,7 +310,7 @@ this.savePlayer(player);
 addHistory(data){
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
@@ -407,7 +348,7 @@ return this.getPlayer().history;
 generateApiKey(){
 
 
-const key =
+let key =
 
 "URAL-" +
 
@@ -422,11 +363,11 @@ Math.random()
 
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
-player.apiKey = key;
+player.apiKey=key;
 
 
 
@@ -459,32 +400,23 @@ return key;
 getApiKey(){
 
 
-let player = this.getPlayer();
+let player=this.getPlayer();
 
 
 
-return (
+return player.apiKey ||
 
-player.apiKey ||
+localStorage.getItem("ural_api") ||
 
-localStorage.getItem(
-"ural_api"
-)
-
-||
-null
-
-);
+null;
 
 
 
 }
 
 
-
-
-
 };
+
 
 
 
