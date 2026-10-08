@@ -1,7 +1,9 @@
+
 // ===================================
 // URALcoin TOP v10
-// Server Leaderboard
+// Server Leaderboard + Avatars
 // ===================================
+
 
 
 
@@ -13,7 +15,6 @@ return Number(value || 0)
 .toFixed(3)
 
 .replace(".",",");
-
 
 
 }
@@ -31,11 +32,9 @@ async function loadTop(){
 
 
 const list =
-
 document.getElementById(
 "topList"
 );
-
 
 
 
@@ -54,10 +53,11 @@ try{
 
 
 
-const response = await fetch(
+const response =
+
+await fetch(
 
 CONFIG.API_URL +
-
 "/top"
 
 );
@@ -67,8 +67,19 @@ CONFIG.API_URL +
 
 
 
+if(!response.ok)
 
-const players = await response.json();
+throw new Error(
+"TOP ERROR"
+);
+
+
+
+
+
+
+let players =
+await response.json();
 
 
 
@@ -77,18 +88,16 @@ const players = await response.json();
 
 
 if(
-
 !Array.isArray(players)
-
 ||
-
 players.length===0
-
 ){
 
 
 
-list.innerHTML = `
+list.innerHTML =
+
+`
 
 <div class="top-empty">
 
@@ -103,7 +112,6 @@ list.innerHTML = `
 return;
 
 
-
 }
 
 
@@ -113,8 +121,29 @@ return;
 
 
 
-list.innerHTML="";
+players = players
 
+.sort(
+
+(a,b)=>
+
+Number(b.balance || 0)
+
+-
+
+Number(a.balance || 0)
+
+)
+
+.slice(0,50);
+
+
+
+
+
+
+
+list.innerHTML = "";
 
 
 
@@ -130,13 +159,10 @@ players.forEach(
 
 
 
-const card =
-
+let card =
 document.createElement(
 "div"
 );
-
-
 
 
 
@@ -148,13 +174,7 @@ card.className =
 
 
 
-
-let avatarHTML = "";
-
-
-
-
-
+let avatar;
 
 
 
@@ -162,7 +182,9 @@ if(player.photo){
 
 
 
-avatarHTML = `
+avatar =
+
+`
 
 <img
 
@@ -170,9 +192,8 @@ class="top-avatar-img"
 
 src="${player.photo}"
 
-onerror="this.style.display='none'"
-
 >
+
 
 `;
 
@@ -184,21 +205,25 @@ else{
 
 
 
-avatarHTML = `
+avatar =
+
+`
 
 <div class="top-avatar">
+
 
 ${
 
 (player.name || "U")
 
 .charAt(0)
-
 .toUpperCase()
 
 }
 
+
 </div>
+
 
 `;
 
@@ -214,9 +239,11 @@ ${
 
 
 
-card.innerHTML = `
+card.innerHTML =
 
 
+
+`
 
 <div class="top-position">
 
@@ -226,13 +253,7 @@ ${index+1}
 
 
 
-
-
-${avatarHTML}
-
-
-
-
+${avatar}
 
 
 
@@ -245,7 +266,6 @@ ${avatarHTML}
 ${player.name || "Игрок"}
 
 </div>
-
 
 
 
@@ -266,11 +286,9 @@ ${formatTopBalance(player.balance)}
 
 Приглашено:
 
-${player.invited || 0}
+${player.invited || player.friends || 0}
 
 </div>
-
-
 
 
 
@@ -286,19 +304,21 @@ ${player.invited || 0}
 
 
 
-list.appendChild(card);
 
+list.appendChild(card);
 
 
 
 
 }
 
+
+
+
+
+
+
 );
-
-
-
-
 
 
 
@@ -309,13 +329,14 @@ catch(error){
 
 
 console.log(
-"TOP ERROR",
 error
 );
 
 
 
-list.innerHTML = `
+list.innerHTML =
+
+`
 
 <div class="top-empty">
 
@@ -342,10 +363,6 @@ list.innerHTML = `
 
 
 loadTop();
-
-
-
-
 
 
 
