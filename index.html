@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>URALcoin</title>
+<title>UralCoin</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -26,34 +26,34 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="city-bg"></div>
 
 
+
+
 <header class="header">
 
 
 <div class="user-profile">
 
+
 <div class="avatar">
 
+
 <img id="userAvatar">
+
 
 <span id="avatarLetter">
 U
 </span>
 
-</div>
 
 </div>
 
 
-
-<div class="brand">
-
-URALcoin
-
 </div>
-
 
 
 </header>
+
+
 
 
 
@@ -92,7 +92,7 @@ U
 <div class="click-power">
 
 +<span id="clickPower">
-0,01
+0,010
 </span>
 
 за клик
@@ -100,7 +100,10 @@ U
 </div>
 
 
+
 </div>
+
+
 
 
 
@@ -108,24 +111,14 @@ U
 
 <button class="main-coin" id="clickButton">
 
-
 U
-
 
 </button>
 
 
 
-
-
-
-<div class="floating">
-
-</div>
-
-
-
 </section>
+
 
 
 
@@ -146,6 +139,7 @@ U
 
 
 
+
 <div class="info-row">
 
 Приглашено:
@@ -161,7 +155,7 @@ U
 
 <div class="info-row">
 
-За друга:
+За человека:
 
 <b>
 5000 U
@@ -171,20 +165,16 @@ U
 
 
 
+
+
 <input id="refLink" readonly>
+
+
 
 
 <button class="gold-button" id="copyReferral">
 
 Копировать ссылку
-
-</button>
-
-
-
-<button class="gold-button" id="openPromo">
-
-Промокоды
 
 </button>
 
@@ -215,6 +205,7 @@ U
 
 
 
+
 <input id="transferName"
 placeholder="@username">
 
@@ -236,7 +227,6 @@ id="transferButton">
 
 
 </div>
-
 
 
 </section>
@@ -265,6 +255,7 @@ id="transferButton">
 
 
 </div>
+
 
 
 </div>
@@ -305,7 +296,9 @@ id="promoButton">
 
 
 
-<button class="menu-card">
+
+<button class="menu-card"
+id="historyButton">
 
 История переводов
 
@@ -315,9 +308,10 @@ id="promoButton">
 
 
 
-<button class="menu-card">
+<button class="menu-card"
+id="apiButton">
 
-Получить API ключ
+Получить ключ API
 
 </button>
 
@@ -356,11 +350,12 @@ href="https://t.me/BuysStarsBot?start=8265611469">
 
 
 
+
 <div class="upgrade-card">
 
 <span>
 
-Сила клика +0,01
+Сила клика +0.01
 
 </span>
 
@@ -373,29 +368,10 @@ data-value="0.01">
 
 </button>
 
-</div>
-
-
-
-
-<div class="upgrade-card">
-
-<span>
-
-Сила клика +0,05
-
-</span>
-
-
-<button data-price="100"
-data-type="click"
-data-value="0.05">
-
-100 U
-
-</button>
 
 </div>
+
+
 
 
 
@@ -417,29 +393,10 @@ data-value="1">
 
 </button>
 
-</div>
-
-
-
-
-<div class="upgrade-card">
-
-<span>
-
-Автокликер +5 U/мин
-
-</span>
-
-
-<button data-price="500"
-data-type="auto"
-data-value="5">
-
-500 U
-
-</button>
 
 </div>
+
+
 
 
 
@@ -469,7 +426,7 @@ data-value="5">
 
 
 <input id="promoName"
-placeholder="Название промокода">
+placeholder="Название">
 
 
 
@@ -480,7 +437,7 @@ type="number">
 
 
 <input id="promoLimit"
-placeholder="Лимит активаций"
+placeholder="Лимит"
 type="number">
 
 
@@ -494,7 +451,10 @@ id="createPromo">
 
 
 
+
+
 <hr>
+
 
 
 
@@ -512,10 +472,91 @@ id="usePromo">
 
 
 
+
 </div>
 
 
 </section>
+
+
+
+
+
+
+
+
+
+<section class="page" id="history">
+
+
+<div class="panel">
+
+
+<h2>
+
+История переводов
+
+</h2>
+
+
+<div id="historyList">
+
+
+Пока операций нет
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="page" id="api">
+
+
+<div class="panel">
+
+
+<h2>
+
+API ключ
+
+</h2>
+
+
+
+<div id="apiResult">
+
+Ключ еще не создан
+
+</div>
+
+
+
+<button class="gold-button"
+id="createApi">
+
+Получить ключ
+
+</button>
+
+
+
+</div>
+
+
+</section>
+
 
 
 
@@ -542,12 +583,15 @@ data-page="game">
 
 
 
+
 <button class="nav"
 data-page="referrals">
 
 Рефералы
 
 </button>
+
+
 
 
 
@@ -560,12 +604,16 @@ data-page="transfer">
 
 
 
+
+
 <button class="nav"
 data-page="tops">
 
 Топы
 
 </button>
+
+
 
 
 
@@ -579,6 +627,8 @@ data-page="more">
 
 
 </nav>
+
+
 
 
 
@@ -607,6 +657,8 @@ data-page="more">
 <script src="top.js"></script>
 
 <script src="transfer.js"></script>
+
+<script src="more.js"></script>
 
 
 </body>
