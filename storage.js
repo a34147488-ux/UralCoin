@@ -2,64 +2,40 @@ const Storage = {
 
 
 
+get(key, defaultValue){
 
 
-getUser(){
-
-
-let user =
-JSON.parse(
-localStorage.getItem("user")
-);
+let data =
+localStorage.getItem(key);
 
 
 
-if(!user){
+if(data === null){
 
+return defaultValue;
 
-user={
-
-
-id:
-localStorage.getItem("user_id")
-|| "guest",
-
-
-name:
-"Игрок",
-
-
-avatar:
-"",
-
-
-balance:0,
-
-
-clickPower:0.01,
-
-
-friends:0,
-
-
-history:[]
-
-
-};
+}
 
 
 
-this.saveUser(user);
+try{
+
+
+return JSON.parse(data);
+
+
+}
+
+catch{
+
+
+return data;
 
 
 }
 
 
 
-return user;
-
-
-
 },
 
 
@@ -67,13 +43,16 @@ return user;
 
 
 
+set(key,value){
 
-saveUser(user){
 
 
 localStorage.setItem(
-"user",
-JSON.stringify(user)
+
+key,
+
+JSON.stringify(value)
+
 );
 
 
@@ -85,25 +64,145 @@ JSON.stringify(user)
 
 
 
-updateBalance(value){
-
-
-let user =
-this.getUser();
+getPlayer(){
 
 
 
-user.balance =
-value;
+return this.get(
+"player",
+{
+
+id:
+localStorage.getItem(
+"telegram_id"
+)
+||
+"guest",
 
 
+name:
+"Игрок",
 
-this.saveUser(user);
+
+balance:
+0,
+
+
+clickPower:
+0.01,
+
+
+autoPower:
+0,
+
+
+friends:
+0,
+
+
+promos:[],
+
+
+history:[]
+
+
+}
+
+);
 
 
 
 },
 
+
+
+
+
+
+
+savePlayer(player){
+
+
+
+this.set(
+"player",
+player
+);
+
+
+
+},
+
+
+
+
+
+
+
+
+addBalance(amount){
+
+
+
+let player =
+this.getPlayer();
+
+
+
+player.balance += amount;
+
+
+
+this.savePlayer(
+player
+);
+
+
+
+return player.balance;
+
+
+
+},
+
+
+
+
+
+
+
+removeBalance(amount){
+
+
+
+let player =
+this.getPlayer();
+
+
+
+if(player.balance < amount){
+
+return false;
+
+
+}
+
+
+
+player.balance -= amount;
+
+
+
+this.savePlayer(
+player
+);
+
+
+
+return true;
+
+
+},
 
 
 
@@ -114,46 +213,50 @@ this.saveUser(user);
 addFriend(){
 
 
-let user =
-this.getUser();
+
+let player =
+this.getPlayer();
 
 
 
-user.friends++;
+player.friends++;
 
 
 
-this.saveUser(user);
-
-
-
-},
-
-
-
-
-
-
-
-
-addHistory(item){
-
-
-let user =
-this.getUser();
-
-
-
-user.history.push(item);
-
-
-
-this.saveUser(user);
+this.savePlayer(
+player
+);
 
 
 
 },
 
+
+
+
+
+
+
+addHistory(data){
+
+
+
+let player =
+this.getPlayer();
+
+
+
+player.history.push(data);
+
+
+
+this.savePlayer(
+player
+);
+
+
+
+},
 
 
 
@@ -164,12 +267,9 @@ this.saveUser(user);
 getHistory(){
 
 
-let user =
-this.getUser();
 
-
-
-return user.history;
+return this.getPlayer()
+.history;
 
 
 
@@ -181,12 +281,14 @@ return user.history;
 
 
 
-generateApi(){
+
+generateApiKey(){
 
 
 
 let key =
-"UC-"
+
+"URAL-"
 +
 Math.random()
 .toString(36)
@@ -197,8 +299,11 @@ Math.random()
 
 
 localStorage.setItem(
+
 "api_key",
+
 key
+
 );
 
 
@@ -206,8 +311,25 @@ key
 return key;
 
 
+},
+
+
+
+
+
+
+getApiKey(){
+
+
+
+return localStorage.getItem(
+"api_key"
+);
+
+
 
 }
+
 
 
 
