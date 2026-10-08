@@ -1,44 +1,158 @@
 const tg = window.Telegram.WebApp;
 
 
+
+// запускаем Telegram WebApp
+
 tg.ready();
 
 tg.expand();
 
 
 
-const user = tg.initDataUnsafe?.user;
+
+// цвета Telegram
+
+tg.setHeaderColor("#ffffff");
+
+tg.setBackgroundColor("#ffffff");
+
+
+
+
+
+// получаем пользователя
+
+
+const user =
+tg.initDataUnsafe?.user;
+
+
 
 
 
 if(user){
 
 
-    localStorage.setItem(
-        "telegram_id",
-        user.id
-    );
+
+// сохраняем ID
 
 
-    localStorage.setItem(
-        "telegram_name",
-        user.first_name || "Игрок"
-    );
-
-
-
-    if(user.photo_url){
-
-        localStorage.setItem(
-            "avatar",
-            user.photo_url
-        );
-
-    }
+localStorage.setItem(
+"user_id",
+user.id
+);
 
 
 
-    console.log(user);
+
+// имя
+
+
+const name =
+document.getElementById(
+"nickname"
+);
+
+
+
+if(name){
+
+
+name.innerText =
+user.first_name || "Игрок";
+
+
+}
+
+
+
+
+
+
+
+// аватар
+
+
+const img =
+document.getElementById(
+"telegramAvatar"
+);
+
+
+
+const letter =
+document.getElementById(
+"avatarLetter"
+);
+
+
+
+
+
+if(
+user.photo_url
+){
+
+
+img.src =
+user.photo_url;
+
+
+
+img.style.display =
+"block";
+
+
+
+if(letter){
+
+letter.style.display =
+"none";
+
+}
+
+
+
+}
+
+
+
+else{
+
+
+if(letter){
+
+letter.innerText =
+(user.first_name || "U")
+.charAt(0)
+.toUpperCase();
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+// если открыли не через Telegram
+
+else{
+
+
+localStorage.setItem(
+"user_id",
+"guest"
+);
+
 
 
 }
