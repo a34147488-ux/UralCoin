@@ -1,30 +1,28 @@
 // ===================================
-// URALcoin APP v10
-// Click + Auto + Upgrades + Navigation
+// URALcoin APP v12
+// Click + Sync + Upgrade + Second Power
 // ===================================
 
 
 
-let player =
-Storage.getPlayer();
+let player = Storage.getPlayer();
 
 
 
 
 
-
-// ===============================
-// FORMAT
-// ===============================
+// ================================
+// Формат чисел
+// ================================
 
 
 function formatNumber(value){
 
-
 return Number(value || 0)
-.toFixed(3)
-.replace(".",",");
 
+.toFixed(3)
+
+.replace(".",",");
 
 }
 
@@ -34,75 +32,134 @@ return Number(value || 0)
 
 
 
-
-// ===============================
-// SCREEN UPDATE
-// ===============================
+// ================================
+// Обновление экрана
+// ================================
 
 
 function updateScreen(){
 
 
-player =
-Storage.getPlayer();
 
-
-
-
-let balance =
-document.getElementById("balance");
-
-
-
-let clickPower =
-document.getElementById("clickPower");
-
-
-
-let secondPower =
-document.getElementById("secondPower");
-
-
-
-let friends =
-document.getElementById("friendsCount");
+player = Storage.getPlayer();
 
 
 
 
 
-if(balance)
+const balance =
+document.getElementById(
+"balance"
+);
+
+
+
+
+
+const power =
+document.getElementById(
+"clickPower"
+);
+
+
+
+
+
+
+const friends =
+document.getElementById(
+"friendsCount"
+);
+
+
+
+
+
+const second =
+document.getElementById(
+"secondPower"
+);
+
+
+
+
+
+
+
+
+
+if(balance){
+
 
 balance.innerText =
-formatNumber(player.balance);
+
+formatNumber(
+player.balance
+);
+
+
+}
 
 
 
 
-if(clickPower)
-
-clickPower.innerText =
-formatNumber(player.clickPower);
 
 
 
 
-if(secondPower)
-
-secondPower.innerText =
-formatNumber(player.autoPower / 60);
+if(power){
 
 
+power.innerText =
+
+formatNumber(
+player.clickPower
+);
 
 
-if(friends)
+}
+
+
+
+
+
+
+
+
+if(friends){
+
 
 friends.innerText =
+
 player.friends || 0;
 
 
+}
 
-renderUpgrades();
+
+
+
+
+
+
+
+if(second){
+
+
+second.innerText =
+
+formatNumber(
+Number(player.autoPower || 0)
+);
+
+
+}
+
+
+
+
+
+
 
 
 }
@@ -115,19 +172,22 @@ renderUpgrades();
 
 
 
-// ===============================
-// SYNC
-// ===============================
+// ================================
+// СИНХРОНИЗАЦИЯ
+// ================================
 
 
 async function syncBalance(){
 
 
+
 try{
 
 
-player =
-Storage.getPlayer();
+
+player = Storage.getPlayer();
+
+
 
 
 
@@ -137,12 +197,17 @@ CONFIG.API_URL + "/sync",
 
 {
 
+
 method:"POST",
+
 
 headers:{
 
+
 "Content-Type":
+
 "application/json"
+
 
 },
 
@@ -153,6 +218,7 @@ id:player.id,
 
 balance:player.balance
 
+
 })
 
 
@@ -162,20 +228,25 @@ balance:player.balance
 
 
 
+
+
 }
 
-catch(e){
+
+
+catch(error){
 
 
 console.log(
 "SYNC ERROR",
-e
+error
 );
 
 
 }
 
 
+
 }
 
 
@@ -186,15 +257,20 @@ e
 
 
 
-// ===============================
-// CLICK
-// ===============================
+// ================================
+// ГЛАВНЫЙ КЛИК
+// ================================
+
 
 
 const clickButton =
+
 document.getElementById(
 "clickButton"
 );
+
+
+
 
 
 
@@ -203,28 +279,51 @@ if(clickButton){
 
 
 
-clickButton.onclick = ()=>{
+clickButton.addEventListener(
+
+"click",
+
+()=>{
 
 
-player =
-Storage.getPlayer();
+
+player = Storage.getPlayer();
+
+
+
 
 
 
 player.balance +=
-Number(player.clickPower);
+
+Number(
+player.clickPower
+);
 
 
 
 
-Storage.savePlayer(player);
+
+
+
+Storage.savePlayer(
+player
+);
+
+
 
 
 
 
 showClickAnimation(
+
 player.clickPower
+
 );
+
+
+
+
 
 
 
@@ -232,11 +331,19 @@ updateScreen();
 
 
 
+
+
+
+
 syncBalance();
 
 
 
-};
+
+}
+
+
+);
 
 
 
@@ -250,39 +357,62 @@ syncBalance();
 
 
 
-// ===============================
-// + U EFFECT
-// ===============================
 
+
+// ================================
+// АНИМАЦИЯ + U
+// ================================
 
 
 function showClickAnimation(value){
 
 
-let div =
-document.createElement("div");
+
+const text =
+
+document.createElement(
+"div"
+);
 
 
 
-div.className =
+
+
+text.className =
 "click-number";
 
 
 
-div.innerText =
-"+"+
-formatNumber(value)+
+
+
+text.innerText =
+
+"+" +
+
+formatNumber(value)
+
++
+
 " U";
 
 
 
-document.body.appendChild(div);
+
+
+document.body.appendChild(text);
+
+
+
+
+
 
 
 
 setTimeout(()=>{
 
-div.remove();
+
+text.remove();
+
 
 },800);
 
@@ -298,35 +428,56 @@ div.remove();
 
 
 
-// ===============================
-// AUTO INCOME
-// ===============================
 
+
+// ================================
+// АВТОКЛИК
+// ================================
 
 
 setInterval(()=>{
 
 
-player =
-Storage.getPlayer();
+
+player = Storage.getPlayer();
 
 
 
-if(player.autoPower > 0){
+
+
+if(
+
+Number(player.autoPower) > 0
+
+){
+
 
 
 player.balance +=
-Number(player.autoPower)/60;
+
+Number(player.autoPower) / 60;
 
 
 
-Storage.savePlayer(player);
+
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
 
 
 updateScreen();
 
 
+
+
 }
+
 
 
 
@@ -340,89 +491,97 @@ updateScreen();
 
 
 
-// ===============================
-// UPGRADES
-// ===============================
+// ================================
+// СИНХРОНИЗАЦИЯ
+// ================================
 
 
-function renderUpgrades(){
+setInterval(
 
+syncBalance,
+
+5000
+
+);
+
+
+
+
+
+
+
+
+
+// ================================
+// УЛУЧШЕНИЯ
+// ================================
 
 
 document
-.querySelectorAll(".upgrade-buy")
+
+.querySelectorAll(
+
+".upgrade-card button"
+
+)
+
 .forEach(button=>{
 
 
 
-let name =
-button.dataset.upgrade;
 
 
 
-let level =
-Storage.getUpgradeLevel(name);
+button.addEventListener(
+
+"click",
+
+()=>{
 
 
 
-let data =
-Storage.getUpgrades()[name];
-
-
-
-let price =
-data.price *
-(level+1);
-
-
-
-
-
-button.innerText =
-
-price+
-" U";
-
-
-
-
-
-});
-
-
-
-}
+player = Storage.getPlayer();
 
 
 
 
 
 
+const price =
 
-
-
-document
-.querySelectorAll(".upgrade-buy")
-.forEach(button=>{
-
-
-button.onclick = ()=>{
-
-
-
-let name =
-button.dataset.upgrade;
-
-
-
-let result =
-Storage.buyUpgrade(name);
+Number(
+button.dataset.price
+);
 
 
 
 
 
-if(!result){
+const type =
+
+button.dataset.type;
+
+
+
+
+
+const value =
+
+Number(
+button.dataset.value
+);
+
+
+
+
+
+
+
+if(
+
+player.balance < price
+
+){
 
 
 alert(
@@ -438,7 +597,65 @@ return;
 
 
 
+
+
+
+player.balance -= price;
+
+
+
+
+
+
+
+
+
+if(type==="click"){
+
+
+
+player.clickPower += value;
+
+
+
+}
+
+
+
+
+
+
+
+if(type==="auto"){
+
+
+
+player.autoPower += value;
+
+
+
+}
+
+
+
+
+
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
+
+
+
 updateScreen();
+
+
+
 
 
 
@@ -446,7 +663,26 @@ syncBalance();
 
 
 
-};
+
+
+
+
+button.innerText =
+"Куплено";
+
+
+
+button.disabled = true;
+
+
+
+
+
+
+}
+
+
+);
 
 
 
@@ -460,32 +696,52 @@ syncBalance();
 
 
 
-// ===============================
-// MENU
-// ===============================
-
+// ================================
+// НИЖНЕЕ МЕНЮ
+// ================================
 
 
 document
-.querySelectorAll(".nav")
+
+.querySelectorAll(
+
+".nav"
+
+)
+
 .forEach(button=>{
 
 
 
-button.onclick = ()=>{
+button.addEventListener(
+
+"click",
+
+()=>{
 
 
 
-let page =
+const page =
+
 button.dataset.page;
 
 
 
 
 
+
+
+
 document
-.querySelectorAll(".page")
+
+.querySelectorAll(
+
+".page"
+
+)
+
 .forEach(item=>{
+
 
 
 item.classList.remove(
@@ -493,22 +749,38 @@ item.classList.remove(
 );
 
 
+
 });
 
 
 
 
 
-let target =
-document.getElementById(page);
 
 
 
-if(target)
+const target =
+
+document.getElementById(
+page
+);
+
+
+
+
+
+
+if(target){
+
 
 target.classList.add(
 "active"
 );
+
+
+}
+
+
 
 
 
@@ -517,8 +789,15 @@ target.classList.add(
 
 
 document
-.querySelectorAll(".nav")
+
+.querySelectorAll(
+
+".nav"
+
+)
+
 .forEach(btn=>{
+
 
 btn.classList.remove(
 "active"
@@ -531,13 +810,20 @@ btn.classList.remove(
 
 
 
+
 button.classList.add(
 "active"
 );
 
 
 
-};
+
+
+}
+
+
+
+);
 
 
 
@@ -551,16 +837,9 @@ button.classList.add(
 
 
 
-// ===============================
-// START
-// ===============================
+// ================================
+// СТАРТ
+// ================================
 
 
 updateScreen();
-
-
-
-setInterval(
-syncBalance,
-10000
-);
