@@ -1,15 +1,43 @@
+// UralCoin v2
+// Система промокодов
+
+
+
 let promos =
 
 JSON.parse(
 
 localStorage.getItem(
-"promos"
+"ural_promos"
 )
 
 )
 
 ||
 [];
+
+
+
+
+
+
+
+
+function savePromos(){
+
+
+localStorage.setItem(
+
+"ural_promos",
+
+JSON.stringify(promos)
+
+);
+
+
+}
+
+
 
 
 
@@ -30,7 +58,6 @@ document.getElementById(
 
 
 
-
 if(createPromo){
 
 
@@ -40,7 +67,9 @@ createPromo.onclick = ()=>{
 
 
 const name =
-document.getElementById(
+
+document
+.getElementById(
 "promoName"
 )
 .value
@@ -50,24 +79,36 @@ document.getElementById(
 
 
 
+
 const reward =
+
 Number(
-document.getElementById(
+
+document
+.getElementById(
 "promoReward"
 )
 .value
+
 );
+
 
 
 
 
 const limit =
+
 Number(
-document.getElementById(
+
+document
+.getElementById(
 "promoLimit"
 )
 .value
+
 );
+
+
 
 
 
@@ -78,7 +119,7 @@ if(!name){
 
 
 alert(
-"Введите название промокода"
+"Введите название"
 );
 
 
@@ -86,6 +127,7 @@ return;
 
 
 }
+
 
 
 
@@ -103,7 +145,6 @@ return;
 
 
 }
-
 
 
 
@@ -129,6 +170,43 @@ return;
 
 
 
+let exists =
+
+promos.find(
+
+p=>
+p.code === name
+
+);
+
+
+
+
+
+
+
+if(exists){
+
+
+
+alert(
+"Такой промокод уже существует"
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
 
 let player =
 Storage.getPlayer();
@@ -139,19 +217,28 @@ Storage.getPlayer();
 
 
 
-const promo = {
+
+promos.push({
 
 
-code:name,
+
+code:
+name,
 
 
-reward:reward,
+
+reward:
+reward,
 
 
-limit:limit,
+
+limit:
+limit,
+
 
 
 used:[],
+
 
 
 owner:
@@ -159,7 +246,7 @@ player.id
 
 
 
-};
+});
 
 
 
@@ -167,22 +254,8 @@ player.id
 
 
 
-promos.push(
-promo
-);
 
-
-
-
-
-
-localStorage.setItem(
-
-"promos",
-
-JSON.stringify(promos)
-
-);
+savePromos();
 
 
 
@@ -203,22 +276,29 @@ name
 
 
 
-document.getElementById(
+
+
+document
+.getElementById(
 "promoName"
-).value="";
+)
+.value="";
 
 
 
-document.getElementById(
+document
+.getElementById(
 "promoReward"
-).value="";
+)
+.value="";
 
 
 
-document.getElementById(
+document
+.getElementById(
 "promoLimit"
-).value="";
-
+)
+.value="";
 
 
 
@@ -227,8 +307,9 @@ document.getElementById(
 
 
 
-
 }
+
+
 
 
 
@@ -261,13 +342,18 @@ usePromo.onclick = ()=>{
 
 
 const input =
-document.getElementById(
+
+document
+.getElementById(
 "promoInput"
 );
 
 
 
+
+
 const code =
+
 input.value
 .trim()
 .toUpperCase();
@@ -280,15 +366,19 @@ input.value
 if(!code){
 
 
+
 alert(
-"Введите промокод"
+"Введите код"
 );
+
 
 
 return;
 
 
+
 }
+
 
 
 
@@ -301,9 +391,11 @@ let promo =
 promos.find(
 
 p=>
-p.code===code
+p.code === code
 
 );
+
+
 
 
 
@@ -341,6 +433,7 @@ Storage.getPlayer();
 
 
 
+
 if(
 promo.used.includes(
 player.id
@@ -351,7 +444,7 @@ player.id
 
 
 alert(
-"Вы уже использовали этот промокод"
+"Вы уже использовали этот код"
 );
 
 
@@ -376,7 +469,7 @@ promo.used.length >= promo.limit
 
 
 alert(
-"Лимит промокода закончился"
+"Лимит закончился"
 );
 
 
@@ -398,9 +491,14 @@ promo.reward;
 
 
 
+
+
+
+
 promo.used.push(
 player.id
 );
+
 
 
 
@@ -418,13 +516,8 @@ player
 
 
 
-localStorage.setItem(
+savePromos();
 
-"promos",
-
-JSON.stringify(promos)
-
-);
 
 
 
@@ -446,14 +539,13 @@ promo.reward
 
 
 
-
 input.value="";
 
 
 
 
-};
 
+};
 
 
 
