@@ -8,7 +8,6 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-
 <title>URALcoin</title>
 
 
@@ -51,7 +50,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 
 
-
 <header class="header">
 
 
@@ -82,12 +80,15 @@ U
 
 
 
-
 <main class="content">
 
 
 
 
+
+
+
+<!-- ГЛАВНАЯ -->
 
 <section class="page active" id="game">
 
@@ -107,6 +108,7 @@ U
 </div>
 
 
+
 <span id="balance">
 
 0,000
@@ -121,11 +123,11 @@ U
 
 
 
-
 <div class="crystals-box">
 
 
 <div class="crystal-count">
+
 
 💎
 
@@ -139,6 +141,7 @@ U
 </div>
 
 
+
 <small>
 
 кристаллы появятся после связки кошельков
@@ -146,7 +149,9 @@ U
 </small>
 
 
+
 </div>
+
 
 
 
@@ -164,8 +169,7 @@ U
 
 </span>
 
-
-за клик
+U за клик
 
 
 
@@ -176,8 +180,8 @@ U
 </span>
 
 
-
 </div>
+
 
 
 
@@ -199,7 +203,10 @@ U
 </div>
 
 
+
 </div>
+
+
 
 
 
@@ -211,7 +218,8 @@ U
 
 
 
-<div class="fire-effect" id="fireEffect">
+<div id="fireEffect"
+class="fire-effect">
 
 🔥
 
@@ -220,7 +228,9 @@ U
 
 
 
-<button class="main-coin" id="clickButton">
+
+<button class="main-coin"
+id="clickButton">
 
 U
 
@@ -245,7 +255,6 @@ U
 
 
 
-
 </section>
 
 
@@ -256,6 +265,8 @@ U
 
 
 
+<!-- ПЕРСОНАЛЬНЫЙ КОД -->
+
 <section class="page" id="referrals">
 
 
@@ -264,17 +275,51 @@ U
 
 <h2>
 
-Рефералы
+Ваш код
 
 </h2>
 
 
 
+
+<p>
+
+Дайте этот код друзьям
+
+</p>
+
+
+
+
+
+<input 
+id="personalCode"
+readonly>
+
+
+
+
+<button 
+class="gold-button"
+id="copyReferral">
+
+Скопировать код
+
+</button>
+
+
+
+
+
+
+
+
 <div class="info-row">
 
-Приглашено:
 
-<b id="friendsCount">
+Активировали:
+
+<b id="promoFriends">
 
 0
 
@@ -286,15 +331,25 @@ U
 
 
 
-<input id="refLink" readonly>
 
 
 
-<button class="gold-button" id="copyReferral">
+<div class="info-row">
 
-Копировать ссылку
 
-</button>
+Получено:
+
+<b id="promoEarned">
+
+0 U
+
+</b>
+
+
+
+</div>
+
+
 
 
 
@@ -311,7 +366,10 @@ U
 
 
 
-<section class="page" id="transfer">
+<!-- ПЕРЕВОД -->
+
+<section class="page"
+id="transfer">
 
 
 <div class="panel">
@@ -325,23 +383,34 @@ U
 
 
 
-<input id="transferName"
-placeholder="@username">
+
+<input 
+id="transferName"
+placeholder="ID пользователя">
 
 
 
-<input id="transferSum"
-placeholder="Количество U"
-type="number">
 
 
 
-<button class="gold-button"
+<input 
+id="transferSum"
+type="number"
+placeholder="Количество U">
+
+
+
+
+
+<button 
+class="gold-button"
 id="transferButton">
 
 Перевести
 
 </button>
+
+
 
 
 
@@ -358,7 +427,10 @@ id="transferButton">
 
 
 
-<section class="page" id="tops">
+<!-- ТОП -->
+
+<section class="page"
+id="tops">
 
 
 <div class="panel">
@@ -371,9 +443,13 @@ id="transferButton">
 </h2>
 
 
+
+
 <div id="topList">
 
 </div>
+
+
 
 
 </div>
@@ -389,10 +465,14 @@ id="transferButton">
 
 
 
-<section class="page" id="more">
+<!-- ЕЩЁ -->
+
+<section class="page"
+id="more">
 
 
 <div class="panel">
+
 
 
 <h2>
@@ -406,6 +486,8 @@ id="transferButton">
 
 
 
+
+
 <a class="menu-card"
 href="https://t.me/+NyqTkXAU-H5hNDky"
 target="_blank">
@@ -413,6 +495,7 @@ target="_blank">
 Подписаться на канал
 
 </a>
+
 
 
 
@@ -433,10 +516,31 @@ target="_blank">
 
 
 
-<button class="menu-card"
-id="promoOpen">
+
+<h2>
 
 Промокоды
+
+</h2>
+
+
+
+
+
+<input 
+id="promoInput"
+placeholder="Введите код">
+
+
+
+
+
+
+<button 
+class="gold-button"
+id="promoButton">
+
+Активировать
 
 </button>
 
@@ -444,7 +548,12 @@ id="promoOpen">
 
 
 
-<button class="menu-card"
+
+
+
+
+<button 
+class="menu-card"
 id="historyOpen">
 
 История
@@ -455,12 +564,16 @@ id="historyOpen">
 
 
 
-<button class="menu-card"
+
+
+<button 
+class="menu-card"
 id="apiOpen">
 
 API ключ
 
 </button>
+
 
 
 
@@ -476,9 +589,15 @@ API ключ
 
 
 
+
+
 <div id="upgradeList">
 
 </div>
+
+
+
+
 
 
 
@@ -486,7 +605,6 @@ API ключ
 
 
 </section>
-
 
 
 
@@ -505,7 +623,11 @@ API ключ
 
 
 
+<!-- НИЖНЕЕ МЕНЮ -->
+
+
 <nav class="bottom-nav">
+
 
 
 <button class="nav active"
@@ -517,12 +639,16 @@ data-page="game">
 
 
 
+
+
 <button class="nav"
 data-page="referrals">
 
-Рефералы
+Код
 
 </button>
+
+
 
 
 
@@ -535,6 +661,8 @@ data-page="transfer">
 
 
 
+
+
 <button class="nav"
 data-page="tops">
 
@@ -544,16 +672,20 @@ data-page="tops">
 
 
 
+
+
 <button class="nav"
 data-page="more">
 
-Еще
+Ещё
 
 </button>
 
 
 
+
 </nav>
+
 
 
 
@@ -568,6 +700,9 @@ data-page="more">
 
 
 
+
+
+<!-- JS -->
 
 
 <script src="config.js"></script>
