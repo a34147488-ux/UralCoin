@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin WINTER EFFECTS v2
-// Angry Santa + Fast Click Bonus
+// URALcoin WINTER EFFECTS v3
+// CSS Santa + Snow Bonus
 // ===================================
 
 
@@ -9,7 +9,8 @@ let clickHistory = [];
 
 
 
-// проверка скорости кликов
+
+// отслеживание быстрых кликов
 
 function registerFastClick(){
 
@@ -19,6 +20,7 @@ const now = Date.now();
 
 
 clickHistory.push(now);
+
 
 
 
@@ -34,9 +36,11 @@ now - time < 2000
 
 
 
-// 20 кликов за 2 секунды
 
-if(clickHistory.length >= 20){
+// 10 быстрых кликов для проверки
+
+
+if(clickHistory.length >= 10){
 
 
 showAngrySanta();
@@ -56,14 +60,18 @@ clickHistory = [];
 
 
 
-// появление Санты
+
+
+// запуск Санты
 
 function showAngrySanta(){
+
 
 
 const santa = document.getElementById(
 "angrySanta"
 );
+
 
 
 
@@ -74,13 +82,18 @@ return;
 
 
 
+
 santa.classList.remove(
 "show"
 );
 
 
 
+
+
 void santa.offsetWidth;
+
+
 
 
 
@@ -91,7 +104,9 @@ santa.classList.add(
 
 
 
-// шанс бонуса 30%
+
+
+// шанс бонуса
 
 if(Math.random() < 0.3){
 
@@ -110,7 +125,9 @@ giveSantaBonus();
 
 
 
-// бонус от Санты
+
+
+// бонус Санты
 
 function giveSantaBonus(){
 
@@ -134,11 +151,16 @@ Math.random() * 400
 
 
 
+
 player.balance += bonus;
 
 
 
+
+
+
 Storage.savePlayer(player);
+
 
 
 
@@ -156,15 +178,12 @@ const effect = document.getElementById(
 if(effect){
 
 
+
 effect.innerText =
 
-"+"
+"+" +
 
-+
-
-bonus
-
-+
+bonus +
 
 " U";
 
@@ -175,6 +194,7 @@ bonus
 effect.classList.remove(
 "show"
 );
+
 
 
 
@@ -194,6 +214,8 @@ effect.classList.add(
 
 
 
+
+
 if(typeof updateScreen === "function"){
 
 
@@ -201,6 +223,7 @@ updateScreen();
 
 
 }
+
 
 
 
@@ -225,7 +248,8 @@ syncBalance();
 
 
 
-// подключаемся к кнопке клика
+
+// подключение к кнопке
 
 document.addEventListener(
 
@@ -235,7 +259,7 @@ document.addEventListener(
 
 
 
-const button = document.getElementById(
+const clickButton = document.getElementById(
 "clickButton"
 );
 
@@ -243,10 +267,11 @@ const button = document.getElementById(
 
 
 
-if(button){
+if(clickButton){
 
 
-button.addEventListener(
+
+clickButton.addEventListener(
 
 "click",
 
