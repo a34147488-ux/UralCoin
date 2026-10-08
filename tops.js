@@ -1,7 +1,12 @@
-function formatTopNumber(num){
+// UralCoin v2
+// Топ игроков
 
 
-return Number(num)
+
+function formatTop(value){
+
+
+return Number(value)
 .toFixed(3)
 .replace(".",",");
 
@@ -16,7 +21,15 @@ return Number(num)
 
 
 
-function getPlayers(){
+
+function saveCurrentPlayerToTop(){
+
+
+
+let player =
+Storage.getPlayer();
+
+
 
 
 
@@ -25,7 +38,7 @@ let players =
 JSON.parse(
 
 localStorage.getItem(
-"players"
+"ural_players"
 )
 
 )
@@ -37,23 +50,14 @@ localStorage.getItem(
 
 
 
-let current =
-Storage.getPlayer();
 
 
+let index =
 
-
-
-
-// добавляем текущего игрока
-
-
-let exists =
-
-players.find(
+players.findIndex(
 
 p=>
-p.id === current.id
+p.id === player.id
 
 );
 
@@ -62,62 +66,71 @@ p.id === current.id
 
 
 
-if(!exists){
 
+let data = {
 
-
-players.push({
 
 id:
-current.id,
+player.id,
+
 
 
 name:
-current.name ||
+player.name ||
 "Игрок",
 
 
+
 photo:
-current.photo ||
+player.photo ||
 "",
 
 
+
 balance:
-current.balance ||
-0,
+player.balance || 0,
+
 
 
 friends:
-current.friends ||
-0
+player.friends || 0
 
 
-});
+
+};
+
+
+
+
+
+
+
+
+
+if(index === -1){
+
+
+
+players.push(
+data
+);
 
 
 
 }
-
-
-
-
-
 
 else{
 
 
 
-exists.balance =
-current.balance;
-
-
-
-exists.friends =
-current.friends;
+players[index] =
+data;
 
 
 
 }
+
+
 
 
 
@@ -125,7 +138,7 @@ current.friends;
 
 localStorage.setItem(
 
-"players",
+"ural_players",
 
 JSON.stringify(players)
 
@@ -135,11 +148,10 @@ JSON.stringify(players)
 
 
 
-return players;
-
-
-
 }
+
+
+
 
 
 
@@ -153,7 +165,7 @@ function loadTop(){
 
 
 
-const box =
+const list =
 document.getElementById(
 "topList"
 );
@@ -162,14 +174,16 @@ document.getElementById(
 
 
 
-if(!box)
+
+if(!list)
 return;
 
 
 
 
 
-box.innerHTML="";
+
+saveCurrentPlayerToTop();
 
 
 
@@ -177,7 +191,20 @@ box.innerHTML="";
 
 
 let players =
-getPlayers();
+
+JSON.parse(
+
+localStorage.getItem(
+"ural_players"
+)
+
+)
+
+||
+[];
+
+
+
 
 
 
@@ -198,6 +225,13 @@ a.balance
 
 
 
+list.innerHTML = "";
+
+
+
+
+
+
 
 players
 .slice(0,20)
@@ -210,9 +244,7 @@ players
 
 
 
-let avatar = "";
-
-
+let avatar;
 
 
 
@@ -260,6 +292,7 @@ ${index+1}
 
 
 
+
 let item =
 document.createElement(
 "div"
@@ -281,9 +314,7 @@ item.className =
 item.innerHTML = `
 
 
-
 ${avatar}
-
 
 
 <div class="top-info">
@@ -291,8 +322,7 @@ ${avatar}
 
 <b>
 
-#${index+1}
-
+${index+1}. 
 ${player.name}
 
 </b>
@@ -304,10 +334,7 @@ ${player.name}
 
 <span>
 
-${formatTopNumber(
-player.balance
-)}
-
+${formatTop(player.balance)}
 U
 
 </span>
@@ -317,19 +344,15 @@ U
 <br>
 
 
-
-<span>
+<small>
 
 Приглашено:
+${player.friends}
 
-${player.friends || 0}
-
-</span>
-
+</small>
 
 
 </div>
-
 
 
 `;
@@ -339,8 +362,7 @@ ${player.friends || 0}
 
 
 
-
-box.appendChild(
+list.appendChild(
 item
 );
 
@@ -348,9 +370,7 @@ item
 
 
 
-}
-);
-
+});
 
 
 
@@ -373,13 +393,17 @@ loadTop();
 
 
 
+// обновление после изменений
 
-// обновление топа каждые 5 секунд
 
 
 setInterval(
 
-loadTop,
+()=>{
+
+loadTop();
+
+},
 
 5000
 
