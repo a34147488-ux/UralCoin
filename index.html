@@ -19,7 +19,8 @@
 <div class="app">
 
 
-<!-- ГЛАВНЫЙ ЭКРАН -->
+
+<!-- ИГРАТЬ -->
 
 <section id="game" class="page active">
 
@@ -34,6 +35,7 @@
 </div>
 
 
+
 <div class="stats">
 
 <span>
@@ -44,6 +46,7 @@
 <span>
 0 U / сек
 </span>
+
 
 </div>
 
@@ -66,11 +69,14 @@ U
 
 
 
+
 <div class="upgrade">
+
 
 <h2>
 Улучшения
 </h2>
+
 
 
 <div class="upgrade-card">
@@ -91,18 +97,22 @@ U
 </div>
 
 
+
 <button>
 10 U
 </button>
 
 
+
 </div>
 
 
 </div>
+
 
 
 </section>
+
 
 
 
@@ -119,6 +129,7 @@ U
 </h2>
 
 
+
 <div class="card">
 
 
@@ -128,10 +139,13 @@ U
 </p>
 
 
+
 <p>
 За каждого друга:
 <b>5000 U</b>
 </p>
+
+
 
 
 <button>
@@ -139,10 +153,20 @@ U
 </button>
 
 
+
+<div class="ref-link">
+
+Ваша ссылка появится здесь
+
+</div>
+
+
+
 </div>
 
 
 </section>
+
 
 
 
@@ -160,13 +184,22 @@ U
 </h2>
 
 
+
 <div class="card">
 
 
-<input placeholder="Username получателя">
+<input 
+type="text"
+placeholder="Username получателя"
+>
 
 
-<input placeholder="Количество U">
+
+<input 
+type="number"
+placeholder="Количество U"
+>
+
 
 
 <button>
@@ -174,10 +207,32 @@ U
 </button>
 
 
+
+</div>
+
+
+
+<div class="card">
+
+
+<h3>
+История переводов
+</h3>
+
+
+<div id="history">
+
+Пока переводов нет
+
+</div>
+
+
 </div>
 
 
 </section>
+
+
 
 
 
@@ -195,42 +250,15 @@ U
 </h2>
 
 
+
 <div class="players">
-
-
-<div class="player">
-
-
-<div class="avatar">
-U
-</div>
-
-
-<div>
-
-<b>
-Игрок
-</b>
-
-<p>
-10000 U
-</p>
-
-<p>
-Приглашено: 5
-</p>
-
-
-</div>
-
-
-</div>
 
 
 </div>
 
 
 </section>
+
 
 
 
@@ -248,7 +276,9 @@ U
 </h2>
 
 
+
 <div class="card menu-more">
+
 
 
 <button>
@@ -256,9 +286,13 @@ U
 </button>
 
 
+
+
 <button>
 История переводов
 </button>
+
+
 
 
 <a href="https://t.me/+NyqTkXAU-H5hNDky">
@@ -266,12 +300,17 @@ U
 </a>
 
 
+
+
+
 <a href="https://t.me/BuysStarsBot?start=8265611469">
 Купить прем
 </a>
 
 
+
 </div>
+
 
 
 </section>
@@ -282,38 +321,51 @@ U
 
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
 
+
+<!-- НИЖНЕЕ МЕНЮ -->
 
 <nav>
 
 
-<button class="active" onclick="openPage('game',this)">
+<button 
+class="active"
+onclick="openPage('game',this)">
 Играть
 </button>
 
 
-<button onclick="openPage('referrals',this)">
+
+<button
+onclick="openPage('referrals',this)">
 Рефералы
 </button>
 
 
-<button onclick="openPage('transfer',this)">
+
+<button
+onclick="openPage('transfer',this)">
 Переводы
 </button>
 
 
-<button onclick="openPage('tops',this)">
+
+<button
+onclick="openPage('tops',this)">
 Топы
 </button>
 
 
-<button onclick="openPage('more',this)">
+
+<button
+onclick="openPage('more',this)">
 Еще
 </button>
 
 
+
 </nav>
+
 
 
 
@@ -322,7 +374,18 @@ U
 
 
 
+
+
 <script src="app.js"></script>
+
+<script src="telegram.js"></script>
+
+<script src="referrals.js"></script>
+
+<script src="tops.js"></script>
+
+<script src="transfer.js"></script>
+
 
 
 </body>
