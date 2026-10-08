@@ -1,35 +1,21 @@
 // ===================================
-// URALcoin CONFIG v12
+// URALcoin CONFIG v14 FINAL
 // Railway Connection
 // ===================================
-
 
 
 const CONFIG = {
 
 
-
-/*
-Вставь сюда свою ссылку Railway
-
-пример:
-
-https://uralcoin-production.up.railway.app
-
-*/
-
-
 API_URL:
 
-"https://ТВОЙ-RAILWAY-АДРЕС.up.railway.app",
-
-
+"https://uralcoin-production-3504.up.railway.app",
 
 
 
 VERSION:
 
-"v12"
+"v14-final"
 
 
 
@@ -40,20 +26,9 @@ VERSION:
 
 
 
-
-
-
-
-// Telegram bot username
-// БЕЗ @
-
-
 const BOT_USERNAME =
 
 "твой_бот";
-
-
-
 
 
 
@@ -68,15 +43,14 @@ window.BOT_USERNAME = BOT_USERNAME;
 
 
 
-
-
-
 console.log(
 
 "URALcoin",
 
 CONFIG.VERSION,
 
-"loaded"
+"SERVER:",
+
+CONFIG.API_URL
 
 );
