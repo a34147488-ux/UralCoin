@@ -4,11 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>UralCoin</title>
 
 <link rel="stylesheet" href="style.css">
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 </head>
 
@@ -27,7 +30,11 @@
 
 <div class="top">
 
-<h1>UralCoin</h1>
+
+<div class="project-name">
+UralCoin
+</div>
+
 
 
 <div class="balance">
@@ -37,6 +44,7 @@
 
 
 <div class="stats">
+
 
 <span>
 +0.01 U / клик
@@ -51,6 +59,7 @@
 </div>
 
 
+
 </div>
 
 
@@ -59,11 +68,21 @@
 
 <div class="coin">
 
+
+<div class="online">
+ONLINE
+</div>
+
+
+
 <div class="u">
 U
 </div>
 
+
+
 </div>
+
 
 
 
@@ -83,6 +102,7 @@ U
 
 
 <div>
+
 
 <h3>
 Уровень 1
@@ -119,6 +139,7 @@ U
 
 
 
+
 <!-- РЕФЕРАЛЫ -->
 
 <section id="referrals" class="page">
@@ -141,7 +162,7 @@ U
 
 
 <p>
-За каждого друга:
+За каждого человека:
 <b>5000 U</b>
 </p>
 
@@ -155,14 +176,13 @@ U
 
 
 <div class="ref-link">
-
 Ваша ссылка появится здесь
-
 </div>
 
 
 
 </div>
+
 
 
 </section>
@@ -174,7 +194,10 @@ U
 
 
 
+
+
 <!-- ПЕРЕВОДЫ -->
+
 
 <section id="transfer" class="page">
 
@@ -212,6 +235,8 @@ placeholder="Количество U"
 
 
 
+
+
 <div class="card">
 
 
@@ -220,14 +245,17 @@ placeholder="Количество U"
 </h3>
 
 
+
 <div id="history">
 
-Пока переводов нет
+Нет переводов
 
 </div>
 
 
+
 </div>
+
 
 
 </section>
@@ -241,6 +269,7 @@ placeholder="Количество U"
 
 
 <!-- ТОПЫ -->
+
 
 <section id="tops" class="page">
 
@@ -257,6 +286,7 @@ placeholder="Количество U"
 </div>
 
 
+
 </section>
 
 
@@ -266,7 +296,9 @@ placeholder="Количество U"
 
 
 
-<!-- ЕЩЕ -->
+
+<!-- ЕЩЁ -->
+
 
 <section id="more" class="page">
 
@@ -280,17 +312,16 @@ placeholder="Количество U"
 <div class="card menu-more">
 
 
-
 <button>
 Получить ключ API
 </button>
 
 
 
-
 <button>
 История переводов
 </button>
+
 
 
 
@@ -323,13 +354,12 @@ placeholder="Количество U"
 
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
+<!-- МЕНЮ -->
 
 <nav>
 
 
-<button 
-class="active"
+<button class="active"
 onclick="openPage('game',this)">
 Играть
 </button>
@@ -369,8 +399,10 @@ onclick="openPage('more',this)">
 
 
 
-
 </div>
+
+
+
 
 
 
@@ -386,6 +418,7 @@ onclick="openPage('more',this)">
 
 <script src="transfer.js"></script>
 
+<script src="profile.js"></script>
 
 
 </body>
