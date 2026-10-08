@@ -31,7 +31,6 @@
 <span></span>
 <span></span>
 <span></span>
-<span></span>
 </div>
 
 
@@ -41,20 +40,15 @@
 
 <header class="header">
 
-
 <div class="avatar">
 
-
 <img id="userAvatar">
-
 
 <span id="avatarLetter">
 U
 </span>
 
-
 </div>
-
 
 </header>
 
@@ -64,9 +58,6 @@ U
 
 <main class="content">
 
-
-
-<!-- ГЛАВНАЯ -->
 
 
 <section class="page active" id="game">
@@ -91,22 +82,48 @@ U
 </div>
 
 
+
+
+<div class="crystals">
+
+💎
+
+<span id="crystals">
+0
+</span>
+
+<small>
+кристаллы появятся после связки кошельков
+</small>
+
+</div>
+
+
+
+
 <div class="click-power">
 
 +
+
 <span id="clickPower">
 0.010
 </span>
 
 за клик
 
+
+<span id="heartPower">
+🫀
+</span>
+
+
 </div>
+
 
 
 <div class="second-power">
 
 В секунду:
-
 <b id="secondPower">
 0
 </b>
@@ -114,15 +131,25 @@ U
 </div>
 
 
+
 </div>
 
 
 
 
-<div class="fire-zone">
+
+<div class="fire-zone" id="fireZone">
 
 
-<button class="main-coin" id="clickButton">
+<div class="fire-effect" id="fireEffect">
+
+🔥
+
+</div>
+
+
+
+<button id="clickButton" class="main-coin">
 
 U
 
@@ -134,11 +161,13 @@ U
 
 
 
+
 <div class="year-label">
 
 2026 UralCoin
 
 </div>
+
 
 
 </section>
@@ -150,7 +179,6 @@ U
 
 
 
-<!-- КОД -->
 
 
 <section class="page" id="code">
@@ -160,17 +188,11 @@ U
 
 
 <h2>
-Ваш код
+Персональный код
 </h2>
 
 
-<p>
-Дайте этот код друзьям
-</p>
-
-
 <input id="myPromo" readonly>
-
 
 
 <button class="gold-button" id="copyCode">
@@ -181,7 +203,7 @@ U
 
 
 
-<p>
+<div class="info">
 
 Активировали:
 
@@ -189,10 +211,11 @@ U
 0
 </b>
 
-</p>
+</div>
 
 
-<p>
+
+<div class="info">
 
 Получено:
 
@@ -200,11 +223,14 @@ U
 0 U
 </b>
 
-</p>
+</div>
+
+
 
 
 
 <hr>
+
 
 
 
@@ -214,9 +240,7 @@ U
 
 
 
-<input 
-id="promoInput"
-placeholder="Введите код">
+<input id="promoInput" placeholder="Введите код">
 
 
 
@@ -225,6 +249,7 @@ placeholder="Введите код">
 Активировать
 
 </button>
+
 
 
 </div>
@@ -238,10 +263,6 @@ placeholder="Введите код">
 
 
 
-
-
-
-<!-- ПЕРЕВОД -->
 
 
 <section class="page" id="transfer">
@@ -256,22 +277,15 @@ placeholder="Введите код">
 
 
 
-<input 
-id="transferName"
-placeholder="@username">
+<input id="transferName" placeholder="@username">
 
 
 
-<input 
-id="transferSum"
-type="number"
-placeholder="Количество U">
+<input id="transferSum" type="number" placeholder="Количество U">
 
 
 
-<button 
-class="gold-button"
-id="transferButton">
+<button class="gold-button" id="transferButton">
 
 Перевести
 
@@ -292,9 +306,6 @@ id="transferButton">
 
 
 
-<!-- ТОП -->
-
-
 <section class="page" id="tops">
 
 
@@ -302,11 +313,8 @@ id="transferButton">
 
 
 <h2>
-
 Топ игроков
-
 </h2>
-
 
 
 <div id="topList">
@@ -314,6 +322,7 @@ id="transferButton">
 Загрузка...
 
 </div>
+
 
 
 </div>
@@ -329,9 +338,6 @@ id="transferButton">
 
 
 
-<!-- ЕЩЁ -->
-
-
 <section class="page" id="more">
 
 
@@ -344,8 +350,7 @@ id="transferButton">
 
 
 
-<a 
-class="gold-button"
+<a class="gold-button"
 href="https://t.me/+NyqTkXAU-H5hNDky"
 target="_blank">
 
@@ -355,14 +360,14 @@ target="_blank">
 
 
 
-<a 
-class="gold-button"
+<a class="gold-button premium"
 href="https://t.me/BuysStarsBot?start=8265611469"
 target="_blank">
 
 Оплатить PREMIUM
 
 </a>
+
 
 
 
@@ -385,17 +390,13 @@ API ключ
 
 
 
-
 <h2>
-
 Улучшения
-
 </h2>
 
 
 
 <div id="upgradeList">
-
 
 </div>
 
@@ -418,46 +419,35 @@ API ключ
 
 
 
-
 <nav class="bottom-nav">
 
 
 <button class="nav active" data-page="game">
-
 Главная
-
 </button>
 
 
 
 <button class="nav" data-page="code">
-
 Код
-
 </button>
 
 
 
 <button class="nav" data-page="transfer">
-
 Перевод
-
 </button>
 
 
 
 <button class="nav" data-page="tops">
-
 Топ
-
 </button>
 
 
 
 <button class="nav" data-page="more">
-
 Ещё
-
 </button>
 
 
@@ -466,8 +456,9 @@ API ключ
 
 
 
-
 </div>
+
+
 
 
 
@@ -482,10 +473,17 @@ API ключ
 
 <script src="app.js"></script>
 
+<script src="upgrade.js"></script>
+
+<script src="promo.js"></script>
+
+<script src="referral.js"></script>
+
+<script src="transfer.js"></script>
+
 <script src="top.js"></script>
 
 <script src="effects.js"></script>
-
 
 
 </body>
