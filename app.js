@@ -1,125 +1,150 @@
-let balance =
-Number(localStorage.getItem("balance")) || 0;
+// UralCoin v2
+// Главная механика приложения
 
 
-let clickPower =
-Number(localStorage.getItem("clickPower")) || 0.01;
-
-
-let autoPower =
-Number(localStorage.getItem("autoPower")) || 0;
+let player = Storage.getPlayer();
 
 
 
-const balanceEl =
-document.getElementById("balance");
 
 
-const powerEl =
-document.getElementById("clickPower");
+function formatNumber(value){
+
+return Number(value)
+.toFixed(3)
+.replace(".", ",");
+
+}
+
+
+
+
+
+
+
+
+function updateScreen(){
+
+
+
+player = Storage.getPlayer();
+
+
+
+
+
+const balance =
+document.getElementById(
+"balance"
+);
+
+
+
+const power =
+document.getElementById(
+"clickPower"
+);
+
+
+
+
+
+if(balance){
+
+
+balance.innerText =
+formatNumber(
+player.balance
+);
+
+
+
+}
+
+
+
+
+
+if(power){
+
+
+power.innerText =
+formatNumber(
+player.clickPower
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// КНОПКА КЛИКА
 
 
 
 const clickButton =
-document.getElementById("clickButton");
-
-
-
-
-
-
-
-function formatNumber(num){
-
-
-return num
-.toFixed(3)
-.replace(".",",");
-
-
-}
-
-
-
-
-
-
-
-function update(){
-
-
-if(balanceEl){
-
-balanceEl.innerText =
-formatNumber(balance);
-
-}
-
-
-
-if(powerEl){
-
-powerEl.innerText =
-formatNumber(clickPower);
-
-}
-
-
-
-localStorage.setItem(
-"balance",
-balance
+document.getElementById(
+"clickButton"
 );
 
 
 
-localStorage.setItem(
-"clickPower",
-clickPower
-);
 
-
-
-localStorage.setItem(
-"autoPower",
-autoPower
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// КЛИК ПО U
 
 
 if(clickButton){
 
 
 
-clickButton.onclick = ()=>{
-
-
-balance += clickPower;
-
-
-showPlus(clickPower);
+clickButton.addEventListener(
+"click",
+()=>{
 
 
 
-update();
+player =
+Storage.getPlayer();
 
 
 
-};
+player.balance +=
+player.clickPower;
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
+
+
+showClickAnimation(
+player.clickPower
+);
+
+
+
+updateScreen();
+
+
+
+}
+
+);
+
 
 
 }
@@ -135,21 +160,24 @@ update();
 // АНИМАЦИЯ +U
 
 
-function showPlus(value){
+
+function showClickAnimation(value){
 
 
 
-let el =
-document.createElement("div");
+let text =
+document.createElement(
+"div"
+);
 
 
 
-el.className =
-"plus-animation";
+text.className =
+"click-number";
 
 
 
-el.innerText =
+text.innerText =
 "+"+
 formatNumber(value)
 +
@@ -157,14 +185,21 @@ formatNumber(value)
 
 
 
-document.body.appendChild(el);
+
+
+document.body.appendChild(
+text
+);
+
+
 
 
 
 setTimeout(()=>{
 
 
-el.remove();
+text.remove();
+
 
 
 },800);
@@ -183,22 +218,46 @@ el.remove();
 
 
 
+
 // АВТОКЛИКЕР
+
 
 
 setInterval(()=>{
 
 
-if(autoPower>0){
+
+player =
+Storage.getPlayer();
 
 
-balance += autoPower/60;
 
 
-update();
+
+if(
+player.autoPower > 0
+){
+
+
+
+player.balance +=
+
+player.autoPower / 60;
+
+
+
+Storage.savePlayer(
+player
+);
+
+
+
+updateScreen();
+
 
 
 }
+
 
 
 },1000);
@@ -213,114 +272,47 @@ update();
 
 
 
-// МЕНЮ
+// ПОКУПКА УЛУЧШЕНИЙ
 
 
 
 document
-.querySelectorAll(".nav")
-.forEach(btn=>{
-
-
-btn.onclick=()=>{
-
-
-
-let id =
-btn.dataset.page;
+.querySelectorAll(
+".upgrade-card button"
+)
+.forEach(
+(button)=>{
 
 
 
-document
-.querySelectorAll(".page")
-.forEach(page=>{
-
-
-page.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-
-document
-.getElementById(id)
-.classList.add(
-"active"
-);
+button.addEventListener(
+"click",
+()=>{
 
 
 
 
 
-
-document
-.querySelectorAll(".nav")
-.forEach(b=>{
-
-
-b.classList.remove(
-"active"
-);
-
-
-
-});
+player =
+Storage.getPlayer();
 
 
 
 
 
-btn.classList.add(
-"active"
-);
-
-
-
-};
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// УЛУЧШЕНИЯ
-
-
-
-document
-.querySelectorAll(".upgrade-card button")
-.forEach(button=>{
-
-
-
-button.onclick=()=>{
-
-
-
-let price =
+const price =
 Number(
 button.dataset.price
 );
 
 
 
-let type =
+const type =
 button.dataset.type;
 
 
 
-let value =
+const value =
 Number(
 button.dataset.value
 );
@@ -329,7 +321,11 @@ button.dataset.value
 
 
 
-if(balance < price){
+
+
+if(
+player.balance < price
+){
 
 
 
@@ -338,9 +334,36 @@ alert(
 );
 
 
+
 return;
 
 
+
+}
+
+
+
+
+
+
+
+player.balance -= price;
+
+
+
+
+
+
+
+if(type === "click"){
+
+
+
+player.clickPower +=
+value;
+
+
+
 }
 
 
@@ -349,18 +372,12 @@ return;
 
 
 
-balance -= price;
+if(type === "auto"){
 
 
 
-
-
-
-if(type==="click"){
-
-
-
-clickPower += value;
+player.autoPower +=
+value;
 
 
 
@@ -369,15 +386,12 @@ clickPower += value;
 
 
 
-if(type==="auto"){
 
 
 
-autoPower += value;
-
-
-
-}
+Storage.savePlayer(
+player
+);
 
 
 
@@ -388,15 +402,20 @@ button.innerText =
 "Куплено";
 
 
-button.disabled=true;
+button.disabled =
+true;
 
 
 
-update();
+
+
+updateScreen();
 
 
 
-};
+}
+
+);
 
 
 
@@ -410,4 +429,125 @@ update();
 
 
 
-update();
+
+
+
+// ПЕРЕКЛЮЧЕНИЕ ОСНОВНЫХ ВКЛАДОК
+
+
+
+document
+.querySelectorAll(
+".nav"
+)
+.forEach(
+(button)=>{
+
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+
+const page =
+button.dataset.page;
+
+
+
+
+
+document
+.querySelectorAll(
+".page"
+)
+.forEach(
+(item)=>{
+
+
+item.classList.remove(
+"active"
+);
+
+
+});
+
+
+
+
+
+
+
+const target =
+document.getElementById(
+page
+);
+
+
+
+
+
+
+if(target){
+
+
+target.classList.add(
+"active"
+);
+
+
+
+}
+
+
+
+
+
+
+
+document
+.querySelectorAll(
+".nav"
+)
+.forEach(
+(btn)=>{
+
+
+btn.classList.remove(
+"active"
+);
+
+
+});
+
+
+
+
+
+
+button.classList.add(
+"active"
+);
+
+
+
+
+
+}
+
+);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+updateScreen();
