@@ -1,12 +1,15 @@
-// UralCoin Storage v3
-// Единое хранилище игрока
+// UralCoin Storage v4
+// Единый профиль игрока
 
 
 const Storage = {
 
 
 
+
+
 getPlayer(){
+
 
 
 let player =
@@ -23,10 +26,13 @@ localStorage.getItem(
 
 
 
+
 if(!player){
 
 
+
 player = {
+
 
 id:
 
@@ -41,60 +47,73 @@ localStorage.getItem(
 
 
 name:
+
 "Игрок",
 
 
 
 username:
+
 "",
 
 
 
 photo:
+
 "",
 
 
 
 balance:
+
 0,
 
 
 
 clickPower:
+
 0.01,
 
 
 
 autoPower:
+
 0,
 
 
 
 friends:
+
 0,
 
 
 
 referrer:
+
 null,
 
 
 
 history:
+
 [],
 
 
 
 usedPromos:
+
 [],
 
 
 
 created:
+
 Date.now()
 
 
+
 };
+
 
 
 
@@ -110,12 +129,14 @@ this.savePlayer(player);
 
 
 
-
 return player;
 
 
 
 },
+
+
+
 
 
 
@@ -145,7 +166,10 @@ JSON.stringify(player)
 
 
 
-setTelegramUser(user){
+
+
+
+updateProfile(data){
 
 
 
@@ -155,26 +179,35 @@ this.getPlayer();
 
 
 
+
+if(data.id)
 player.id =
-user.id;
+String(data.id);
 
 
 
+
+if(data.name)
 player.name =
-user.first_name ||
-"Игрок";
+data.name;
 
 
 
+
+
+if(data.username)
 player.username =
-user.username ||
-"";
+data.username;
 
 
 
+
+
+if(data.photo)
 player.photo =
-user.photo_url ||
-"";
+data.photo;
+
+
 
 
 
@@ -184,6 +217,9 @@ this.savePlayer(player);
 
 
 },
+
+
+
 
 
 
@@ -217,6 +253,9 @@ this.savePlayer(player);
 
 
 
+
+
+
 addBalance(amount){
 
 
@@ -243,6 +282,9 @@ this.savePlayer(player);
 
 
 
+
+
+
 removeBalance(amount){
 
 
@@ -254,7 +296,9 @@ this.getPlayer();
 
 
 
-if(player.balance < amount){
+if(
+player.balance < Number(amount)
+){
 
 
 return false;
@@ -287,6 +331,9 @@ return true;
 
 
 
+
+
+
 addFriend(){
 
 
@@ -312,6 +359,9 @@ this.savePlayer(player);
 
 
 
+
+
+
 setReferrer(id){
 
 
@@ -323,11 +373,15 @@ this.getPlayer();
 
 
 
-if(!player.referrer){
+
+if(
+!player.referrer
+){
 
 
 
-player.referrer=id;
+player.referrer =
+String(id);
 
 
 
@@ -347,12 +401,17 @@ this.savePlayer(player);
 
 
 
+
+
+
 addHistory(data){
 
 
 
 let player =
 this.getPlayer();
+
+
 
 
 
@@ -370,11 +429,15 @@ Date.now()
 
 
 
+
 this.savePlayer(player);
 
 
 
 },
+
+
+
 
 
 
@@ -399,7 +462,10 @@ return this.getPlayer()
 
 
 
-buyUpgrade(type,value,price){
+
+
+
+savePromo(code){
 
 
 
@@ -410,55 +476,11 @@ this.getPlayer();
 
 
 
-if(player.balance < price){
-
-
-
-return false;
-
-
-}
-
-
-
-
-
-player.balance -= price;
-
-
-
-
-
-if(type==="click"){
-
-
-player.clickPower += value;
-
-
-}
-
-
-
-
-
-if(type==="auto"){
-
-
-player.autoPower += value;
-
-
-}
-
-
-
+player.usedPromos.push(code);
 
 
 
 this.savePlayer(player);
-
-
-
-return true;
 
 
 
@@ -470,11 +492,40 @@ return true;
 
 
 
+
+
+
+hasPromo(code){
+
+
+
+let player =
+this.getPlayer();
+
+
+
+
+
+return player.usedPromos.includes(code);
+
+
+
+},
+
+
+
+
+
+
+
+
+
+
 generateApiKey(){
 
 
 
-let key =
+const key =
 
 "URAL-"
 
@@ -484,6 +535,7 @@ Math.random()
 .toString(36)
 .substring(2,12)
 .toUpperCase();
+
 
 
 
@@ -499,6 +551,8 @@ key
 
 
 
+
+
 return key;
 
 
@@ -511,12 +565,17 @@ return key;
 
 
 
+
+
+
 getApiKey(){
 
 
 
 return localStorage.getItem(
+
 "ural_api"
+
 )
 
 ||
@@ -531,8 +590,8 @@ null;
 
 
 
-
 };
+
 
 
 
