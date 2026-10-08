@@ -1,10 +1,15 @@
-// UralCoin Telegram CONNECT v4
+// =================================
+// URALcoin Telegram WebApp v5
+// Связь Telegram + Storage
+// =================================
+
 
 
 const tg = window.Telegram.WebApp;
 
 
 
+// запуск Telegram Mini App
 
 tg.ready();
 
@@ -12,6 +17,8 @@ tg.expand();
 
 
 
+
+// цвета Telegram
 
 tg.setHeaderColor("#090414");
 
@@ -22,7 +29,9 @@ tg.setBackgroundColor("#090414");
 
 
 
+
 const telegramUser =
+
 tg.initDataUnsafe?.user;
 
 
@@ -31,115 +40,20 @@ tg.initDataUnsafe?.user;
 
 
 
-function loadTelegramUser(){
 
+if(telegramUser){
 
 
-if(!telegramUser){
 
 
 
-let player =
-Storage.getPlayer();
-
-
-
-
-
-if(!player.id){
-
-
-player.id =
-"guest";
-
-
-
-Storage.savePlayer(player);
-
-
-}
-
-
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-let player =
-Storage.getPlayer();
-
-
-
-
-
-
-player.id =
-String(
-telegramUser.id
-);
-
-
-
-
-
-player.name =
-
-telegramUser.first_name ||
-
-"Игрок";
-
-
-
-
-
-player.username =
-
-telegramUser.username ||
-
-"";
-
-
-
-
-
-player.photo =
-
-telegramUser.photo_url ||
-
-"";
-
-
-
-
-
-
-
-Storage.savePlayer(
-player
-);
-
-
-
-
-
+// сохраняем ID отдельно
 
 localStorage.setItem(
 
 "telegram_id",
 
-String(
-telegramUser.id
-)
+String(telegramUser.id)
 
 );
 
@@ -148,11 +62,33 @@ telegramUser.id
 
 
 
-updateProfile();
+
+// передаем данные в единое хранилище
+
+Storage.setTelegramUser({
+
+id:
+
+telegramUser.id,
+
+
+first_name:
+
+telegramUser.first_name,
+
+
+username:
+
+telegramUser.username,
+
+
+photo_url:
+
+telegramUser.photo_url
 
 
 
-}
+});
 
 
 
@@ -161,32 +97,26 @@ updateProfile();
 
 
 
-
-function updateProfile(){
-
+// аватар
 
 
 const avatar =
-document.getElementById(
-"userAvatar"
-);
 
+document.getElementById(
+
+"userAvatar"
+
+);
 
 
 
 const letter =
+
 document.getElementById(
+
 "avatarLetter"
+
 );
-
-
-
-
-
-
-if(!telegramUser)
-return;
-
 
 
 
@@ -195,8 +125,8 @@ return;
 
 
 if(
-telegramUser.photo_url &&
-avatar
+avatar &&
+telegramUser.photo_url
 ){
 
 
@@ -207,8 +137,8 @@ telegramUser.photo_url;
 
 
 
-
 avatar.style.display =
+
 "block";
 
 
@@ -220,6 +150,7 @@ if(letter){
 
 
 letter.style.display =
+
 "none";
 
 
@@ -229,14 +160,19 @@ letter.style.display =
 
 }
 
+
+
+
+
+
 else if(letter){
 
 
 
 letter.innerText =
 
-
 (
+
 telegramUser.first_name ||
 
 "U"
@@ -249,38 +185,6 @@ telegramUser.first_name ||
 
 
 
-
-}
-
-
-
-
-
-
-const brand =
-document.querySelector(
-".brand"
-);
-
-
-
-
-
-if(brand){
-
-
-
-brand.innerText =
-"URALcoin";
-
-
-
-}
-
-
-
-
-
 }
 
 
@@ -291,34 +195,45 @@ brand.innerText =
 
 
 
+// проверяем реферальную ссылку Telegram
 
 
 
-// запуск подключения
+const startParam =
 
-
-loadTelegramUser();
-
-
-
+tg.initDataUnsafe?.start_param;
 
 
 
 
-// синхронизация с сервером после загрузки
+
+if(startParam){
 
 
-setTimeout(()=>{
+
+let player =
+
+Storage.getPlayer();
+
+
 
 
 
 if(
-window.API &&
-API.syncUser
+
+!player.referrer &&
+
+String(startParam)!==String(player.id)
+
 ){
 
 
-API.syncUser();
+
+Storage.setReferrer(
+
+startParam
+
+);
 
 
 
@@ -326,4 +241,53 @@ API.syncUser();
 
 
 
-},700);
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+else{
+
+
+
+// если открыт вне Telegram
+
+
+
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+
+if(!player.id){
+
+
+
+player.id =
+
+"guest";
+
+
+
+Storage.savePlayer(player);
+
+
+
+}
+
+
+
+}
