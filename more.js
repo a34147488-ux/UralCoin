@@ -1,16 +1,72 @@
+
 // ===================================
-// URALcoin MORE v2
-// API + History + Navigation
+// URALcoin MORE v10
+// Navigation + History + API
 // ===================================
 
 
 
 
-// Открытие промокодов
+
+function openPage(page){
+
+
+
+document
+
+.querySelectorAll(".page")
+
+.forEach(item=>{
+
+
+item.classList.remove(
+"active"
+);
+
+
+});
+
+
+
+
+
+
+let target =
+document.getElementById(
+page
+);
+
+
+
+if(target){
+
+
+target.classList.add(
+"active"
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// PROMO BUTTON
+// ===============================
 
 
 const promoButton =
-
 document.getElementById(
 "promoButton"
 );
@@ -20,24 +76,17 @@ document.getElementById(
 if(promoButton){
 
 
-promoButton.addEventListener(
-
-"click",
-
-()=>{
+promoButton.onclick = ()=>{
 
 
-
-openPage("promo");
-
-
-
-}
-
-
+openPage(
+"promo"
 );
 
 
+};
+
+
 
 }
 
@@ -48,15 +97,16 @@ openPage("promo");
 
 
 
-// История переводов
+
+// ===============================
+// HISTORY
+// ===============================
+
 
 
 const historyButton =
-
 document.getElementById(
-
 "historyButton"
-
 );
 
 
@@ -66,29 +116,22 @@ document.getElementById(
 if(historyButton){
 
 
-historyButton.addEventListener(
-
-"click",
-
-()=>{
-
+historyButton.onclick = ()=>{
 
 
 renderHistory();
 
 
-
-openPage("history");
-
-
-
-}
-
-
+openPage(
+"history"
 );
 
 
 
+};
+
+
+
 }
 
 
@@ -99,15 +142,142 @@ openPage("history");
 
 
 
-// API кнопка
+function renderHistory(){
+
+
+
+let list =
+document.getElementById(
+"historyList"
+);
+
+
+
+
+
+if(!list)
+
+return;
+
+
+
+
+
+
+let history =
+Storage.getHistory();
+
+
+
+
+
+
+
+if(
+!history ||
+history.length===0
+){
+
+
+
+list.innerHTML =
+"Операций нет";
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+list.innerHTML = "";
+
+
+
+
+
+
+
+history
+.slice()
+.reverse()
+.forEach(item=>{
+
+
+
+let div =
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"history-item";
+
+
+
+
+
+div.innerHTML =
+
+
+
+`
+
+<b>
+
+${item.text || "Операция"}
+
+</b>
+
+
+<br>
+
+
+${item.date || ""}
+
+`;
+
+
+
+
+
+
+list.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// API
+// ===============================
+
 
 
 const apiButton =
-
 document.getElementById(
-
 "apiButton"
-
 );
 
 
@@ -118,14 +288,12 @@ if(apiButton){
 
 
 
-apiButton.addEventListener(
-
-"click",
-
-()=>{
+apiButton.onclick = ()=>{
 
 
-openPage("api");
+openPage(
+"api"
+);
 
 
 
@@ -133,10 +301,7 @@ loadApi();
 
 
 
-}
-
-
-);
+};
 
 
 
@@ -148,18 +313,13 @@ loadApi();
 
 
 
-
-
-// Получить ключ API
 
 
 const createApi =
-
 document.getElementById(
-
 "createApi"
-
 );
+
 
 
 
@@ -170,16 +330,11 @@ if(createApi){
 
 
 
-createApi.addEventListener(
-
-"click",
-
-()=>{
+createApi.onclick = ()=>{
 
 
 
-const key =
-
+let key =
 Storage.generateApiKey();
 
 
@@ -187,12 +342,9 @@ Storage.generateApiKey();
 
 
 
-const result =
-
+let result =
 document.getElementById(
-
 "apiResult"
-
 );
 
 
@@ -204,7 +356,8 @@ if(result){
 
 
 
-result.innerText = key;
+result.innerText =
+key;
 
 
 
@@ -212,10 +365,7 @@ result.innerText = key;
 
 
 
-}
-
-
-);
+};
 
 
 
@@ -227,24 +377,16 @@ result.innerText = key;
 
 
 
-
-
-
-// показать существующий ключ
 
 
 function loadApi(){
 
 
 
-const result =
-
+let result =
 document.getElementById(
-
 "apiResult"
-
 );
-
 
 
 
@@ -260,9 +402,9 @@ return;
 
 
 
-const key =
-
+let key =
 Storage.getApiKey();
+
 
 
 
@@ -272,9 +414,8 @@ Storage.getApiKey();
 if(key){
 
 
-
-result.innerText = key;
-
+result.innerText =
+key;
 
 
 }
@@ -282,11 +423,8 @@ result.innerText = key;
 else{
 
 
-
 result.innerText =
-
-"Ключ еще не создан";
-
+"Ключ не создан";
 
 
 }
@@ -303,178 +441,34 @@ result.innerText =
 
 
 
-
-
-// история
-
-
-function renderHistory(){
-
-
-
-const list =
-
-document.getElementById(
-
-"historyList"
-
-);
-
-
-
-
-
-
-if(!list)
-
-return;
-
-
-
-
-
-
-const history =
-
-Storage.getHistory();
-
-
-
-
-
-
-
-if(
-
-!history ||
-
-history.length===0
-
-){
-
-
-
-list.innerHTML =
-
-"Пока операций нет";
-
-
-
-return;
-
-
-
-}
-
-
-
-
-
-
-
-
-list.innerHTML="";
-
-
-
-
-
-
-
-history
-
-.slice()
-
-.reverse()
-
-.forEach(
-
-item=>{
-
-
-
-const div =
-
-document.createElement(
-
-"div"
-
-);
-
-
-
-div.className=
-
-"history-item";
-
-
-
-
-
-
-div.innerHTML =
-
-`
-
-${item.text || "Перевод"}
-
-<br>
-
-${item.date || ""}
-
-`;
-
-
-
-
-
-list.appendChild(div);
-
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// переключение страниц
-
-
-function openPage(page){
+// ===============================
+// BOTTOM MENU SYNC
+// ===============================
 
 
 
 document
 
-.querySelectorAll(
+.querySelectorAll(".nav")
 
-".page"
-
-)
-
-.forEach(
-
-item=>{
+.forEach(btn=>{
 
 
 
-item.classList.remove(
+btn.onclick = ()=>{
 
+
+
+document
+
+.querySelectorAll(".page")
+
+.forEach(page=>{
+
+
+page.classList.remove(
 "active"
-
 );
-
 
 
 });
@@ -485,32 +479,24 @@ item.classList.remove(
 
 
 
-const target =
-
+let target =
 document.getElementById(
-
-page
-
+btn.dataset.page
 );
 
 
 
 
 
-
-if(target){
-
+if(target)
 
 
 target.classList.add(
-
 "active"
-
 );
 
 
 
-}
 
 
 
@@ -519,28 +505,31 @@ target.classList.add(
 
 document
 
-.querySelectorAll(
+.querySelectorAll(".nav")
 
-".nav"
-
-)
-
-.forEach(
-
-btn=>{
+.forEach(item=>{
 
 
-
-btn.classList.remove(
-
+item.classList.remove(
 "active"
-
 );
-
 
 
 });
 
 
 
-}
+
+
+
+btn.classList.add(
+"active"
+);
+
+
+
+};
+
+
+
+});
