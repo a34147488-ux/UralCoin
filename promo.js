@@ -1,51 +1,9 @@
-// UralCoin v2
-// Система промокодов
 
+// ===================================
+// URALcoin PROMO v10
+// Create + Activate Promo Codes
+// ===================================
 
-
-let promos =
-
-JSON.parse(
-
-localStorage.getItem(
-"ural_promos"
-)
-
-)
-
-||
-[];
-
-
-
-
-
-
-
-
-function savePromos(){
-
-
-localStorage.setItem(
-
-"ural_promos",
-
-JSON.stringify(promos)
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// СОЗДАНИЕ ПРОМОКОДА
 
 
 
@@ -56,56 +14,43 @@ document.getElementById(
 
 
 
-
-
 if(createPromo){
 
 
 
-createPromo.onclick = ()=>{
+createPromo.onclick = async ()=>{
 
 
 
-const name =
-
-document
-.getElementById(
+let name =
+document.getElementById(
 "promoName"
 )
 .value
-.trim()
-.toUpperCase();
+.trim();
 
 
 
 
 
-const reward =
-
+let reward =
 Number(
-
-document
-.getElementById(
+document.getElementById(
 "promoReward"
 )
 .value
-
 );
 
 
 
 
 
-const limit =
-
+let limit =
 Number(
-
-document
-.getElementById(
+document.getElementById(
 "promoLimit"
 )
 .value
-
 );
 
 
@@ -114,12 +59,11 @@ document
 
 
 
-
-if(!name){
+if(!name || !reward || !limit){
 
 
 alert(
-"Введите название"
+"Заполните все поля"
 );
 
 
@@ -133,73 +77,46 @@ return;
 
 
 
-if(!reward || reward <=0){
-
-
-alert(
-"Введите награду"
-);
-
-
-return;
-
-
-}
+try{
 
 
 
+let response =
+
+await fetch(
+
+CONFIG.API_URL +
+"/promo/create",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json"
+
+},
 
 
+body:JSON.stringify({
 
-if(!limit || limit <=0){
-
-
-alert(
-"Введите лимит"
-);
+name:name,
 
 
-return;
+reward:reward,
 
 
-}
+limit:limit
 
 
-
-
-
-
-
-let exists =
-
-promos.find(
-
-p=>
-p.code === name
-
-);
-
-
-
-
-
-
-
-if(exists){
-
-
-
-alert(
-"Такой промокод уже существует"
-);
-
-
-
-return;
+})
 
 
 }
 
+);
 
 
 
@@ -207,60 +124,14 @@ return;
 
 
 
-
-let player =
-Storage.getPlayer();
-
+let data =
+await response.json();
 
 
 
 
 
-
-
-promos.push({
-
-
-
-code:
-name,
-
-
-
-reward:
-reward,
-
-
-
-limit:
-limit,
-
-
-
-used:[],
-
-
-
-owner:
-player.id
-
-
-
-});
-
-
-
-
-
-
-
-
-savePromos();
-
-
-
-
-
+if(data){
 
 
 alert(
@@ -273,37 +144,32 @@ name
 
 
 
+}
 
 
 
+}
+
+catch(e){
 
 
-document
-.getElementById(
-"promoName"
-)
-.value="";
+console.log(
+e
+);
 
 
-
-document
-.getElementById(
-"promoReward"
-)
-.value="";
+alert(
+"Ошибка сервера"
+);
 
 
 
-document
-.getElementById(
-"promoLimit"
-)
-.value="";
-
+}
 
 
 
 };
+
 
 
 
@@ -317,9 +183,9 @@ document
 
 
 
-
-
-// АКТИВАЦИЯ ПРОМОКОДА
+// ===============================
+// USE PROMO
+// ===============================
 
 
 
@@ -337,88 +203,18 @@ if(usePromo){
 
 
 
-usePromo.onclick = ()=>{
+usePromo.onclick = async ()=>{
 
 
 
-const input =
 
-document
-.getElementById(
+
+let code =
+document.getElementById(
 "promoInput"
-);
-
-
-
-
-
-const code =
-
-input.value
-.trim()
-.toUpperCase();
-
-
-
-
-
-
-if(!code){
-
-
-
-alert(
-"Введите код"
-);
-
-
-
-return;
-
-
-
-}
-
-
-
-
-
-
-
-
-let promo =
-
-promos.find(
-
-p=>
-p.code === code
-
-);
-
-
-
-
-
-
-
-
-if(!promo){
-
-
-
-alert(
-"Промокод не найден"
-);
-
-
-
-return;
-
-
-}
-
-
-
+)
+.value
+.trim();
 
 
 
@@ -432,21 +228,12 @@ Storage.getPlayer();
 
 
 
-
-
-if(
-promo.used.includes(
-player.id
-)
-
-){
-
+if(!code){
 
 
 alert(
-"Вы уже использовали этот код"
+"Введите промокод"
 );
-
 
 
 return;
@@ -460,49 +247,68 @@ return;
 
 
 
-
-if(
-promo.used.length >= promo.limit
-
-){
+try{
 
 
 
-alert(
-"Лимит закончился"
-);
+let response =
+
+await fetch(
+
+CONFIG.API_URL +
+"/promo/use",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json"
+
+},
 
 
+body:JSON.stringify({
 
-return;
+id:player.id,
+
+
+code:code
+
+
+})
 
 
 }
 
+);
 
 
 
 
+
+
+
+let data =
+await response.json();
+
+
+
+
+
+
+
+
+if(data.success){
 
 
 
 player.balance +=
-promo.reward;
-
-
-
-
-
-
-
-promo.used.push(
-player.id
+Number(
+data.reward
 );
-
-
-
-
-
 
 
 
@@ -512,23 +318,15 @@ player
 
 
 
-
-
-
-
-savePromos();
-
-
-
-
+updateScreen();
 
 
 
 alert(
 
-"Получено "
+"Получено +"
 +
-promo.reward
+data.reward
 +
 " U"
 
@@ -536,12 +334,41 @@ promo.reward
 
 
 
+}
+
+else{
 
 
 
-input.value="";
+alert(
+"Промокод недоступен"
+);
 
 
+
+}
+
+
+
+}
+
+catch(e){
+
+
+
+console.log(
+e
+);
+
+
+
+alert(
+"Ошибка сервера"
+);
+
+
+
+}
 
 
 
