@@ -1,19 +1,16 @@
 // =================================
-// URALcoin APP v13.2
-// MAIN CORE
+// URALcoin APP v13.3
+// CORE FIX
 // =================================
-
 
 
 let player = Storage.getPlayer();
 
 
 
+function formatNumber(value){
 
-
-function formatNumber(num){
-
-return Number(num || 0)
+return Number(value || 0)
 .toFixed(3)
 .replace(".",",");
 
@@ -24,14 +21,10 @@ return Number(num || 0)
 
 
 
-
-
 function updateScreen(){
 
 
-
 player = Storage.getPlayer();
-
 
 
 
@@ -47,79 +40,53 @@ let second =
 document.getElementById("secondPower");
 
 
-let code =
-document.getElementById("myPromo");
 
-
-let activated =
-document.getElementById("activatedCount");
-
-
-let earned =
-document.getElementById("promoEarn");
-
-
-
-
-
-
-
-
-if(balance)
+if(balance){
 
 balance.innerText =
 formatNumber(player.balance);
 
+}
 
 
 
-
-if(power)
+if(power){
 
 power.innerText =
 formatNumber(player.clickPower);
 
+}
 
 
 
-
-if(second)
+if(second){
 
 second.innerText =
 formatNumber(player.autoPower);
 
+}
+
+
+
+let crystals =
+document.getElementById("crystals");
+
+
+if(crystals){
+
+crystals.innerText =
+player.crystals || 0;
+
+}
 
 
 
 
+if(typeof checkPromo==="function"){
 
+checkPromo();
 
-if(code)
-
-code.value =
-player.promoCode || "Создание...";
-
-
-
-
-
-
-
-if(activated)
-
-activated.innerText =
-player.friends || 0;
-
-
-
-
-
-
-
-if(earned)
-
-earned.innerText =
-formatNumber(player.earnedFromPromo)+" U";
+}
 
 
 
@@ -132,11 +99,9 @@ formatNumber(player.earnedFromPromo)+" U";
 
 
 
-
 // ===============================
 // TELEGRAM PROFILE
 // ===============================
-
 
 
 function loadTelegram(){
@@ -155,22 +120,17 @@ Telegram.WebApp.initDataUnsafe.user;
 
 
 
-
-
 if(!user)
 
 return;
 
 
 
-
-
-
+if(Storage.updateTelegramProfile){
 
 Storage.updateTelegramProfile(user);
 
-
-
+}
 
 
 
@@ -185,9 +145,7 @@ document.getElementById("avatarLetter");
 
 
 
-
 if(user.photo_url && img){
-
 
 
 img.src=user.photo_url;
@@ -195,13 +153,12 @@ img.src=user.photo_url;
 img.style.display="block";
 
 
-
 if(letter)
 
 letter.style.display="none";
 
-}
 
+}
 
 
 }
@@ -221,30 +178,27 @@ letter.style.display="none";
 
 let clickButton =
 
-document.getElementById("clickButton");
-
-
+document.getElementById(
+"clickButton"
+);
 
 
 
 if(clickButton){
 
 
-
 clickButton.onclick=function(){
 
 
 
-let player =
+player =
 Storage.getPlayer();
-
-
 
 
 
 player.balance +=
 
-Number(player.clickPower);
+Number(player.clickPower || 0);
 
 
 
@@ -265,18 +219,21 @@ updateScreen();
 
 
 
-if(typeof showClickAnimation==="function")
+if(typeof showClickAnimation==="function"){
 
-showClickAnimation(player.clickPower);
+showClickAnimation(
+player.clickPower
+);
+
+}
 
 
 
-
-
-
-if(typeof clickHeat==="function")
+if(typeof clickHeat==="function"){
 
 clickHeat();
+
+}
 
 
 
@@ -299,15 +256,11 @@ clickHeat();
 // ===============================
 
 
-
 setInterval(()=>{
 
 
-
-let player =
+player =
 Storage.getPlayer();
-
-
 
 
 
@@ -321,13 +274,10 @@ Number(player.autoPower)/60;
 
 
 
-
 Storage.savePlayer(player);
 
 
-
 updateScreen();
-
 
 
 }
@@ -344,22 +294,108 @@ updateScreen();
 
 
 
+
 // ===============================
-// NAVIGATION
+// API KEY
 // ===============================
 
+
+
+let apiBtn =
+
+document.getElementById(
+"apiBtn"
+);
+
+
+
+
+if(apiBtn){
+
+
+
+apiBtn.onclick=function(){
+
+
+
+player =
+Storage.getPlayer();
+
+
+
+
+if(!player.apiKey){
+
+
+
+player.apiKey =
+
+"UC-"
+
++
+
+Math.random()
+
+.toString(36)
+
+.substring(2,10)
+
+.toUpperCase();
+
+
+
+Storage.savePlayer(player);
+
+
+
+}
+
+
+
+alert(
+
+"Ваш API ключ:\n\n"
+
++
+
+player.apiKey
+
+);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// MENU
+// ===============================
 
 
 document
+
 .querySelectorAll(".nav")
-.forEach(btn=>{
+
+.forEach(button=>{
 
 
-btn.onclick=function(){
+button.onclick=function(){
 
 
 
 let page =
+
 this.dataset.page;
 
 
@@ -367,10 +403,14 @@ this.dataset.page;
 
 
 document
-.querySelectorAll(".page")
-.forEach(p=>{
 
-p.classList.remove("active");
+.querySelectorAll(".page")
+
+.forEach(item=>{
+
+
+item.classList.remove("active");
+
 
 });
 
@@ -379,7 +419,9 @@ p.classList.remove("active");
 
 
 
+
 let target =
+
 document.getElementById(page);
 
 
@@ -387,20 +429,23 @@ document.getElementById(page);
 
 
 
-if(target)
+if(target){
 
 target.classList.add("active");
 
-
-
+}
 
 
 
 document
-.querySelectorAll(".nav")
-.forEach(n=>{
 
-n.classList.remove("active");
+.querySelectorAll(".nav")
+
+.forEach(btn=>{
+
+
+btn.classList.remove("active");
+
 
 });
 
@@ -427,72 +472,7 @@ this.classList.add("active");
 
 
 // ===============================
-// COPY PROMO
-// ===============================
-
-
-
-let copyCode =
-
-document.getElementById("copyCode");
-
-
-
-
-
-if(copyCode){
-
-
-
-copyCode.onclick=function(){
-
-
-
-let player =
-Storage.getPlayer();
-
-
-
-
-
-if(player.promoCode){
-
-
-
-navigator.clipboard.writeText(
-
-player.promoCode
-
-);
-
-
-
-alert(
-"Код скопирован"
-);
-
-
-
-}
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// SYNC SERVER
+// SYNC
 // ===============================
 
 
@@ -504,19 +484,15 @@ async function syncBalance(){
 try{
 
 
-
-let player =
-Storage.getPlayer();
-
-
-
-
-
-
 if(!CONFIG.API_URL)
 
 return;
 
+
+
+
+player =
+Storage.getPlayer();
 
 
 
@@ -528,27 +504,19 @@ CONFIG.API_URL+"/sync",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":"application/json"
-
 
 },
 
-
 body:JSON.stringify({
-
 
 id:player.id,
 
-
 balance:player.balance
-
 
 })
 
@@ -558,26 +526,19 @@ balance:player.balance
 
 
 
-
-
 }
 
-catch(e){
-
-
+catch(error){
 
 console.log(
 "SYNC ERROR"
 );
 
-
-
 }
 
 
 
 }
-
 
 
 
@@ -599,6 +560,7 @@ syncBalance,
 
 
 
+
 // ===============================
 // START
 // ===============================
@@ -606,11 +568,39 @@ syncBalance,
 
 loadTelegram();
 
-updateScreen();
+
+
+
+if(typeof registerPromo==="function"){
+
+registerPromo();
+
+}
+
+
+
+if(typeof checkPromo==="function"){
+
+checkPromo();
+
+}
 
 
 
 
-if(typeof drawUpgrades==="function")
+setTimeout(()=>{
+
+
+if(typeof drawUpgrades==="function"){
 
 drawUpgrades();
+
+}
+
+
+},500);
+
+
+
+
+updateScreen();
