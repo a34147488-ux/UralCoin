@@ -7,29 +7,11 @@ tg.expand();
 
 
 
-// Получаем пользователя Telegram
-
-const user = tg.initDataUnsafe.user;
+const user = tg.initDataUnsafe?.user;
 
 
 
 if(user){
-
-
-    const name = document.querySelector(".top h1");
-
-
-    if(name){
-
-        name.innerHTML = 
-        "UralCoin";
-
-    }
-
-
-
-    console.log("Telegram user:", user);
-
 
 
     localStorage.setItem(
@@ -40,9 +22,23 @@ if(user){
 
     localStorage.setItem(
         "telegram_name",
-        user.first_name
+        user.first_name || "Игрок"
     );
 
+
+
+    if(user.photo_url){
+
+        localStorage.setItem(
+            "avatar",
+            user.photo_url
+        );
+
+    }
+
+
+
+    console.log(user);
 
 
 }
