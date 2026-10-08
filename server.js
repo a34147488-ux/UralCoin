@@ -1,7 +1,7 @@
-// =================================
-// URALcoin SERVER v5
-// Users + Top + Referrals
-// =================================
+// ===================================
+// URALcoin SERVER v6
+// Users + Top System
+// ===================================
 
 
 const express = require("express");
@@ -21,22 +21,12 @@ app.use(express.json());
 
 
 
-
 const PORT = 3000;
 
 
 
 
-const ADMIN_ID = "ТВОЙ_ID";
-
-
-
-
-
-
-// ===============================
-// БАЗА
-// ===============================
+const DB = "users.json";
 
 
 
@@ -44,40 +34,37 @@ let users = [];
 
 
 
-const DB_FILE = "users.json";
 
 
+
+// ============================
+// Загрузка базы
+// ============================
 
 
 
 function loadUsers(){
 
 
-
-if(
-
-fs.existsSync(DB_FILE)
-
-){
-
+if(fs.existsSync(DB)){
 
 
 users = JSON.parse(
 
 fs.readFileSync(
-DB_FILE,
+DB,
 "utf8"
 )
 
 );
 
 
+}
+
 
 }
 
 
-
-}
 
 
 
@@ -85,10 +72,9 @@ DB_FILE,
 function saveUsers(){
 
 
-
 fs.writeFileSync(
 
-DB_FILE,
+DB,
 
 JSON.stringify(
 
@@ -103,8 +89,9 @@ null,
 );
 
 
-
 }
+
+
 
 
 
@@ -118,9 +105,10 @@ loadUsers();
 
 
 
-// ===============================
-// СОЗДАНИЕ ИГРОКА
-// ===============================
+
+// ============================
+// Создание / обновление игрока
+// ============================
 
 
 
@@ -157,6 +145,7 @@ String(data.id)
 
 
 
+
 if(!user){
 
 
@@ -164,64 +153,47 @@ if(!user){
 user = {
 
 
-
-id:
-
-String(data.id),
+id:String(data.id),
 
 
 
 name:
 
-data.name || "Игрок",
+data.name ||
 
-
-
-username:
-
-data.username || "",
+"Игрок",
 
 
 
 photo:
 
-data.photo || "",
+data.photo ||
+
+"",
 
 
 
-balance:
-
-0,
+balance:0,
 
 
 
-friends:
-
-0,
+friends:0,
 
 
 
-referrer:
-
-null,
+invited:0,
 
 
 
-clickPower:
-
-0.010,
+clickPower:0.01,
 
 
 
-autoPower:
-
-0,
+autoPower:0,
 
 
 
-history:
-
-[]
+referrer:null
 
 
 
@@ -241,25 +213,21 @@ users.push(user);
 
 
 
+
+
 else{
 
 
 
-user.name =
+if(data.name)
 
-data.name || user.name;
-
-
-
-user.username =
-
-data.username || user.username;
+user.name=data.name;
 
 
 
-user.photo =
+if(data.photo)
 
-data.photo || user.photo;
+user.photo=data.photo;
 
 
 
@@ -269,7 +237,10 @@ data.photo || user.photo;
 
 
 
+
 saveUsers();
+
+
 
 
 
@@ -289,9 +260,11 @@ res.json(user);
 
 
 
-// ===============================
-// ПОЛУЧИТЬ ИГРОКА
-// ===============================
+
+
+// ============================
+// Получить игрока
+// ============================
 
 
 
@@ -337,9 +310,9 @@ user || null
 
 
 
-// ===============================
-// СОХРАНЕНИЕ БАЛАНСА
-// ===============================
+// ============================
+// Сохранить баланс
+// ============================
 
 
 
@@ -351,17 +324,15 @@ app.post(
 
 
 
-const {
+const id = req.body.id;
 
-id,
 
-balance
+const balance = Number(
 
-}
+req.body.balance
 
-=
+);
 
-req.body;
 
 
 
@@ -389,9 +360,7 @@ if(user){
 
 
 
-user.balance =
-
-Number(balance);
+user.balance = balance;
 
 
 
@@ -423,9 +392,9 @@ success:true
 
 
 
-// ===============================
+// ============================
 // ТОП ИГРОКОВ
-// ===============================
+// ============================
 
 
 
@@ -437,9 +406,9 @@ app.get(
 
 
 
+
+
 const top =
-
-
 
 [...users]
 
@@ -447,13 +416,17 @@ const top =
 
 (a,b)=>
 
-b.balance-a.balance
+Number(b.balance)
+
+-
+
+Number(a.balance)
 
 )
 
 
 
-.slice(0,20);
+.slice(0,50);
 
 
 
@@ -475,366 +448,24 @@ res.json(top);
 
 
 
-// ===============================
-// РЕФЕРАЛ
-// ===============================
+// ============================
+// Статус сервера
+// ============================
 
 
 
-app.post(
+app.get(
 
-"/referral",
+"/",
 
 (req,res)=>{
 
 
+res.send(
 
-const {
-
-userId,
-
-referrerId
-
-}
-
-=
-
-req.body;
-
-
-
-
-
-
-
-const user = users.find(
-
-u =>
-
-String(u.id)
-
-===
-
-String(userId)
+"URALcoin server online"
 
 );
-
-
-
-
-
-
-
-const referrer = users.find(
-
-u =>
-
-String(u.id)
-
-===
-
-String(referrerId)
-
-);
-
-
-
-
-
-
-
-
-if(
-
-user &&
-
-referrer &&
-
-!user.referrer &&
-
-user.id !== referrer.id
-
-){
-
-
-
-
-
-user.referrer =
-
-String(referrerId);
-
-
-
-
-
-referrer.friends +=1;
-
-
-
-referrer.balance +=5000;
-
-
-
-
-
-
-saveUsers();
-
-
-
-}
-
-
-
-
-
-
-res.json({
-
-success:true
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// АДМИН ВЫДАЧА
-// ===============================
-
-
-
-app.post(
-
-"/admin/give",
-
-(req,res)=>{
-
-
-
-const {
-
-admin,
-
-id,
-
-amount
-
-}
-
-=
-
-req.body;
-
-
-
-
-
-
-
-if(
-
-String(admin)
-
-!==
-
-String(ADMIN_ID)
-
-){
-
-
-
-return res.status(403)
-
-.json({
-
-error:"Нет доступа"
-
-});
-
-
-
-}
-
-
-
-
-
-
-const user = users.find(
-
-u =>
-
-String(u.id)
-
-===
-
-String(id)
-
-);
-
-
-
-
-
-
-if(user){
-
-
-
-user.balance +=
-
-Number(amount);
-
-
-
-saveUsers();
-
-
-
-}
-
-
-
-
-
-
-
-res.json({
-
-success:true
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// АДМИН СНЯТИЕ
-// ===============================
-
-
-
-app.post(
-
-"/admin/take",
-
-(req,res)=>{
-
-
-
-const {
-
-admin,
-
-id,
-
-amount
-
-}
-
-=
-
-req.body;
-
-
-
-
-
-
-
-
-if(
-
-String(admin)
-
-!==
-
-String(ADMIN_ID)
-
-){
-
-
-
-return res.status(403)
-
-.json({
-
-error:"Нет доступа"
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-const user = users.find(
-
-u =>
-
-String(u.id)
-
-===
-
-String(id)
-
-);
-
-
-
-
-
-
-if(user){
-
-
-
-user.balance -=
-
-Number(amount);
-
-
-
-saveUsers();
-
-
-
-}
-
-
-
-
-
-res.json({
-
-success:true
-
-});
 
 
 
@@ -857,7 +488,7 @@ PORT,
 
 console.log(
 
-"URALcoin server v5 started"
+"URALcoin server v6 started"
 
 );
 
