@@ -219,3 +219,8 @@ brand.innerText =
 
 
 connectTelegram();
+setTimeout(()=>{
+
+API.syncUser();
+
+},500);
