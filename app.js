@@ -1,14 +1,12 @@
 // ===================================
 // URALcoin APP v6
-// Click + Auto + Navigation
+// Click + Auto + Sync + Upgrades
 // ===================================
 
 
 
 let player =
 Storage.getPlayer();
-
-
 
 
 
@@ -37,6 +35,7 @@ return Number(value || 0)
 
 
 
+
 // ===============================
 // Обновление экрана
 // ===============================
@@ -53,17 +52,15 @@ Storage.getPlayer();
 
 
 
-const balance =
 
+const balance =
 document.getElementById(
 "balance"
 );
 
 
 
-
 const clickPower =
-
 document.getElementById(
 "clickPower"
 );
@@ -71,20 +68,10 @@ document.getElementById(
 
 
 
-const autoPower =
 
+const autoPower =
 document.getElementById(
 "autoPower"
-);
-
-
-
-
-
-const friends =
-
-document.getElementById(
-"friendsCount"
 );
 
 
@@ -109,14 +96,10 @@ player.balance
 
 if(clickPower){
 
-
 clickPower.innerText =
-
 formatNumber(
 player.clickPower
 );
-
-
 
 }
 
@@ -128,18 +111,22 @@ player.clickPower
 
 if(autoPower){
 
-
 autoPower.innerText =
-
 formatNumber(
-player.autoPower / 60
+player.autoPower
 );
-
-
 
 }
 
 
+
+
+
+
+const friends =
+document.getElementById(
+"friendsCount"
+);
 
 
 
@@ -147,12 +134,9 @@ player.autoPower / 60
 
 if(friends){
 
-
 friends.innerText =
-
 player.friends || 0;
 
-
 }
 
 
@@ -169,17 +153,14 @@ player.friends || 0;
 
 
 // ===============================
-// Серверная синхронизация
+// Синхронизация
 // ===============================
-
 
 
 async function syncBalance(){
 
 
-
 try{
-
 
 
 player =
@@ -191,7 +172,7 @@ Storage.getPlayer();
 
 await fetch(
 
-CONFIG.API_URL + "/sync",
+CONFIG.API_URL+"/sync",
 
 {
 
@@ -203,12 +184,10 @@ headers:{
 
 
 "Content-Type":
-
 "application/json"
 
 
 },
-
 
 
 body:JSON.stringify({
@@ -225,12 +204,12 @@ balance:player.balance
 
 }
 
-
 );
 
 
 
 }
+
 
 catch(e){
 
@@ -272,11 +251,12 @@ document.getElementById(
 
 
 
+
 if(clickButton){
 
 
 
-clickButton.onclick = ()=>{
+clickButton.onclick=()=>{
 
 
 
@@ -287,17 +267,12 @@ Storage.getPlayer();
 
 
 
-const power =
+
+player.balance +=
 
 Number(
 player.clickPower
 );
-
-
-
-
-
-player.balance += power;
 
 
 
@@ -313,15 +288,9 @@ player
 
 
 
-if(window.ClickEffects){
-
-
-ClickEffects.show(power);
-
-
-
-}
-
+showClickAnimation(
+player.clickPower
+);
 
 
 
@@ -332,9 +301,9 @@ updateScreen();
 
 
 
+
+
 syncBalance();
-
-
 
 
 
@@ -353,7 +322,71 @@ syncBalance();
 
 
 // ===============================
-// АВТОДОХОД
+// +U Анимация
+// ===============================
+
+
+
+function showClickAnimation(value){
+
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"click-number";
+
+
+
+div.innerText =
+
+"+"
++
+formatNumber(value)
++
+" U";
+
+
+
+
+
+document.body.appendChild(
+div
+);
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+div.remove();
+
+
+
+},800);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// АВТОКЛИК
 // ===============================
 
 
@@ -395,7 +428,6 @@ player
 
 
 
-
 updateScreen();
 
 
@@ -414,32 +446,10 @@ updateScreen();
 
 
 
-
-
 // ===============================
-// СИНХРОНИЗАЦИЯ
+// ПОКУПКА УЛУЧШЕНИЙ
 // ===============================
 
-
-setInterval(
-
-syncBalance,
-
-5000
-
-);
-
-
-
-
-
-
-
-
-
-// ===============================
-// УЛУЧШЕНИЯ
-// ===============================
 
 
 document
@@ -454,9 +464,9 @@ document
 
 
 
-button.onclick = ()=>{
 
 
+button.onclick=()=>{
 
 
 
@@ -468,11 +478,13 @@ Storage.getPlayer();
 
 
 
+
 const price =
 
 Number(
 button.dataset.price
 );
+
 
 
 
@@ -497,8 +509,9 @@ button.dataset.value
 
 
 
-if(player.balance < price){
-
+if(
+player.balance < price
+){
 
 
 alert(
@@ -506,11 +519,12 @@ alert(
 );
 
 
-
 return;
 
 
 }
+
+
 
 
 
@@ -525,7 +539,11 @@ player.balance -= price;
 
 
 
-if(type==="click"){
+
+
+if(
+type==="click"
+){
 
 
 player.clickPower += value;
@@ -537,13 +555,18 @@ player.clickPower += value;
 
 
 
-if(type==="auto"){
+
+
+if(
+type==="auto"
+){
 
 
 player.autoPower += value;
 
 
 }
+
 
 
 
@@ -559,8 +582,18 @@ player
 
 
 
-updateScreen();
+button.innerText =
+"Куплено";
 
+
+button.disabled =
+true;
+
+
+
+
+
+updateScreen();
 
 
 
@@ -569,20 +602,7 @@ syncBalance();
 
 
 
-
-button.innerText =
-"Куплено";
-
-
-
-button.disabled=true;
-
-
-
-
-
 };
-
 
 
 
@@ -597,23 +617,22 @@ button.disabled=true;
 
 
 // ===============================
-// НИЖНЕЕ МЕНЮ
+// НАВИГАЦИЯ
 // ===============================
+
 
 
 document
 
 .querySelectorAll(
-
 ".nav"
-
 )
 
 .forEach(btn=>{
 
 
 
-btn.onclick = ()=>{
+btn.onclick=()=>{
 
 
 
@@ -625,12 +644,12 @@ btn.dataset.page;
 
 
 
+
+
 document
 
 .querySelectorAll(
-
 ".page"
-
 )
 
 .forEach(p=>{
@@ -649,7 +668,6 @@ p.classList.remove(
 
 
 
-
 const target =
 
 document.getElementById(
@@ -659,11 +677,17 @@ page
 
 
 
-if(target)
+
+
+if(target){
+
 
 target.classList.add(
 "active"
 );
+
+
+}
 
 
 
@@ -712,4 +736,21 @@ btn.classList.add(
 
 
 
+
+
+// ===============================
+// ЗАПУСК
+// ===============================
+
+
 updateScreen();
+
+
+
+setInterval(
+
+syncBalance,
+
+5000
+
+);
