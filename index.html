@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 
 <title>URALcoin</title>
@@ -27,11 +27,32 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="app">
 
 
-
 <div class="city-bg"></div>
 
 
+<!-- ГИРЛЯНДА -->
+
+<div class="garland">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+
+<!-- СНЕГ -->
+
 <div class="snow"></div>
+
+
 
 
 
@@ -46,12 +67,13 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <div class="avatar">
 
 
-<img id="userAvatar"
-style="display:none;">
+<img id="userAvatar">
 
 
 <span id="avatarLetter">
+
 U
+
 </span>
 
 
@@ -67,16 +89,16 @@ U
 
 
 
+
+
+
 <main class="content">
 
 
 
 
 
-
-<!-- =========================
-ИГРА
-========================= -->
+<!-- ИГРА -->
 
 
 <section class="page active" id="game">
@@ -92,46 +114,85 @@ U
 <div class="balance">
 
 
+<div class="coin-balance">
+
+U
+
+</div>
+
+
 
 <span id="balance">
+
 0,000
+
 </span>
 
 
 
-<div class="u-coin">
-
-U
-
-</div>
-
-
-
 </div>
 
 
 
 
 
-<div class="stats-box">
 
 
+<div class="crystals-box">
 
-<div class="stat-card">
 
+<div class="crystal-count">
+
+
+💎
 
 <span>
-За клик
+
+0
+
 </span>
 
 
-<b>
+</div>
+
+
+
+<small>
+
+кристаллы появятся после связки кошельков
+
+</small>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="click-power">
+
+
 +
+
 <span id="clickPower">
+
 0,010
+
 </span>
-U
-</b>
+
+
+за клик
+
+
+
+<span id="heartPower">
+
+🫀
+
+</span>
 
 
 
@@ -140,31 +201,22 @@ U
 
 
 
-
-<div class="stat-card">
+<div class="second-power">
 
 
 <span>
-В секунду
+
+В секунду:
+
 </span>
 
 
+<b id="secondPower">
 
-<b>
-+
-<span id="secondPower">
 0,000
-</span>
-U
+
 </b>
 
-
-
-</div>
-
-
-
-
 </div>
 
 
@@ -180,19 +232,52 @@ U
 
 
 
-<button class="main-coin"
+
+<div class="fire-zone"
+
+id="fireZone">
+
+
+
+<div class="fire-effect"
+
+id="fireEffect">
+
+🔥
+
+</div>
+
+
+
+
+
+<button
+
+class="main-coin"
+
 id="clickButton">
 
 
-<div class="big-u">
-
 U
-
-</div>
 
 
 </button>
 
+
+
+</div>
+
+
+
+
+
+
+
+<div class="year-label">
+
+2026 UralCoin
+
+</div>
 
 
 
@@ -200,9 +285,10 @@ U
 
 
 <div id="bonusEffect"
-class="bonus-effect"></div>
 
+class="bonus-effect">
 
+</div>
 
 
 
@@ -218,83 +304,46 @@ class="bonus-effect"></div>
 
 
 
-
-<!-- =========================
-РЕФЕРАЛЫ
-========================= -->
+<!-- РЕФЕРАЛЫ -->
 
 
-
-<section class="page"
-id="referrals">
-
+<section class="page" id="referrals">
 
 
 <div class="panel">
 
 
 <h2>
+
 Рефералы
+
 </h2>
 
 
 
-
-
 <div class="info-row">
 
-<span>
-Приглашено
-</span>
-
+Приглашено:
 
 <b id="friendsCount">
+
 0
+
 </b>
 
 
 </div>
-
-
-
-
-
-<div class="info-row">
-
-<span>
-Награда
-</span>
-
-
-<b>
-5000 U
-</b>
-
-
-</div>
-
-
-
-
-
-
-
-<div id="workersList"></div>
-
-
-
 
 
 
 
 <input id="refLink"
+
 readonly>
 
 
-
-
-
 <button class="gold-button"
+
 id="copyReferral">
 
 Копировать ссылку
@@ -316,70 +365,67 @@ id="copyReferral">
 
 
 
-
-<!-- =========================
-ПЕРЕВОДЫ
-========================= -->
-
+<!-- ПЕРЕВОДЫ -->
 
 
 <section class="page"
-id="transfer">
 
+id="transfer">
 
 
 <div class="panel">
 
 
-
 <h2>
+
 Переводы
+
 </h2>
 
 
 
-
-
 <input id="transferName"
+
 placeholder="@username">
 
 
 
-
-
-
 <input id="transferSum"
-type="number"
-placeholder="Количество U">
 
+placeholder="Количество U"
 
-
+type="number">
 
 
 
 <button class="gold-button"
-id="transferButton">
 
+id="transferButton">
 
 Перевести
 
-
 </button>
-
 
 
 
 </div>
 
 
-
 </section>
-<!-- =========================
-ТОПЫ
-========================= -->
+
+
+
+
+
+
+
+
+
+<!-- ТОП -->
 
 
 <section class="page"
+
 id="tops">
 
 
@@ -387,17 +433,16 @@ id="tops">
 
 
 <h2>
-Топ игроков
-</h2>
 
+Топ игроков
+
+</h2>
 
 
 
 <div id="topList">
 
-
 </div>
-
 
 
 
@@ -414,30 +459,27 @@ id="tops">
 
 
 
-<!-- =========================
-ЕЩЁ
-========================= -->
+<!-- ЕЩЕ -->
 
 
 <section class="page"
+
 id="more">
 
 
 <div class="panel">
 
 
-
 <h2>
-Ещё
+
+Еще
+
 </h2>
 
 
 
 
-
-
-<button class="menu-card"
-id="promoButton">
+<button class="menu-card">
 
 Промокоды
 
@@ -445,25 +487,15 @@ id="promoButton">
 
 
 
+<button class="menu-card">
 
-
-
-
-<button class="menu-card"
-id="historyButton">
-
-История переводов
+История
 
 </button>
 
 
 
-
-
-
-
-<button class="menu-card"
-id="apiButton">
+<button class="menu-card">
 
 API ключ
 
@@ -474,23 +506,7 @@ API ключ
 
 
 
-
-
-<a class="menu-card"
-href="https://t.me/+NyqTkXAU-H5hNDky">
-
-Наш канал
-
-</a>
-
-
-
-
-
-
-
-
-<h2 class="upgrade-title">
+<h2>
 
 Улучшения
 
@@ -498,281 +514,8 @@ href="https://t.me/+NyqTkXAU-H5hNDky">
 
 
 
-
-
-
-
 <div id="upgradeList">
 
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-PURGANIS
-</h3>
-
-
-<span>
-+0.010 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="PURGANIS">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-PURLES
-</h3>
-
-
-<span>
-+0.025 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="PURLES">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-VLADESTOK
-</h3>
-
-
-<span>
-+0.050 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="VLADESTOK">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-PURPUR
-</h3>
-
-
-<span>
-+0.100 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="PURPUR">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-PURUS
-</h3>
-
-
-<span>
-+0.250 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="PURUS">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-VLADET
-</h3>
-
-
-<span>
-+0.500 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="VLADET">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="upgrade-card">
-
-
-<div>
-
-
-<h3>
-VLADIKAZ
-</h3>
-
-
-<span>
-+1.000 U к клику
-</span>
-
-
-</div>
-
-
-
-<button class="upgrade-buy"
-data-upgrade="VLADIKAZ">
-
-Купить
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
 </div>
 
 
@@ -785,191 +528,6 @@ data-upgrade="VLADIKAZ">
 
 
 
-
-
-
-
-
-
-
-
-
-<!-- =========================
-ПРОМОКОДЫ
-========================= -->
-
-
-<section class="page"
-id="promo">
-
-
-<div class="panel">
-
-
-<h2>
-Промокоды
-</h2>
-
-
-
-
-
-<input id="promoName"
-placeholder="Название">
-
-
-
-
-
-<input id="promoReward"
-type="number"
-placeholder="Награда U">
-
-
-
-
-
-<input id="promoLimit"
-type="number"
-placeholder="Количество активаций">
-
-
-
-
-
-
-<button class="gold-button"
-id="createPromo">
-
-
-Создать промокод
-
-
-</button>
-
-
-
-
-
-
-
-
-<hr>
-
-
-
-
-
-
-
-
-<input id="promoInput"
-placeholder="Введите промокод">
-
-
-
-
-
-<button class="gold-button"
-id="usePromo">
-
-
-Активировать
-
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-</section>
-<!-- =========================
-ИСТОРИЯ
-========================= -->
-
-
-<section class="page"
-id="history">
-
-
-<div class="panel">
-
-
-<h2>
-История
-</h2>
-
-
-
-
-<div id="historyList">
-
-Операций нет
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- =========================
-API
-========================= -->
-
-
-<section class="page"
-id="api">
-
-
-<div class="panel">
-
-
-<h2>
-API ключ
-</h2>
-
-
-
-
-<div id="apiResult">
-
-Ключ не создан
-
-</div>
-
-
-
-
-<button class="gold-button"
-id="createApi">
-
-Создать ключ
-
-</button>
-
-
-
-
-</div>
-
-
-</section>
 
 
 
@@ -984,27 +542,26 @@ id="createApi">
 
 
 
-<!-- =========================
-НИЖНЕЕ МЕНЮ
-========================= -->
+
+<!-- НИЖНЕЕ МЕНЮ -->
 
 
 <nav class="bottom-nav">
 
 
-
 <button class="nav active"
+
 data-page="game">
 
-Играть
+Главная
 
 </button>
 
 
 
 
-
 <button class="nav"
+
 data-page="referrals">
 
 Рефералы
@@ -1016,9 +573,10 @@ data-page="referrals">
 
 
 <button class="nav"
+
 data-page="transfer">
 
-Переводы
+Перевод
 
 </button>
 
@@ -1027,9 +585,10 @@ data-page="transfer">
 
 
 <button class="nav"
+
 data-page="tops">
 
-Топы
+Топ
 
 </button>
 
@@ -1038,17 +597,20 @@ data-page="tops">
 
 
 <button class="nav"
+
 data-page="more">
 
-Ещё
+Еще
 
 </button>
-
 
 
 
 
 </nav>
+
+
+
 
 
 
@@ -1063,10 +625,6 @@ data-page="more">
 
 
 
-<!-- =========================
-SCRIPTS
-========================= -->
-
 
 <script src="config.js"></script>
 
@@ -1076,17 +634,9 @@ SCRIPTS
 
 <script src="app.js"></script>
 
-<script src="referrals.js"></script>
-
-<script src="promo.js"></script>
-
 <script src="top.js"></script>
 
-<script src="transfer.js"></script>
-
-<script src="more.js"></script>
-
-
+<script src="effects.js"></script>
 
 
 
