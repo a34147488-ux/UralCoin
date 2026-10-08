@@ -1,10 +1,13 @@
-// UralCoin TOP v3
+// =================================
+// URALcoin TOP v5
 // Серверный рейтинг игроков
+// =================================
 
 
 
 
 function formatTopBalance(value){
+
 
 
 return Number(value || 0)
@@ -14,6 +17,7 @@ return Number(value || 0)
 .replace(".", ",");
 
 
+
 }
 
 
@@ -22,36 +26,44 @@ return Number(value || 0)
 
 
 
-async function renderTop(){
+
+async function loadTop(){
 
 
 
 const list =
 
 document.getElementById(
+
 "topList"
+
 );
 
 
 
 
 
+
 if(!list)
-return;
-
-
-
-
-
-
-if(
-!window.API
-){
 
 return;
 
-}
 
+
+
+
+
+try{
+
+
+
+const response =
+
+await fetch(
+
+API_URL + "/top"
+
+);
 
 
 
@@ -60,7 +72,7 @@ return;
 
 const players =
 
-await API.getTop();
+await response.json();
 
 
 
@@ -69,8 +81,11 @@ await API.getTop();
 
 
 if(
+
 !players ||
+
 players.length === 0
+
 ){
 
 
@@ -99,6 +114,7 @@ return;
 
 
 
+
 list.innerHTML = "";
 
 
@@ -107,15 +123,9 @@ list.innerHTML = "";
 
 
 
-
-players
-.slice(0,20)
-.forEach(
+players.forEach(
 
 (player,index)=>{
-
-
-
 
 
 
@@ -129,25 +139,26 @@ index + 1;
 
 
 
-let avatar = "";
+
+let avatar;
 
 
 
-
-
-
-
-if(
-player.photo
-){
+if(player.photo){
 
 
 
 avatar = `
 
-<img class="top-avatar-img"
+<img
 
-src="${player.photo}">
+class="top-avatar-img"
+
+src="${player.photo}"
+
+>
+
+
 
 `;
 
@@ -183,13 +194,20 @@ ${place}
 const card =
 
 document.createElement(
+
 "div"
+
 );
 
 
 
+
+
+
 card.className =
+
 "top-card";
+
 
 
 
@@ -212,12 +230,7 @@ ${place}
 
 
 
-<div class="top-avatar">
-
 ${avatar}
-
-</div>
-
 
 
 
@@ -239,9 +252,9 @@ ${player.name || "Игрок"}
 
 <div class="top-balance">
 
-${formatTopBalance(
-player.balance
-)} U
+${formatTopBalance(player.balance)}
+
+ U
 
 </div>
 
@@ -270,14 +283,49 @@ ${player.friends || 0}
 
 
 
+
+
 list.appendChild(card);
-
-
 
 
 
 });
 
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(
+
+"Ошибка загрузки топа",
+
+error
+
+);
+
+
+
+
+
+list.innerHTML = `
+
+<div class="top-empty">
+
+Ошибка соединения
+
+</div>
+
+`;
+
+
+
+}
 
 
 
@@ -293,43 +341,32 @@ list.appendChild(card);
 
 
 
-
-
-
-// обновление при открытии страницы
+// загрузка при открытии вкладки
 
 
 document
-.querySelector('[data-page="tops"]')
+
+.querySelector(
+
+'[data-page="tops"]'
+
+)
 
 ?.addEventListener(
+
 "click",
+
 ()=>{
 
 
-renderTop();
+
+loadTop();
 
 
 
-});
+}
 
-
-
-
-
-
-
-
-// первый запуск
-
-
-setTimeout(()=>{
-
-
-renderTop();
-
-
-},1000);
+);
 
 
 
@@ -337,13 +374,45 @@ renderTop();
 
 
 
-// обновление каждые 10 секунд
 
 
-setInterval(()=>{
+// первая загрузка
 
 
-renderTop();
+setTimeout(
+
+()=>{
 
 
-},10000);
+loadTop();
+
+
+},
+
+1500
+
+);
+
+
+
+
+
+
+
+
+// обновление
+
+
+setInterval(
+
+()=>{
+
+
+loadTop();
+
+
+},
+
+10000
+
+);
