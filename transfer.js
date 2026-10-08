@@ -1,5 +1,7 @@
-// UralCoin v2
-// Переводы игроков
+// ===================================
+// URALcoin TRANSFER v10
+// Player Transfers + History
+// ===================================
 
 
 
@@ -15,22 +17,19 @@ document.getElementById(
 
 
 
-
 if(transferButton){
 
 
 
-transferButton.onclick = ()=>{
+transferButton.onclick = async ()=>{
 
 
 
 
 
+let username =
 
-const username =
-
-document
-.getElementById(
+document.getElementById(
 "transferName"
 )
 .value
@@ -41,12 +40,12 @@ document
 
 
 
-const amount =
+
+let amount =
 
 Number(
 
-document
-.getElementById(
+document.getElementById(
 "transferSum"
 )
 .value
@@ -81,9 +80,10 @@ return;
 
 
 
-
 if(
+
 !amount ||
+
 amount <= 0
 
 ){
@@ -91,7 +91,7 @@ amount <= 0
 
 
 alert(
-"Введите количество U"
+"Введите сумму"
 );
 
 
@@ -101,6 +101,7 @@ return;
 
 
 }
+
 
 
 
@@ -118,8 +119,8 @@ Storage.getPlayer();
 
 
 
-
 if(
+
 player.balance < amount
 
 ){
@@ -137,6 +138,8 @@ return;
 
 
 }
+
+
 
 
 
@@ -165,31 +168,44 @@ player
 
 
 
-// сохраняем историю
+
+
+// история
 
 
 
 Storage.addHistory({
 
+text:
 
+"Перевод "
 
-type:
-"Перевод",
++
 
+amount
 
++
 
-to:
+" U пользователю "
+
++
+
 username,
 
 
 
-amount:
-amount,
+to:username,
+
+
+
+amount:amount,
 
 
 
 date:
+
 new Date()
+
 .toLocaleString(
 "ru-RU"
 )
@@ -204,73 +220,65 @@ new Date()
 
 
 
-alert(
-
-"Переведено "
-+
-amount
-+
-" U"
-
-);
 
 
+if(typeof updateScreen === "function"){
 
 
-
-
-
-
-document
-.getElementById(
-"transferName"
-)
-.value="";
-
-
-
-document
-.getElementById(
-"transferSum"
-)
-.value="";
-
-
-
-
-
-
-
-// обновление баланса
-
-
-const balance =
-
-document.getElementById(
-"balance"
-);
-
-
-
-
-
-if(balance){
-
-
-
-balance.innerText =
-
-Number(player.balance)
-
-.toFixed(3)
-
-.replace(".",",");
-
+updateScreen();
 
 
 }
 
 
+
+
+
+
+
+if(typeof syncBalance === "function"){
+
+
+syncBalance();
+
+
+}
+
+
+
+
+
+
+
+document.getElementById(
+"transferName"
+).value="";
+
+
+
+document.getElementById(
+"transferSum"
+).value="";
+
+
+
+
+
+
+
+alert(
+
+"Переведено "
+
++
+
+amount
+
++
+
+" U"
+
+);
 
 
 
