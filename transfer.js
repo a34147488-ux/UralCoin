@@ -1,6 +1,6 @@
-const sendButton =
+const transferButton =
 document.getElementById(
-"sendTransfer"
+"transferButton"
 );
 
 
@@ -8,17 +8,20 @@ document.getElementById(
 
 
 
-if(sendButton){
+
+
+if(transferButton){
 
 
 
-sendButton.onclick = ()=>{
+transferButton.onclick = ()=>{
 
 
 
-const receiver =
+const username =
+
 document.getElementById(
-"transferUser"
+"transferName"
 )
 .value
 .trim();
@@ -26,12 +29,16 @@ document.getElementById(
 
 
 
+
 const amount =
+
 Number(
+
 document.getElementById(
-"transferAmount"
+"transferSum"
 )
 .value
+
 );
 
 
@@ -39,11 +46,11 @@ document.getElementById(
 
 
 
-if(!receiver){
+if(!username){
 
 
 alert(
-"Введите Username получателя"
+"Введите пользователя"
 );
 
 
@@ -51,6 +58,8 @@ return;
 
 
 }
+
+
 
 
 
@@ -60,8 +69,9 @@ if(!amount || amount <= 0){
 
 
 alert(
-"Введите корректное количество U"
+"Введите количество U"
 );
+
 
 
 return;
@@ -76,20 +86,26 @@ return;
 
 
 
-let user =
-Storage.getUser();
+let player =
+Storage.getPlayer();
 
 
 
 
 
 
-if(user.balance < amount){
+
+
+if(player.balance < amount){
+
 
 
 alert(
-"Недостаточно U"
+
+"Недостаточно средств"
+
 );
+
 
 
 return;
@@ -103,36 +119,50 @@ return;
 
 
 
-
-user.balance -= amount;
-
+// снимаем баланс
 
 
 
+player.balance -= amount;
 
-Storage.saveUser(
-user
+
+
+
+
+Storage.savePlayer(
+player
 );
 
 
 
+
+
+
+
+// сохраняем историю
 
 
 
 Storage.addHistory({
 
 
-type:"send",
+
+type:
+"Перевод",
 
 
-to:receiver,
+to:
+username,
 
 
-amount:amount,
+amount:
+amount,
 
 
-date:new Date()
+date:
+new Date()
 .toLocaleString()
+
 
 
 });
@@ -144,21 +174,32 @@ date:new Date()
 
 
 
-// обновляем главный баланс
+
+// обновление баланса на экране
 
 
-let balance =
+
+const balance =
 document.getElementById(
 "balance"
 );
 
 
 
+
+
 if(balance){
 
 
+
 balance.innerText =
-user.balance.toFixed(2);
+
+Number(player.balance)
+
+.toFixed(3)
+
+.replace(".",",");
+
 
 
 }
@@ -169,9 +210,20 @@ user.balance.toFixed(2);
 
 
 
+
+
 alert(
 
-`Переведено ${amount} U пользователю ${receiver}`
+"Переведено "
+
++
+amount
++
+" U пользователю "
+
++
+username
+
 
 );
 
@@ -180,20 +232,26 @@ alert(
 
 
 
-document.getElementById(
-"transferUser"
-).value="";
-
-
 
 document.getElementById(
-"transferAmount"
-).value="";
+"transferName"
+)
+.value="";
+
+
+
+document.getElementById(
+"transferSum"
+)
+.value="";
+
+
 
 
 
 
 };
+
 
 
 
