@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin APP v5
-// Click + Sync + Navigation
+// URALcoin APP v6
+// Click + Auto + Sync + Navigation
 // ===================================
 
 
@@ -27,7 +27,6 @@ return Number(value || 0)
 
 
 
-
 // ================================
 // Обновление экрана
 // ================================
@@ -41,27 +40,23 @@ player = Storage.getPlayer();
 
 
 const balance =
-
-document.getElementById(
-"balance"
-);
+document.getElementById("balance");
 
 
 
 const power =
+document.getElementById("clickPower");
 
-document.getElementById(
-"clickPower"
-);
 
+
+const auto =
+document.getElementById("autoPower");
 
 
 
 const friends =
+document.getElementById("friendsCount");
 
-document.getElementById(
-"friendsCount"
-);
 
 
 
@@ -87,6 +82,18 @@ formatNumber(player.clickPower);
 
 
 
+
+if(auto){
+
+auto.innerText =
+formatNumber(player.autoPower);
+
+}
+
+
+
+
+
 if(friends){
 
 friends.innerText =
@@ -107,7 +114,7 @@ player.friends || 0;
 
 
 // ================================
-// Синхронизация с сервером
+// Синхронизация
 // ================================
 
 
@@ -137,6 +144,7 @@ headers:{
 
 },
 
+
 body:JSON.stringify({
 
 id:player.id,
@@ -145,6 +153,7 @@ balance:player.balance
 
 })
 
+
 }
 
 );
@@ -153,14 +162,13 @@ balance:player.balance
 
 }
 
-catch(error){
+catch(e){
 
 
 console.log(
 "SYNC ERROR",
-error
+e
 );
-
 
 
 }
@@ -178,7 +186,7 @@ error
 
 
 // ================================
-// Главная кнопка
+// Клик
 // ================================
 
 
@@ -190,15 +198,11 @@ document.getElementById(
 
 
 
-
 if(clickButton){
 
 
-clickButton.addEventListener(
 
-"click",
-
-()=>{
+clickButton.onclick = ()=>{
 
 
 player = Storage.getPlayer();
@@ -211,9 +215,7 @@ Number(player.clickPower);
 
 
 
-
 Storage.savePlayer(player);
-
 
 
 
@@ -231,10 +233,7 @@ syncBalance();
 
 
 
-}
-
-
-);
+};
 
 
 
@@ -256,11 +255,9 @@ syncBalance();
 function showClickAnimation(value){
 
 
-const text =
 
-document.createElement(
-"div"
-);
+const text =
+document.createElement("div");
 
 
 
@@ -271,12 +268,13 @@ text.className =
 
 text.innerText =
 
-"+" +
+"+"+
+
 formatNumber(value)
+
 +
+
 " U";
-
-
 
 
 
@@ -287,10 +285,7 @@ document.body.appendChild(text);
 
 setTimeout(()=>{
 
-
 text.remove();
-
-
 
 },800);
 
@@ -307,23 +302,27 @@ text.remove();
 
 
 // ================================
-// Автоклик
+// АВТО ДОХОД
 // ================================
 
 
 setInterval(()=>{
 
 
-player = Storage.getPlayer();
+player =
+Storage.getPlayer();
 
 
 
-if(player.autoPower > 0){
+if(
+Number(player.autoPower)>0
+){
+
 
 
 player.balance +=
 
-Number(player.autoPower) / 60;
+Number(player.autoPower)/60;
 
 
 
@@ -332,7 +331,6 @@ Storage.savePlayer(player);
 
 
 updateScreen();
-
 
 
 }
@@ -350,7 +348,7 @@ updateScreen();
 
 
 // ================================
-// Синхронизация каждые 5 секунд
+// Синхронизация каждые 5 сек
 // ================================
 
 
@@ -371,7 +369,7 @@ syncBalance,
 
 
 // ================================
-// Покупка улучшений
+// ПОКУПКА УЛУЧШЕНИЙ
 // ================================
 
 
@@ -384,45 +382,38 @@ document
 .forEach(button=>{
 
 
-button.addEventListener(
-
-"click",
-
-()=>{
+button.onclick = ()=>{
 
 
-player = Storage.getPlayer();
+
+player =
+Storage.getPlayer();
+
 
 
 
 
 const price =
-
-Number(
-button.dataset.price
-);
+Number(button.dataset.price);
 
 
 
 const type =
-
 button.dataset.type;
 
 
 
 const value =
-
-Number(
-button.dataset.value
-);
+Number(button.dataset.value);
 
 
 
 
 
 
-
-if(player.balance < price){
+if(
+player.balance < price
+){
 
 
 alert(
@@ -447,7 +438,8 @@ player.balance -= price;
 
 
 
-if(type === "click"){
+
+if(type==="click"){
 
 
 player.clickPower += value;
@@ -459,13 +451,17 @@ player.clickPower += value;
 
 
 
-if(type === "auto"){
+
+
+if(type==="auto"){
 
 
 player.autoPower += value;
 
 
 }
+
+
 
 
 
@@ -483,22 +479,16 @@ syncBalance();
 
 
 
-
-
 button.innerText =
 "Куплено";
 
 
 
-button.disabled = true;
+button.disabled=true;
 
 
 
-}
-
-
-
-);
+};
 
 
 
@@ -513,41 +503,32 @@ button.disabled = true;
 
 
 // ================================
-// Нижнее меню
+// НАВИГАЦИЯ
 // ================================
 
 
 document
 
-.querySelectorAll(
-".nav"
-)
+.querySelectorAll(".nav")
 
 .forEach(button=>{
 
 
-button.addEventListener(
 
-"click",
-
-()=>{
+button.onclick=()=>{
 
 
 
 const page =
-
 button.dataset.page;
 
 
 
 
 
-
 document
 
-.querySelectorAll(
-".page"
-)
+.querySelectorAll(".page")
 
 .forEach(item=>{
 
@@ -564,12 +545,9 @@ item.classList.remove(
 
 
 
-
 const target =
 
-document.getElementById(
-page
-);
+document.getElementById(page);
 
 
 
@@ -589,11 +567,11 @@ target.classList.add(
 
 
 
+
+
 document
 
-.querySelectorAll(
-".nav"
-)
+.querySelectorAll(".nav")
 
 .forEach(btn=>{
 
@@ -609,19 +587,13 @@ btn.classList.remove(
 
 
 
-
 button.classList.add(
 "active"
 );
 
 
 
-
-}
-
-
-
-);
+};
 
 
 
