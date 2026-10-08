@@ -1,57 +1,55 @@
-// UralCoin v2
-// Безопасная система топов
-
+// UralCoin TOP SYSTEM v3
 
 function formatTopBalance(value){
 
-return Number(value)
-.toFixed(3)
-.replace(".", ",");
+    return Number(value || 0)
+        .toLocaleString("ru-RU", {
+            minimumFractionDigits:3,
+            maximumFractionDigits:3
+        });
 
 }
-
-
-
-
 
 
 
 function getCurrentPlayerForTop(){
 
+    const player = Storage.getPlayer() || {};
 
-const player =
-Storage.getPlayer();
-
-
-
-return {
-
-id:
-player.id || "guest",
+    const tg =
+    window.Telegram?.WebApp?.initDataUnsafe?.user;
 
 
-name:
-player.name || "Игрок",
+    return {
+
+        id:
+        player.id ||
+        tg?.id ||
+        "guest",
 
 
-photo:
-player.photo || "",
+        name:
+        player.name ||
+        tg?.first_name ||
+        "Игрок",
 
 
-balance:
-Number(player.balance || 0),
+        photo:
+        player.photo ||
+        tg?.photo_url ||
+        "",
 
 
-friends:
-Number(player.friends || 0)
+        balance:
+        Number(player.balance || 0),
 
-};
 
+        friends:
+        Number(player.friends || 0)
+
+    };
 
 }
-
-
-
 
 
 
@@ -61,84 +59,44 @@ Number(player.friends || 0)
 function savePlayerToTop(){
 
 
-
-let players =
-
-JSON.parse(
-
-localStorage.getItem(
-"ural_players"
-)
-
-)
-
-|| [];
+    let players =
+    JSON.parse(
+        localStorage.getItem("ural_players")
+    ) || [];
 
 
 
-
-
-const current =
-getCurrentPlayerForTop();
-
+    const current =
+    getCurrentPlayerForTop();
 
 
 
-
-const index =
-players.findIndex(
-
-item =>
-
-item.id === current.id
-
-);
+    const exists =
+    players.findIndex(
+        p=>String(p.id)===String(current.id)
+    );
 
 
 
+    if(exists >=0){
+
+        players[exists]=current;
+
+    }
+    else{
+
+        players.push(current);
+
+    }
 
 
 
-
-if(index === -1){
-
-
-players.push(
-current
-);
-
-
+    localStorage.setItem(
+        "ural_players",
+        JSON.stringify(players)
+    );
 
 }
-
-else{
-
-
-players[index] =
-current;
-
-
-
-}
-
-
-
-
-
-
-localStorage.setItem(
-
-"ural_players",
-
-JSON.stringify(players)
-
-);
-
-
-
-}
-
-
 
 
 
@@ -149,218 +107,137 @@ JSON.stringify(players)
 function renderTop(){
 
 
+    const list =
+    document.getElementById("topList");
 
-const list =
-document.getElementById(
-"topList"
-);
 
+    if(!list)
+    return;
 
 
 
+    savePlayerToTop();
 
-if(!list)
-return;
 
 
+    let players =
+    JSON.parse(
+        localStorage.getItem("ural_players")
+    ) || [];
 
 
 
+    players =
+    players
+    .sort(
+        (a,b)=>
+        Number(b.balance)-Number(a.balance)
+    );
 
-savePlayerToTop();
 
 
+    list.innerHTML="";
 
 
 
+    players
+    .slice(0,20)
+    .forEach(
+        (player,index)=>{
 
-let players =
 
-JSON.parse(
+        let avatar =
+        "";
 
-localStorage.getItem(
-"ural_players"
-)
 
-)
 
-|| [];
+        if(player.photo){
 
+            avatar = `
+            <img 
+            class="top-avatar-img"
+            src="${player.photo}">
+            `;
 
+        }
+        else{
 
+            avatar = `
+            <div class="top-avatar">
+            ${player.name.charAt(0).toUpperCase()}
+            </div>
+            `;
 
+        }
 
 
 
 
-players.sort(
 
-(a,b)=>
+        const card =
+        document.createElement("div");
 
-b.balance -
-a.balance
 
-);
 
+        card.className="top-card";
 
 
 
+        card.innerHTML=`
 
+        <div class="top-place">
+        ${index+1}
+        </div>
 
-list.innerHTML = "";
 
+        ${avatar}
 
 
+        <div class="top-info">
 
 
+        <div class="top-name">
+        ${player.name}
+        </div>
 
 
-players
-.slice(0,20)
-.forEach(
+        <div class="top-balance">
+        ${formatTopBalance(player.balance)}
+        <span>U</span>
+        </div>
 
-(player,index)=>{
 
+        <div class="top-friends">
+        Приглашено: ${player.friends}
+        </div>
 
 
+        </div>
 
 
+        `;
 
-let place =
 
-index + 1;
 
+        card.onclick=()=>{
 
 
+            alert(
+            "Игрок: "+player.name+
+            "\nБаланс: "+
+            formatTopBalance(player.balance)
+            );
 
 
+        };
 
-let avatar;
 
 
+        list.appendChild(card);
 
-if(player.photo){
 
 
-
-avatar = `
-
-<img class="top-avatar-img"
-src="${player.photo}">
-
-`;
-
-
-
-}
-
-else{
-
-
-avatar = `
-
-<div class="top-avatar">
-
-${place}
-
-</div>
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-const card =
-
-document.createElement(
-"div"
-);
-
-
-
-card.className =
-"top-card";
-
-
-
-
-
-
-
-card.innerHTML = `
-
-
-
-<div class="top-position">
-
-${place}
-
-</div>
-
-
-
-${avatar}
-
-
-
-<div class="top-data">
-
-
-<div class="top-name">
-
-${player.name}
-
-</div>
-
-
-
-<div class="top-balance">
-
-${formatTopBalance(
-player.balance
-)} U
-
-</div>
-
-
-
-<div class="top-friends">
-
-Приглашено:
-${player.friends}
-
-</div>
-
-
-
-</div>
-
-
-
-`;
-
-
-
-
-
-
-
-list.appendChild(
-card
-);
-
-
-
-});
-
-
+    });
 
 
 
@@ -372,20 +249,18 @@ card
 
 
 
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
 
 renderTop();
 
 
-
-
-
-
-
 setInterval(
-
 renderTop,
-
 5000
-
 );
+
+
+});
