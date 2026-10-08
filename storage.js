@@ -1,28 +1,24 @@
 // ===================================
-// URALcoin STORAGE v7
-// Referral + Workers + Stable Player
+// URALcoin STORAGE v8
+// Stable Player + Referrals
 // ===================================
 
 
 const Storage = {
 
 
+
 getPlayer(){
 
 
 let player = JSON.parse(
-localStorage.getItem("ural_player")
+
+localStorage.getItem(
+"ural_player"
+)
+
 );
 
-
-
-if(!player){
-
-player = JSON.parse(
-localStorage.getItem("player")
-);
-
-}
 
 
 
@@ -45,7 +41,9 @@ name:"Игрок",
 photo:"",
 
 
+
 balance:0,
+
 
 
 clickPower:0.01,
@@ -54,25 +52,30 @@ clickPower:0.01,
 autoPower:0,
 
 
+
 friends:0,
 
 
 invited:0,
 
 
+
 referrer:null,
+
+
+
+referralRewarded:[],
 
 
 workers:[],
 
-
-referralRewarded:[],
 
 
 history:[],
 
 
 usedPromos:[],
+
 
 
 apiKey:null
@@ -86,6 +89,11 @@ apiKey:null
 
 
 
+
+
+// исправление старых игроков
+
+
 player.id =
 player.id || "guest";
 
@@ -94,36 +102,54 @@ player.name =
 player.name || "Игрок";
 
 
+player.username =
+player.username || "";
+
+
+
+player.photo =
+player.photo || "";
+
+
+
 player.balance =
 Number(player.balance || 0);
+
 
 
 player.clickPower =
 Number(player.clickPower || 0.01);
 
 
+
 player.autoPower =
 Number(player.autoPower || 0);
+
 
 
 player.friends =
 Number(player.friends || 0);
 
 
+
 player.invited =
 Number(player.invited || 0);
 
-
-player.workers =
-player.workers || [];
 
 
 player.referralRewarded =
 player.referralRewarded || [];
 
 
+
+player.workers =
+player.workers || [];
+
+
+
 player.history =
 player.history || [];
+
 
 
 player.usedPromos =
@@ -131,10 +157,13 @@ player.usedPromos || [];
 
 
 
+
 this.savePlayer(player);
 
 
+
 return player;
+
 
 
 },
@@ -145,7 +174,9 @@ return player;
 
 
 
+
 savePlayer(player){
+
 
 
 localStorage.setItem(
@@ -157,14 +188,6 @@ JSON.stringify(player)
 );
 
 
-localStorage.setItem(
-
-"player",
-
-JSON.stringify(player)
-
-);
-
 
 },
 
@@ -174,12 +197,16 @@ JSON.stringify(player)
 
 
 
+
+
 // ===============================
-// TELEGRAM PROFILE
+// TELEGRAM DATA
 // ===============================
 
 
-updateTelegramProfile(data){
+
+updateTelegram(data){
+
 
 
 let player=this.getPlayer();
@@ -191,19 +218,23 @@ if(data.id)
 player.id=String(data.id);
 
 
+
 if(data.username)
 
 player.username=data.username;
 
 
-if(data.first_name)
 
-player.name=data.first_name;
+if(data.name)
+
+player.name=data.name;
 
 
-if(data.photo_url)
 
-player.photo=data.photo_url;
+if(data.photo)
+
+player.photo=data.photo;
+
 
 
 
@@ -219,12 +250,16 @@ this.savePlayer(player);
 
 
 
+
+
 // ===============================
-// REFERRAL SYSTEM
+// REFERRER
 // ===============================
+
 
 
 setReferrer(id){
+
 
 
 let player=this.getPlayer();
@@ -237,13 +272,21 @@ return false;
 
 
 
-if(String(id)===String(player.id))
+
+if(
+String(player.id)
+===
+String(id)
+)
 
 return false;
 
 
 
-player.referrer=String(id);
+
+
+player.referrer =
+String(id);
 
 
 
@@ -263,80 +306,21 @@ return true;
 
 
 
-addReferral(worker){
+
+
+// ===============================
+// БОНУС ЗА РЕФЕРАЛА
+// ===============================
+
+
+
+addReferralBonus(workerId){
+
 
 
 let player=this.getPlayer();
 
 
-
-let exists = player.workers.find(
-
-w=>String(w.id)===String(worker.id)
-
-);
-
-
-
-if(exists)
-
-return false;
-
-
-
-player.workers.push({
-
-
-id:String(worker.id),
-
-
-name:worker.name || "Игрок",
-
-
-photo:worker.photo || "",
-
-
-level:1,
-
-
-earned:0,
-
-
-joined:Date.now()
-
-
-
-});
-
-
-
-player.friends++;
-
-
-player.invited++;
-
-
-
-this.savePlayer(player);
-
-
-
-return true;
-
-
-
-},
-
-
-
-
-
-
-
-giveReferralBonus(workerId, amount=5000){
-
-
-let player=this.getPlayer();
 
 
 
@@ -351,29 +335,51 @@ return false;
 
 
 
-player.balance += Number(amount);
+
+
+
+player.balance += 5000;
+
+
+
+player.friends++;
+
+
+player.invited++;
+
+
 
 
 
 player.referralRewarded.push(
+
 String(workerId)
+
 );
 
 
 
-this.addHistory({
-
-type:"referral",
 
 
-amount:amount,
+
+player.history.push({
 
 
-date:new Date().toLocaleString()
+type:"Реферал",
 
+
+amount:5000,
+
+
+date:new Date()
+.toLocaleString("ru-RU")
 
 
 });
+
+
+
+
 
 
 
@@ -393,115 +399,16 @@ return true;
 
 
 
-getWorkers(){
-
-
-return this.getPlayer().workers;
-
-
-},
-
-
-
-
-
-
-
-upgradeWorker(id){
-
-
-let player=this.getPlayer();
-
-
-
-let worker =
-player.workers.find(
-
-w=>String(w.id)===String(id)
-
-);
-
-
-
-if(!worker)
-
-return false;
-
-
-
-if(worker.level>=50)
-
-return false;
-
-
-
-worker.level++;
-
-
-
-this.savePlayer(player);
-
-
-
-return worker;
-
-
-
-},
-
-
-
-
-
-
-
-getReferralCount(){
-
-
-return this.getPlayer().workers.length;
-
-
-},
-
-
-
-
-
-
-
-getTopReferrals(){
-
-
-let player=this.getPlayer();
-
-
-
-return player.workers
-
-.sort(
-
-(a,b)=>
-
-b.level-a.level
-
-);
-
-
-
-},
-
-
-
-
-
 
 
 // ===============================
-// BALANCE
+// БАЛАНС
 // ===============================
+
 
 
 addBalance(amount){
+
 
 
 let player=this.getPlayer();
@@ -517,6 +424,7 @@ this.savePlayer(player);
 
 
 },
+
 
 
 
@@ -527,7 +435,9 @@ this.savePlayer(player);
 removeBalance(amount){
 
 
+
 let player=this.getPlayer();
+
 
 
 
@@ -537,7 +447,9 @@ return false;
 
 
 
-player.balance-=Number(amount);
+
+
+player.balance -= Number(amount);
 
 
 
@@ -557,12 +469,16 @@ return true;
 
 
 
+
+
 // ===============================
-// HISTORY
+// ИСТОРИЯ
 // ===============================
+
 
 
 addHistory(data){
+
 
 
 let player=this.getPlayer();
@@ -588,7 +504,9 @@ this.savePlayer(player);
 getHistory(){
 
 
+
 return this.getPlayer().history;
+
 
 
 },
@@ -599,15 +517,19 @@ return this.getPlayer().history;
 
 
 
+
+
 // ===============================
-// API KEY
+// API
 // ===============================
+
 
 
 generateApiKey(){
 
 
-const key =
+
+let key =
 
 "URAL-" +
 
@@ -621,6 +543,8 @@ Math.random()
 
 
 
+
+
 let player=this.getPlayer();
 
 
@@ -630,16 +554,6 @@ player.apiKey=key;
 
 
 this.savePlayer(player);
-
-
-
-localStorage.setItem(
-
-"ural_api",
-
-key
-
-);
 
 
 
@@ -658,19 +572,14 @@ return key;
 getApiKey(){
 
 
-let player=this.getPlayer();
 
-
-
-return player.apiKey ||
-
-localStorage.getItem("ural_api") ||
-
-null;
+return this.getPlayer().apiKey || null;
 
 
 
 }
+
+
 
 
 
