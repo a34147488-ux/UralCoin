@@ -1,199 +1,36 @@
 // ===================================
-// URALcoin WINTER EFFECTS v4
-// Santa + Small Bonus
+// URALcoin EFFECTS v1
+// Clean Click Effects
 // ===================================
 
 
-let clickHistory = [];
+
+// ===============================
+// Анимация +U
+// ===============================
 
 
+function showCoinEffect(value){
 
 
-
-function registerFastClick(){
-
-
-const now = Date.now();
-
-
-
-clickHistory.push(now);
-
-
-
-
-
-clickHistory = clickHistory.filter(
-
-time =>
-
-now - time < 2000
-
+const text = document.createElement(
+"div"
 );
 
 
 
+text.className =
+"click-number";
 
 
-if(clickHistory.length >= 10){
 
+text.innerText =
 
-showAngrySanta();
+"+" +
 
-
-clickHistory = [];
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function showAngrySanta(){
-
-
-
-const santa = document.getElementById(
-"angrySanta"
-);
-
-
-
-
-
-if(!santa)
-
-return;
-
-
-
-
-
-
-santa.classList.remove(
-"show"
-);
-
-
-
-void santa.offsetWidth;
-
-
-
-
-santa.classList.add(
-"show"
-);
-
-
-
-
-
-
-if(Math.random() < 0.25){
-
-
-giveSantaBonus();
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function giveSantaBonus(){
-
-
-
-let player = Storage.getPlayer();
-
-
-
-
-
-// бонус от 0.050 до 0.500 U
-
-
-const bonus =
-
-Number(
-
-(
-
-Math.random()
-
-*
-
-0.450
-
-+
-
-0.050
-
-)
-
+Number(value)
 .toFixed(3)
-
-);
-
-
-
-
-
-
-player.balance += bonus;
-
-
-
-
-
-
-Storage.savePlayer(player);
-
-
-
-
-
-
-
-const effect = document.getElementById(
-"bonusEffect"
-);
-
-
-
-
-
-
-if(effect){
-
-
-
-effect.innerText =
-
-"+"
-
-+
-
-bonus.toFixed(3)
+.replace(".",",")
 
 +
 
@@ -203,22 +40,20 @@ bonus.toFixed(3)
 
 
 
-
-effect.classList.remove(
-"show"
-);
+document.body.appendChild(text);
 
 
 
 
-void effect.offsetWidth;
+
+setTimeout(()=>{
+
+
+text.remove();
 
 
 
-
-effect.classList.add(
-"show"
-);
+},800);
 
 
 
@@ -229,79 +64,93 @@ effect.classList.add(
 
 
 
-
-if(typeof updateScreen === "function"){
-
-
-updateScreen();
+// ===============================
+// Подсветка кнопки
+// ===============================
 
 
-}
+function pulseClickButton(){
 
 
 
+const button =
 
-
-
-if(typeof syncBalance === "function"){
-
-
-syncBalance();
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-
-const clickButton = document.getElementById(
+document.getElementById(
 "clickButton"
 );
 
 
 
 
+if(!button)
 
-if(clickButton){
-
-
-
-clickButton.addEventListener(
-
-"click",
-
-()=>{
-
-
-registerFastClick();
+return;
 
 
 
-}
 
+
+
+button.classList.remove(
+"pulse"
 );
 
 
 
+void button.offsetWidth;
+
+
+
+button.classList.add(
+"pulse"
+);
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+button.classList.remove(
+"pulse"
+);
+
+
+
+},300);
+
+
+
 }
 
 
 
-});
+
+
+
+
+
+// ===============================
+// Добавление эффекта
+// ===============================
+
+
+window.ClickEffects = {
+
+
+show(value){
+
+
+showCoinEffect(value);
+
+
+pulseClickButton();
+
+
+}
+
+
+
+};
