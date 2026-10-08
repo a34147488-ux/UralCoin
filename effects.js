@@ -9,6 +9,7 @@ let clickHistory = [];
 
 
 
+// проверка скорости кликов
 
 function registerFastClick(){
 
@@ -16,8 +17,8 @@ function registerFastClick(){
 const now = Date.now();
 
 
-clickHistory.push(now);
 
+clickHistory.push(now);
 
 
 
@@ -33,6 +34,7 @@ now - time < 2000
 
 
 
+// 20 кликов за 2 секунды
 
 if(clickHistory.length >= 20){
 
@@ -54,18 +56,14 @@ clickHistory = [];
 
 
 
-
+// появление Санты
 
 function showAngrySanta(){
 
 
-const santa =
-
-document.getElementById(
+const santa = document.getElementById(
 "angrySanta"
 );
-
-
 
 
 
@@ -76,19 +74,13 @@ return;
 
 
 
-
-
 santa.classList.remove(
 "show"
 );
 
 
 
-
-
 void santa.offsetWidth;
-
-
 
 
 
@@ -99,6 +91,7 @@ santa.classList.add(
 
 
 
+// шанс бонуса 30%
 
 if(Math.random() < 0.3){
 
@@ -117,13 +110,13 @@ giveSantaBonus();
 
 
 
-
+// бонус от Санты
 
 function giveSantaBonus(){
 
 
 
-const player = Storage.getPlayer();
+let player = Storage.getPlayer();
 
 
 
@@ -133,19 +126,15 @@ const bonus =
 
 Math.floor(
 
-Math.random()*400
+Math.random() * 400
 
-)+100;
-
+) + 100;
 
 
 
 
 
 player.balance += bonus;
-
-
-
 
 
 
@@ -156,10 +145,7 @@ Storage.savePlayer(player);
 
 
 
-
-const effect =
-
-document.getElementById(
+const effect = document.getElementById(
 "bonusEffect"
 );
 
@@ -167,9 +153,7 @@ document.getElementById(
 
 
 
-
 if(effect){
-
 
 
 effect.innerText =
@@ -198,7 +182,6 @@ void effect.offsetWidth;
 
 
 
-
 effect.classList.add(
 "show"
 );
@@ -211,8 +194,6 @@ effect.classList.add(
 
 
 
-
-
 if(typeof updateScreen === "function"){
 
 
@@ -220,7 +201,6 @@ updateScreen();
 
 
 }
-
 
 
 
@@ -245,6 +225,8 @@ syncBalance();
 
 
 
+// подключаемся к кнопке клика
+
 document.addEventListener(
 
 "DOMContentLoaded",
@@ -253,9 +235,7 @@ document.addEventListener(
 
 
 
-const button =
-
-document.getElementById(
+const button = document.getElementById(
 "clickButton"
 );
 
@@ -264,7 +244,6 @@ document.getElementById(
 
 
 if(button){
-
 
 
 button.addEventListener(
