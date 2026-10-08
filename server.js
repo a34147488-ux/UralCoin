@@ -1,13 +1,12 @@
 // ===================================
-// URALcoin SERVER v12
-// Users + Top + Referrals + Promos
+// URALcoin SERVER v13
+// Personal Promo Referral System
 // ===================================
 
 
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-
 
 
 const app = express();
@@ -18,33 +17,24 @@ app.use(cors());
 app.use(express.json());
 
 
-
 const PORT = process.env.PORT || 3000;
-
 
 
 const DB = "users.json";
 
-const PROMO_DB = "promos.json";
 
-
-
-let users=[];
-
-let promos=[];
-
-
+let users = [];
 
 
 
 
 
 // ===============================
-// LOAD DATABASE
+// DATABASE
 // ===============================
 
 
-function loadDB(){
+function loadUsers(){
 
 
 try{
@@ -67,7 +57,6 @@ DB,
 }
 
 
-
 }
 
 catch(e){
@@ -79,44 +68,7 @@ users=[];
 }
 
 
-
-
-
-try{
-
-
-if(fs.existsSync(PROMO_DB)){
-
-
-promos = JSON.parse(
-
-fs.readFileSync(
-PROMO_DB,
-"utf8"
-)
-
-);
-
-
-
 }
-
-
-
-}
-
-catch(e){
-
-
-promos=[];
-
-
-}
-
-
-
-}
-
 
 
 
@@ -152,34 +104,7 @@ null,
 
 
 
-function savePromos(){
-
-
-fs.writeFileSync(
-
-PROMO_DB,
-
-JSON.stringify(
-
-promos,
-
-null,
-
-2
-
-)
-
-);
-
-
-
-}
-
-
-
-
-
-loadDB();
+loadUsers();
 
 
 
@@ -190,7 +115,65 @@ loadDB();
 
 
 // ===============================
-// CREATE / UPDATE USER
+// CREATE PROMO CODE
+// ===============================
+
+
+function createPromoCode(){
+
+
+
+let code;
+
+
+
+do{
+
+
+code =
+
+"URAL-" +
+
+Math.random()
+
+.toString(36)
+
+.substring(2,8)
+
+.toUpperCase();
+
+
+
+}
+
+while(
+
+users.some(
+
+u=>u.promoCode===code
+
+)
+
+);
+
+
+
+return code;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// CREATE USER
 // ===============================
 
 
@@ -231,8 +214,6 @@ String(u.id)===String(data.id)
 
 
 
-
-
 if(!user){
 
 
@@ -249,31 +230,37 @@ name:data.name || "Игрок",
 photo:data.photo || "",
 
 
-username:data.username || "",
-
 
 balance:0,
 
-
-friends:0,
-
-
-invited:0,
 
 
 clickPower:0.01,
 
 
+
 autoPower:0,
 
 
-referrer:null,
+
+friends:0,
 
 
-promos:[],
+
+promoCode:createPromoCode(),
+
+
+
+activatedCodes:[],
+
+
+
+earnedFromPromo:0,
+
 
 
 upgrades:{},
+
 
 
 created:Date.now()
@@ -281,6 +268,7 @@ created:Date.now()
 
 
 };
+
 
 
 
@@ -308,10 +296,9 @@ user.photo=data.photo;
 
 
 
+if(!user.promoCode)
 
-if(data.username)
-
-user.username=data.username;
+user.promoCode=createPromoCode();
 
 
 
@@ -322,8 +309,10 @@ user.username=data.username;
 
 
 
-
 saveUsers();
+
+
+
 
 
 
@@ -341,14 +330,13 @@ res.json(user);
 
 
 
-
-
 // ===============================
 // GET USER
 // ===============================
 
 
 app.get("/user/:id",(req,res)=>{
+
 
 
 const user = users.find(
@@ -358,6 +346,7 @@ u=>
 String(u.id)===String(req.params.id)
 
 );
+
 
 
 
@@ -375,28 +364,21 @@ res.json(user || null);
 
 
 
-
-
 // ===============================
-// SYNC BALANCE
+// SYNC
 // ===============================
 
 
 app.post("/sync",(req,res)=>{
 
 
-const id=req.body.id;
-
-
-
 let user = users.find(
 
 u=>
 
-String(u.id)===String(id)
+String(u.id)===String(req.body.id)
 
 );
-
 
 
 
@@ -415,17 +397,214 @@ Number(req.body.balance || 0);
 
 
 
-if(req.body.photo)
-
-user.photo=req.body.photo;
+saveUsers();
 
 
 
+}
 
 
-if(req.body.name)
 
-user.name=req.body.name;
+res.json({
+
+success:true
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// ACTIVATE PERSONAL CODE
+// ===============================
+
+
+app.post("/promo/activate",(req,res)=>{
+
+
+const {
+
+
+userId,
+
+code
+
+
+}=req.body;
+
+
+
+
+
+
+
+let user = users.find(
+
+u=>
+
+String(u.id)===String(userId)
+
+);
+
+
+
+
+
+
+let owner = users.find(
+
+u=>
+
+u.promoCode ===
+
+String(code).toUpperCase()
+
+);
+
+
+
+
+
+
+
+if(!user){
+
+
+return res.json({
+
+error:"USER"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+if(!owner){
+
+
+return res.json({
+
+error:"NOT_FOUND"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(
+
+String(user.id)===String(owner.id)
+
+){
+
+
+return res.json({
+
+error:"SELF"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(
+
+user.activatedCodes
+
+&&
+
+user.activatedCodes.includes(
+
+code.toUpperCase()
+
+)
+
+){
+
+
+return res.json({
+
+error:"USED"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(!user.activatedCodes)
+
+user.activatedCodes=[];
+
+
+
+
+
+
+
+
+user.activatedCodes.push(
+
+code.toUpperCase()
+
+);
+
+
+
+
+
+
+
+
+owner.balance += 5000;
+
+
+
+owner.friends =
+
+Number(owner.friends || 0)+1;
+
+
+
+owner.earnedFromPromo =
+
+Number(owner.earnedFromPromo || 0)+5000;
+
+
+
 
 
 
@@ -435,15 +614,15 @@ saveUsers();
 
 
 
-}
-
 
 
 
 
 res.json({
 
-success:true
+success:true,
+
+reward:5000
 
 });
 
@@ -468,10 +647,9 @@ app.get("/top",(req,res)=>{
 
 
 
-const top =
+let top =
 
 [...users]
-
 
 .sort(
 
@@ -492,8 +670,6 @@ Number(a.balance||0)
 
 
 
-
-
 res.json(top);
 
 
@@ -509,468 +685,7 @@ res.json(top);
 
 
 // ===============================
-// REFERRAL
-// ===============================
-
-
-app.post("/referral",(req,res)=>{
-
-
-
-const {
-
-userId,
-
-referrerId,
-
-name,
-
-photo
-
-}=req.body;
-
-
-
-
-
-
-
-
-let user = users.find(
-
-u=>
-
-String(u.id)===String(userId)
-
-);
-
-
-
-
-
-
-
-let referrer = users.find(
-
-u=>
-
-String(u.id)===String(referrerId)
-
-);
-
-
-
-
-
-
-
-
-
-if(!user){
-
-
-
-user={
-
-
-id:String(userId),
-
-
-name:name || "Игрок",
-
-
-photo:photo || "",
-
-
-balance:0,
-
-
-friends:0,
-
-
-invited:0,
-
-
-clickPower:0.01,
-
-
-autoPower:0,
-
-
-referrer:null,
-
-
-promos:[],
-
-
-upgrades:{}
-
-
-};
-
-
-
-users.push(user);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-if(
-
-referrer &&
-
-!user.referrer &&
-
-String(user.id)!==String(referrer.id)
-
-){
-
-
-
-user.referrer=
-
-String(referrer.id);
-
-
-
-
-
-referrer.friends++;
-
-
-referrer.invited++;
-
-
-
-
-
-referrer.balance +=5000;
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-saveUsers();
-
-
-
-
-
-
-
-res.json({
-
-success:true
-
-});
-
-
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// CREATE PROMO
-// ===============================
-
-
-app.post("/promo/create",(req,res)=>{
-
-
-
-const {
-
-
-code,
-
-reward,
-
-limit
-
-
-}=req.body;
-
-
-
-
-
-if(!code || !reward){
-
-
-return res.json({
-
-error:"DATA"
-
-});
-
-
-}
-
-
-
-
-
-
-
-let promo={
-
-
-code:String(code).toUpperCase(),
-
-
-reward:Number(reward),
-
-
-limit:Number(limit||1),
-
-
-used:[]
-
-};
-
-
-
-
-
-
-
-promos.push(promo);
-
-
-
-savePromos();
-
-
-
-
-
-
-
-res.json({
-
-success:true,
-
-promo
-
-});
-
-
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// USE PROMO
-// ===============================
-
-
-app.post("/promo/use",(req,res)=>{
-
-
-
-const {
-
-
-id,
-
-code
-
-
-}=req.body;
-
-
-
-
-
-
-
-let user = users.find(
-
-u=>
-
-String(u.id)===String(id)
-
-);
-
-
-
-
-
-
-let promo = promos.find(
-
-p=>
-
-p.code===String(code).toUpperCase()
-
-);
-
-
-
-
-
-
-
-if(!user || !promo){
-
-
-return res.json({
-
-error:"NOT FOUND"
-
-});
-
-
-}
-
-
-
-
-
-
-
-if(
-
-promo.used.includes(
-
-String(id)
-
-)
-
-){
-
-
-return res.json({
-
-error:"USED"
-
-});
-
-
-}
-
-
-
-
-
-
-
-if(
-
-promo.used.length >= promo.limit
-
-){
-
-
-return res.json({
-
-error:"LIMIT"
-
-});
-
-
-}
-
-
-
-
-
-
-
-user.balance += promo.reward;
-
-
-
-promo.used.push(String(id));
-
-
-
-
-
-if(!user.promos)
-
-user.promos=[];
-
-
-
-
-user.promos.push(promo.code);
-
-
-
-
-
-
-saveUsers();
-
-savePromos();
-
-
-
-
-
-
-
-res.json({
-
-success:true,
-
-reward:promo.reward
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// STATUS
+// SERVER STATUS
 // ===============================
 
 
@@ -979,14 +694,12 @@ app.get("/",(req,res)=>{
 
 res.send(
 
-"URALcoin server v12 online"
+"URALcoin server v13 online"
 
 );
 
 
 });
-
-
 
 
 
@@ -999,11 +712,14 @@ app.listen(PORT,()=>{
 
 console.log(
 
-"URALcoin server started "
+"URALcoin v13 started "
 
-+PORT
++
+
+PORT
 
 );
+
 
 
 });
