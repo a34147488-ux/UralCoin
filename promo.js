@@ -1,20 +1,15 @@
 // ===================================
-// URALcoin PROMO SYSTEM v12
-// Create + Activate Promo
+// URALcoin PROMO SYSTEM v13.1
+// Personal Code Activation
 // ===================================
 
 
 
-const promoInput = document.getElementById(
-"promoInput"
-);
+const promoButton =
 
-
-
-const promoButton = document.getElementById(
+document.getElementById(
 "promoButton"
 );
-
 
 
 
@@ -27,9 +22,34 @@ async function activatePromo(){
 
 
 
+const input =
+
+document.getElementById(
+"promoInput"
+);
+
+
+
+
+
+
+if(!input)
+
+return;
+
+
+
+
+
+
 const code =
 
-promoInput?.value.trim();
+input.value
+
+.trim()
+
+.toUpperCase();
+
 
 
 
@@ -39,12 +59,17 @@ promoInput?.value.trim();
 if(!code){
 
 
+
 alert(
-"Введите промокод"
+
+"Введите код"
+
 );
 
 
+
 return;
+
 
 
 }
@@ -72,7 +97,9 @@ try{
 
 const response = await fetch(
 
-CONFIG.API_URL + "/promo/use",
+CONFIG.API_URL +
+
+"/promo/activate",
 
 {
 
@@ -93,9 +120,14 @@ headers:{
 
 body:JSON.stringify({
 
-id:player.id,
+
+
+userId:player.id,
+
+
 
 code:code
+
 
 
 })
@@ -119,39 +151,70 @@ const data = await response.json();
 
 
 
+
+
 if(!data.success){
 
 
 
-if(data.error==="USED"){
+if(data.error==="SELF"){
+
 
 
 alert(
-"Вы уже использовали этот промокод"
+
+"Нельзя активировать свой код"
+
 );
+
 
 
 }
 
 
 
-else if(data.error==="LIMIT"){
+else if(data.error==="USED"){
+
 
 
 alert(
-"Лимит промокода закончился"
+
+"Этот код уже использован"
+
 );
 
 
+
 }
+
+
+
+else if(data.error==="NOT_FOUND"){
+
+
+
+alert(
+
+"Такого кода нет"
+
+);
+
+
+
+}
+
 
 
 else{
 
 
+
 alert(
-"Промокод не найден"
+
+"Ошибка активации"
+
 );
+
 
 
 }
@@ -161,6 +224,7 @@ alert(
 return;
 
 
+
 }
 
 
@@ -170,31 +234,27 @@ return;
 
 
 
+
+// добавляем награду локально
+
+
+player.activatedCodes.push(
+
+code
+
+);
+
+
+
+
+
+
+
 player.balance +=
 
-Number(data.reward);
+Number(
 
-
-
-
-
-
-
-
-if(!player.usedPromos)
-
-player.usedPromos=[];
-
-
-
-
-
-
-
-
-player.usedPromos.push(
-
-code.toUpperCase()
+data.reward || 5000
 
 );
 
@@ -205,9 +265,35 @@ code.toUpperCase()
 
 
 
-Storage.savePlayer(
-player
-);
+Storage.savePlayer(player);
+
+
+
+
+
+
+
+
+Storage.addHistory({
+
+
+
+type:"Промокод",
+
+
+
+amount:data.reward || 5000,
+
+
+
+date:new Date()
+
+.toLocaleString("ru-RU")
+
+
+
+});
+
 
 
 
@@ -219,7 +305,9 @@ player
 if(typeof updateScreen==="function"){
 
 
+
 updateScreen();
+
 
 
 }
@@ -230,13 +318,22 @@ updateScreen();
 
 
 
+input.value="";
+
+
+
+
+
+
+
+
 alert(
 
-"Получено +"
+"Код активирован\n+"
 
 +
 
-data.reward
+(data.reward || 5000)
 
 +
 
@@ -246,42 +343,39 @@ data.reward
 
 
 
-
-
-
-if(promoInput)
-
-promoInput.value="";
-
-
-
-
-
 }
-
-
 
 catch(error){
 
 
+
 console.log(
+
 "PROMO ERROR",
+
 error
+
 );
+
+
+
+
 
 
 alert(
-"Ошибка сервера"
+
+"Сервер недоступен"
+
 );
 
 
-}
-
-
-
 
 }
 
+
+
+
+}
 
 
 
@@ -294,10 +388,22 @@ if(promoButton){
 
 
 
-promoButton.onclick=
+promoButton.onclick =
 
 activatePromo;
 
 
 
 }
+
+
+
+
+
+
+
+
+
+window.activatePromo =
+
+activatePromo;
