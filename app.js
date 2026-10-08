@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin APP v6
-// Click + Auto + Sync + Upgrades
+// URALcoin APP v10
+// Click + Auto + Upgrades + Navigation
 // ===================================
 
 
@@ -11,8 +11,10 @@ Storage.getPlayer();
 
 
 
+
+
 // ===============================
-// Формат чисел
+// FORMAT
 // ===============================
 
 
@@ -20,9 +22,7 @@ function formatNumber(value){
 
 
 return Number(value || 0)
-
 .toFixed(3)
-
 .replace(".",",");
 
 
@@ -35,14 +35,12 @@ return Number(value || 0)
 
 
 
-
 // ===============================
-// Обновление экрана
+// SCREEN UPDATE
 // ===============================
 
 
 function updateScreen(){
-
 
 
 player =
@@ -51,95 +49,60 @@ Storage.getPlayer();
 
 
 
-
-
-const balance =
-document.getElementById(
-"balance"
-);
+let balance =
+document.getElementById("balance");
 
 
 
-const clickPower =
-document.getElementById(
-"clickPower"
-);
+let clickPower =
+document.getElementById("clickPower");
 
 
 
+let secondPower =
+document.getElementById("secondPower");
 
 
-const autoPower =
-document.getElementById(
-"autoPower"
-);
+
+let friends =
+document.getElementById("friendsCount");
 
 
 
 
 
-
-
-if(balance){
+if(balance)
 
 balance.innerText =
-formatNumber(
-player.balance
-);
-
-}
+formatNumber(player.balance);
 
 
 
 
-
-
-if(clickPower){
+if(clickPower)
 
 clickPower.innerText =
-formatNumber(
-player.clickPower
-);
-
-}
+formatNumber(player.clickPower);
 
 
 
 
+if(secondPower)
 
-
-
-if(autoPower){
-
-autoPower.innerText =
-formatNumber(
-player.autoPower
-);
-
-}
+secondPower.innerText =
+formatNumber(player.autoPower / 60);
 
 
 
 
-
-
-const friends =
-document.getElementById(
-"friendsCount"
-);
-
-
-
-
-
-if(friends){
+if(friends)
 
 friends.innerText =
 player.friends || 0;
 
-}
 
 
+renderUpgrades();
 
 
 }
@@ -153,7 +116,7 @@ player.friends || 0;
 
 
 // ===============================
-// Синхронизация
+// SYNC
 // ===============================
 
 
@@ -168,36 +131,27 @@ Storage.getPlayer();
 
 
 
-
-
 await fetch(
 
-CONFIG.API_URL+"/sync",
+CONFIG.API_URL + "/sync",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":
 "application/json"
-
 
 },
 
 
 body:JSON.stringify({
 
-
 id:player.id,
 
-
 balance:player.balance
-
 
 })
 
@@ -210,9 +164,7 @@ balance:player.balance
 
 }
 
-
 catch(e){
-
 
 
 console.log(
@@ -221,9 +173,7 @@ e
 );
 
 
-
 }
-
 
 
 }
@@ -237,17 +187,14 @@ e
 
 
 // ===============================
-// КЛИК
+// CLICK
 // ===============================
 
 
 const clickButton =
-
 document.getElementById(
 "clickButton"
 );
-
-
 
 
 
@@ -256,8 +203,7 @@ if(clickButton){
 
 
 
-clickButton.onclick=()=>{
-
+clickButton.onclick = ()=>{
 
 
 player =
@@ -265,25 +211,13 @@ Storage.getPlayer();
 
 
 
-
-
-
 player.balance +=
-
-Number(
-player.clickPower
-);
+Number(player.clickPower);
 
 
 
 
-
-
-Storage.savePlayer(
-player
-);
-
-
+Storage.savePlayer(player);
 
 
 
@@ -294,12 +228,7 @@ player.clickPower
 
 
 
-
-
 updateScreen();
-
-
-
 
 
 
@@ -322,7 +251,7 @@ syncBalance();
 
 
 // ===============================
-// +U Анимация
+// + U EFFECT
 // ===============================
 
 
@@ -330,11 +259,8 @@ syncBalance();
 function showClickAnimation(value){
 
 
-
-const div =
-document.createElement(
-"div"
-);
+let div =
+document.createElement("div");
 
 
 
@@ -344,32 +270,19 @@ div.className =
 
 
 div.innerText =
-
-"+"
-+
-formatNumber(value)
-+
+"+"+
+formatNumber(value)+
 " U";
 
 
 
-
-
-document.body.appendChild(
-div
-);
-
-
-
+document.body.appendChild(div);
 
 
 
 setTimeout(()=>{
 
-
 div.remove();
-
-
 
 },800);
 
@@ -386,7 +299,7 @@ div.remove();
 
 
 // ===============================
-// АВТОКЛИК
+// AUTO INCOME
 // ===============================
 
 
@@ -394,42 +307,23 @@ div.remove();
 setInterval(()=>{
 
 
-
 player =
 Storage.getPlayer();
 
 
 
-
-
-
-if(
-player.autoPower > 0
-){
-
+if(player.autoPower > 0){
 
 
 player.balance +=
-
-Number(
-player.autoPower
-)
-/
-60;
+Number(player.autoPower)/60;
 
 
 
-
-
-
-Storage.savePlayer(
-player
-);
-
+Storage.savePlayer(player);
 
 
 updateScreen();
-
 
 
 }
@@ -447,71 +341,88 @@ updateScreen();
 
 
 // ===============================
-// ПОКУПКА УЛУЧШЕНИЙ
+// UPGRADES
 // ===============================
+
+
+function renderUpgrades(){
 
 
 
 document
-
-.querySelectorAll(
-
-".upgrade-card button"
-
-)
-
+.querySelectorAll(".upgrade-buy")
 .forEach(button=>{
 
 
 
-
-
-button.onclick=()=>{
-
-
-
-player =
-Storage.getPlayer();
+let name =
+button.dataset.upgrade;
 
 
 
+let level =
+Storage.getUpgradeLevel(name);
 
 
 
-
-const price =
-
-Number(
-button.dataset.price
-);
+let data =
+Storage.getUpgrades()[name];
 
 
 
-
-
-const type =
-
-button.dataset.type;
+let price =
+data.price *
+(level+1);
 
 
 
 
 
-const value =
+button.innerText =
 
-Number(
-button.dataset.value
-);
-
+price+
+" U";
 
 
 
 
 
+});
 
-if(
-player.balance < price
-){
+
+
+}
+
+
+
+
+
+
+
+
+
+document
+.querySelectorAll(".upgrade-buy")
+.forEach(button=>{
+
+
+button.onclick = ()=>{
+
+
+
+let name =
+button.dataset.upgrade;
+
+
+
+let result =
+Storage.buyUpgrade(name);
+
+
+
+
+
+if(!result){
 
 
 alert(
@@ -527,72 +438,6 @@ return;
 
 
 
-
-
-
-
-player.balance -= price;
-
-
-
-
-
-
-
-
-
-if(
-type==="click"
-){
-
-
-player.clickPower += value;
-
-
-}
-
-
-
-
-
-
-
-if(
-type==="auto"
-){
-
-
-player.autoPower += value;
-
-
-}
-
-
-
-
-
-
-
-Storage.savePlayer(
-player
-);
-
-
-
-
-
-
-button.innerText =
-"Куплено";
-
-
-button.disabled =
-true;
-
-
-
-
-
 updateScreen();
 
 
@@ -601,7 +446,6 @@ syncBalance();
 
 
 
-
 };
 
 
@@ -617,48 +461,36 @@ syncBalance();
 
 
 // ===============================
-// НАВИГАЦИЯ
+// MENU
 // ===============================
 
 
 
 document
-
-.querySelectorAll(
-".nav"
-)
-
-.forEach(btn=>{
+.querySelectorAll(".nav")
+.forEach(button=>{
 
 
 
-btn.onclick=()=>{
+button.onclick = ()=>{
 
 
 
-const page =
-
-btn.dataset.page;
-
-
+let page =
+button.dataset.page;
 
 
 
 
 
 document
-
-.querySelectorAll(
-".page"
-)
-
-.forEach(p=>{
+.querySelectorAll(".page")
+.forEach(item=>{
 
 
-p.classList.remove(
+item.classList.remove(
 "active"
 );
-
 
 
 });
@@ -667,44 +499,28 @@ p.classList.remove(
 
 
 
-
-const target =
-
-document.getElementById(
-page
-);
+let target =
+document.getElementById(page);
 
 
 
-
-
-
-if(target){
-
+if(target)
 
 target.classList.add(
 "active"
 );
 
 
-}
-
-
 
 
 
 
 
 document
+.querySelectorAll(".nav")
+.forEach(btn=>{
 
-.querySelectorAll(
-".nav"
-)
-
-.forEach(b=>{
-
-
-b.classList.remove(
+btn.classList.remove(
 "active"
 );
 
@@ -715,12 +531,9 @@ b.classList.remove(
 
 
 
-
-
-btn.classList.add(
+button.classList.add(
 "active"
 );
-
 
 
 
@@ -739,7 +552,7 @@ btn.classList.add(
 
 
 // ===============================
-// ЗАПУСК
+// START
 // ===============================
 
 
@@ -748,9 +561,6 @@ updateScreen();
 
 
 setInterval(
-
 syncBalance,
-
-5000
-
+10000
 );
