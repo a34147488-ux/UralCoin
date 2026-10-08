@@ -1,14 +1,18 @@
 // ===================================
-// URALcoin TRANSFER v10
-// Player Transfers + History
+// URALcoin TRANSFER v12
+// Player Transfers
 // ===================================
+
+
 
 
 
 const transferButton =
 
 document.getElementById(
+
 "transferButton"
+
 );
 
 
@@ -27,13 +31,26 @@ transferButton.onclick = async ()=>{
 
 
 
-let username =
+
+const nameInput =
 
 document.getElementById(
+
 "transferName"
-)
-.value
-.trim();
+
+);
+
+
+
+
+
+const sumInput =
+
+document.getElementById(
+
+"transferSum"
+
+);
 
 
 
@@ -41,16 +58,25 @@ document.getElementById(
 
 
 
-let amount =
+
+const username =
+
+nameInput.value.trim();
+
+
+
+
+
+
+
+const amount =
 
 Number(
 
-document.getElementById(
-"transferSum"
-)
-.value
+sumInput.value
 
 );
+
 
 
 
@@ -63,7 +89,9 @@ if(!username){
 
 
 alert(
+
 "Введите пользователя"
+
 );
 
 
@@ -73,6 +101,7 @@ return;
 
 
 }
+
 
 
 
@@ -91,7 +120,9 @@ amount <= 0
 
 
 alert(
-"Введите сумму"
+
+"Введите количество U"
+
 );
 
 
@@ -128,7 +159,9 @@ player.balance < amount
 
 
 alert(
+
 "Недостаточно U"
+
 );
 
 
@@ -147,7 +180,7 @@ return;
 
 
 
-// снимаем баланс
+// списание
 
 
 
@@ -158,8 +191,11 @@ player.balance -= amount;
 
 
 
+
 Storage.savePlayer(
+
 player
+
 );
 
 
@@ -176,21 +212,9 @@ player
 
 Storage.addHistory({
 
-text:
 
-"Перевод "
 
-+
-
-amount
-
-+
-
-" U пользователю "
-
-+
-
-username,
+type:"Перевод",
 
 
 
@@ -207,7 +231,9 @@ date:
 new Date()
 
 .toLocaleString(
+
 "ru-RU"
+
 )
 
 
@@ -222,12 +248,24 @@ new Date()
 
 
 
-if(typeof updateScreen === "function"){
+
+
+
+// обновление экрана
+
+
+if(
+
+typeof updateScreen === "function"
+
+){
+
 
 
 updateScreen();
 
 
+
 }
 
 
@@ -236,12 +274,25 @@ updateScreen();
 
 
 
-if(typeof syncBalance === "function"){
+
+
+
+
+// синхронизация
+
+
+if(
+
+typeof syncBalance === "function"
+
+){
+
 
 
 syncBalance();
 
 
+
 }
 
 
@@ -250,15 +301,16 @@ syncBalance();
 
 
 
-document.getElementById(
-"transferName"
-).value="";
 
 
 
-document.getElementById(
-"transferSum"
-).value="";
+nameInput.value="";
+
+
+
+sumInput.value="";
+
+
 
 
 
@@ -268,17 +320,29 @@ document.getElementById(
 
 alert(
 
-"Переведено "
+
+
+"Отправлено "
 
 +
 
-amount
+amount.toFixed(3)
 
 +
 
-" U"
+" U пользователю "
+
++
+
+username
+
+
 
 );
+
+
+
+
 
 
 
