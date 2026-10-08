@@ -1,21 +1,3 @@
-const tg = window.Telegram?.WebApp;
-
-
-if(tg){
-
-tg.ready();
-
-tg.expand();
-
-tg.setHeaderColor("#ffffff");
-
-tg.setBackgroundColor("#ffffff");
-
-}
-
-
-
-
 let balance =
 Number(localStorage.getItem("balance")) || 0;
 
@@ -25,44 +7,41 @@ Number(localStorage.getItem("clickPower")) || 0.01;
 
 
 
-
-const balanceEl =
+const balanceElement =
 document.getElementById("balance");
 
 
-const powerEl =
+const powerElement =
 document.getElementById("clickPower");
 
 
 
-const clickButton =
-document.getElementById("clickButton");
+const coin =
+document.getElementById("coin");
 
 
 
 
 
 
+function updateBalance(){
 
-function update(){
 
+if(balanceElement){
 
-if(balanceEl){
-
-balanceEl.innerHTML =
+balanceElement.innerText =
 balance.toFixed(2);
 
 }
 
 
 
-if(powerEl){
+if(powerElement){
 
-powerEl.innerHTML =
+powerElement.innerText =
 clickPower.toFixed(2);
 
 }
-
 
 
 
@@ -72,12 +51,14 @@ balance
 );
 
 
+
 localStorage.setItem(
 "clickPower",
 clickPower
 );
 
 
+
 }
 
 
@@ -87,23 +68,26 @@ clickPower
 
 
 
-// КЛИК U
+/* КЛИК ПО U */
 
 
-if(clickButton){
+if(coin){
 
 
-clickButton.onclick = ()=>{
+coin.addEventListener(
+"click",
+()=>{
 
 
 balance += clickPower;
 
 
-update();
+updateBalance();
 
 
-};
 
+}
+);
 
 
 }
@@ -116,227 +100,76 @@ update();
 
 
 
-// TELEGRAM ПРОФИЛЬ
+/* МЕНЮ */
 
 
-if(tg){
-
-
-
-let user =
-tg.initDataUnsafe?.user;
-
-
-
-if(user){
-
-
-
-document.getElementById("username").innerHTML =
-user.first_name;
-
-
-
-let avatar =
-document.getElementById("avatar");
-
-
-
-if(user.photo_url){
-
-
-avatar.src =
-user.photo_url;
-
-
-}
-
-
-
-let circle =
-document.querySelector(".avatar-circle");
-
-
-if(circle){
-
-circle.innerHTML =
-user.first_name[0];
-
-}
-
-
-
-localStorage.setItem(
-"user_id",
-user.id
+const menuButtons =
+document.querySelectorAll(
+".bottom-menu button"
 );
 
 
 
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// РЕФЕРАЛЬНАЯ ССЫЛКА
-
-
-
-function createRef(){
-
-
-
-let id =
-localStorage.getItem("user_id");
-
-
-
-if(!id){
-
-id="123456";
-
-}
-
-
-
-
-let link =
-`https://t.me/uralscoin_bot?start=${id}`;
-
-
-
-let input =
-document.getElementById("refLink");
-
-
-
-if(input){
-
-input.value = link;
-
-}
-
-
-
-}
-
-
-
-createRef();
-
-
-
-
-
-
-
-
-// КОПИРОВАНИЕ ССЫЛКИ
-
-
-let copy =
-document.getElementById("copyRef");
-
-
-
-if(copy){
-
-
-copy.onclick=()=>{
-
-
-let input =
-document.getElementById("refLink");
-
-
-
-navigator.clipboard.writeText(
-input.value
+const pages =
+document.querySelectorAll(
+".page"
 );
 
 
 
-alert(
-"Ссылка скопирована"
+menuButtons.forEach(
+button=>{
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+let target =
+button.dataset.page;
+
+
+
+
+pages.forEach(
+page=>{
+
+page.classList.remove(
+"active"
 );
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-// ПЕРЕКЛЮЧЕНИЕ МЕНЮ
-
-
-
-document
-.querySelectorAll(".menu button")
-.forEach(btn=>{
-
-
-btn.onclick=()=>{
-
-
-
-let page =
-btn.dataset.page;
-
-
-
-document
-.querySelectorAll(".page")
-.forEach(p=>{
-
-p.classList.remove("active");
 
 });
 
 
 
-
 document
-.getElementById(page)
-.classList.add("active");
+.getElementById(target)
+.classList.add(
+"active"
+);
 
 
 
+menuButtons.forEach(
+btn=>{
 
-
-document
-.querySelectorAll(".menu button")
-.forEach(b=>{
-
-b.classList.remove("active");
+btn.classList.remove(
+"active"
+);
 
 });
 
 
 
-btn.classList.add("active");
+button.classList.add(
+"active"
+);
 
 
 
-};
+}
+);
 
 
 
@@ -350,103 +183,98 @@ btn.classList.add("active");
 
 
 
-// УЛУЧШЕНИЯ
+/* УЛУЧШЕНИЯ */
 
 
-let upgrades =
-document.querySelectorAll(".upgrade button");
-
-
-
-let levels =
+let bought =
 JSON.parse(
-localStorage.getItem("levels")
-) || [];
-
-
-
-
-upgrades.forEach((btn,index)=>{
-
-
-
-btn.onclick=()=>{
-
-
-
-let prices=[
-
-10,
-100,
-500,
-2500,
-10000
-
-];
-
-
-
-let powers=[
-
-0.01,
-0.05,
-0.10,
-0.50,
-1
-
-];
+localStorage.getItem("upgrades")
+)
+|| [];
 
 
 
 
 
-if(levels.includes(index)){
+const upgradeButtons =
+document.querySelectorAll(
+".upgrade button"
+);
 
+
+
+upgradeButtons.forEach(
+(button,index)=>{
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+if(
+bought.includes(index)
+){
 
 return;
 
-
 }
 
 
 
-
-if(balance >= prices[index]){
-
-
-
-balance -= prices[index];
-
-
-clickPower += powers[index];
-
-
-
-levels.push(index);
-
-
-
-localStorage.setItem(
-"levels",
-JSON.stringify(levels)
+let price =
+Number(
+button.dataset.price
 );
 
 
 
-btn.innerHTML =
+let power =
+Number(
+button.dataset.power
+);
+
+
+
+
+if(balance >= price){
+
+
+
+balance -= price;
+
+
+clickPower += power;
+
+
+
+
+bought.push(index);
+
+
+
+localStorage.setItem(
+"upgrades",
+JSON.stringify(bought)
+);
+
+
+
+button.innerText =
 "Куплено";
 
 
-
-btn.disabled=true;
-
-
-
-update();
+button.disabled=true;
 
 
 
-}else{
+updateBalance();
+
+
+
+}
+
+else{
 
 
 alert(
@@ -454,12 +282,12 @@ alert(
 );
 
 
-
 }
 
 
 
-};
+}
+);
 
 
 
@@ -470,4 +298,39 @@ alert(
 
 
 
-update();
+
+
+
+/* ВОССТАНОВЛЕНИЕ КУПЛЕННЫХ */
+
+
+upgradeButtons.forEach(
+(button,index)=>{
+
+
+if(
+bought.includes(index)
+){
+
+
+button.innerText =
+"Куплено";
+
+
+button.disabled=true;
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+updateBalance();
