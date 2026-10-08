@@ -1,13 +1,8 @@
-// =================================
-// URALcoin TOP v5
-// Серверный рейтинг игроков
-// =================================
-
-
+// UralCoin TOP v3
+// Серверные топы игроков
 
 
 function formatTopBalance(value){
-
 
 
 return Number(value || 0)
@@ -15,7 +10,6 @@ return Number(value || 0)
 .toFixed(3)
 
 .replace(".", ",");
-
 
 
 }
@@ -42,12 +36,9 @@ document.getElementById(
 
 
 
-
-
 if(!list)
 
 return;
-
 
 
 
@@ -61,10 +52,9 @@ const response =
 
 await fetch(
 
-API_URL + "/top"
+CONFIG.API_URL + "/top"
 
 );
-
 
 
 
@@ -80,9 +70,12 @@ await response.json();
 
 
 
+
 if(
 
-!players ||
+!Array.isArray(players)
+
+||
 
 players.length === 0
 
@@ -115,6 +108,7 @@ return;
 
 
 
+
 list.innerHTML = "";
 
 
@@ -123,9 +117,31 @@ list.innerHTML = "";
 
 
 
-players.forEach(
+
+
+players
+
+.sort(
+
+(a,b)=>
+
+Number(b.balance || 0)
+
+-
+
+Number(a.balance || 0)
+
+)
+
+
+
+.slice(0,20)
+
+.forEach(
 
 (player,index)=>{
+
+
 
 
 
@@ -138,9 +154,10 @@ index + 1;
 
 
 
+let avatar = "";
 
 
-let avatar;
+
 
 
 
@@ -157,8 +174,6 @@ class="top-avatar-img"
 src="${player.photo}"
 
 >
-
-
 
 `;
 
@@ -191,6 +206,7 @@ ${place}
 
 
 
+
 const card =
 
 document.createElement(
@@ -198,7 +214,6 @@ document.createElement(
 "div"
 
 );
-
 
 
 
@@ -228,11 +243,7 @@ ${place}
 
 
 
-
-
 ${avatar}
-
-
 
 
 
@@ -249,12 +260,9 @@ ${player.name || "Игрок"}
 
 
 
-
 <div class="top-balance">
 
-${formatTopBalance(player.balance)}
-
- U
+${formatTopBalance(player.balance)} U
 
 </div>
 
@@ -266,7 +274,7 @@ ${formatTopBalance(player.balance)}
 
 Приглашено:
 
-${player.friends || 0}
+${player.invited || player.friends || 0}
 
 </div>
 
@@ -284,12 +292,15 @@ ${player.friends || 0}
 
 
 
-
 list.appendChild(card);
 
 
 
-});
+}
+
+);
+
+
 
 
 
@@ -312,12 +323,11 @@ error
 
 
 
-
 list.innerHTML = `
 
 <div class="top-empty">
 
-Ошибка соединения
+Ошибка загрузки
 
 </div>
 
@@ -329,8 +339,6 @@ list.innerHTML = `
 
 
 
-
-
 }
 
 
@@ -341,77 +349,16 @@ list.innerHTML = `
 
 
 
-// загрузка при открытии вкладки
-
-
-document
-
-.querySelector(
-
-'[data-page="tops"]'
-
-)
-
-?.addEventListener(
-
-"click",
-
-()=>{
-
-
-
 loadTop();
 
 
 
-}
 
-);
-
-
-
-
-
-
-
-
-
-// первая загрузка
-
-
-setTimeout(
-
-()=>{
-
-
-loadTop();
-
-
-},
-
-1500
-
-);
-
-
-
-
-
-
-
-
-// обновление
 
 
 setInterval(
 
-()=>{
-
-
-loadTop();
-
-
-},
+loadTop,
 
 10000
 
