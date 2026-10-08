@@ -5,17 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>URALcoin</title>
-
+<title>UralCoin</title>
 
 <link rel="stylesheet" href="style.css">
 
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 
 </head>
 
@@ -30,30 +26,20 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 
 <div class="garland">
-
 <span></span>
 <span></span>
 <span></span>
 <span></span>
 <span></span>
 <span></span>
-<span></span>
-<span></span>
-
 </div>
-
 
 
 <div class="snow"></div>
 
 
 
-
-
 <header class="header">
-
-
-<div class="user-profile">
 
 
 <div class="avatar">
@@ -70,11 +56,7 @@ U
 </div>
 
 
-</div>
-
-
 </header>
-
 
 
 
@@ -84,164 +66,70 @@ U
 
 
 
-
-
-
-
 <!-- ГЛАВНАЯ -->
+
 
 <section class="page active" id="game">
 
 
-
 <div class="balance-box">
-
 
 
 <div class="balance">
 
 
 <div class="coin-balance">
-
 U
-
 </div>
-
 
 
 <span id="balance">
-
-0,000
-
-</span>
-
-
-
-</div>
-
-
-
-
-
-<div class="crystals-box">
-
-
-<div class="crystal-count">
-
-
-💎
-
-<span id="crystals">
-
 0
-
 </span>
 
 
 </div>
-
-
-
-<small>
-
-кристаллы появятся после связки кошельков
-
-</small>
-
-
-
-</div>
-
-
-
-
-
 
 
 <div class="click-power">
 
-
 +
-
 <span id="clickPower">
-
-0,010
-
+0.010
 </span>
 
-U за клик
-
-
-
-<span id="heartPower">
-
-🫀
-
-</span>
-
+за клик
 
 </div>
-
-
-
-
-
 
 
 <div class="second-power">
 
-
 В секунду:
 
 <b id="secondPower">
-
-0,000
-
+0
 </b>
 
-
 </div>
 
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="fire-zone" id="fireZone">
-
-
-
-<div id="fireEffect"
-class="fire-effect">
-
-🔥
 
 </div>
 
 
 
 
+<div class="fire-zone">
 
-<button class="main-coin"
-id="clickButton">
+
+<button class="main-coin" id="clickButton">
 
 U
 
 </button>
 
 
-
 </div>
-
-
-
 
 
 
@@ -253,8 +141,6 @@ U
 </div>
 
 
-
-
 </section>
 
 
@@ -264,44 +150,30 @@ U
 
 
 
+<!-- КОД -->
 
-<!-- ПЕРСОНАЛЬНЫЙ КОД -->
 
-<section class="page" id="referrals">
+<section class="page" id="code">
 
 
 <div class="panel">
 
 
 <h2>
-
 Ваш код
-
 </h2>
 
 
-
-
 <p>
-
 Дайте этот код друзьям
-
 </p>
 
 
+<input id="myPromo" readonly>
 
 
 
-<input 
-id="personalCode"
-readonly>
-
-
-
-
-<button 
-class="gold-button"
-id="copyReferral">
+<button class="gold-button" id="copyCode">
 
 Скопировать код
 
@@ -309,54 +181,57 @@ id="copyReferral">
 
 
 
-
-
-
-
-
-<div class="info-row">
-
+<p>
 
 Активировали:
 
-<b id="promoFriends">
-
+<b id="activatedCount">
 0
-
 </b>
 
-
-</div>
-
+</p>
 
 
-
-
-
-
-<div class="info-row">
-
+<p>
 
 Получено:
 
-<b id="promoEarned">
-
+<b id="promoEarn">
 0 U
-
 </b>
 
-
-
-</div>
+</p>
 
 
 
+<hr>
+
+
+
+<h2>
+Активировать код
+</h2>
+
+
+
+<input 
+id="promoInput"
+placeholder="Введите код">
+
+
+
+<button class="gold-button" id="activatePromo">
+
+Активировать
+
+</button>
 
 
 </div>
 
 
 </section>
+
 
 
 
@@ -368,28 +243,22 @@ id="copyReferral">
 
 <!-- ПЕРЕВОД -->
 
-<section class="page"
-id="transfer">
+
+<section class="page" id="transfer">
 
 
 <div class="panel">
 
 
 <h2>
-
 Переводы
-
 </h2>
-
 
 
 
 <input 
 id="transferName"
-placeholder="ID пользователя">
-
-
-
+placeholder="@username">
 
 
 
@@ -400,8 +269,6 @@ placeholder="Количество U">
 
 
 
-
-
 <button 
 class="gold-button"
 id="transferButton">
@@ -409,8 +276,6 @@ id="transferButton">
 Перевести
 
 </button>
-
-
 
 
 
@@ -429,8 +294,8 @@ id="transferButton">
 
 <!-- ТОП -->
 
-<section class="page"
-id="tops">
+
+<section class="page" id="tops">
 
 
 <div class="panel">
@@ -444,12 +309,11 @@ id="tops">
 
 
 
-
 <div id="topList">
 
+Загрузка...
+
 </div>
-
-
 
 
 </div>
@@ -467,28 +331,21 @@ id="tops">
 
 <!-- ЕЩЁ -->
 
-<section class="page"
-id="more">
+
+<section class="page" id="more">
 
 
 <div class="panel">
 
 
-
 <h2>
-
 Ещё
-
 </h2>
 
 
 
-
-
-
-
-
-<a class="menu-card"
+<a 
+class="gold-button"
 href="https://t.me/+NyqTkXAU-H5hNDky"
 target="_blank">
 
@@ -498,11 +355,8 @@ target="_blank">
 
 
 
-
-
-
-
-<a class="menu-card premium"
+<a 
+class="gold-button"
 href="https://t.me/BuysStarsBot?start=8265611469"
 target="_blank">
 
@@ -513,48 +367,7 @@ target="_blank">
 
 
 
-
-
-
-
-<h2>
-
-Промокоды
-
-</h2>
-
-
-
-
-
-<input 
-id="promoInput"
-placeholder="Введите код">
-
-
-
-
-
-
-<button 
-class="gold-button"
-id="promoButton">
-
-Активировать
-
-</button>
-
-
-
-
-
-
-
-
-
-<button 
-class="menu-card"
-id="historyOpen">
+<button class="menu-card" id="historyBtn">
 
 История
 
@@ -562,19 +375,11 @@ id="historyOpen">
 
 
 
-
-
-
-
-<button 
-class="menu-card"
-id="apiOpen">
+<button class="menu-card" id="apiBtn">
 
 API ключ
 
 </button>
-
-
 
 
 
@@ -589,15 +394,10 @@ API ключ
 
 
 
-
-
 <div id="upgradeList">
 
+
 </div>
-
-
-
-
 
 
 
@@ -605,9 +405,6 @@ API ключ
 
 
 </section>
-
-
-
 
 
 
@@ -622,16 +419,10 @@ API ключ
 
 
 
-
-<!-- НИЖНЕЕ МЕНЮ -->
-
-
 <nav class="bottom-nav">
 
 
-
-<button class="nav active"
-data-page="game">
+<button class="nav active" data-page="game">
 
 Главная
 
@@ -639,10 +430,7 @@ data-page="game">
 
 
 
-
-
-<button class="nav"
-data-page="referrals">
+<button class="nav" data-page="code">
 
 Код
 
@@ -650,10 +438,7 @@ data-page="referrals">
 
 
 
-
-
-<button class="nav"
-data-page="transfer">
+<button class="nav" data-page="transfer">
 
 Перевод
 
@@ -661,10 +446,7 @@ data-page="transfer">
 
 
 
-
-
-<button class="nav"
-data-page="tops">
+<button class="nav" data-page="tops">
 
 Топ
 
@@ -672,10 +454,7 @@ data-page="tops">
 
 
 
-
-
-<button class="nav"
-data-page="more">
+<button class="nav" data-page="more">
 
 Ещё
 
@@ -683,11 +462,7 @@ data-page="more">
 
 
 
-
 </nav>
-
-
-
 
 
 
@@ -699,12 +474,6 @@ data-page="more">
 
 
 
-
-
-
-<!-- JS -->
-
-
 <script src="config.js"></script>
 
 <script src="telegram.js"></script>
@@ -712,14 +481,6 @@ data-page="more">
 <script src="storage.js"></script>
 
 <script src="app.js"></script>
-
-<script src="upgrade.js"></script>
-
-<script src="promo.js"></script>
-
-<script src="referral.js"></script>
-
-<script src="transfer.js"></script>
 
 <script src="top.js"></script>
 
