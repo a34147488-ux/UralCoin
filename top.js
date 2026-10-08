@@ -1,5 +1,5 @@
 // ===================================
-// URALcoin TOP v4
+// URALcoin TOP v5
 // Server Leaderboard
 // ===================================
 
@@ -50,6 +50,7 @@ return;
 
 
 
+
 try{
 
 
@@ -69,13 +70,9 @@ CONFIG.API_URL + "/top"
 if(!response.ok){
 
 
-
 throw new Error(
-
-"Server error"
-
+"TOP ERROR"
 );
-
 
 
 }
@@ -85,7 +82,10 @@ throw new Error(
 
 
 
-let players = await response.json();
+
+let players =
+
+await response.json();
 
 
 
@@ -93,11 +93,8 @@ let players = await response.json();
 
 
 if(
-
 !Array.isArray(players)
-
 ||
-
 players.length===0
 
 ){
@@ -153,7 +150,8 @@ Number(a.balance || 0)
 
 
 
-list.innerHTML = "";
+
+list.innerHTML="";
 
 
 
@@ -171,17 +169,12 @@ players.forEach(
 const card =
 
 document.createElement(
-
 "div"
-
 );
 
 
 
-
-
 card.className =
-
 "top-card";
 
 
@@ -190,11 +183,18 @@ card.className =
 
 
 
-let avatar;
+let avatar = "";
 
 
 
-if(player.photo){
+
+
+
+if(
+player.photo &&
+player.photo.length > 5
+
+){
 
 
 
@@ -218,11 +218,28 @@ else{
 
 
 
+const letter =
+
+(
+player.name ||
+"U"
+
+)
+
+.charAt(0)
+
+.toUpperCase();
+
+
+
+
+
+
 avatar = `
 
 <div class="top-avatar">
 
-${index + 1}
+${letter}
 
 </div>
 
@@ -239,15 +256,19 @@ ${index + 1}
 
 
 
+
+
 card.innerHTML = `
 
 
 
 <div class="top-position">
 
-${index + 1}
+${index+1}
 
 </div>
+
+
 
 
 
@@ -255,8 +276,9 @@ ${avatar}
 
 
 
-<div class="top-data">
 
+
+<div class="top-data">
 
 
 <div class="top-name">
@@ -272,7 +294,7 @@ ${player.name || "Игрок"}
 
 ${formatTopBalance(player.balance)}
 
- U
+U
 
 </div>
 
@@ -301,14 +323,13 @@ ${player.invited || player.friends || 0}
 
 
 
-
 list.appendChild(card);
 
 
 
+
+
 }
-
-
 
 );
 
@@ -325,11 +346,7 @@ catch(error){
 
 
 console.log(
-
-"TOP ERROR",
-
 error
-
 );
 
 
@@ -338,7 +355,7 @@ list.innerHTML = `
 
 <div class="top-empty">
 
-Ошибка загрузки топа
+Ошибка загрузки
 
 </div>
 
@@ -359,7 +376,9 @@ list.innerHTML = `
 
 
 
-// первая загрузка
+
+
+// запуск
 
 
 loadTop();
@@ -368,9 +387,6 @@ loadTop();
 
 
 
-
-
-// обновление
 
 
 setInterval(
