@@ -1,24 +1,55 @@
-function openPage(page){
+// UralCoin v2
+// Дополнительные функции
+
+
+
+
+
+function openMorePage(page){
+
+
 
 document
 .querySelectorAll(".page")
-.forEach(p=>{
+.forEach(
+(item)=>{
 
-p.classList.remove("active");
+
+item.classList.remove(
+"active"
+);
+
+
 
 });
 
 
+
+
+
+
+
 const target =
-document.getElementById(page);
+document.getElementById(
+page
+);
+
+
 
 
 
 if(target){
 
-target.classList.add("active");
+
+
+target.classList.add(
+"active"
+);
+
+
 
 }
+
 
 
 }
@@ -36,9 +67,12 @@ target.classList.add("active");
 
 
 const promoButton =
+
 document.getElementById(
 "promoButton"
 );
+
+
 
 
 
@@ -49,15 +83,20 @@ if(promoButton){
 promoButton.onclick = ()=>{
 
 
-openPage(
+
+openMorePage(
 "promo"
 );
+
 
 
 };
 
 
+
 }
+
+
 
 
 
@@ -72,6 +111,7 @@ openPage(
 
 
 const historyButton =
+
 document.getElementById(
 "historyButton"
 );
@@ -87,13 +127,15 @@ if(historyButton){
 historyButton.onclick = ()=>{
 
 
-openPage(
+
+openMorePage(
 "history"
 );
 
 
 
-loadHistory();
+showHistory();
+
 
 
 };
@@ -109,15 +151,17 @@ loadHistory();
 
 
 
-
-function loadHistory(){
+function showHistory(){
 
 
 
 const box =
+
 document.getElementById(
 "historyList"
 );
+
+
 
 
 
@@ -131,7 +175,11 @@ return;
 
 
 let history =
+
 Storage.getHistory();
+
+
+
 
 
 
@@ -139,14 +187,19 @@ Storage.getHistory();
 
 if(
 history.length === 0
+
 ){
 
 
+
 box.innerHTML =
+
 "Пока операций нет";
 
 
+
 return;
+
 
 
 }
@@ -157,24 +210,31 @@ return;
 
 
 
-box.innerHTML="";
+
+box.innerHTML = "";
+
+
+
 
 
 
 
 
 history
+.slice()
 .reverse()
-.forEach(item=>{
-
-
+.forEach(
+(item)=>{
 
 
 
 let div =
+
 document.createElement(
 "div"
 );
+
+
 
 
 
@@ -188,28 +248,35 @@ div.className =
 div.innerHTML = `
 
 
+
 <b>
 ${item.type}
 </b>
 
+
 <br>
+
 
 ${item.amount} U
 
+
 <br>
+
 
 ${item.to || ""}
 
+
 <br>
 
+
 <small>
-
 ${item.date}
-
 </small>
 
 
+
 `;
+
 
 
 
@@ -221,9 +288,11 @@ div
 
 
 
+}
 
 
-});
+
+);
 
 
 
@@ -237,16 +306,16 @@ div
 
 
 
-
-
-// API КЛЮЧ
+// API
 
 
 
 const apiButton =
+
 document.getElementById(
 "apiButton"
 );
+
 
 
 
@@ -259,9 +328,11 @@ if(apiButton){
 apiButton.onclick = ()=>{
 
 
-openPage(
+
+openMorePage(
 "api"
 );
+
 
 
 };
@@ -277,11 +348,12 @@ openPage(
 
 
 
-
 const createApi =
+
 document.getElementById(
 "createApi"
 );
+
 
 
 
@@ -296,28 +368,52 @@ createApi.onclick = ()=>{
 
 
 let key =
+
 Storage.generateApiKey();
 
 
 
 
 
+
+const box =
+
 document.getElementById(
 "apiResult"
-)
-.innerHTML =
+);
 
-`
 
-Ваш ключ:
+
+
+
+
+
+if(box){
+
+
+
+box.innerHTML = `
+
+
+
+Ваш API ключ:
+
 
 <br><br>
+
 
 <b>
 ${key}
 </b>
 
+
+
 `;
+
+
+
+}
+
 
 
 
