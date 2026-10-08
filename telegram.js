@@ -5,7 +5,8 @@
 
 
 
-const tg = window.Telegram.WebApp;
+const tg =
+window.Telegram.WebApp;
 
 
 
@@ -33,10 +34,7 @@ tg.setBackgroundColor(
 
 
 
-
-
-const telegramUser =
-
+const tgUser =
 tg.initDataUnsafe?.user;
 
 
@@ -47,8 +45,7 @@ tg.initDataUnsafe?.user;
 
 
 
-async function sendUser(player){
-
+async function sendUserToServer(player){
 
 
 try{
@@ -57,49 +54,36 @@ try{
 
 await fetch(
 
-CONFIG.API_URL + "/user",
+CONFIG.API_URL +
+"/user",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":
-
 "application/json"
-
 
 },
 
 
 body:JSON.stringify({
 
-
-
 id:player.id,
-
 
 
 name:player.name,
 
 
-
-username:player.username,
-
-
-
 photo:player.photo
-
 
 
 })
 
-}
 
+}
 
 );
 
@@ -107,8 +91,9 @@ photo:player.photo
 
 
 
+
 console.log(
-"Telegram user synced"
+"User synced"
 );
 
 
@@ -120,7 +105,7 @@ catch(error){
 
 
 console.log(
-"USER SYNC ERROR",
+"Server error",
 error
 );
 
@@ -140,30 +125,91 @@ error
 
 
 
-function loadTelegramProfile(){
+function updateAvatar(player){
 
 
 
-let player =
-
-Storage.getPlayer();
-
-
-
+const img =
+document.getElementById(
+"userAvatar"
+);
 
 
 
+const letter =
+document.getElementById(
+"avatarLetter"
+);
 
 
-if(!telegramUser){
 
 
 
-Storage.savePlayer(player);
 
-
+if(!img)
 
 return;
+
+
+
+
+
+
+
+if(player.photo){
+
+
+
+img.src =
+player.photo;
+
+
+
+img.style.display =
+"block";
+
+
+
+if(letter)
+
+letter.style.display =
+"none";
+
+
+
+}
+
+else{
+
+
+
+img.style.display =
+"none";
+
+
+
+if(letter){
+
+
+
+letter.style.display =
+"block";
+
+
+
+letter.innerText =
+
+(player.name || "U")
+.charAt(0)
+.toUpperCase();
+
+
+
+}
+
+
+
+}
 
 
 
@@ -177,11 +223,39 @@ return;
 
 
 
-player.id =
+if(tgUser){
 
-String(
-telegramUser.id
+
+
+
+
+localStorage.setItem(
+
+"telegram_id",
+
+tgUser.id
+
 );
+
+
+
+
+
+
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+
+
+player.id =
+String(tgUser.id);
 
 
 
@@ -189,7 +263,7 @@ telegramUser.id
 
 player.name =
 
-telegramUser.first_name ||
+tgUser.first_name ||
 
 "Игрок";
 
@@ -197,10 +271,9 @@ telegramUser.first_name ||
 
 
 
-
 player.username =
 
-telegramUser.username ||
+tgUser.username ||
 
 "";
 
@@ -211,7 +284,7 @@ telegramUser.username ||
 
 player.photo =
 
-telegramUser.photo_url ||
+tgUser.photo_url ||
 
 "";
 
@@ -221,36 +294,8 @@ telegramUser.photo_url ||
 
 
 
-
-Storage.savePlayer(player);
-
-
-
-
-
-
-
-
-
-
-
-// аватар
-
-
-
-const avatar =
-
-document.getElementById(
-"userAvatar"
-);
-
-
-
-
-const letter =
-
-document.getElementById(
-"avatarLetter"
+Storage.savePlayer(
+player
 );
 
 
@@ -258,74 +303,60 @@ document.getElementById(
 
 
 
+Storage.updateTelegram({
+
+id:tgUser.id,
 
 
-if(
-avatar &&
-player.photo
-
-){
+username:tgUser.username,
 
 
-
-avatar.src =
-player.photo;
+name:tgUser.first_name,
 
 
-
-avatar.style.display =
-"block";
+photo:tgUser.photo_url
 
 
 
-
-
-if(letter){
-
-letter.style.display =
-"none";
-
-}
+});
 
 
 
-}
-
-else if(letter){
 
 
 
-letter.innerText =
+updateAvatar(
+Storage.getPlayer()
+);
 
-player.name
 
-.charAt(0)
 
-.toUpperCase();
+
+
+
+sendUserToServer(
+Storage.getPlayer()
+);
+
+
+
+
 
 
 
 }
 
+else{
 
 
 
+let player =
+Storage.getPlayer();
 
 
 
-
-sendUser(player);
+updateAvatar(player);
 
 
 
 }
-
-
-
-
-
-
-
-
-
-loadTelegramProfile();
