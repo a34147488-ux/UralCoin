@@ -1,8 +1,8 @@
 // ===================================
-// URALcoin TELEGRAM v16
+// URALcoin TELEGRAM v17
 // Telegram User Connect
+// Server Sync Ready
 // ===================================
-
 
 
 function initTelegram(){
@@ -10,6 +10,7 @@ function initTelegram(){
 
 
 let tg = null;
+
 
 
 
@@ -23,7 +24,6 @@ tg = window.Telegram.WebApp;
 
 
 tg.ready();
-
 
 tg.expand();
 
@@ -41,7 +41,9 @@ let player = Storage.getPlayer();
 
 
 
+
 let user = null;
+
 
 
 
@@ -97,7 +99,7 @@ user.first_name || ""
 (
 user.last_name
 ?
-" "+user.last_name
+" " + user.last_name
 :
 ""
 
@@ -108,9 +110,11 @@ user.last_name
 
 
 
-if(!player.name)
+if(!player.name){
 
 player.name="Игрок";
+
+}
 
 
 
@@ -139,22 +143,24 @@ user.photo_url || "";
 
 
 
+// если Telegram не дал пользователя
+
+// не оставляем гостя
+
+if(
+!player.id ||
+player.id==="guest"
+){
 
 
+console.log(
 
-// сохраняем Telegram ID отдельно
-
-
-if(player.id){
-
-
-localStorage.setItem(
-
-"telegram_id",
-
-player.id
+"Telegram user not found"
 
 );
+
+
+return;
 
 
 }
@@ -164,7 +170,23 @@ player.id
 
 
 
+
+
 Storage.savePlayer(player);
+
+
+
+
+
+
+
+localStorage.setItem(
+
+"telegram_id",
+
+String(player.id)
+
+);
 
 
 
@@ -190,6 +212,8 @@ document.getElementById(
 
 
 
+
+
 const letter =
 
 document.getElementById(
@@ -197,6 +221,8 @@ document.getElementById(
 "avatarLetter"
 
 );
+
+
 
 
 
@@ -224,7 +250,6 @@ letter.style.display="none";
 
 
 }
-
 
 
 
@@ -266,6 +291,38 @@ player
 
 
 
+
+
+
+
+// ===============================
+// START SERVER SYNC
+// ===============================
+
+
+
+setTimeout(()=>{
+
+
+
+if(
+typeof loadPlayer === "function"
+){
+
+
+loadPlayer();
+
+
+}
+
+
+
+},500);
+
+
+
+
+
 }
 
 
@@ -278,7 +335,9 @@ player
 
 
 
+// ===============================
 // START
+// ===============================
 
 
 document.addEventListener(
@@ -293,6 +352,8 @@ initTelegram();
 
 
 });
+
+
 
 
 
