@@ -1,13 +1,12 @@
 // ===================================
-// URALcoin EFFECTS v16
-// Visual Click Effects Only
+// URALcoin EFFECTS v16.2
+// Visual Effects Only
 // ===================================
 
 
 let clickSpeed = [];
 
 let fireTimer = null;
-
 
 
 
@@ -22,9 +21,7 @@ const now = Date.now();
 
 
 
-
 clickSpeed.push(now);
-
 
 
 
@@ -40,10 +37,7 @@ time => now - time < 2000
 
 
 
-
-const heart =
-
-document.getElementById(
+const heart = document.getElementById(
 
 "heartPower"
 
@@ -53,10 +47,7 @@ document.getElementById(
 
 
 
-
-const zone =
-
-document.getElementById(
+const zone = document.getElementById(
 
 "fireZone"
 
@@ -66,10 +57,7 @@ document.getElementById(
 
 
 
-
-const snow =
-
-document.querySelector(
+const snow = document.querySelector(
 
 ".snow"
 
@@ -79,11 +67,6 @@ document.querySelector(
 
 
 
-
-
-
-
-// обычный режим
 
 
 if(clickSpeed.length < 5){
@@ -96,6 +79,7 @@ heart.innerText="🫀";
 
 
 
+
 if(zone)
 
 zone.classList.remove(
@@ -106,14 +90,17 @@ zone.classList.remove(
 
 
 
+
+
 if(snow)
 
 snow.style.opacity="1";
 
 
 
-return;
 
+
+return;
 
 
 }
@@ -123,9 +110,6 @@ return;
 
 
 
-
-
-// быстрый режим
 
 
 if(clickSpeed.length >=5 && clickSpeed.length <12){
@@ -138,14 +122,9 @@ heart.innerText="❤️";
 
 
 
-if(zone)
 
-zone.classList.remove(
 
-"fire-mode"
-
-);
-
+return;
 
 
 }
@@ -156,9 +135,6 @@ zone.classList.remove(
 
 
 
-
-
-// максимальная скорость
 
 
 if(clickSpeed.length >=12){
@@ -186,14 +162,9 @@ zone.classList.add(
 
 
 
-if(snow){
-
+if(snow)
 
 snow.style.opacity="0";
-
-
-}
-
 
 
 
@@ -211,12 +182,12 @@ clearTimeout(fireTimer);
 fireTimer=setTimeout(()=>{
 
 
+
 resetFireMode();
 
 
 
 },4000);
-
 
 
 
@@ -239,9 +210,7 @@ function resetFireMode(){
 
 
 
-const heart =
-
-document.getElementById(
+let heart = document.getElementById(
 
 "heartPower"
 
@@ -251,10 +220,7 @@ document.getElementById(
 
 
 
-
-const zone =
-
-document.getElementById(
+let zone = document.getElementById(
 
 "fireZone"
 
@@ -264,10 +230,7 @@ document.getElementById(
 
 
 
-
-const snow =
-
-document.querySelector(
+let snow = document.querySelector(
 
 ".snow"
 
@@ -282,7 +245,6 @@ document.querySelector(
 if(heart)
 
 heart.innerText="🫀";
-
 
 
 
@@ -311,7 +273,6 @@ snow.style.opacity="1";
 
 
 
-
 clickSpeed=[];
 
 
@@ -326,13 +287,93 @@ clickSpeed=[];
 
 
 
+// ===============================
+// CLICK NUMBER EFFECT
+// ===============================
 
-// только подключение эффекта
-// без привязки к кнопке
+
+function createClickEffect(value){
+
+
+
+let el=document.createElement(
+
+"div"
+
+);
+
+
+
+
+
+el.className="click-number";
+
+
+
+
+
+el.innerText=
+
+"+"+
+
+Number(value)
+
+.toFixed(3);
+
+
+
+
+
+
+
+el.style.left =
+
+(20 + Math.random()*60)+"%";
+
+
+
+
+
+el.style.top="65%";
+
+
+
+
+
+
+document.body.appendChild(el);
+
+
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+el.remove();
+
+
+},700);
+
+
+
+
+
+}
+
+
+
+
+
+
+
 
 
 window.registerClickEffect = registerClickEffect;
 
-
-
 window.resetFireMode = resetFireMode;
+
+window.createClickEffect = createClickEffect;
