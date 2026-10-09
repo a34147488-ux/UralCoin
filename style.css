@@ -3461,3 +3461,168 @@ scale(.92);
 
 
 }
+/* =================================
+MAIN PAGE FIX
+================================= */
+
+
+/* только главная без скролла */
+
+.page#home,
+#home{
+
+height:
+
+calc(100vh - 90px);
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+
+
+
+/* контейнер главной */
+
+#home .content{
+
+overflow:hidden;
+
+height:100%;
+
+padding-bottom:0;
+
+}
+
+
+
+
+
+
+
+/* большая кнопка клика */
+
+.click-button{
+
+
+position:absolute;
+
+
+left:50%;
+
+
+bottom:-260px;
+
+
+
+transform:translateX(-50%);
+
+
+
+width:520px;
+
+
+height:520px;
+
+
+
+border-radius:50%;
+
+
+
+background:
+
+radial-gradient(
+
+circle,
+
+#ffe800,
+
+#ffb300 45%,
+
+#ff6600
+
+);
+
+
+
+box-shadow:
+
+0 0 80px gold,
+
+inset 0 0 50px white;
+
+
+
+border:
+
+8px solid rgba(255,255,255,.5);
+
+
+
+z-index:5;
+
+
+
+}
+
+
+
+
+
+
+/* скрываем низ кнопки */
+
+#home{
+
+overflow:hidden!important;
+
+}
+
+
+
+
+
+
+/* меню поверх кнопки */
+
+.bottom-nav{
+
+z-index:9999!important;
+
+}
+
+
+
+
+
+
+/* остальные страницы скроллятся */
+
+
+.page:not(#home){
+
+overflow-y:auto;
+
+height:auto;
+
+min-height:100vh;
+
+}
+
+
+
+
+.page:not(#home) .content{
+
+overflow-y:auto;
+
+height:auto;
+
+}
+
+
+
+
