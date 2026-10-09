@@ -1,308 +1,54 @@
 // ===================================
-// URALcoin EFFECTS v16.2
-// Visual Effects Only
+// URALcoin EFFECTS v16.4
+// Static Screen
+// Snow Only
+// No Fire
 // ===================================
 
 
-let clickSpeed = [];
 
-let fireTimer = null;
-
-
-
-
-
-function registerClickEffect(){
-
-
-
-const now = Date.now();
-
-
-
-
-clickSpeed.push(now);
-
-
-
-
-
-clickSpeed = clickSpeed.filter(
-
-time => now - time < 2000
-
-);
-
-
-
-
-
-const heart = document.getElementById(
-
-"heartPower"
-
-);
-
-
-
-
-
-const zone = document.getElementById(
-
-"fireZone"
-
-);
-
-
-
-
-
-const snow = document.querySelector(
-
-".snow"
-
-);
-
-
-
-
-
-
-
-if(clickSpeed.length < 5){
-
-
-
-if(heart)
-
-heart.innerText="🫀";
-
-
-
-
-if(zone)
-
-zone.classList.remove(
-
-"fire-mode"
-
-);
-
-
-
-
-
-if(snow)
-
-snow.style.opacity="1";
-
-
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-if(clickSpeed.length >=5 && clickSpeed.length <12){
-
-
-
-if(heart)
-
-heart.innerText="❤️";
-
-
-
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-
-if(clickSpeed.length >=12){
-
-
-
-if(heart)
-
-heart.innerText="🔥";
-
-
-
-
-
-if(zone)
-
-zone.classList.add(
-
-"fire-mode"
-
-);
-
-
-
-
-
-
-if(snow)
-
-snow.style.opacity="0";
-
-
-
-
-
-
-
-clearTimeout(fireTimer);
-
-
-
-
-
-
-fireTimer=setTimeout(()=>{
-
-
-
-resetFireMode();
-
-
-
-},4000);
-
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function resetFireMode(){
-
-
-
-let heart = document.getElementById(
-
-"heartPower"
-
-);
-
-
-
-
-
-let zone = document.getElementById(
-
-"fireZone"
-
-);
-
-
-
-
-
-let snow = document.querySelector(
-
-".snow"
-
-);
-
-
-
-
-
-
-
-if(heart)
-
-heart.innerText="🫀";
-
-
-
-
-
-
-if(zone)
-
-zone.classList.remove(
-
-"fire-mode"
-
-);
-
-
-
-
-
-
-
-if(snow)
-
-snow.style.opacity="1";
-
-
-
-
-
-clickSpeed=[];
-
-
-
-}
-
-
-
-
-
+let clickSnowTimer = null;
 
 
 
 
 // ===============================
-// CLICK NUMBER EFFECT
+// CLICK VISUAL EFFECT
+// ===============================
+
+
+function registerClickEffect(){
+
+
+const heart = document.getElementById(
+"heartPower"
+);
+
+
+
+if(heart){
+
+heart.innerText="🫀";
+
+}
+
+
+
+}
+
+
+
+// ===============================
+// CLICK NUMBER
 // ===============================
 
 
 function createClickEffect(value){
 
 
-
-let el=document.createElement(
-
+let el = document.createElement(
 "div"
-
 );
-
-
 
 
 
@@ -310,11 +56,9 @@ el.className="click-number";
 
 
 
+el.innerText =
 
-
-el.innerText=
-
-"+"+
+"+" +
 
 Number(value)
 
@@ -324,25 +68,23 @@ Number(value)
 
 
 
-
-
 el.style.left =
 
-(20 + Math.random()*60)+"%";
+(35 + Math.random()*30) + "%";
 
 
 
 
 
-el.style.top="65%";
+el.style.top =
 
+"60%";
 
 
 
 
 
 document.body.appendChild(el);
-
 
 
 
@@ -361,6 +103,60 @@ el.remove();
 
 
 
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// RESET EFFECTS
+// ===============================
+
+
+function resetFireMode(){
+
+
+
+const zone = document.getElementById(
+"fireZone"
+);
+
+
+
+const snow = document.querySelector(
+".snow"
+);
+
+
+
+if(zone){
+
+
+zone.classList.remove(
+"fire-mode"
+);
+
+
+}
+
+
+
+
+
+if(snow){
+
+
+snow.style.opacity="1";
+
+
+}
+
+
 
 }
 
@@ -374,6 +170,6 @@ el.remove();
 
 window.registerClickEffect = registerClickEffect;
 
-window.resetFireMode = resetFireMode;
-
 window.createClickEffect = createClickEffect;
+
+window.resetFireMode = resetFireMode;
