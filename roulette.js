@@ -1,230 +1,75 @@
 // ===================================
-// URALcoin ROULETTE v3
-// Wheel numbers + bets
+// URALcoin Roulette FIX v4
 // ===================================
 
 
-document.addEventListener(
-"DOMContentLoaded",
+window.addEventListener(
+"load",
 ()=>{
-
-
-
-const wheel =
-
-document.getElementById(
-"rouletteWheel"
-);
-
-
-
-const resultText =
-
-document.getElementById(
-"rouletteResult"
-);
-
-
-
-const timerText =
-
-document.getElementById(
-"rouletteTimer"
-);
-
-
-
-const message =
-
-document.getElementById(
-"rouletteMessage"
-);
-
-
-
-const amountInput =
-
-document.getElementById(
-"rouletteAmount"
-);
-
-
-
 
 
 let selectedBet = null;
 
 
 
-
-
-// ===============================
-// CREATE NUMBERS
-// ===============================
-
-
-if(wheel){
+const message =
+document.getElementById("rouletteMessage");
 
 
 
-let colors = {
+const amount =
+document.getElementById("rouletteAmount");
 
 
 
-0:"green",
+const start =
+document.getElementById("rouletteStart");
 
 
 
-1:"red",
-2:"black",
-3:"red",
-4:"black",
-5:"red",
-6:"black",
-7:"red",
-8:"black",
-9:"red",
-10:"black",
-11:"black",
-12:"red",
-13:"black",
-14:"red",
-15:"black",
-16:"red",
-17:"black",
-18:"red",
-19:"red",
-20:"black",
-21:"red",
-22:"black",
-23:"red",
-24:"black",
-25:"red",
-26:"black",
-27:"red",
-28:"black",
-29:"black",
-30:"red",
-31:"black",
-32:"red",
-33:"black",
-34:"red",
-35:"black",
-36:"red"
-
-
-
-};
-
-
-
-
-
-
-for(let i=0;i<=36;i++){
-
-
-
-let n=document.createElement(
-"div"
-);
-
-
-
-n.className=
-
-"wheel-number "+colors[i];
-
-
-
-n.innerHTML=i;
-
-
-
-let angle =
-
-(i*9.73)-90;
-
-
-
-n.style.transform=
-
-`
-
-rotate(${angle}deg)
-
-translate(125px)
-
-rotate(-${angle}deg)
-
-`;
-
-
-
-wheel.appendChild(n);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// BET BUTTONS
-// ===============================
 
 
 document
-.querySelectorAll(
-".roulette-bet"
-)
-
+.querySelectorAll(".roulette-bet")
 .forEach(btn=>{
 
 
+btn.addEventListener(
+"click",
+function(e){
 
-btn.onclick=()=>{
+
+e.preventDefault();
+
+
+selectedBet=this.dataset.bet;
 
 
 
 document
-.querySelectorAll(
-".roulette-bet"
-)
+.querySelectorAll(".roulette-bet")
+.forEach(b=>{
 
-.forEach(b=>
+b.classList.remove("active");
 
-b.classList.remove(
-"active"
-)
-
-);
+});
 
 
 
-btn.classList.add(
-"active"
-);
+this.classList.add("active");
 
 
 
-selectedBet=
+if(message){
 
-btn.dataset.bet;
+message.innerText=
+"Выбрано: "+selectedBet;
+
+}
 
 
 
-};
+});
 
 
 
@@ -238,60 +83,31 @@ btn.dataset.bet;
 
 
 
-// ===============================
-// SEND BET
-// ===============================
+if(start){
 
 
-let startBtn=
-
-document.getElementById(
-"rouletteStart"
-);
+start.addEventListener(
+"click",
+async function(e){
 
 
-
-
-
-if(startBtn){
-
-
-
-startBtn.onclick=
-
-async()=>{
+e.preventDefault();
 
 
 
 
-
-let player=
-
+let player =
 Storage.getPlayer();
 
 
 
 
 
-
-let amount=
-
-Number(
-amountInput.value
-);
-
-
-
-
-
-
-
-if(!selectedBet){
+if(!player || !player.id){
 
 
 message.innerText=
-
-"Выберите ставку";
+"Нет Telegram ID";
 
 
 return;
@@ -304,12 +120,33 @@ return;
 
 
 
-
-if(!amount){
+if(!selectedBet){
 
 
 message.innerText=
+"Сначала выберите ставку";
 
+
+return;
+
+
+}
+
+
+
+
+
+let sum =
+Number(amount.value);
+
+
+
+
+
+if(!sum || sum<=0){
+
+
+message.innerText=
 "Введите сумму";
 
 
@@ -322,16 +159,26 @@ return;
 
 
 
+try{
 
 
 
-let response=
+let api =
+
+CONFIG.API_URL ||
+
+CONFIG.API;
+
+
+
+
+
+
+let response =
 
 await fetch(
 
-CONFIG.API+
-
-"/roulette/bet",
+api+"/roulette/bet",
 
 {
 
@@ -346,21 +193,16 @@ headers:{
 
 "application/json"
 
-
 },
 
 
 body:JSON.stringify({
 
+id:String(player.id),
 
-id:player.id,
+type:selectedBet,
 
-
-amount:amount,
-
-
-type:selectedBet
-
+amount:sum
 
 
 })
@@ -376,22 +218,38 @@ type:selectedBet
 
 
 
-let data=
+let data =
 
 await response.json();
 
 
 
+
+
+
+message.innerText =
+
+data.message ||
+
+"Ставка принята";
+
+
+
+
+
+}
+
+catch(err){
+
+
+
+console.log(err);
 
 
 
 message.innerText=
 
-data.message;
-
-
-
-};
+"Ошибка соединения";
 
 
 
@@ -401,88 +259,7 @@ data.message;
 
 
 
-
-
-
-
-// ===============================
-// STATE
-// ===============================
-
-
-async function update(){
-
-
-
-try{
-
-
-
-let response=
-
-await fetch(
-
-CONFIG.API+
-
-"/roulette/state"
-
-);
-
-
-
-
-let data=
-
-await response.json();
-
-
-
-
-
-
-if(timerText)
-
-timerText.innerText=
-
-data.timeLeft;
-
-
-
-
-
-
-
-
-if(data.result!==null){
-
-
-
-
-
-let deg=
-
-(360*10)
-
--
-
-(data.result*9.73);
-
-
-
-
-
-
-if(wheel){
-
-
-
-wheel.style.transform=
-
-`
-
-rotate(${deg}deg)
-
-`;
+});
 
 
 
@@ -492,57 +269,6 @@ rotate(${deg}deg)
 
 
 
-
-
-if(resultText)
-
-resultText.innerText=
-
-data.result;
-
-
-
-}
-
-
-
-
-
-}
-
-catch(e){
-
-
-
-console.log(
-"roulette",
-e
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-setInterval(
-
-update,
-
-1000
-
-);
-
-
-
-update();
 
 
 
