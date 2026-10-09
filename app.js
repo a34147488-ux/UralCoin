@@ -1,7 +1,7 @@
 // ===================================
-// URALcoin APP v20
+// URALcoin APP v21
 // Main Controller
-// Buttons + Pages + Click System
+// Roulette Support
 // ===================================
 
 
@@ -10,22 +10,12 @@ let appPlayer = null;
 
 
 
-// ===============================
-// START
-// ===============================
-
-
 async function startApp(){
-
 
 
 appPlayer = Storage.getPlayer();
 
 
-
-
-
-// обновляем Telegram данные
 
 if(typeof initTelegram === "function"){
 
@@ -36,15 +26,11 @@ await initTelegram();
 
 
 
-
-
 appPlayer = Storage.getPlayer();
 
 
 
 
-
-// серверная регистрация
 
 if(
 window.API &&
@@ -62,7 +48,7 @@ let serverUser = await API.syncUser();
 if(serverUser){
 
 
-appPlayer = {
+appPlayer={
 
 ...appPlayer,
 
@@ -91,9 +77,7 @@ e
 }
 
 
-
 }
-
 
 
 
@@ -107,7 +91,6 @@ initNavigation();
 
 
 initClick();
-
 
 
 
@@ -134,11 +117,6 @@ drawUpgrades();
 
 
 
-// ===============================
-// NAVIGATION
-// ===============================
-
-
 function initNavigation(){
 
 
@@ -155,8 +133,7 @@ button.onclick=function(){
 
 
 
-let page =
-this.dataset.page;
+let page=this.dataset.page;
 
 
 
@@ -173,7 +150,6 @@ item.classList.remove(
 
 
 });
-
 
 
 
@@ -217,7 +193,6 @@ btn.classList.remove(
 
 
 
-
 this.classList.add(
 "active"
 );
@@ -239,6 +214,26 @@ loadTop();
 
 
 }
+
+
+
+
+
+
+
+
+if(
+page==="roulette" &&
+typeof startRoulette==="function"
+){
+
+
+startRoulette();
+
+
+}
+
+
 
 
 
@@ -277,16 +272,12 @@ drawUpgrades();
 
 
 
-// ===============================
-// CLICK
-// ===============================
-
-
 function initClick(){
 
 
 
 const button =
+
 document.getElementById(
 "clickButton"
 );
@@ -303,15 +294,12 @@ return;
 
 
 
-
-
 button.onclick=function(){
 
 
 
+let player=
 
-
-let player =
 Storage.getPlayer();
 
 
@@ -356,9 +344,7 @@ API.syncBalance();
 
 
 
-
 };
-
 
 
 
@@ -373,23 +359,21 @@ API.syncBalance();
 
 
 
-// ===============================
-// SCREEN UPDATE
-// ===============================
-
-
 function updateScreen(){
 
 
 
-let player =
+let player=
+
 Storage.getPlayer();
 
 
 
 
 
-let balance =
+
+let balance=
+
 document.getElementById(
 "balance"
 );
@@ -399,7 +383,7 @@ document.getElementById(
 if(balance){
 
 
-balance.innerText =
+balance.innerText=
 
 Number(player.balance || 0)
 
@@ -414,8 +398,8 @@ Number(player.balance || 0)
 
 
 
+let power=
 
-let power =
 document.getElementById(
 "clickPower"
 );
@@ -425,7 +409,7 @@ document.getElementById(
 if(power){
 
 
-power.innerText =
+power.innerText=
 
 Number(player.clickPower || 0)
 
@@ -441,7 +425,8 @@ Number(player.clickPower || 0)
 
 
 
-let crystal =
+let crystal=
+
 document.getElementById(
 "crystals"
 );
@@ -451,7 +436,8 @@ document.getElementById(
 if(crystal){
 
 
-crystal.innerText =
+crystal.innerText=
+
 player.crystals || 0;
 
 
@@ -461,8 +447,8 @@ player.crystals || 0;
 
 
 
+let second=
 
-let second =
 document.getElementById(
 "secondPower"
 );
@@ -472,7 +458,8 @@ document.getElementById(
 if(second){
 
 
-second.innerText =
+second.innerText=
+
 player.autoPower || 0;
 
 
@@ -481,24 +468,20 @@ player.autoPower || 0;
 
 
 
-
 }
 
 
 
-window.updateScreen =
+
+
+window.updateScreen=
+
 updateScreen;
 
 
 
 
 
-
-
-
-// ===============================
-// START
-// ===============================
 
 
 document.addEventListener(
