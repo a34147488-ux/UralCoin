@@ -3745,6 +3745,116 @@ z-index:99999!important;
 
 
 }
+/* =================================
+NEW CLICK BUTTON POSITION
+PASTE AT END
+================================= */
+
+
+#home{
+    overflow:hidden!important;
+    height:100vh!important;
+    position:relative;
+}
+
+
+
+/* зона кнопки под рулеткой */
+
+.click-area{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    top:430px;
+
+    height:380px;
+
+    overflow:hidden;
+
+    z-index:10;
+
+}
+
+
+
+
+/* сама кнопка клика */
+
+.click-button{
+
+    position:absolute;
+
+    left:50%;
+
+    top:40px;
+
+    transform:translateX(-50%);
+
+
+    width:320px;
+
+    height:320px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+    radial-gradient(
+    circle at 35% 30%,
+    #fffbd0,
+    #ffd700 35%,
+    #ff9800 70%,
+    #9b5600
+    );
+
+
+    border:
+
+    8px solid rgba(255,255,255,.7);
+
+
+    box-shadow:
+
+    0 0 70px gold,
+    inset 0 0 50px rgba(255,255,255,.6);
+
+
+    color:white;
+
+    font-size:90px;
+
+    font-weight:900;
+
+
+}
+
+
+
+
+.click-button:active{
+
+    transform:
+
+    translateX(-50%)
+
+    scale(.94);
+
+}
+
+
+
+/* нижнее меню поверх */
+
+.bottom-nav{
+
+    z-index:99999!important;
+
+}
 
 
 
