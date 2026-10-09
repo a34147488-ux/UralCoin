@@ -5,12 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>URALcoin</title>
 
 
 <link rel="stylesheet" href="style.css">
+
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -27,6 +28,7 @@
 <!-- СНЕГ -->
 
 <div class="snow"></div>
+
 
 
 <!-- ГИРЛЯНДА -->
@@ -60,7 +62,10 @@
 
 
 
-<div class="glass balance-card">
+
+
+<div class="panel balance-card">
+
 
 
 <div class="coin-icon">
@@ -71,8 +76,8 @@ U
 
 
 
-<div class="balance-value">
 
+<div class="balance-value">
 
 <span id="balance">
 
@@ -82,8 +87,10 @@ U
 
 U
 
-
 </div>
+
+
+
 
 
 
@@ -92,29 +99,50 @@ U
 
 <div>
 
-⚡
+⚡ Клик:
 
-<span id="clickPower">
+<b id="clickPower">
 
-0.01
+0.50
 
-</span>
-
-за клик
+</b>
 
 </div>
+
 
 
 
 <div>
 
-В секунду:
+🚀 Доход:
 
-<span id="secondPower">
+<b id="secondPower">
 
 0
 
-</span>
+</b>
+
+/ сек
+
+</div>
+
+
+
+
+<div>
+
+🏙 Город:
+
+<b id="city">
+
+START
+
+</b>
+
+</div>
+
+
+
 
 </div>
 
@@ -123,15 +151,19 @@ U
 </div>
 
 
-</div>
 
 
 
 
 
 
+<!-- NEW РУЛЕТКА -->
 
-<div class="new-card" id="openRoulette">
+
+<div 
+class="new-card"
+id="openRoulette"
+>
 
 
 <div class="new">
@@ -144,9 +176,10 @@ NEW
 
 <div class="mini-wheel">
 
-👑
+0
 
 </div>
+
 
 
 
@@ -167,12 +200,19 @@ NEW
 
 
 
+<!-- КНОПКА КЛИКА -->
+
 
 <div class="click-zone">
 
 
-<button id="clickButton" class="big-coin">
+<button
 
+id="clickButton"
+
+class="big-coin"
+
+>
 
 U
 
@@ -186,40 +226,56 @@ U
 
 
 
+
+
 </section>
-
-
-
-
-
-
-
-
-
 <!-- =====================
-ПРОМО
+ПРОМОКОДЫ
 ===================== -->
 
 
-<section class="page" id="promo">
+<section class="page" id="code">
 
 
-<div class="glass panel">
+<div class="panel">
 
 
 <h2>
 
-Промокоды
+ПРОМОКОДЫ
 
 </h2>
 
 
 
-<input id="personalCode" readonly>
 
 
+<div class="glass-box">
 
-<button id="copyReferral">
+
+<h3>
+
+Мой код
+
+</h3>
+
+
+<input
+
+id="personalCode"
+
+readonly
+
+>
+
+
+<button
+
+id="copyReferral"
+
+class="glass-button"
+
+>
 
 Скопировать
 
@@ -227,9 +283,23 @@ U
 
 
 
-<div>
+</div>
 
-Приглашено:
+
+
+
+
+
+
+<div class="glass-box">
+
+
+<h3>
+
+Приглашено
+
+</h3>
+
 
 <b id="promoFriends">
 
@@ -237,13 +307,27 @@ U
 
 </b>
 
+
+
+
+
 </div>
 
 
 
-<div>
 
-Получено:
+
+
+
+<div class="glass-box">
+
+
+<h3>
+
+Получено
+
+</h3>
+
 
 <b id="promoEarned">
 
@@ -251,7 +335,12 @@ U
 
 </b>
 
+
+
 </div>
+
+
+
 
 
 
@@ -262,11 +351,40 @@ U
 
 
 
-<input id="promoInput" placeholder="Введите код">
 
 
 
-<button id="activatePromo">
+<div class="glass-box">
+
+
+<h3>
+
+Активировать код
+
+</h3>
+
+
+
+
+
+<input
+
+id="promoInput"
+
+placeholder="Введите код"
+
+>
+
+
+
+
+<button
+
+id="activatePromo"
+
+class="glass-button"
+
+>
 
 Активировать
 
@@ -275,6 +393,14 @@ U
 
 
 </div>
+
+
+
+
+
+
+</div>
+
 
 
 </section>
@@ -296,31 +422,76 @@ U
 
 
 
-<div class="glass panel">
+
+
+<div class="panel">
+
 
 
 <h2>
 
-Перевод
+ПЕРЕВОДЫ
 
 </h2>
 
 
 
-<div class="glass input-box">
 
 
-<input id="transferName" placeholder="@username">
+
+
+
+<div class="glass-box">
+
+
+<h3>
+
+Кому отправить
+
+</h3>
+
+
+
+
+<input
+
+id="transferName"
+
+placeholder="@username"
+
+>
+
 
 
 </div>
 
 
 
-<div class="glass input-box">
 
 
-<input id="transferSum" placeholder="Количество U" type="number">
+
+
+<div class="glass-box">
+
+
+<h3>
+
+Количество U
+
+</h3>
+
+
+
+<input
+
+id="transferSum"
+
+type="number"
+
+placeholder="Введите сумму"
+
+>
+
 
 
 </div>
@@ -328,15 +499,29 @@ U
 
 
 
-<button id="transferButton">
 
-Отправить
+
+
+
+<button
+
+id="transferButton"
+
+class="glass-button"
+
+>
+
+ОТПРАВИТЬ
 
 </button>
 
 
 
+
+
+
 </div>
+
 
 
 
@@ -351,33 +536,46 @@ U
 
 
 <!-- =====================
-ТОП
+ТОП ИГРОКОВ
 ===================== -->
 
 
 <section class="page" id="tops">
 
 
-<div class="glass panel">
+
+
+
+<div class="panel">
 
 
 <h2>
 
-ТОП игроков
+ТОП ИГРОКОВ
 
 </h2>
 
 
 
+
+
 <div id="topList">
+
 
 Загрузка...
 
+
+</div>
+
+
+
+
+
+
 </div>
 
 
 
-</div>
 
 
 </section>
@@ -398,7 +596,13 @@ U
 <section class="page" id="roulette">
 
 
-<div class="glass panel">
+
+
+
+<div class="panel roulette-panel">
+
+
+
 
 
 <h2>
@@ -409,11 +613,16 @@ U
 
 
 
+
+
+
 <div id="rouletteTimer">
 
-Раунд: 25
+Раунд: 25 сек
 
 </div>
+
+
 
 
 
@@ -422,19 +631,23 @@ U
 <div class="wheel-box">
 
 
-<div id="rouletteWheel"></div>
+<div id="rouletteWheel">
 
 
 </div>
+
+
+</div>
+
+
+
 
 
 
 
 <div id="rouletteResult">
 
-Выпало:
-
--
+Выпало: -
 
 </div>
 
@@ -443,7 +656,36 @@ U
 
 
 
-<input id="rouletteAmount" type="number" placeholder="Ставка">
+
+
+<button
+
+class="glass-button"
+
+id="numberBetScroll"
+
+>
+
+🎯 Поставить на число
+
+</button>
+
+
+
+
+
+
+
+<input
+
+id="rouletteAmount"
+
+type="number"
+
+placeholder="Сумма ставки"
+
+>
+
 
 
 
@@ -452,18 +694,37 @@ U
 <div class="bets">
 
 
-<button data-bet="red">
 
-Красное
+<button data-bet="1-18">
+
+1 - 18
+
+</button>
+
+
+
+<button data-bet="19-36">
+
+19 - 36
 
 </button>
 
 
-<button data-bet="black">
 
-Чёрное
+<button data-bet="13-24">
+
+13 - 24
 
 </button>
+
+
+
+<button data-bet="25-36">
+
+25 - 36
+
+</button>
+
 
 
 <button data-bet="even">
@@ -473,11 +734,46 @@ U
 </button>
 
 
+
 <button data-bet="odd">
 
 Нечёт
 
 </button>
+
+
+
+
+</div>
+<!-- =====================
+СТАВКА НА ЧИСЛО
+===================== -->
+
+
+<div 
+class="number-area"
+id="numberArea"
+>
+
+
+<h3>
+
+Выберите число
+
+</h3>
+
+
+
+<div 
+id="rouletteNumbers"
+class="roulette-numbers"
+>
+
+
+
+</div>
+
+
 
 
 </div>
@@ -486,7 +782,16 @@ U
 
 
 
-<button id="rouletteStart">
+
+
+
+<button
+
+id="rouletteStart"
+
+class="glass-button"
+
+>
 
 Сделать ставку
 
@@ -495,16 +800,44 @@ U
 
 
 
+
+
+
+<div id="rouletteMessage">
+
+Ожидание ставок...
+
+</div>
+
+
+
+
+
+
+
+
+<div class="history-box">
+
+
 <h3>
 
-История
+История раундов
 
 </h3>
 
 
+
 <div id="rouletteHistory">
 
+Загрузка...
+
 </div>
+
+
+
+</div>
+
+
 
 
 
@@ -523,31 +856,246 @@ U
 
 
 <!-- =====================
-ЕЩЁ
+УЛУЧШЕНИЯ
 ===================== -->
 
 
 <section class="page" id="more">
 
 
-<div class="glass panel">
+
+
+
+<div class="panel">
+
 
 
 <h2>
 
-Ещё
+УЛУЧШЕНИЯ
 
 </h2>
 
 
 
-<a class="channel-card" href="https://t.me/+NyqTkXAU-H5hNDky">
 
-👑 👑 👑
 
-<br>
 
-Канал URALcoin
+<div class="glass-info">
+
+
+⚡ Сила клика:
+
+<b id="upgradeClick">
+
+0.50
+
+</b>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="glass-info">
+
+
+🚀 Доход в секунду:
+
+<b id="upgradeIncome">
+
+0
+
+</b>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<h2>
+
+🏙 ГОРОДА
+
+</h2>
+
+
+
+
+
+
+
+
+<div id="upgradeList">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<h2>
+
+⚡ CHIP
+
+</h2>
+
+
+
+
+
+
+
+
+<div id="chipList">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+
+
+<div class="glass-box">
+
+
+<h2>
+
+🔐 API КЛЮЧ
+
+</h2>
+
+
+
+<button
+
+id="apiButton"
+
+class="glass-button"
+
+>
+
+Получить API ключ
+
+</button>
+
+
+
+<div id="apiResult">
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="glass-box">
+
+
+<h2>
+
+📜 История переводов
+
+</h2>
+
+
+
+<button
+
+id="historyBtn"
+
+class="glass-button"
+
+>
+
+Открыть историю
+
+</button>
+
+
+
+<div id="transferHistory">
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- КАНАЛ -->
+
+
+
+<a
+
+href="https://t.me/+NyqTkXAU-H5hNDky"
+
+target="_blank"
+
+class="channel-card"
+
+>
+
+
+
+<div class="crown-wheel">
+
+
+♛ ♛ ♛
+
+</div>
+
+
+
+ПОДПИСАТЬСЯ НА КАНАЛ
+
 
 
 </a>
@@ -555,35 +1103,10 @@ U
 
 
 
-<button>
-
-API ключ
-
-</button>
-
-
-
-<button>
-
-История
-
-</button>
-
-
-
-<h2>
-
-Улучшения
-
-</h2>
-
-
-
-<div id="upgradeList"></div>
-
 
 
 </div>
+
 
 
 </section>
@@ -593,58 +1116,121 @@ API ключ
 
 
 
-
-</main>
-
-
-
-
-
+<!-- =====================
+НИЖНЕЕ МЕНЮ
+===================== -->
 
 
 <nav class="bottom-nav">
 
 
-<button class="nav active" data-page="game">
+
+
+
+<button
+
+class="nav active"
+
+data-page="game"
+
+>
 
 Главная
 
 </button>
 
 
-<button class="nav" data-page="promo">
+
+
+
+
+
+<button
+
+class="nav"
+
+data-page="code"
+
+>
 
 Код
 
 </button>
 
 
-<button class="nav" data-page="transfer">
+
+
+
+
+
+<button
+
+class="nav"
+
+data-page="transfer"
+
+>
 
 Перевод
 
 </button>
 
 
-<button class="nav" data-page="tops">
+
+
+
+
+
+<button
+
+class="nav"
+
+data-page="tops"
+
+>
 
 Топ
 
 </button>
 
 
-<button class="nav" data-page="roulette">
+
+
+
+
+
+<button
+
+class="nav"
+
+data-page="roulette"
+
+>
 
 Рулетка
 
 </button>
 
 
-<button class="nav" data-page="more">
+
+
+
+
+
+<button
+
+class="nav"
+
+data-page="more"
+
+>
 
 Ещё
 
 </button>
+
+
+
 
 
 
@@ -655,6 +1241,9 @@ API ключ
 
 
 
+</main>
+
+
 
 </div>
 
@@ -662,20 +1251,43 @@ API ключ
 
 
 
+
+
+
+
+<!-- =====================
+SCRIPTS
+===================== -->
+
+
+
 <script src="config.js"></script>
+
 <script src="storage.js"></script>
+
 <script src="telegram.js"></script>
+
 <script src="app.js"></script>
-<script src="promo.js"></script>
-<script src="referral.js"></script>
-<script src="transfer.js"></script>
-<script src="top.js"></script>
-<script src="roulette.js"></script>
+
 <script src="upgrade.js"></script>
+
+<script src="promo.js"></script>
+
+<script src="referral.js"></script>
+
+<script src="transfer.js"></script>
+
+<script src="roulette.js"></script>
+
+<script src="top.js"></script>
+
 <script src="effects.js"></script>
 
 
 
+
+
 </body>
+
 
 </html>
