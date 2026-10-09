@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin TRANSFER v14.5
-// Search + Safe Transfer System
+// URALcoin TRANSFER v16
+// Search + Player Transfer
 // ===================================
 
 
@@ -8,36 +8,55 @@ let selectedReceiver = null;
 
 
 
-const nameInput =
-document.getElementById("transferName");
 
-
-const sumInput =
-document.getElementById("transferSum");
-
-
-const transferButton =
-document.getElementById("transferButton");
-
-
-
-
-
-// создаём блок поиска
-
-let searchBox =
-document.createElement("div");
-
-
-searchBox.id="transferResults";
-
-
-if(nameInput){
-
-nameInput.parentNode.insertBefore(
-searchBox,
-nameInput.nextSibling
+let transferName =
+document.getElementById(
+"transferName"
 );
+
+
+let transferSum =
+document.getElementById(
+"transferSum"
+);
+
+
+let transferButton =
+document.getElementById(
+"transferButton"
+);
+
+
+
+
+
+let resultBox =
+document.createElement(
+"div"
+);
+
+
+
+resultBox.id =
+"transferResults";
+
+
+
+
+
+if(transferName){
+
+
+
+transferName.parentNode.insertBefore(
+
+resultBox,
+
+transferName.nextSibling
+
+);
+
+
 
 }
 
@@ -45,68 +64,94 @@ nameInput.nextSibling
 
 
 
+
+
+
+
 // ===============================
-// SEARCH USERS
+// SEARCH
 // ===============================
 
 
 async function searchUsers(){
 
 
-let text =
-nameInput.value
-.trim()
-.toLowerCase();
+
+let query =
+
+transferName.value
+
+.trim();
+
+
+
 
 
 
 selectedReceiver=null;
 
 
-searchBox.innerHTML="";
+resultBox.innerHTML="";
 
 
 
-if(!text)
+
+
+
+if(!query)
 
 return;
+
+
+
 
 
 
 try{
 
 
-let response =
-await fetch(
 
-CONFIG.API_URL+
-"/search-users?q="+
-encodeURIComponent(text)
+let response = await fetch(
+
+CONFIG.API_URL +
+
+"/search-users?q=" +
+
+encodeURIComponent(query)
 
 );
 
 
 
-let data =
-await response.json();
+
+
+let data = await response.json();
 
 
 
 
 
-if(!data.users ||
-data.users.length===0){
 
 
-searchBox.innerHTML=
+if(
+!data.users ||
+data.users.length===0
+){
 
-"Пользователи не найдены";
+
+
+resultBox.innerHTML=
+
+"Игроки не найдены";
+
 
 
 return;
 
 
+
 }
+
 
 
 
@@ -117,43 +162,56 @@ data.users.forEach(user=>{
 
 
 
-let button =
-document.createElement("button");
+let item = document.createElement(
+"button"
+);
 
 
 
-button.className="menu-card";
+
+
+item.className="menu-card";
 
 
 
-button.innerHTML=
+
+
+item.innerHTML =
 
 `
+
 ${user.name || "Игрок"}
+
 <br>
+
 ${user.username ? "@"+user.username : ""}
-<br>
-Баланс: ${user.balance} U
+
 `;
 
 
 
 
 
-button.onclick=()=>{
+
+
+item.onclick=()=>{
+
 
 
 selectedReceiver=user;
 
 
-nameInput.value=
+
+transferName.value=
+
 user.name;
 
 
-searchBox.innerHTML=
 
-"Выбран: "+
-(user.name || "Игрок");
+resultBox.innerHTML=
+
+"Выбран: "+user.name;
+
 
 
 };
@@ -162,7 +220,9 @@ searchBox.innerHTML=
 
 
 
-searchBox.appendChild(button);
+
+
+resultBox.appendChild(item);
 
 
 
@@ -172,31 +232,24 @@ searchBox.appendChild(button);
 
 }
 
-catch(e){
-
-
-console.log(e);
-
-
-}
+catch(error){
 
 
 
-}
+console.log(
 
+"SEARCH ERROR",
 
+error
 
-
-
-if(nameInput){
-
-
-nameInput.addEventListener(
-"input",
-searchUsers
 );
 
 
+
+}
+
+
+
 }
 
 
@@ -205,25 +258,62 @@ searchUsers
 
 
 
+
+if(transferName){
+
+
+
+transferName.addEventListener(
+
+"input",
+
+searchUsers
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
 // ===============================
-// TRANSFER
+// SEND
 // ===============================
+
 
 
 if(transferButton){
+
 
 
 transferButton.onclick=async()=>{
 
 
 
-let amount =
-Number(sumInput.value);
 
 
-
-let player =
+let user =
 Storage.getPlayer();
+
+
+
+
+
+
+let amount =
+
+Number(
+transferSum.value
+);
+
+
 
 
 
@@ -232,32 +322,17 @@ Storage.getPlayer();
 if(!selectedReceiver){
 
 
+
 alert(
-"Выберите пользователя из списка"
+
+"Выберите получателя"
+
 );
+
 
 
 return;
 
-
-}
-
-
-
-
-if(
-String(selectedReceiver.id)
-===
-String(player.id)
-){
-
-
-alert(
-"Нельзя отправить себе"
-);
-
-
-return;
 
 
 }
@@ -266,40 +341,56 @@ return;
 
 
 
+
+
 if(
-!amount ||
-amount<=0
+amount<=0 ||
+isNaN(amount)
 ){
 
 
+
 alert(
+
 "Введите сумму"
+
 );
+
 
 
 return;
 
 
+
 }
+
+
+
 
 
 
 
 
 if(
-player.balance < amount
+user.balance < amount
 ){
 
 
+
 alert(
+
 "Недостаточно U"
+
 );
+
 
 
 return;
 
 
+
 }
+
 
 
 
@@ -311,43 +402,56 @@ try{
 
 
 
-let response =
-await fetch(
+let response = await fetch(
 
 CONFIG.API_URL+
+
 "/transfer",
 
 {
 
+
 method:"POST",
+
 
 headers:{
 
+
 "Content-Type":"application/json"
+
 
 },
 
 
 body:JSON.stringify({
 
-from:String(player.id),
+
+from:String(user.id),
+
 
 to:String(selectedReceiver.id),
+
 
 amount:amount
 
 
 })
 
-}
 
+}
 
 );
 
 
 
+
+
+
+
 let data =
+
 await response.json();
+
 
 
 
@@ -358,37 +462,94 @@ if(data.success){
 
 
 
-player.balance -= amount;
+user.balance -= amount;
 
 
 
-Storage.savePlayer(player);
 
 
 
-if(typeof updateScreen==="function")
+Storage.savePlayer(user);
+
+
+
+
+
+
+if(typeof updateScreen==="function"){
+
 
 updateScreen();
+
+
+}
+
+
+
+
+
+
+if(typeof syncBalance==="function"){
+
+
+syncBalance();
+
+
+}
+
+
+
+
+
+
+Storage.addHistory({
+
+type:"Перевод",
+
+text:
+
+"Перевод "+
+
+amount+
+
+" U игроку "+
+
+selectedReceiver.name,
+
+date:
+
+new Date().toLocaleString()
+
+});
+
+
+
+
+
 
 
 
 alert(
 
-"Перевод выполнен: "+
-amount+
-" U"
+"Перевод выполнен"
 
 );
 
 
 
-nameInput.value="";
 
-sumInput.value="";
+
+
+transferName.value="";
+
+
+transferSum.value="";
+
+
+resultBox.innerHTML="";
+
 
 selectedReceiver=null;
-
-searchBox.innerHTML="";
 
 
 
@@ -397,9 +558,11 @@ searchBox.innerHTML="";
 else{
 
 
+
 alert(
 
 data.message ||
+
 "Ошибка перевода"
 
 );
@@ -412,12 +575,24 @@ data.message ||
 
 }
 
-catch(e){
+catch(error){
+
+
+
+console.log(
+
+error
+
+);
+
 
 
 alert(
+
 "Ошибка сервера"
+
 );
+
 
 
 }
@@ -425,6 +600,7 @@ alert(
 
 
 };
+
 
 
 }
