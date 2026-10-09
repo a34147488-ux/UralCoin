@@ -1681,6 +1681,204 @@ background-position:0% 50%;
 
 
 }
+/* ===================================
+URALcoin TRANSFER GLASS v24
+=================================== */
 
+
+/* ПАНЕЛЬ ПЕРЕВОДА */
+
+#transfer .panel{
+
+padding:20px;
+
+}
+
+
+
+
+#transfer h2{
+
+text-align:center;
+
+font-size:26px;
+
+text-shadow:
+
+0 0 12px #00cfff;
+
+}
+
+
+
+
+
+/* ПОЛЯ */
+
+#transfer input{
+
+
+width:100%;
+
+
+height:65px;
+
+
+margin:12px 0;
+
+
+padding:18px;
+
+
+font-size:18px;
+
+
+border-radius:25px;
+
+
+color:white;
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+2px solid rgba(255,255,255,.35);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+outline:none;
+
+
+}
+
+
+
+
+#transfer input::placeholder{
+
+color:rgba(255,255,255,.7);
+
+}
+
+
+
+
+
+
+/* КНОПКА ПЕРЕВЕСТИ */
+
+
+#transferButton{
+
+
+width:100%;
+
+
+height:70px;
+
+
+margin-top:20px;
+
+
+font-size:22px;
+
+
+border-radius:28px;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+border:
+
+2px solid rgba(255,255,255,.45);
+
+
+backdrop-filter:
+
+blur(20px);
+
+
+
+box-shadow:
+
+
+0 0 25px rgba(0,180,255,.35);
+
+
+
+}
+
+
+
+#transferButton:active{
+
+
+transform:scale(.96);
+
+
+background:
+
+rgba(0,180,255,.35);
+
+
+}
+
+
+
+
+
+
+/* РЕЗУЛЬТАТЫ ПОИСКА */
+
+#transferResults button{
+
+
+width:100%;
+
+
+min-height:75px;
+
+
+margin:10px 0;
+
+
+border-radius:25px;
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+2px solid rgba(255,255,255,.3);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+font-size:18px;
+
+
+}
 
 
