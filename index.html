@@ -16,7 +16,6 @@
 </head>
 
 
-
 <body>
 
 
@@ -26,33 +25,25 @@
 <div class="city-bg"></div>
 
 
-<div class="snow">
-❄️ ❄️ ❄️ ❄️ ❄️
+<div class="garland">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
 </div>
 
 
+<div class="snow"></div>
 
 
+
+
+<!-- Верхний аватар убран -->
 
 <header class="header">
 
-
-<div class="avatar">
-
-
-<img id="userAvatar">
-
-
-<span id="avatarLetter">
-U
-</span>
-
-
-</div>
-
-
 </header>
-
 
 
 
@@ -63,10 +54,7 @@ U
 
 
 
-
-
 <section class="page active" id="game">
-
 
 
 <div class="balance-box">
@@ -76,56 +64,64 @@ U
 
 
 <div class="coin-balance">
-
 U
-
 </div>
 
 
 <span id="balance">
-
 0
-
 </span>
-
 
 
 </div>
 
 
+
+
+<div class="crystals">
+
+💎
+
+<span id="crystals">
+0
+</span>
+
+<small>
+кристаллы появятся после связки кошельков
+</small>
+
+</div>
 
 
 
 
 <div class="click-power">
 
++
 
-+ <span id="clickPower">
-
+<span id="clickPower">
 0.010
-
 </span>
 
 за клик
 
 
-</div>
+<span id="heartPower">
+🫀
+</span>
 
+
+</div>
 
 
 
 <div class="second-power">
 
-
 В секунду:
-
 <b id="secondPower">
-
 0
-
 </b>
 
-
 </div>
 
 
@@ -136,9 +132,15 @@ U
 
 
 
+<div class="fire-zone" id="fireZone">
 
 
-<div class="fire-zone">
+<div class="fire-effect" id="fireEffect">
+
+🔥
+
+</div>
+
 
 
 <button id="clickButton" class="main-coin">
@@ -154,7 +156,16 @@ U
 
 
 
+<div class="year-label">
+
+2026 UralCoin
+
+</div>
+
+
+
 </section>
+
 
 
 
@@ -175,9 +186,7 @@ U
 </h2>
 
 
-
 <input id="myPromo" readonly>
-
 
 
 <button class="gold-button" id="copyCode">
@@ -188,6 +197,31 @@ U
 
 
 
+<div class="info">
+
+Активировали:
+
+<b id="activatedCount">
+0
+</b>
+
+</div>
+
+
+
+<div class="info">
+
+Получено:
+
+<b id="promoEarn">
+0 U
+</b>
+
+</div>
+
+
+
+
 
 <hr>
 
@@ -195,11 +229,8 @@ U
 
 
 <h2>
-
 Активировать код
-
 </h2>
-
 
 
 
@@ -212,7 +243,6 @@ U
 Активировать
 
 </button>
-
 
 
 
@@ -236,9 +266,7 @@ U
 
 
 <h2>
-
-Перевод
-
+Переводы
 </h2>
 
 
@@ -248,10 +276,6 @@ U
 
 
 <input id="transferSum" type="number" placeholder="Количество U">
-
-
-
-<div id="transferResults"></div>
 
 
 
@@ -283,11 +307,8 @@ U
 
 
 <h2>
-
 Топ игроков
-
 </h2>
-
 
 
 <div id="topList">
@@ -314,29 +335,30 @@ U
 <section class="page" id="more">
 
 
-
-<div class="panel more-scroll">
-
+<div class="panel">
 
 
 <h2>
-
 Ещё
-
 </h2>
 
 
 
-
-
-
 <a class="gold-button"
-
 href="https://t.me/+NyqTkXAU-H5hNDky"
-
 target="_blank">
 
-Канал проекта
+Подписаться на канал
+
+</a>
+
+
+
+<a class="gold-button premium"
+href="https://t.me/BuysStarsBot?start=8265611469"
+target="_blank">
+
+Оплатить PREMIUM
 
 </a>
 
@@ -344,17 +366,11 @@ target="_blank">
 
 
 
-
-
 <button class="menu-card" id="historyBtn">
 
-История операций
+История
 
 </button>
-
-
-
-
 
 
 
@@ -368,37 +384,9 @@ API ключ
 
 
 
-
-<div id="apiBlock" style="display:none;">
-
-
-
-<input id="apiResult" readonly placeholder="Ключ не создан">
-
-
-
-<button class="gold-button" id="createApi">
-
-Создать API ключ
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
 <h2>
-
 Улучшения
-
 </h2>
-
 
 
 
@@ -408,15 +396,9 @@ API ключ
 
 
 
-
-
 </div>
 
-
-
 </section>
-
-
 
 
 
@@ -430,62 +412,40 @@ API ключ
 
 
 
-
-
-
 <nav class="bottom-nav">
 
 
 <button class="nav active" data-page="game">
-
 Главная
-
 </button>
-
 
 
 
 <button class="nav" data-page="code">
-
 Код
-
 </button>
-
-
 
 
 
 <button class="nav" data-page="transfer">
-
 Перевод
-
 </button>
-
-
 
 
 
 <button class="nav" data-page="tops">
-
 Топ
-
 </button>
 
 
 
-
-
 <button class="nav" data-page="more">
-
 Ещё
-
 </button>
 
 
 
 </nav>
-
-
 
 
 
@@ -502,9 +462,13 @@ API ключ
 
 <script src="storage.js"></script>
 
+<script src="telegram.js"></script>
+
 <script src="upgrade.js"></script>
 
 <script src="promo.js"></script>
+
+<script src="referral.js"></script>
 
 <script src="transfer.js"></script>
 
@@ -513,9 +477,6 @@ API ключ
 <script src="top.js"></script>
 
 <script src="effects.js"></script>
-
-<script src="more.js"></script>
-
 
 
 </body>
