@@ -1,79 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-
 <head>
-
 
 <meta charset="UTF-8">
 
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 
 <title>UralCoin</title>
 
 
-
 <link rel="stylesheet" href="style.css">
 
-
 <link rel="stylesheet" href="roulette.css">
-
 
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 
-
 </head>
-
-
 
 
 <body>
 
 
-
 <div class="app">
-
-
-
 
 
 <div class="city-bg"></div>
 
 
 
-<div class="garland">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-
-
-
-<div class="snow"></div>
-
-
-
-
-
-
-
 <header class="header">
 
+<div class="logo">
+UralCoin
+</div>
+
 </header>
-
-
-
-
-
 
 
 
@@ -82,19 +46,12 @@
 
 
 
-
-
-
-
-<!-- ===============================
+<!-- ======================
 ГЛАВНАЯ
-=============================== -->
-
+====================== -->
 
 
 <section class="page active" id="game">
-
-
 
 
 
@@ -102,19 +59,13 @@
 
 
 
-
-
 <div class="balance">
-
-
 
 <div class="coin-balance">
 
 U
 
 </div>
-
-
 
 
 <span id="balance">
@@ -130,11 +81,7 @@ U
 
 
 
-
-
-
 <div class="crystals">
-
 
 💎
 
@@ -145,13 +92,11 @@ U
 </span>
 
 
-
 <small>
 
-кристаллы появятся после связки кошельков
+кристаллы
 
 </small>
-
 
 
 </div>
@@ -160,10 +105,7 @@ U
 
 
 
-
-
 <div class="click-power">
-
 
 +
 
@@ -173,16 +115,10 @@ U
 
 </span>
 
-
 за клик
 
 
-
 </div>
-
-
-
-
 
 
 
@@ -192,7 +128,6 @@ U
 
 В секунду:
 
-
 <b id="secondPower">
 
 0
@@ -200,6 +135,9 @@ U
 </b>
 
 
+</div>
+
+
 
 </div>
 
@@ -207,21 +145,28 @@ U
 
 
 
+
+<!-- NEW РУЛЕТКА -->
+
+
+<div 
+class="new-roulette-card"
+id="newRouletteButton"
+>
+
+
+
+<div class="mini-wheel">
+
+
+<span>
+
+0
+
+</span>
+
+
 </div>
-
-
-
-
-
-
-
-
-<!-- ===============================
-NEW РУЛЕТКА
-=============================== -->
-
-
-<div class="new-roulette-card" id="newRouletteButton">
 
 
 
@@ -233,27 +178,6 @@ NEW
 
 
 
-
-
-<div class="mini-wheel">
-
-
-
-<span>
-
-0
-
-</span>
-
-
-
-</div>
-
-
-
-
-
-
 <div class="new-title">
 
 РУЛЕТКА
@@ -262,10 +186,7 @@ NEW
 
 
 
-
 </div>
-
-
 
 
 
@@ -276,7 +197,6 @@ NEW
 <div class="fire-zone">
 
 
-
 <button
 
 id="clickButton"
@@ -285,17 +205,12 @@ class="main-coin"
 
 >
 
-
 U
-
 
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -307,24 +222,15 @@ U
 
 
 
-
-
-
-<!-- ===============================
+<!-- ======================
 КОД
-=============================== -->
-
+====================== -->
 
 
 <section class="page" id="code">
 
 
-
-
-
 <div class="panel">
-
-
 
 
 
@@ -333,9 +239,6 @@ U
 Персональный код
 
 </h2>
-
-
-
 
 
 
@@ -352,8 +255,6 @@ readonly
 
 
 
-
-
 <button
 
 class="gold-button"
@@ -362,9 +263,7 @@ id="copyCode"
 
 >
 
-
 Скопировать код
-
 
 </button>
 
@@ -373,13 +272,9 @@ id="copyCode"
 
 
 
-
-
 <div class="info">
 
-
 Активировали:
-
 
 <b id="activatedCount">
 
@@ -387,12 +282,7 @@ id="copyCode"
 
 </b>
 
-
-
 </div>
-
-
-
 
 
 
@@ -400,9 +290,7 @@ id="copyCode"
 
 <div class="info">
 
-
 Получено:
-
 
 <b id="promoEarn">
 
@@ -410,11 +298,7 @@ id="copyCode"
 
 </b>
 
-
-
 </div>
-
-
 
 
 
@@ -425,18 +309,11 @@ id="copyCode"
 
 
 
-
-
-
 <h2>
 
 Активировать код
 
 </h2>
-
-
-
-
 
 
 
@@ -452,10 +329,6 @@ placeholder="Введите код"
 
 
 
-
-
-
-
 <button
 
 class="gold-button"
@@ -464,13 +337,9 @@ id="activatePromo"
 
 >
 
-
 Активировать
 
-
 </button>
-
-
 
 
 
@@ -478,25 +347,21 @@ id="activatePromo"
 </div>
 
 
-
-
-
 </section>
-<!-- ===============================
+
+
+
+
+
+<!-- ======================
 ПЕРЕВОДЫ
-=============================== -->
+====================== -->
 
 
 <section class="page" id="transfer">
 
 
-
-
-
 <div class="panel">
-
-
-
 
 
 <h2>
@@ -507,10 +372,6 @@ id="activatePromo"
 
 
 
-
-
-
-
 <input
 
 id="transferName"
@@ -518,11 +379,6 @@ id="transferName"
 placeholder="@username"
 
 >
-
-
-
-
-
 
 
 
@@ -538,11 +394,6 @@ placeholder="Количество U"
 
 
 
-
-
-
-
-
 <button
 
 class="gold-button"
@@ -551,51 +402,25 @@ id="transferButton"
 
 >
 
-
 Перевести
 
-
 </button>
-
-
-
-
 
 
 
 </div>
 
 
-
-
-
-
 </section>
-
-
-
-
-
-
-
-
-
-<!-- ===============================
-ТОП
-=============================== -->
-
+<!-- ======================
+ТОП ИГРОКОВ
+====================== -->
 
 
 <section class="page" id="tops">
 
 
-
-
-
 <div class="panel">
-
-
-
 
 
 <h2>
@@ -606,28 +431,15 @@ id="transferButton"
 
 
 
-
-
-
-
 <div id="topList">
-
 
 Загрузка...
 
-
 </div>
 
 
 
-
-
-
-
 </div>
-
-
-
 
 
 </section>
@@ -637,30 +449,21 @@ id="transferButton"
 
 
 
-
-
-
-<!-- ===============================
+<!-- ======================
 РУЛЕТКА
-=============================== -->
+====================== -->
 
 
 <section class="page" id="roulette">
-
-
-
 
 
 <div class="panel roulette-panel">
 
 
 
-
-
-
 <h2>
 
-Рулетка
+🎡 Рулетка
 
 </h2>
 
@@ -668,15 +471,21 @@ id="transferButton"
 
 
 
+<div class="roulette-timer">
 
 
-<div id="rouletteTimer">
+Раунд:
 
-Раунд: 25 сек
+<b id="rouletteTimer">
+
+25
+
+</b>
+
+секунд
+
 
 </div>
-
-
 
 
 
@@ -687,16 +496,28 @@ id="transferButton"
 
 
 
+<div class="roulette-arrow">
+
+▼
+
+</div>
+
+
+
 
 
 <div id="rouletteWheel">
 
 
 
+<div class="roulette-center">
 
+0
 
 </div>
 
+
+</div>
 
 
 
@@ -721,34 +542,25 @@ id="transferButton"
 
 
 
-
+<!-- СУММА СТАВКИ СВЕРХУ -->
 
 <input
 
-
 id="rouletteAmount"
-
 
 type="number"
 
-
 placeholder="Сумма ставки"
-
-
 
 >
 
 
 
 
-
-
-
+<!-- ВЫБОР СТАВКИ -->
 
 
 <div class="roulette-bets">
-
-
 
 
 
@@ -760,14 +572,9 @@ data-bet="1-18"
 
 >
 
-
 1 - 18
 
-
 </button>
-
-
-
 
 
 
@@ -780,14 +587,9 @@ data-bet="13-24"
 
 >
 
-
 13 - 24
 
-
 </button>
-
-
-
 
 
 
@@ -800,14 +602,9 @@ data-bet="25-36"
 
 >
 
-
 25 - 36
 
-
 </button>
-
-
-
 
 
 
@@ -820,14 +617,9 @@ data-bet="19-36"
 
 >
 
-
 19 - 36
 
-
 </button>
-
-
-
 
 
 
@@ -840,14 +632,9 @@ data-bet="even"
 
 >
 
-
-Чётное
-
+Чёт
 
 </button>
-
-
-
 
 
 
@@ -860,19 +647,13 @@ data-bet="odd"
 
 >
 
-
-Нечётное
-
+Нечёт
 
 </button>
 
 
 
-
-
 </div>
-
-
 
 
 
@@ -888,9 +669,7 @@ id="rouletteStart"
 
 >
 
-
 Сделать ставку
-
 
 </button>
 
@@ -899,14 +678,9 @@ id="rouletteStart"
 
 
 
-
-
-
 <div id="rouletteMessage">
 
-
 Ожидание ставок...
-
 
 </div>
 
@@ -916,10 +690,10 @@ id="rouletteStart"
 
 
 
+<!-- ИСТОРИЯ -->
 
 
 <div class="roulette-history-box">
-
 
 
 <h3>
@@ -930,14 +704,10 @@ id="rouletteStart"
 
 
 
-
-
 <div id="rouletteHistory">
-
 
 Загрузка...
 
-
 </div>
 
 
@@ -947,21 +717,21 @@ id="rouletteStart"
 
 
 
-
-
-
-
 </div>
-
-
-
-
 
 
 </section>
-<!-- ===============================
+
+
+
+
+
+
+
+
+<!-- ======================
 ЕЩЁ
-=============================== -->
+====================== -->
 
 
 <section class="page" id="more">
@@ -972,15 +742,11 @@ id="rouletteStart"
 
 
 
-
-
 <h2>
 
 Ещё
 
 </h2>
-
-
 
 
 
@@ -996,12 +762,9 @@ target="_blank"
 
 >
 
-
-Подписаться на канал
-
+Канал UralCoin
 
 </a>
-
 
 
 
@@ -1018,13 +781,9 @@ target="_blank"
 
 >
 
-
-Оплатить PREMIUM
-
+Premium
 
 </a>
-
-
 
 
 
@@ -1039,13 +798,9 @@ id="historyBtn"
 
 >
 
-
 История переводов
 
-
 </button>
-
-
 
 
 
@@ -1060,12 +815,9 @@ id="apiBtn"
 
 >
 
-
 API ключ
 
-
 </button>
-
 
 
 
@@ -1082,22 +834,14 @@ API ключ
 
 
 
-
-
-
 <div id="upgradeList">
 
-
 </div>
 
 
 
 
-
-
-
 </div>
-
 
 
 
@@ -1108,27 +852,13 @@ API ключ
 
 
 
-
-
-
 </main>
-
-
-
-
-
-
-
-
-
-<!-- ===============================
-НАВИГАЦИЯ
-=============================== -->
+<!-- ======================
+НИЖНЯЯ НАВИГАЦИЯ
+====================== -->
 
 
 <nav class="bottom-nav">
-
-
 
 
 
@@ -1140,13 +870,9 @@ data-page="game"
 
 >
 
-
 Главная
 
-
 </button>
-
-
 
 
 
@@ -1160,13 +886,9 @@ data-page="code"
 
 >
 
-
 Код
 
-
 </button>
-
-
 
 
 
@@ -1180,13 +902,9 @@ data-page="transfer"
 
 >
 
-
 Перевод
 
-
 </button>
-
-
 
 
 
@@ -1200,13 +918,9 @@ data-page="tops"
 
 >
 
-
 Топ
 
-
 </button>
-
-
 
 
 
@@ -1220,13 +934,9 @@ data-page="roulette"
 
 >
 
-
 Рулетка
 
-
 </button>
-
-
 
 
 
@@ -1240,23 +950,13 @@ data-page="more"
 
 >
 
-
 Ещё
-
 
 </button>
 
 
 
-
-
-
-
 </nav>
-
-
-
-
 
 
 
@@ -1269,12 +969,9 @@ data-page="more"
 
 
 
-
-
-
-<!-- ===============================
+<!-- ======================
 SCRIPTS
-=============================== -->
+====================== -->
 
 
 <script src="config.js"></script>
@@ -1289,6 +986,7 @@ SCRIPTS
 <script src="telegram.js"></script>
 
 
+
 <script src="upgrade.js"></script>
 
 
@@ -1301,6 +999,7 @@ SCRIPTS
 <script src="transfer.js"></script>
 
 
+
 <script src="app.js"></script>
 
 
@@ -1310,16 +1009,13 @@ SCRIPTS
 <script src="effects.js"></script>
 
 
+
 <script src="roulette.js"></script>
 
 
 
 
 
-
-
-
 </body>
-
 
 </html>
