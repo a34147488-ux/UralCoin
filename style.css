@@ -3639,3 +3639,96 @@ z-index:999999!important;
 
 
 }
+/* =====================================
+FINAL CLICK POSITION
+UNDER NEW ROULETTE
+===================================== */
+
+
+#game{
+
+position:relative!important;
+
+overflow:hidden!important;
+
+}
+
+
+
+#game .click-zone{
+
+position:absolute!important;
+
+
+top:360px!important;
+
+
+left:0!important;
+
+right:0!important;
+
+
+height:420px!important;
+
+
+display:flex!important;
+
+
+justify-content:center!important;
+
+
+align-items:flex-start!important;
+
+
+overflow:hidden!important;
+
+
+z-index:20!important;
+
+
+}
+
+
+
+
+
+#game .big-coin{
+
+
+position:relative!important;
+
+
+top:60px!important;
+
+
+left:auto!important;
+
+
+transform:none!important;
+
+
+
+width:320px!important;
+
+
+height:320px!important;
+
+
+
+margin:0!important;
+
+
+
+}
+
+
+
+
+
+#game .big-coin:active{
+
+
+transform:scale(.93)!important;
+
+
+}
