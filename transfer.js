@@ -1,11 +1,157 @@
 // ===================================
-// URALcoin TRANSFER v14.2 FINAL
-// Server Transfers
+// URALcoin TRANSFER v14.4
+// Search + Real Transfer
 // ===================================
 
 
-const transferButton =
+let selectedUser = null;
 
+
+
+const searchInput =
+document.getElementById("transferName");
+
+
+const resultsBox =
+document.getElementById("userSearchResults");
+
+
+
+
+
+if(searchInput){
+
+
+searchInput.addEventListener(
+"input",
+async()=>{
+
+
+let q =
+searchInput.value.trim();
+
+
+
+selectedUser=null;
+
+
+
+if(q.length < 2){
+
+resultsBox.innerHTML="";
+
+return;
+
+}
+
+
+
+
+
+try{
+
+
+let response = await fetch(
+
+CONFIG.API_URL +
+
+"/search-users?q=" +
+
+encodeURIComponent(q)
+
+);
+
+
+
+let users = await response.json();
+
+
+
+resultsBox.innerHTML="";
+
+
+
+
+
+users.forEach(user=>{
+
+
+
+let div =
+document.createElement("div");
+
+
+
+div.className="user-result";
+
+
+
+div.innerHTML =
+
+`
+<b>${user.name}</b>
+<br>
+<small>
+${user.username ? "@"+user.username : "без username"}
+</small>
+`;
+
+
+
+
+
+div.onclick=()=>{
+
+
+selectedUser=user;
+
+
+searchInput.value =
+
+user.name;
+
+
+
+resultsBox.innerHTML="";
+
+
+
+};
+
+
+
+resultsBox.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+catch(e){
+
+console.log(e);
+
+}
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+const transferButton =
 document.getElementById(
 "transferButton"
 );
@@ -18,54 +164,31 @@ if(transferButton){
 
 
 
-transferButton.onclick = async ()=>{
-
-
-
-const nameInput =
-
-document.getElementById(
-"transferName"
-);
-
+transferButton.onclick = async()=>{
 
 
 
 const sumInput =
-
 document.getElementById(
 "transferSum"
 );
 
 
 
-
-
-const username =
-
-nameInput.value
-.trim();
-
-
-
-
-
 const amount =
-
-Number(
-sumInput.value
-);
+Number(sumInput.value);
 
 
 
 
 
 
-if(!username){
+
+if(!selectedUser){
 
 
 alert(
-"Введите пользователя"
+"Выберите пользователя из списка"
 );
 
 
@@ -78,13 +201,11 @@ return;
 
 
 
-
-
 if(!amount || amount<=0){
 
 
 alert(
-"Введите количество U"
+"Введите сумму"
 );
 
 
@@ -100,29 +221,7 @@ return;
 
 
 let player =
-
 Storage.getPlayer();
-
-
-
-
-
-
-
-if(player.balance < amount){
-
-
-alert(
-"Недостаточно U"
-);
-
-
-return;
-
-
-}
-
-
 
 
 
@@ -136,7 +235,7 @@ try{
 
 let response = await fetch(
 
-CONFIG.API_URL + "/transfer",
+CONFIG.API_URL+"/transfer",
 
 {
 
@@ -157,7 +256,7 @@ body:JSON.stringify({
 
 from:String(player.id),
 
-username:username,
+receiverId:String(selectedUser.id),
 
 amount:amount
 
@@ -174,7 +273,21 @@ amount:amount
 
 
 
-let data = await response.json();
+
+let data =
+await response.json();
+
+
+
+
+
+
+
+
+console.log(
+"TRANSFER RESULT",
+data
+);
 
 
 
@@ -187,10 +300,7 @@ if(data.success){
 
 
 player.balance =
-
 Number(data.fromBalance);
-
-
 
 
 
@@ -199,45 +309,23 @@ Storage.savePlayer(player);
 
 
 
-
-
-
-if(typeof updateScreen==="function"){
-
+if(typeof updateScreen==="function")
 
 updateScreen();
 
 
-}
-
-
-
-
-
 
 alert(
-
-"Успешно отправлено "
-
-+
-
-amount.toFixed(3)
-
-+
-
-" U"
-
+"Перевод выполнен"
 );
 
 
 
-
-
-
-
-nameInput.value="";
-
 sumInput.value="";
+
+searchInput.value="";
+
+selectedUser=null;
 
 
 
@@ -246,13 +334,10 @@ sumInput.value="";
 else{
 
 
-
 alert(
-
-data.message ||
-
+data.message
+||
 "Ошибка перевода"
-
 );
 
 
@@ -263,24 +348,18 @@ data.message ||
 
 }
 
-catch(error){
+catch(e){
 
 
-
-console.log(
-"TRANSFER ERROR",
-error
-);
-
+console.log(e);
 
 
 alert(
-"Ошибка сервера"
+"Ошибка соединения"
 );
 
 
 }
-
 
 
 
