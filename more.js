@@ -1,21 +1,16 @@
 // ===================================
-// URALcoin MORE v17
-// History + API Key System
+// URALcoin MORE v19
+// History + API KEY
 // ===================================
 
 
 
-function openPage(page){
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
 
-document
-.querySelectorAll(".page")
-.forEach(item=>{
-
-
-item.classList.remove(
-"active"
-);
+initMore();
 
 
 });
@@ -23,38 +18,20 @@ item.classList.remove(
 
 
 
-let target =
-document.getElementById(page);
 
 
 
-if(target){
+function initMore(){
 
-
-target.classList.add(
-"active"
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ===============================
-// HISTORY BUTTON
-// ===============================
 
 
 const historyBtn =
+
 document.getElementById(
 "historyBtn"
 );
+
+
 
 
 
@@ -78,6 +55,45 @@ showHistory();
 
 
 
+const apiBtn =
+
+document.getElementById(
+"apiBtn"
+);
+
+
+
+
+
+if(apiBtn){
+
+
+apiBtn.onclick = ()=>{
+
+
+getApiKey();
+
+
+};
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// HISTORY
+// ===============================
 
 
 function showHistory(){
@@ -85,6 +101,7 @@ function showHistory(){
 
 
 let player =
+
 Storage.getPlayer();
 
 
@@ -92,6 +109,7 @@ Storage.getPlayer();
 
 
 let history =
+
 player.history || [];
 
 
@@ -99,7 +117,7 @@ player.history || [];
 
 
 
-if(history.length===0){
+if(!history.length){
 
 
 alert(
@@ -117,7 +135,12 @@ return;
 
 
 
-let text = "История:\n\n";
+
+let text =
+
+"История переводов:\n\n";
+
+
 
 
 
@@ -133,14 +156,19 @@ history
 
 text +=
 
-(item.type || "Операция")
+(item.type || "Перевод")
+
 +
 
 "\n"
 
 +
 
-(item.amount || 0)
+"Сумма: "
+
++
+
+item.amount
 
 +
 
@@ -177,17 +205,78 @@ alert(text);
 
 
 
-
-
 // ===============================
 // API KEY
 // ===============================
 
 
+async function getApiKey(){
 
-const apiBtn =
-document.getElementById(
-"apiBtn"
+
+
+let player =
+
+Storage.getPlayer();
+
+
+
+
+
+if(!player.id){
+
+
+alert(
+"Нет Telegram ID"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+try{
+
+
+
+let response = await fetch(
+
+CONFIG.API_URL + "/api-key",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+id:String(player.id)
+
+
+})
+
+
+}
+
+
+
 );
 
 
@@ -195,19 +284,9 @@ document.getElementById(
 
 
 
-if(apiBtn){
+let data =
 
-
-apiBtn.onclick = ()=>{
-
-
-showApiKey();
-
-
-};
-
-
-}
+await response.json();
 
 
 
@@ -215,49 +294,7 @@ showApiKey();
 
 
 
-
-function showApiKey(){
-
-
-
-let player =
-Storage.getPlayer();
-
-
-
-
-
-if(!player.apiKey){
-
-
-
-player.apiKey =
-
-"URAL-"
-
-+
-
-Math.random()
-
-.toString(36)
-
-.substring(2,10)
-
-.toUpperCase();
-
-
-
-
-
-
-Storage.savePlayer(player);
-
-
-
-}
-
-
-
+if(data.success){
 
 
 
@@ -267,9 +304,51 @@ alert(
 
 +
 
-player.apiKey
+data.key
 
 );
+
+
+
+}
+
+else{
+
+
+alert(
+
+data.message ||
+
+"Ошибка создания ключа"
+
+);
+
+
+}
+
+
+
+
+
+
+
+}
+
+catch(e){
+
+
+console.log(
+"API KEY ERROR",
+e
+);
+
+
+alert(
+"Ошибка соединения с сервером"
+);
+
+
+}
 
 
 
