@@ -11,6 +11,8 @@
 
 <link rel="stylesheet" href="style.css">
 
+<link rel="stylesheet" href="roulette.css">
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 </head>
@@ -37,7 +39,6 @@
 
 
 <div class="snow"></div>
-
 
 
 
@@ -347,14 +348,6 @@ U
 
 
 <input id="promoInput" placeholder="Введите код">
-
-
-
-
-
-
-
-
 <button class="gold-button" id="activatePromo">
 
 
@@ -520,6 +513,252 @@ U
 
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===============================
+РУЛЕТКА
+=============================== -->
+
+
+<section class="page" id="roulette">
+
+
+
+<div class="panel roulette-panel">
+
+
+
+<h2>
+
+🎡 Рулетка
+
+</h2>
+
+
+
+
+
+<div class="roulette-timer">
+
+
+Раунд:
+
+
+<b id="rouletteTimer">
+
+25
+
+</b>
+
+секунд
+
+
+</div>
+
+
+
+
+
+
+
+<div class="roulette-wheel-wrap">
+
+
+
+<div class="roulette-arrow">
+
+▼
+
+</div>
+
+
+
+
+
+<div class="roulette-wheel" id="rouletteWheel">
+
+
+<div class="roulette-center">
+
+0
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="roulette-result">
+
+
+Выпало:
+
+
+<b id="rouletteResult">
+
+-
+
+</b>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="roulette-bets">
+
+
+
+<button class="roulette-bet" data-bet="1-18">
+
+1 - 18
+
+</button>
+
+
+
+<button class="roulette-bet" data-bet="13-24">
+
+13 - 24
+
+</button>
+
+
+
+
+<button class="roulette-bet" data-bet="25-36">
+
+25 - 36
+
+</button>
+
+
+
+
+<button class="roulette-bet" data-bet="19-36">
+
+19 - 36
+
+</button>
+
+
+
+
+<button class="roulette-bet" data-bet="even">
+
+Чёт
+
+</button>
+
+
+
+
+<button class="roulette-bet" data-bet="odd">
+
+Нечёт
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<input 
+
+id="rouletteAmount"
+
+type="number"
+
+placeholder="Сумма ставки">
+
+
+
+
+
+
+
+
+<button 
+
+class="gold-button"
+
+id="rouletteStart">
+
+
+Сделать ставку
+
+
+</button>
+
+
+
+
+
+
+
+<div id="rouletteMessage">
+
+
+Ожидание ставок...
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
 <section class="page" id="more">
 
 
@@ -631,15 +870,7 @@ API ключ
 
 
 </section>
-
-
-
-
-
-
-
-
-
+  
 </main>
 
 
@@ -705,6 +936,22 @@ API ключ
 
 
 </button>
+
+
+
+
+
+
+
+
+<button class="nav" data-page="roulette">
+
+
+Рулетка
+
+
+</button>
+
 
 
 
@@ -779,6 +1026,9 @@ API ключ
 <script src="effects.js"></script>
 
 
+<script src="roulette.js"></script>
+
+
 
 
 
@@ -788,3 +1038,5 @@ API ключ
 </body>
 
 </html>
+
+
