@@ -1,16 +1,13 @@
 // ===================================
 // URALcoin TELEGRAM v17
-// Telegram User Connect
-// Server Sync Ready
+// Telegram + Server User Create Fix
 // ===================================
 
 
-function initTelegram(){
-
+async function initTelegram(){
 
 
 let tg = null;
-
 
 
 
@@ -25,6 +22,7 @@ tg = window.Telegram.WebApp;
 
 tg.ready();
 
+
 tg.expand();
 
 
@@ -34,17 +32,11 @@ tg.expand();
 
 
 
-
 let player = Storage.getPlayer();
 
 
 
-
-
-
 let user = null;
-
-
 
 
 
@@ -57,14 +49,10 @@ tg.initDataUnsafe.user
 ){
 
 
-
 user = tg.initDataUnsafe.user;
 
 
-
 }
-
-
 
 
 
@@ -76,14 +64,7 @@ if(user){
 
 
 
-player.id = String(
-
-user.id
-
-);
-
-
-
+player.id = String(user.id);
 
 
 
@@ -91,7 +72,6 @@ player.name =
 
 (
 user.first_name || ""
-
 )
 
 +
@@ -99,13 +79,10 @@ user.first_name || ""
 (
 user.last_name
 ?
-" " + user.last_name
+" "+user.last_name
 :
 ""
-
 );
-
-
 
 
 
@@ -119,52 +96,17 @@ player.name="Игрок";
 
 
 
-
-
 player.username =
-
 user.username || "";
 
 
 
-
-
-
 player.photo =
-
 user.photo_url || "";
 
 
 
 }
-
-
-
-
-
-
-// если Telegram не дал пользователя
-
-// не оставляем гостя
-
-if(
-!player.id ||
-player.id==="guest"
-){
-
-
-console.log(
-
-"Telegram user not found"
-
-);
-
-
-return;
-
-
-}
-
 
 
 
@@ -180,15 +122,25 @@ Storage.savePlayer(player);
 
 
 
-localStorage.setItem(
+// отправляем на сервер
 
-"telegram_id",
 
-String(player.id)
+if(
+typeof API !== "undefined"
+){
 
+
+let result =
+await API.syncUser();
+
+
+console.log(
+"SERVER USER:",
+result
 );
 
 
+}
 
 
 
@@ -196,34 +148,21 @@ String(player.id)
 
 
 
-// ===============================
-// AVATAR
-// ===============================
 
+// аватар
 
 
 const img =
-
 document.getElementById(
-
 "userAvatar"
-
 );
-
-
 
 
 
 const letter =
-
 document.getElementById(
-
 "avatarLetter"
-
 );
-
-
-
 
 
 
@@ -235,8 +174,8 @@ player.photo
 ){
 
 
-
-img.src = player.photo;
+img.src =
+player.photo;
 
 
 img.style.display="block";
@@ -248,9 +187,7 @@ if(letter)
 letter.style.display="none";
 
 
-
 }
-
 
 
 
@@ -262,82 +199,26 @@ player.name
 ){
 
 
-
 letter.innerText =
-
-player.name
-
-.charAt(0)
-
-.toUpperCase();
-
+player.name.charAt(0).toUpperCase();
 
 
 }
-
-
-
-
 
 
 
 console.log(
-
-"URALcoin Telegram user",
-
+"Telegram player",
 player
-
 );
 
 
 
-
-
-
-
-// ===============================
-// START SERVER SYNC
-// ===============================
-
-
-
-setTimeout(()=>{
-
-
-
-if(
-typeof loadPlayer === "function"
-){
-
-
-loadPlayer();
-
-
-}
-
-
-
-},500);
-
-
-
-
-
 }
 
 
 
 
-
-
-
-
-
-
-
-// ===============================
-// START
-// ===============================
 
 
 document.addEventListener(
@@ -350,12 +231,7 @@ document.addEventListener(
 initTelegram();
 
 
-
 });
-
-
-
-
 
 
 
