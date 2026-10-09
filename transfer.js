@@ -1,21 +1,14 @@
 // ===================================
-// URALcoin TRANSFER v12
-// Player Transfers
+// URALcoin TRANSFER v14.2 FINAL
+// Server Transfers
 // ===================================
-
-
-
 
 
 const transferButton =
 
 document.getElementById(
-
 "transferButton"
-
 );
-
-
 
 
 
@@ -29,17 +22,11 @@ transferButton.onclick = async ()=>{
 
 
 
-
-
-
 const nameInput =
 
 document.getElementById(
-
 "transferName"
-
 );
-
 
 
 
@@ -47,13 +34,8 @@ document.getElementById(
 const sumInput =
 
 document.getElementById(
-
 "transferSum"
-
 );
-
-
-
 
 
 
@@ -61,9 +43,8 @@ document.getElementById(
 
 const username =
 
-nameInput.value.trim();
-
-
+nameInput.value
+.trim();
 
 
 
@@ -72,12 +53,8 @@ nameInput.value.trim();
 const amount =
 
 Number(
-
 sumInput.value
-
 );
-
-
 
 
 
@@ -87,17 +64,12 @@ sumInput.value
 if(!username){
 
 
-
 alert(
-
 "Введите пользователя"
-
 );
 
 
-
 return;
-
 
 
 }
@@ -108,31 +80,18 @@ return;
 
 
 
-
-if(
-
-!amount ||
-
-amount <= 0
-
-){
-
+if(!amount || amount<=0){
 
 
 alert(
-
 "Введите количество U"
-
 );
-
 
 
 return;
 
 
-
 }
-
 
 
 
@@ -150,26 +109,17 @@ Storage.getPlayer();
 
 
 
-if(
-
-player.balance < amount
-
-){
-
+if(player.balance < amount){
 
 
 alert(
-
 "Недостаточно U"
-
 );
-
 
 
 return;
 
 
-
 }
 
 
@@ -180,21 +130,42 @@ return;
 
 
 
-// списание
+try{
 
 
 
-player.balance -= amount;
+let response = await fetch(
+
+CONFIG.API_URL + "/transfer",
+
+{
 
 
+method:"POST",
 
 
+headers:{
 
 
+"Content-Type":"application/json"
 
-Storage.savePlayer(
 
-player
+},
+
+
+body:JSON.stringify({
+
+from:String(player.id),
+
+username:username,
+
+amount:amount
+
+
+})
+
+
+}
 
 );
 
@@ -203,42 +174,7 @@ player
 
 
 
-
-
-
-// история
-
-
-
-Storage.addHistory({
-
-
-
-type:"Перевод",
-
-
-
-to:username,
-
-
-
-amount:amount,
-
-
-
-date:
-
-new Date()
-
-.toLocaleString(
-
-"ru-RU"
-
-)
-
-
-
-});
+let data = await response.json();
 
 
 
@@ -246,26 +182,32 @@ new Date()
 
 
 
+if(data.success){
+
+
+
+player.balance =
+
+Number(data.fromBalance);
 
 
 
 
 
-// обновление экрана
+Storage.savePlayer(player);
 
 
-if(
 
-typeof updateScreen === "function"
 
-){
 
+
+
+if(typeof updateScreen==="function"){
 
 
 updateScreen();
 
 
-
 }
 
 
@@ -273,30 +215,19 @@ updateScreen();
 
 
 
+alert(
 
+"Успешно отправлено "
 
++
 
+amount.toFixed(3)
 
++
 
-// синхронизация
+" U"
 
-
-if(
-
-typeof syncBalance === "function"
-
-){
-
-
-
-syncBalance();
-
-
-
-}
-
-
-
+);
 
 
 
@@ -306,42 +237,49 @@ syncBalance();
 
 nameInput.value="";
 
-
-
 sumInput.value="";
 
 
 
+}
 
-
-
+else{
 
 
 
 alert(
 
+data.message ||
 
-
-"Отправлено "
-
-+
-
-amount.toFixed(3)
-
-+
-
-" U пользователю "
-
-+
-
-username
-
-
+"Ошибка перевода"
 
 );
 
 
 
+}
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(
+"TRANSFER ERROR",
+error
+);
+
+
+
+alert(
+"Ошибка сервера"
+);
+
+
+}
 
 
 
