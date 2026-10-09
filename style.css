@@ -3210,3 +3210,108 @@ margin:25px 0;
 
 
 }
+/* =====================================
+NO ZOOM + SCROLL FIX
+===================================== */
+
+
+/* запрещаем приближение при кликах */
+
+html,
+body{
+
+touch-action:manipulation;
+
+-webkit-user-select:none;
+
+user-select:none;
+
+-webkit-text-size-adjust:100%;
+
+}
+
+
+
+
+
+button{
+
+touch-action:manipulation;
+
+-webkit-touch-callout:none;
+
+}
+
+
+
+
+
+/* ГЛАВНАЯ - БЕЗ СКРОЛЛА */
+
+
+#home{
+
+height:100vh!important;
+
+overflow:hidden!important;
+
+}
+
+
+
+
+
+#home .content{
+
+height:100%;
+
+overflow:hidden!important;
+
+}
+
+
+
+
+
+/* ВСЕ ОСТАЛЬНЫЕ ВКЛАДКИ - СО СКРОЛЛОМ */
+
+
+.page:not(#home){
+
+height:auto!important;
+
+min-height:100vh;
+
+overflow-y:auto!important;
+
+-webkit-overflow-scrolling:touch;
+
+}
+
+
+
+
+
+.page:not(#home) .content{
+
+height:auto!important;
+
+overflow:visible!important;
+
+padding-bottom:120px;
+
+}
+
+
+
+
+
+/* чтобы меню не мешало */
+
+.bottom-nav{
+
+position:fixed!important;
+
+z-index:999999!important;
+
+}
