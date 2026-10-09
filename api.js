@@ -1,42 +1,74 @@
 // ===================================
-// URALcoin APP v16
-// Stable Click + Balance Sync
+// URALcoin API v17
+// Server Connection
 // ===================================
 
 
-let tg = null;
+const API = {
 
 
-if(
-window.Telegram &&
-window.Telegram.WebApp
-){
 
-tg = window.Telegram.WebApp;
+async request(url, options = {}){
 
-tg.ready();
 
-tg.expand();
+try{
+
+
+let response = await fetch(
+
+CONFIG.API_URL + url,
+
+options
+
+);
+
+
+
+let data = await response.json();
+
+
+return data;
+
+
+
+}
+
+catch(e){
+
+
+console.log(
+"API ERROR",
+e
+);
+
+
+
+return null;
+
 
 }
 
 
+},
 
-let player = null;
+
 
 
 
 
 
 // ===============================
-// LOAD PLAYER
+// CREATE / UPDATE USER
 // ===============================
 
 
-async function loadPlayer(){
+async syncUser(){
 
 
-player = Storage.getPlayer();
+
+let player =
+Storage.getPlayer();
+
 
 
 
@@ -45,11 +77,11 @@ if(!player.id){
 
 
 console.log(
-"NO USER ID"
+"NO TELEGRAM ID"
 );
 
 
-return;
+return null;
 
 
 }
@@ -59,258 +91,10 @@ return;
 
 
 
-try{
 
+let data = await this.request(
 
-let response = await fetch(
-
-CONFIG.API_URL +
-
-"/user/" +
-
-player.id
-
-);
-
-
-
-
-
-let serverUser = await response.json();
-
-
-
-
-
-if(serverUser){
-
-
-
-player = {
-
-
-...player,
-
-
-...serverUser
-
-
-};
-
-
-
-Storage.savePlayer(player);
-
-
-
-}
-
-
-
-
-updateScreen();
-
-
-
-
-
-
-// запуск промокода после синхронизации
-
-
-setTimeout(()=>{
-
-
-if(typeof createPromo === "function"){
-
-
-createPromo();
-
-
-}
-
-
-
-},1500);
-
-
-
-
-
-
-}
-
-
-
-catch(error){
-
-
-console.log(
-
-"PLAYER LOAD ERROR",
-
-error
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// CLICK
-// ===============================
-
-
-function setupClick(){
-
-
-
-const button = document.getElementById(
-
-"clickButton"
-
-);
-
-
-
-
-
-
-if(!button){
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-button.onclick = async function(){
-
-
-
-let user = Storage.getPlayer();
-
-
-
-
-
-
-let power = Number(
-
-user.clickPower || 0.01
-
-);
-
-
-
-
-
-
-user.balance =
-
-Number(user.balance || 0)
-
-+
-
-power;
-
-
-
-
-
-
-
-Storage.savePlayer(user);
-
-
-
-
-
-
-
-updateScreen();
-
-
-
-
-
-
-syncBalance();
-
-
-
-
-
-
-if(typeof createClickEffect==="function"){
-
-
-createClickEffect(power);
-
-
-}
-
-
-
-
-
-};
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// SERVER SYNC
-// ===============================
-
-
-async function syncBalance(){
-
-
-
-let user = Storage.getPlayer();
-
-
-
-
-
-try{
-
-
-await fetch(
-
-CONFIG.API_URL+"/sync",
+"/user",
 
 {
 
@@ -327,48 +111,42 @@ headers:{
 },
 
 
-
 body:JSON.stringify({
 
 
-id:String(user.id),
+id:String(player.id),
 
 
-balance:Number(user.balance)
+name:player.name || "Игрок",
+
+
+username:player.username || "",
+
+
+photo:player.photo || ""
 
 
 })
 
 
+
 }
+
+
 
 );
 
 
 
 
-}
 
 
 
-catch(error){
-
-
-console.log(
-
-"SYNC ERROR",
-
-error
-
-);
+return data;
 
 
 
-}
-
-
-
-}
+},
 
 
 
@@ -379,139 +157,71 @@ error
 
 
 // ===============================
-// SCREEN UPDATE
+// SYNC BALANCE
 // ===============================
 
 
-function updateScreen(){
+async syncBalance(){
 
 
 
-let user = Storage.getPlayer();
+let player =
+Storage.getPlayer();
 
 
 
 
 
-const balance = document.getElementById(
+if(!player.id)
 
-"balance"
+return;
+
+
+
+
+
+
+
+await this.request(
+
+"/sync",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+id:String(player.id),
+
+
+balance:Number(player.balance || 0)
+
+
+})
+
+
+
+}
+
+
 
 );
 
 
 
-
-if(balance){
-
-
-
-balance.innerText =
-
-Number(user.balance || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-}
-
-
-
-
-
-
-const power = document.getElementById(
-
-"clickPower"
-
-);
-
-
-
-
-
-
-if(power){
-
-
-
-power.innerText =
-
-Number(user.clickPower || 0.01)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-}
-
-
-
-
-
-
-const second = document.getElementById(
-
-"secondPower"
-
-);
-
-
-
-
-
-if(second){
-
-
-second.innerText =
-
-Number(user.autoPower || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-}
-
-
-
-
-
-
-const crystals = document.getElementById(
-
-"crystals"
-
-);
-
-
-
-
-
-
-if(crystals){
-
-
-
-crystals.innerText =
-
-user.crystals || 0;
-
-
-
-}
-
-
-
-
-
 }
 
 
@@ -520,38 +230,7 @@ user.crystals || 0;
 
 
 
-
-
-// ===============================
-// AUTO INCOME
-// ===============================
-
-
-setInterval(()=>{
-
-
-
-let user = Storage.getPlayer();
-
-
-
-
-
-if(
-
-Number(user.autoPower)>0
-
-){
-
-
-
-user.balance =
-
-Number(user.balance || 0)
-
-+
-
-Number(user.autoPower);
+};
 
 
 
@@ -559,51 +238,4 @@ Number(user.autoPower);
 
 
 
-Storage.savePlayer(user);
-
-
-
-updateScreen();
-
-
-
-syncBalance();
-
-
-
-}
-
-
-
-},1000);
-
-
-
-
-
-
-
-
-
-// ===============================
-// START
-// ===============================
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-setupClick();
-
-
-loadPlayer();
-
-
-
-}
-
-);
+window.API = API;
