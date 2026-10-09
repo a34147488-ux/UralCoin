@@ -745,6 +745,159 @@ padding-bottom:130px;
 
 
 }
+/* ===================================
+URALcoin BIG CLICK COIN v21
+Huge bottom click button
+=================================== */
+
+
+.fire-zone{
+
+position:fixed;
+
+bottom:-120px;
+
+left:0;
+
+right:0;
+
+
+display:flex;
+
+justify-content:center;
+
+
+z-index:5;
+
+
+pointer-events:none;
+
+}
+
+
+
+
+
+.main-coin{
+
+
+width:430px;
+
+height:430px;
+
+
+max-width:110vw;
+
+max-height:110vw;
+
+
+border-radius:50%;
+
+
+pointer-events:auto;
+
+
+
+font-size:120px;
+
+
+
+background:
+
+radial-gradient(
+
+circle at 35% 25%,
+
+#aaf7ff,
+
+#007cff 45%,
+
+#003b9e 75%
+
+);
+
+
+
+box-shadow:
+
+
+0 -10px 50px rgba(0,180,255,.9),
+
+
+inset 0 0 40px rgba(255,255,255,.35);
+
+
+
+border:
+
+5px solid rgba(255,255,255,.35);
+
+
+
+transform:translateY(0);
+
+
+}
+
+
+
+
+
+.main-coin:active{
+
+
+transform:
+
+translateY(5px)
+
+scale(.97);
+
+
+}
+
+
+
+
+
+
+
+/* текст онлайна внутри большой монеты */
+
+
+.main-coin::after{
+
+
+bottom:150px;
+
+
+font-size:18px;
+
+
+text-shadow:
+
+0 0 10px black;
+
+
+}
+
+
+
+
+
+
+
+/* чтобы контент не залезал на монету */
+
+
+.content{
+
+
+padding-bottom:220px;
+
+
+}
+
+
 
 
 
