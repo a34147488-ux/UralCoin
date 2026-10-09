@@ -1,21 +1,15 @@
-
 // ===================================
-// URALcoin MORE v10
-// Navigation + History + API
+// URALcoin MORE v17
+// History + API Key System
 // ===================================
-
-
 
 
 
 function openPage(page){
 
 
-
 document
-
 .querySelectorAll(".page")
-
 .forEach(item=>{
 
 
@@ -29,12 +23,8 @@ item.classList.remove(
 
 
 
-
-
 let target =
-document.getElementById(
-page
-);
+document.getElementById(page);
 
 
 
@@ -46,7 +36,6 @@ target.classList.add(
 );
 
 
-
 }
 
 
@@ -57,37 +46,30 @@ target.classList.add(
 
 
 
-
-
-
-
 // ===============================
-// PROMO BUTTON
+// HISTORY BUTTON
 // ===============================
 
 
-const promoButton =
+const historyBtn =
 document.getElementById(
-"promoButton"
+"historyBtn"
 );
 
 
 
-if(promoButton){
+if(historyBtn){
 
 
-promoButton.onclick = ()=>{
+historyBtn.onclick = ()=>{
 
 
-openPage(
-"promo"
-);
+showHistory();
 
 
 };
 
 
-
 }
 
 
@@ -98,91 +80,31 @@ openPage(
 
 
 
-// ===============================
-// HISTORY
-// ===============================
+function showHistory(){
 
 
 
-const historyButton =
-document.getElementById(
-"historyButton"
-);
-
-
-
-
-
-if(historyButton){
-
-
-historyButton.onclick = ()=>{
-
-
-renderHistory();
-
-
-openPage(
-"history"
-);
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function renderHistory(){
-
-
-
-let list =
-document.getElementById(
-"historyList"
-);
-
-
-
-
-
-if(!list)
-
-return;
-
+let player =
+Storage.getPlayer();
 
 
 
 
 
 let history =
-Storage.getHistory();
+player.history || [];
 
 
 
 
 
 
-
-if(
-!history ||
-history.length===0
-){
+if(history.length===0){
 
 
-
-list.innerHTML =
-"Операций нет";
-
+alert(
+"История переводов пустая"
+);
 
 
 return;
@@ -195,10 +117,7 @@ return;
 
 
 
-
-
-list.innerHTML = "";
-
+let text = "История:\n\n";
 
 
 
@@ -212,50 +131,39 @@ history
 
 
 
-let div =
-document.createElement(
-"div"
-);
+text +=
 
+(item.type || "Операция")
++
 
+"\n"
 
-div.className =
-"history-item";
++
 
+(item.amount || 0)
 
++
 
+" U\n"
 
++
 
-div.innerHTML =
+(item.date || "")
 
++
 
-
-`
-
-<b>
-
-${item.text || "Операция"}
-
-</b>
-
-
-<br>
-
-
-${item.date || ""}
-
-`;
-
-
-
-
-
-
-list.appendChild(div);
+"\n\n";
 
 
 
 });
+
+
+
+
+
+
+alert(text);
 
 
 
@@ -269,42 +177,36 @@ list.appendChild(div);
 
 
 
+
+
 // ===============================
-// API
+// API KEY
 // ===============================
 
 
 
-const apiButton =
+const apiBtn =
 document.getElementById(
-"apiButton"
+"apiBtn"
 );
 
 
 
 
 
-if(apiButton){
+
+if(apiBtn){
 
 
-
-apiButton.onclick = ()=>{
-
-
-openPage(
-"api"
-);
+apiBtn.onclick = ()=>{
 
 
-
-loadApi();
-
+showApiKey();
 
 
 };
 
 
-
 }
 
 
@@ -314,58 +216,41 @@ loadApi();
 
 
 
-
-const createApi =
-document.getElementById(
-"createApi"
-);
+function showApiKey(){
 
 
 
-
-
-
-
-if(createApi){
-
-
-
-createApi.onclick = ()=>{
-
-
-
-let key =
-Storage.generateApiKey();
+let player =
+Storage.getPlayer();
 
 
 
 
 
+if(!player.apiKey){
 
-let result =
-document.getElementById(
-"apiResult"
-);
+
+
+player.apiKey =
+
+"URAL-"
+
++
+
+Math.random()
+
+.toString(36)
+
+.substring(2,10)
+
+.toUpperCase();
 
 
 
 
 
 
-if(result){
-
-
-
-result.innerText =
-key;
-
-
-
-}
-
-
-
-};
+Storage.savePlayer(player);
 
 
 
@@ -376,160 +261,16 @@ key;
 
 
 
+alert(
 
+"Ваш API ключ:\n\n"
 
++
 
-function loadApi(){
+player.apiKey
 
-
-
-let result =
-document.getElementById(
-"apiResult"
 );
-
-
-
-
-
-if(!result)
-
-return;
-
-
-
-
-
-
-
-let key =
-Storage.getApiKey();
-
-
-
-
-
-
-
-if(key){
-
-
-result.innerText =
-key;
-
-
-}
-
-else{
-
-
-result.innerText =
-"Ключ не создан";
-
-
-}
 
 
 
 }
-
-
-
-
-
-
-
-
-
-// ===============================
-// BOTTOM MENU SYNC
-// ===============================
-
-
-
-document
-
-.querySelectorAll(".nav")
-
-.forEach(btn=>{
-
-
-
-btn.onclick = ()=>{
-
-
-
-document
-
-.querySelectorAll(".page")
-
-.forEach(page=>{
-
-
-page.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-
-
-
-
-let target =
-document.getElementById(
-btn.dataset.page
-);
-
-
-
-
-
-if(target)
-
-
-target.classList.add(
-"active"
-);
-
-
-
-
-
-
-
-
-
-document
-
-.querySelectorAll(".nav")
-
-.forEach(item=>{
-
-
-item.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-
-
-
-btn.classList.add(
-"active"
-);
-
-
-
-};
-
-
-
-});
