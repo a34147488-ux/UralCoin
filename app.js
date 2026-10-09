@@ -1,230 +1,49 @@
 // ===================================
 // URALcoin APP v17
-// Stable Click + Server User Sync
-// TOP FIX
+// Stable Buttons + Click Fix
 // ===================================
-
-
-const tg = window.Telegram.WebApp;
-
-
-tg.ready();
-
-tg.expand();
-
 
 
 let player = null;
 
 
 
-
-
-// ===============================
-// LOAD PLAYER
-// CREATE USER ON SERVER
-// ===============================
-
-
-async function loadPlayer(){
+function startApp(){
 
 
 player = Storage.getPlayer();
-
-
-
-if(!player.id){
-
-console.log("NO TELEGRAM USER");
-
-return;
-
-}
-
-
-
-
-try{
-
-
-let response = await fetch(
-
-CONFIG.API_URL + "/user",
-
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-},
-
-
-body:JSON.stringify({
-
-
-id:String(player.id),
-
-
-name:player.name || "Игрок",
-
-
-username:player.username || "",
-
-
-photo:player.photo || ""
-
-
-})
-
-
-}
-
-
-);
-
-
-
-
-
-let serverUser = await response.json();
-
-
-
-
-
-if(serverUser){
-
-
-
-player = {
-
-
-...player,
-
-
-...serverUser
-
-
-};
-
-
-
-Storage.savePlayer(player);
-
-
-
-}
-
-
-
 
 
 updateScreen();
 
 
 
-if(typeof drawUpgrades==="function"){
-
-
-drawUpgrades();
-
-
-}
-
-
-
-}
-
-catch(e){
-
-
-console.log(
-
-"LOAD ERROR",
-
-e
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// CLICK
-// ===============================
-
-
 const clickButton =
-
-document.getElementById(
-
-"clickButton"
-
-);
-
-
-
+document.getElementById("clickButton");
 
 
 
 if(clickButton){
 
 
-
-clickButton.onclick = async ()=>{
-
+clickButton.onclick = async function(){
 
 
-let player = Storage.getPlayer();
+let p = Storage.getPlayer();
 
 
 
-
-
-let power = Number(
-
-player.clickPower || 0.01
-
-);
+let power =
+Number(p.clickPower || 0.01);
 
 
 
+p.balance =
+Number(p.balance || 0) + power;
 
 
 
-player.balance =
-
-Number(player.balance || 0)
-
-+
-
-power;
-
-
-
-
-
-
-Storage.savePlayer(player);
+Storage.savePlayer(p);
 
 
 
@@ -232,15 +51,11 @@ updateScreen();
 
 
 
-
+if(typeof syncBalance==="function"){
 
 syncBalance();
 
-
-
-
-
-createClickEffect(power);
+}
 
 
 
@@ -254,38 +69,200 @@ createClickEffect(power);
 
 
 
-
-
-
-
 // ===============================
-// SYNC BALANCE
+// NAVIGATION
 // ===============================
+
+
+document
+.querySelectorAll(".nav")
+.forEach(button=>{
+
+
+button.onclick=function(){
+
+
+let page =
+this.dataset.page;
+
+
+
+document
+.querySelectorAll(".page")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+});
+
+
+
+
+
+let target =
+document.getElementById(page);
+
+
+
+if(target){
+
+target.classList.add("active");
+
+}
+
+
+
+
+
+document
+.querySelectorAll(".nav")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+});
+
+
+
+this.classList.add("active");
+
+
+
+
+
+if(page==="tops" &&
+typeof loadTop==="function"){
+
+loadTop();
+
+}
+
+
+
+
+
+if(page==="more" &&
+typeof drawUpgrades==="function"){
+
+drawUpgrades();
+
+}
+
+
+
+};
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function updateScreen(){
+
+
+let p = Storage.getPlayer();
+
+
+
+let balance =
+document.getElementById("balance");
+
+
+
+if(balance){
+
+balance.innerText =
+Number(p.balance || 0)
+.toFixed(3)
+.replace(".",",");
+
+}
+
+
+
+let power =
+document.getElementById("clickPower");
+
+
+
+if(power){
+
+power.innerText =
+Number(p.clickPower || 0)
+.toFixed(3)
+.replace(".",",");
+
+}
+
+
+
+let second =
+document.getElementById("secondPower");
+
+
+
+if(second){
+
+second.innerText =
+Number(p.autoPower || 0)
+.toFixed(3)
+.replace(".",",");
+
+}
+
+
+
+let crystals =
+document.getElementById("crystals");
+
+
+
+if(crystals){
+
+crystals.innerText =
+p.crystals || 0;
+
+}
+
+
+
+}
+
+
+
+
 
 
 async function syncBalance(){
 
 
-
-let player = Storage.getPlayer();
-
-
+let p =
+Storage.getPlayer();
 
 
 
 try{
 
 
-
 await fetch(
 
-CONFIG.API_URL + "/sync",
+CONFIG.API_URL+"/sync",
 
 {
 
 
 method:"POST",
-
 
 headers:{
 
@@ -297,12 +274,9 @@ headers:{
 
 body:JSON.stringify({
 
+id:String(p.id),
 
-id:String(player.id),
-
-
-balance:Number(player.balance)
-
+balance:Number(p.balance)
 
 })
 
@@ -313,22 +287,11 @@ balance:Number(player.balance)
 );
 
 
-
-
 }
 
 catch(e){
 
-
-console.log(
-
-"SYNC ERROR",
-
-e
-
-);
-
-
+console.log(e);
 
 }
 
@@ -342,244 +305,16 @@ e
 
 
 
+document.addEventListener(
 
+"DOMContentLoaded",
 
-// ===============================
-// UPDATE SCREEN
-// ===============================
+()=>{
 
 
-function updateScreen(){
-
-
-
-let player = Storage.getPlayer();
-
-
-
-
-
-let balance =
-
-document.getElementById(
-
-"balance"
-
-);
-
-
-
-if(balance)
-
-balance.innerText =
-
-Number(player.balance || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-
-
-
-
-let power =
-
-document.getElementById(
-
-"clickPower"
-
-);
-
-
-
-if(power)
-
-power.innerText =
-
-Number(player.clickPower || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-
-
-
-
-
-let second =
-
-document.getElementById(
-
-"secondPower"
-
-);
-
-
-
-if(second)
-
-second.innerText =
-
-Number(player.autoPower || 0)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-
-
-
-
-let crystals =
-
-document.getElementById(
-
-"crystals"
-
-);
-
-
-
-if(crystals)
-
-crystals.innerText =
-
-player.crystals || 0;
-
+startApp();
 
 
 }
 
-
-
-
-
-
-
-
-
-// ===============================
-// CLICK EFFECT
-// ===============================
-
-
-function createClickEffect(value){
-
-
-
-let el=document.createElement(
-
-"div"
-
 );
-
-
-
-el.className="click-number";
-
-
-
-el.innerText=
-
-"+"+
-
-Number(value)
-
-.toFixed(3);
-
-
-
-
-
-document.body.appendChild(el);
-
-
-
-
-
-
-setTimeout(()=>{
-
-
-el.remove();
-
-
-},800);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// AUTO INCOME
-// ===============================
-
-
-setInterval(()=>{
-
-
-let player = Storage.getPlayer();
-
-
-
-
-if(
-
-Number(player.autoPower)>0
-
-){
-
-
-
-player.balance +=
-
-Number(player.autoPower);
-
-
-
-Storage.savePlayer(player);
-
-
-
-updateScreen();
-
-
-
-syncBalance();
-
-
-
-}
-
-
-
-},1000);
-
-
-
-
-
-
-
-
-
-// START
-
-
-loadPlayer();
