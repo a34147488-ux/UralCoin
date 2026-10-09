@@ -35,7 +35,13 @@ tg.expand();
 
 
 
-let userData = null;
+let player = Storage.getPlayer();
+
+
+
+
+
+let user = null;
 
 
 
@@ -50,7 +56,7 @@ tg.initDataUnsafe.user
 
 
 
-userData = tg.initDataUnsafe.user;
+user = tg.initDataUnsafe.user;
 
 
 
@@ -63,20 +69,14 @@ userData = tg.initDataUnsafe.user;
 
 
 
-let player = Storage.getPlayer();
 
-
-
-
-
-
-if(userData){
+if(user){
 
 
 
 player.id = String(
 
-userData.id
+user.id
 
 );
 
@@ -84,28 +84,33 @@ userData.id
 
 
 
+
 player.name =
 
-userData.first_name ||
+(
+user.first_name || ""
 
-"Игрок";
+)
 
++
 
+(
+user.last_name
+?
+" "+user.last_name
+:
+""
 
-
-
-if(userData.last_name){
-
-
-
-player.name +=
-
-" " +
-
-userData.last_name;
+);
 
 
-}
+
+
+
+
+if(!player.name)
+
+player.name="Игрок";
 
 
 
@@ -114,9 +119,7 @@ userData.last_name;
 
 player.username =
 
-userData.username ||
-
-"";
+user.username || "";
 
 
 
@@ -125,12 +128,7 @@ userData.username ||
 
 player.photo =
 
-userData.photo_url ||
-
-"";
-
-
-
+user.photo_url || "";
 
 
 
@@ -139,34 +137,27 @@ userData.photo_url ||
 
 
 
-// запасной вариант
-
-if(!player.id){
 
 
 
-let savedId =
 
-localStorage.getItem(
 
-"telegram_id"
+// сохраняем Telegram ID отдельно
+
+
+if(player.id){
+
+
+localStorage.setItem(
+
+"telegram_id",
+
+player.id
 
 );
 
 
-
-if(savedId){
-
-
-player.id = savedId;
-
-
 }
-
-
-
-}
-
 
 
 
@@ -180,10 +171,18 @@ Storage.savePlayer(player);
 
 
 
-// профиль
 
 
-const avatar = document.getElementById(
+
+// ===============================
+// AVATAR
+// ===============================
+
+
+
+const img =
+
+document.getElementById(
 
 "userAvatar"
 
@@ -191,7 +190,9 @@ const avatar = document.getElementById(
 
 
 
-const letter = document.getElementById(
+const letter =
+
+document.getElementById(
 
 "avatarLetter"
 
@@ -203,30 +204,27 @@ const letter = document.getElementById(
 
 
 if(
-avatar &&
+img &&
 player.photo
 ){
 
 
 
-avatar.src = player.photo;
+img.src = player.photo;
 
 
-avatar.style.display="block";
+img.style.display="block";
 
 
 
-if(letter){
-
+if(letter)
 
 letter.style.display="none";
 
 
-}
-
-
 
 }
+
 
 
 
@@ -257,9 +255,10 @@ player.name
 
 
 
+
 console.log(
 
-"Telegram user",
+"URALcoin Telegram user",
 
 player
 
@@ -277,7 +276,9 @@ player
 
 
 
-// запуск
+
+
+// START
 
 
 document.addEventListener(
@@ -290,8 +291,8 @@ document.addEventListener(
 initTelegram();
 
 
-});
 
+});
 
 
 
