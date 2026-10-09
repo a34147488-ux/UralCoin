@@ -1,14 +1,10 @@
 // =====================================
-// URALcoin APP v1
-// Main Logic
+// URALcoin APP FIXED v2
+// Static Home + Click System
 // =====================================
 
 
-
 let player = null;
-
-
-
 
 
 
@@ -19,143 +15,80 @@ let player = null;
 
 function loadPlayer(){
 
-
-player = Storage.getPlayer();
-
+    player = Storage.getPlayer();
 
 
-
-if(!player)
-
-return;
-
+    if(!player){
+        return;
+    }
 
 
-updateUI();
+    window.player = player;
 
 
+    updateUI();
 
 }
 
 
 
 
-
-
-
-
-
 // =====================================
-// UPDATE INTERFACE
+// UPDATE UI
 // =====================================
 
 
 function updateUI(){
 
-
-
-if(!player)
-
-return;
-
+    if(!player){
+        return;
+    }
 
 
 
-
-let balance =
-
-document.getElementById(
-
-"balance"
-
-);
+    const balance =
+    document.getElementById("balance");
 
 
+    if(balance){
 
+        balance.innerText =
+        Math.floor(player.balance || 0);
 
-
-if(balance){
-
-
-
-balance.innerText =
-
-Math.floor(
-
-player.balance || 0
-
-);
-
-
-
-}
+    }
 
 
 
 
+    const power =
+    document.getElementById("clickPower");
 
 
-let power =
+    if(power){
 
-document.getElementById(
+        power.innerText =
+        player.click_power || 0.01;
 
-"clickPower"
-
-);
-
-
-
-
-
-if(power){
+    }
 
 
 
-power.innerText =
 
-player.click_power || 0.01;
+    const income =
+    document.getElementById("secondPower");
+
+
+    if(income){
+
+        income.innerText =
+        player.second_power || 0;
+
+    }
 
 
 
 }
 
-
-
-
-
-
-
-let second =
-
-document.getElementById(
-
-"secondPower"
-
-);
-
-
-
-
-
-
-if(second){
-
-
-
-second.innerText =
-
-player.second_power || 0;
-
-
-
-}
-
-
-
-
-
-
-}
 
 
 
@@ -165,86 +98,63 @@ window.updateUI = updateUI;
 
 
 
-
-
-
-
 // =====================================
-// CLICK BUTTON
+// CLICK
 // =====================================
 
 
 function clickCoin(){
 
 
-
-if(!player)
-
-return;
-
+    if(!player){
+        return;
+    }
 
 
 
-
-fetch(
-
-CONFIG.API_URL+"/click",
-
-{
+    let power =
+    Number(player.click_power || 0.01);
 
 
-method:"POST",
+
+    player.balance =
+    Number(player.balance || 0)
+    +
+    power;
 
 
-headers:{
+
+    Storage.savePlayer(player);
 
 
-"Content-Type":
 
-"application/json"
-
-
-},
-
-
-body:JSON.stringify({
-
-
-id:String(player.id)
-
-
-})
-
-
-}
-
-);
+    updateUI();
 
 
 
 
+    fetch(
+        CONFIG.API_URL + "/click",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
 
 
+            body:JSON.stringify({
+
+                id:String(player.id)
+
+            })
 
 
-player.balance +=
-
-player.click_power;
-
-
-
-Storage.savePlayer(
-
-player
-
-);
-
-
-
-updateUI();
-
-
-
+        }
+    )
+    .catch(()=>{});
 
 
 
@@ -252,6 +162,9 @@ updateUI();
 
 
 
+
+
+window.clickCoin = clickCoin;
 
 
 
@@ -263,114 +176,83 @@ updateUI();
 // =====================================
 
 
-function navigation(){
+function initNavigation(){
 
 
 
-document
+    const buttons =
+    document.querySelectorAll(".nav");
 
-.querySelectorAll(".nav")
 
-.forEach(btn=>{
 
+    const pages =
+    document.querySelectorAll(".page");
 
 
 
 
-btn.onclick=()=>{
+    buttons.forEach(button=>{
 
 
+        button.addEventListener(
+            "click",
+            ()=>{
 
 
+                const target =
+                button.dataset.page;
 
-let page =
 
-btn.dataset.page;
 
 
+                pages.forEach(page=>{
 
+                    page.classList.remove(
+                        "active"
+                    );
 
+                });
 
 
 
-document
 
-.querySelectorAll(".page")
+                const open =
+                document.getElementById(target);
 
-.forEach(p=>{
 
 
-p.classList.remove(
+                if(open){
 
-"active"
+                    open.classList.add(
+                        "active"
+                    );
 
-);
+                }
 
 
-});
 
 
+                buttons.forEach(btn=>{
 
+                    btn.classList.remove(
+                        "active"
+                    );
 
+                });
 
 
 
-document
+                button.classList.add(
+                    "active"
+                );
 
-.getElementById(page)
 
-.classList.add(
 
-"active"
+            }
+        );
 
-);
 
-
-
-
-
-
-
-
-document
-
-.querySelectorAll(".nav")
-
-.forEach(n=>{
-
-
-n.classList.remove(
-
-"active"
-
-);
-
-
-});
-
-
-
-
-
-
-btn.classList.add(
-
-"active"
-
-);
-
-
-
-
-
-};
-
-
-
-
-});
-
-
+    });
 
 
 
@@ -381,196 +263,43 @@ btn.classList.add(
 
 
 
-
-
-
 // =====================================
-// NEW ROULETTE
-// =====================================
-
-
-function newRoulette(){
-
-
-
-let button =
-
-document.getElementById(
-
-"openRoulette"
-
-);
-
-
-
-
-
-
-if(button){
-
-
-
-button.onclick=()=>{
-
-
-
-document
-
-.querySelectorAll(".page")
-
-.forEach(p=>{
-
-
-p.classList.remove(
-
-"active"
-
-);
-
-
-});
-
-
-
-
-
-
-document
-
-.getElementById(
-
-"roulette"
-
-)
-
-.classList.add(
-
-"active"
-
-);
-
-
-
-
-
-
-
-
-document
-
-.querySelectorAll(".nav")
-
-.forEach(n=>{
-
-
-n.classList.remove(
-
-"active"
-
-);
-
-
-});
-
-
-
-
-
-let nav =
-
-document.querySelector(
-
-'[data-page="roulette"]'
-
-);
-
-
-
-
-
-if(nav)
-
-nav.classList.add(
-
-"active"
-
-);
-
-
-
-};
-
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================
-// START
+// TELEGRAM READY START
 // =====================================
 
 
 document.addEventListener(
-
 "DOMContentLoaded",
-
 ()=>{
 
 
-
-navigation();
-
-
-
-newRoulette();
+    initNavigation();
 
 
 
-loadPlayer();
+    loadPlayer();
 
 
 
 
-
-
-let click =
-
-document.getElementById(
-
-"clickButton"
-
-);
+    const clickButton =
+    document.getElementById(
+        "clickButton"
+    );
 
 
 
 
+    if(clickButton){
 
 
-if(click){
+        clickButton.addEventListener(
+            "click",
+            clickCoin
+        );
 
 
-
-click.onclick=
-
-clickCoin;
-
-
-
-}
-
-
+    }
 
 
 
