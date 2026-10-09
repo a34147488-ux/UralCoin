@@ -1,6 +1,6 @@
 /* ===================================
-URALcoin STYLE v17
-Winter Clean Design
+URALcoin STYLE v18
+Purple Blue Clean UI
 =================================== */
 
 
@@ -21,26 +21,40 @@ body{
 
 margin:0;
 
-padding:0;
-
 width:100%;
 
 height:100%;
-
-background:#07111f;
-
-color:white;
 
 overflow:hidden;
 
 touch-action:manipulation;
 
--webkit-user-select:none;
-
-user-select:none;
+-webkit-text-size-adjust:100%;
 
 }
 
+
+
+body{
+
+background:
+
+linear-gradient(
+
+160deg,
+
+#7b2cff,
+
+#3b0b8f 45%,
+
+#12002f
+
+);
+
+
+color:white;
+
+}
 
 
 
@@ -51,8 +65,6 @@ height:100vh;
 
 overflow:hidden;
 
-position:relative;
-
 padding-bottom:90px;
 
 }
@@ -61,62 +73,10 @@ padding-bottom:90px;
 
 
 
-.city-bg{
-
-position:fixed;
-
-inset:0;
-
-background:
-
-linear-gradient(
-180deg,
-rgba(0,0,0,.35),
-rgba(0,0,0,.75)
-),
-
-url("city.jpg");
-
-
-background-size:cover;
-
-background-position:center;
-
-z-index:-2;
-
-}
-
-
-
-
-
-
-
+.city-bg,
 .snow{
 
-position:fixed;
-
-top:0;
-
-left:0;
-
-right:0;
-
-height:120px;
-
-font-size:35px;
-
-letter-spacing:25px;
-
-opacity:.8;
-
-animation:snowMove 12s linear infinite;
-
-pointer-events:none;
-
-z-index:2;
-
-white-space:nowrap;
+display:none!important;
 
 }
 
@@ -124,26 +84,39 @@ white-space:nowrap;
 
 
 
-@keyframes snowMove{
 
 
-from{
+.content{
 
-transform:translateY(-40px);
+height:calc(100vh - 150px);
+
+padding:15px;
+
+overflow-y:auto;
+
+-webkit-overflow-scrolling:touch;
+
+}
+
+
+
+
+
+.page{
+
+display:none;
+
+min-height:100%;
 
 }
 
 
 
-to{
+.page.active{
 
-transform:translateY(100vh);
-
-}
-
+display:block;
 
 }
-
 
 
 
@@ -154,7 +127,7 @@ transform:translateY(100vh);
 
 .header{
 
-padding:18px;
+padding:20px;
 
 }
 
@@ -170,9 +143,7 @@ height:55px;
 
 border-radius:50%;
 
-overflow:hidden;
-
-background:#ffd900;
+background:#246bff;
 
 display:flex;
 
@@ -180,11 +151,9 @@ align-items:center;
 
 justify-content:center;
 
-font-size:25px;
+overflow:hidden;
 
 font-weight:bold;
-
-color:#5a3b00;
 
 }
 
@@ -210,59 +179,16 @@ object-fit:cover;
 
 
 
-.content{
-
-height:calc(100vh - 150px);
-
-padding:15px;
-
-overflow:hidden;
-
-}
-
-
-
-
-
-
-
-.page{
-
-display:none;
-
-height:100%;
-
-}
-
-
-
-
-
-.page.active{
-
-display:block;
-
-}
-
-
-
-
-
-
-
-
-
-/* БАЛАНС */
+/* BALANCE */
 
 
 .balance-box{
 
-
-padding:10px;
-
 background:transparent;
 
 border:none;
+
+padding:10px;
 
 }
 
@@ -274,15 +200,15 @@ border:none;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-gap:12px;
+justify-content:center;
 
-font-size:40px;
+gap:10px;
 
-font-weight:800;
+font-size:38px;
+
+font-weight:900;
 
 }
 
@@ -290,29 +216,40 @@ font-weight:800;
 
 
 
+
 .coin-balance{
 
-width:36px;
+width:28px;
 
-height:36px;
+height:28px;
 
 border-radius:50%;
 
-background:#ffea00;
 
-color:#5b3b00;
+background:
 
-display:flex;
+radial-gradient(
 
-align-items:center;
+circle at 30% 30%,
 
-justify-content:center;
+#8be9ff,
 
-font-weight:900;
+#006cff
+
+);
+
+
+
+color:white;
+
+font-size:15px;
+
+font-weight:bold;
+
 
 box-shadow:
 
-0 0 15px #ffea00;
+0 0 15px #008cff;
 
 }
 
@@ -327,15 +264,11 @@ box-shadow:
 .click-power,
 .second-power{
 
-
 text-align:center;
 
-margin-top:12px;
-
-color:#ddd;
+margin-top:10px;
 
 }
-
 
 
 
@@ -368,6 +301,9 @@ display:none;
 
 
 
+
+
+
 .main-coin{
 
 width:170px;
@@ -375,6 +311,7 @@ width:170px;
 height:170px;
 
 border-radius:50%;
+
 
 border:none;
 
@@ -385,28 +322,32 @@ radial-gradient(
 
 circle at 35% 30%,
 
-#fff8a6,
+#74e8ff,
 
-#ffd000 55%,
+#006dff 55%,
 
-#d89500
+#003b9e
 
 );
 
 
+
+color:white;
+
+
 font-size:65px;
 
-font-weight:bold;
-
-color:#553500;
+font-weight:900;
 
 
 box-shadow:
 
-0 0 25px rgba(255,215,0,.5);
+0 0 35px #008cff;
 
 
 }
+
+
 
 
 
@@ -424,25 +365,24 @@ transform:scale(.94);
 
 
 
+
 .panel{
-
-
-height:100%;
 
 background:
 
-rgba(0,0,0,.35);
+rgba(0,0,0,.25);
 
 border-radius:25px;
 
 padding:18px;
 
-overflow-y:auto;
-
--webkit-overflow-scrolling:touch;
+min-height:100%;
 
 
 }
+
+
+
 
 
 
@@ -450,9 +390,12 @@ overflow-y:auto;
 
 .more-scroll{
 
-padding-bottom:130px;
+overflow-y:auto;
+
+padding-bottom:120px;
 
 }
+
 
 
 
@@ -469,21 +412,22 @@ button,
 
 border:none;
 
-border-radius:16px;
+border-radius:18px;
 
 padding:14px;
 
-margin:6px 0;
+margin:7px 0;
 
 background:
 
-rgba(255,215,0,.18);
+#246bff;
+
 
 color:white;
 
-font-weight:bold;
-
 font-size:15px;
+
+font-weight:bold;
 
 }
 
@@ -506,15 +450,19 @@ transform:scale(.96);
 
 input{
 
+
 width:100%;
 
 padding:14px;
 
-border-radius:14px;
+border-radius:15px;
 
 border:none;
 
-background:#111b2d;
+background:
+
+rgba(255,255,255,.15);
+
 
 color:white;
 
@@ -541,43 +489,18 @@ align-items:center;
 
 gap:12px;
 
+background:
+
+rgba(255,255,255,.12);
+
+
+border-radius:20px;
+
 padding:14px;
 
 margin:10px 0;
 
-background:
-
-rgba(255,255,255,.08);
-
-border-radius:20px;
-
-border:1px solid rgba(255,215,0,.25);
-
-}
-
-
-
-
-
-.top-player:nth-child(1){
-
-border-color:#ffd700;
-
-}
-
-
-
-.top-player:nth-child(2){
-
-border-color:#c0c0c0;
-
-}
-
-
-
-.top-player:nth-child(3){
-
-border-color:#cd7f32;
+border:1px solid rgba(255,255,255,.25);
 
 }
 
@@ -595,19 +518,17 @@ height:55px;
 
 border-radius:50%;
 
+background:#246bff;
+
 display:flex;
 
 align-items:center;
 
 justify-content:center;
 
-background:#ffd700;
-
-color:#5a3b00;
+overflow:hidden;
 
 font-weight:bold;
-
-overflow:hidden;
 
 }
 
@@ -628,32 +549,10 @@ object-fit:cover;
 
 
 
-.upgrade-card{
-
-
-background:
-
-rgba(255,255,255,.07);
-
-
-border-radius:20px;
-
-padding:15px;
-
-margin:12px 0;
-
-
-}
-
-
-
-
-
-
-
 
 
 .bottom-nav{
+
 
 position:fixed;
 
@@ -663,7 +562,9 @@ left:0;
 
 right:0;
 
+
 height:85px;
+
 
 display:flex;
 
@@ -671,9 +572,11 @@ gap:5px;
 
 padding:10px;
 
+
 background:
 
-rgba(0,0,0,.85);
+rgba(20,0,50,.9);
+
 
 z-index:100;
 
@@ -689,7 +592,7 @@ flex:1;
 
 font-size:12px;
 
-padding:10px 3px;
+padding:10px 2px;
 
 }
 
@@ -699,9 +602,7 @@ padding:10px 3px;
 
 .nav.active{
 
-background:#ffda00;
-
-color:#553500;
+background:#4d8dff;
 
 }
 
@@ -714,30 +615,23 @@ color:#553500;
 
 .click-number{
 
-
 position:fixed;
 
 font-size:26px;
 
-color:#ffd700;
+color:#7de4ff;
 
 font-weight:bold;
 
 pointer-events:none;
 
-animation:clickFly .7s forwards;
-
-z-index:200;
-
+animation:fly .7s forwards;
 
 }
 
 
 
-
-
-@keyframes clickFly{
-
+@keyframes fly{
 
 from{
 
@@ -748,7 +642,6 @@ transform:translateY(0);
 }
 
 
-
 to{
 
 opacity:0;
@@ -756,6 +649,5 @@ opacity:0;
 transform:translateY(-100px);
 
 }
-
 
 }
