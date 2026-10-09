@@ -1237,5 +1237,767 @@ transform:scale(.95);
 
 
 }
+/* =====================================
+ROULETTE
+===================================== */
 
+
+.roulette-panel{
+
+
+text-align:center;
+
+
+}
+
+
+
+
+.wheel-box{
+
+
+width:330px;
+
+
+height:330px;
+
+
+margin:25px auto;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+position:relative;
+
+
+}
+
+
+
+
+
+#rouletteWheel{
+
+
+width:290px;
+
+
+height:290px;
+
+
+
+border-radius:50%;
+
+
+
+position:relative;
+
+
+
+background:
+
+
+conic-gradient(
+
+#009900 0deg 9.7deg,
+
+#111 9.7deg 19.4deg,
+
+#d00000 19.4deg 29.1deg,
+
+#111 29.1deg 38.8deg,
+
+#d00000 38.8deg 48.5deg,
+
+#111 48.5deg 58.2deg,
+
+#d00000 58.2deg 67.9deg,
+
+#111 67.9deg 77.6deg,
+
+#d00000 77.6deg 87.3deg,
+
+#111 87.3deg 97deg,
+
+#d00000 97deg 106.7deg,
+
+#111 106.7deg 116.4deg,
+
+#d00000 116.4deg 126.1deg,
+
+#111 126.1deg 135.8deg,
+
+#d00000 135.8deg 145.5deg,
+
+#111 145.5deg 155.2deg,
+
+#d00000 155.2deg 164.9deg,
+
+#111 164.9deg 174.6deg,
+
+#d00000 174.6deg 184.3deg,
+
+#111 184.3deg 194deg,
+
+#d00000 194deg 203.7deg,
+
+#111 203.7deg 213.4deg,
+
+#d00000 213.4deg 223.1deg,
+
+#111 223.1deg 232.8deg,
+
+#d00000 232.8deg 242.5deg,
+
+#111 242.5deg 252.2deg,
+
+#d00000 252.2deg 261.9deg,
+
+#111 261.9deg 271.6deg,
+
+#d00000 271.6deg 281.3deg,
+
+#111 281.3deg 291deg,
+
+#d00000 291deg 300.7deg,
+
+#111 300.7deg 310.4deg,
+
+#d00000 310.4deg 320.1deg,
+
+#111 320.1deg 329.8deg,
+
+#d00000 329.8deg 339.5deg,
+
+#111 339.5deg 349.2deg,
+
+#d00000 349.2deg 360deg
+
+);
+
+
+
+border:
+
+8px solid rgba(255,255,255,.7);
+
+
+
+box-shadow:
+
+
+0 0 50px #00d9ff;
+
+
+
+transition:
+
+transform 6s cubic-bezier(.15,.8,.25,1);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* центр колеса */
+
+
+#rouletteWheel:after{
+
+
+content:"U";
+
+
+position:absolute;
+
+
+
+left:50%;
+
+
+top:50%;
+
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+width:70px;
+
+
+height:70px;
+
+
+
+border-radius:50%;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+background:
+
+radial-gradient(
+
+circle,
+
+white,
+
+#00aaff
+
+);
+
+
+
+color:white;
+
+
+font-size:40px;
+
+
+font-weight:900;
+
+
+
+border:
+
+4px solid white;
+
+
+
+box-shadow:
+
+
+0 0 30px cyan;
+
+
+
+}
+
+
+
+
+
+
+
+.wheel-number{
+
+
+position:absolute;
+
+
+width:34px;
+
+
+height:34px;
+
+
+
+margin-left:-17px;
+
+
+margin-top:-17px;
+
+
+
+border-radius:50%;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+font-weight:900;
+
+
+font-size:14px;
+
+
+
+color:white;
+
+
+
+z-index:3;
+
+
+
+background:
+
+rgba(0,0,0,.7);
+
+
+
+border:
+
+2px solid white;
+
+
+
+}
+
+
+
+
+
+.wheel-number.red{
+
+
+background:#c00000;
+
+
+}
+
+
+
+.wheel-number.black{
+
+
+background:#050505;
+
+
+}
+
+
+
+.wheel-number.green{
+
+
+background:#009900;
+
+
+}
+
+
+
+
+
+.wheel-number.winner{
+
+
+animation:
+
+winner 1s infinite;
+
+
+
+}
+
+
+
+
+
+@keyframes winner{
+
+
+50%{
+
+
+transform:scale(1.4);
+
+
+box-shadow:
+
+0 0 35px gold;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+BET BUTTONS
+===================================== */
+
+
+.bets{
+
+
+display:grid;
+
+
+grid-template-columns:repeat(2,1fr);
+
+
+gap:12px;
+
+
+margin:20px 0;
+
+
+
+}
+
+
+
+.bets button,
+
+
+#rouletteStart,
+
+
+#activatePromo,
+
+
+#copyReferral,
+
+
+#transferButton{
+
+
+height:55px;
+
+
+border-radius:20px;
+
+
+border:
+
+1px solid rgba(255,255,255,.5);
+
+
+
+background:
+
+linear-gradient(
+
+145deg,
+
+rgba(0,200,255,.7),
+
+rgba(0,50,255,.8)
+
+);
+
+
+
+color:white;
+
+
+font-size:17px;
+
+
+font-weight:900;
+
+
+
+}
+
+
+
+
+
+#rouletteAmount,
+
+
+input{
+
+
+background:
+
+rgba(0,0,0,.35);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.4);
+
+
+
+color:white;
+
+
+
+height:55px;
+
+
+border-radius:20px;
+
+
+padding:0 15px;
+
+
+font-size:18px;
+
+
+}
+
+
+
+
+
+/* =====================================
+HISTORY
+===================================== */
+
+
+#rouletteHistory{
+
+
+margin-top:15px;
+
+
+}
+
+
+
+.history-row{
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+
+padding:12px;
+
+
+margin:8px 0;
+
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.2);
+
+
+
+}
+
+
+
+
+
+/* =====================================
+TOP
+===================================== */
+
+
+.top-player{
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:space-between;
+
+
+
+padding:15px;
+
+
+margin:10px 0;
+
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.25);
+
+
+
+}
+
+
+
+
+.top-player:nth-child(1){
+
+
+box-shadow:
+
+0 0 40px gold;
+
+
+border-color:gold;
+
+
+}
+
+
+
+.top-player:nth-child(2){
+
+
+box-shadow:
+
+0 0 40px red;
+
+
+border-color:red;
+
+
+}
+
+
+
+.top-player:nth-child(3){
+
+
+box-shadow:
+
+0 0 40px lime;
+
+
+border-color:#00ff66;
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+CHANNEL
+===================================== */
+
+
+.channel-card{
+
+
+display:block;
+
+
+text-align:center;
+
+
+
+padding:25px;
+
+
+margin:20px 0;
+
+
+
+border-radius:30px;
+
+
+
+text-decoration:none;
+
+
+
+color:white;
+
+
+
+font-size:22px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.3);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+box-shadow:
+
+
+0 0 30px gold;
+
+
+
+}
+
+
+
+
+
+
+.channel-card:hover{
+
+
+box-shadow:
+
+
+0 0 60px gold;
+
+
+}
 
