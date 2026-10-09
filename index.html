@@ -7,7 +7,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>UralCoin</title>
+
+<title>URALcoin</title>
 
 
 <link rel="stylesheet" href="style.css">
@@ -27,17 +28,43 @@
 <div class="app">
 
 
-<div class="city-bg"></div>
+<div class="background">
 
 
+<div class="stars"></div>
 
-<header class="header">
 
-<div class="logo">
-UralCoin
+<div class="city"></div>
+
+
 </div>
 
+
+
+
+
+<!-- =====================
+HEADER
+===================== -->
+
+
+<header class="top-header">
+
+
+<div class="logo">
+
+
+URAL<span>coin</span>
+
+
+</div>
+
+
+
 </header>
+
+
+
 
 
 
@@ -46,26 +73,47 @@ UralCoin
 
 
 
-<!-- ======================
-ГЛАВНАЯ
-====================== -->
+
+
+
+
+<!-- =====================
+MAIN PAGE
+===================== -->
 
 
 <section class="page active" id="game">
 
 
 
-<div class="balance-box">
 
 
 
-<div class="balance">
 
-<div class="coin-balance">
+<div class="wallet-card">
+
+
+
+<div class="wallet-title">
+
+Ваш баланс
+
+</div>
+
+
+
+
+<div class="wallet-balance">
+
+
+<div class="coin-icon">
+
 
 U
 
+
 </div>
+
 
 
 <span id="balance">
@@ -81,7 +129,15 @@ U
 
 
 
-<div class="crystals">
+
+
+
+<div class="wallet-info">
+
+
+
+<div>
+
 
 💎
 
@@ -92,22 +148,14 @@ U
 </span>
 
 
-<small>
-
-кристаллы
-
-</small>
-
-
 </div>
 
 
 
+<div>
 
 
-<div class="click-power">
-
-+
+⚡
 
 <span id="clickPower">
 
@@ -115,7 +163,9 @@ U
 
 </span>
 
-за клик
+
+</div>
+
 
 
 </div>
@@ -123,10 +173,147 @@ U
 
 
 
-<div class="second-power">
 
 
-В секунду:
+</div>
+
+
+
+
+
+
+
+
+
+<!-- NEW BUTTON -->
+
+
+<div class="roulette-new" id="newRouletteButton">
+
+
+<div class="new-light">
+
+
+NEW
+
+
+</div>
+
+
+
+
+
+<div class="roulette-mini">
+
+
+<div>
+
+
+0
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="roulette-text">
+
+
+РУЛЕТКА
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MAIN CLICK -->
+
+
+<div class="click-area">
+
+
+
+<div class="click-shadow"></div>
+
+
+
+<button
+
+id="clickButton"
+
+class="main-coin"
+
+>
+
+
+U
+
+
+</button>
+
+
+
+
+
+<div class="click-info">
+
+
+За клик:
+
+<b id="clickValue">
+
+0.010
+
+</b>
+
+
+U
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="income-card">
+
+
+<div>
+
+
+В секунду
+
+
+</div>
+
 
 <b id="secondPower">
 
@@ -139,79 +326,6 @@ U
 
 
 
-</div>
-
-
-
-
-
-
-<!-- NEW РУЛЕТКА -->
-
-
-<div 
-class="new-roulette-card"
-id="newRouletteButton"
->
-
-
-
-<div class="mini-wheel">
-
-
-<span>
-
-0
-
-</span>
-
-
-</div>
-
-
-
-<div class="new-badge">
-
-NEW
-
-</div>
-
-
-
-<div class="new-title">
-
-РУЛЕТКА
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="fire-zone">
-
-
-<button
-
-id="clickButton"
-
-class="main-coin"
-
->
-
-U
-
-</button>
-
-
-</div>
-
 
 
 
@@ -222,23 +336,33 @@ U
 
 
 
-<!-- ======================
-КОД
-====================== -->
+
+
+
+
+
+
+<!-- =====================
+PROMO CODE
+===================== -->
 
 
 <section class="page" id="code">
 
 
-<div class="panel">
+
+<div class="glass-card">
 
 
 
 <h2>
 
+
 Персональный код
 
+
 </h2>
+
 
 
 
@@ -255,15 +379,19 @@ readonly
 
 
 
+
+
 <button
 
-class="gold-button"
+class="main-button"
 
 id="copyCode"
 
 >
 
-Скопировать код
+
+Скопировать
+
 
 </button>
 
@@ -272,9 +400,11 @@ id="copyCode"
 
 
 
-<div class="info">
+<div class="stat-box">
 
-Активировали:
+
+Приглашено:
+
 
 <b id="activatedCount">
 
@@ -282,15 +412,19 @@ id="copyCode"
 
 </b>
 
+
 </div>
 
 
 
 
 
-<div class="info">
+
+<div class="stat-box">
+
 
 Получено:
+
 
 <b id="promoEarn">
 
@@ -298,7 +432,11 @@ id="copyCode"
 
 </b>
 
+
 </div>
+
+
+
 
 
 
@@ -309,11 +447,18 @@ id="copyCode"
 
 
 
+
+
+
 <h2>
+
 
 Активировать код
 
+
 </h2>
+
+
 
 
 
@@ -324,22 +469,30 @@ id="promoInput"
 
 placeholder="Введите код"
 
+
 >
+
+
+
 
 
 
 
 <button
 
-class="gold-button"
+class="main-button"
 
 id="activatePromo"
 
 >
 
+
 Активировать
 
+
 </button>
+
+
 
 
 
@@ -347,28 +500,30 @@ id="activatePromo"
 </div>
 
 
+
+
 </section>
-
-
-
-
-
-<!-- ======================
-ПЕРЕВОДЫ
-====================== -->
+<!-- =====================
+TRANSFER
+===================== -->
 
 
 <section class="page" id="transfer">
 
 
-<div class="panel">
+
+<div class="glass-card">
+
 
 
 <h2>
 
-Переводы
+Перевод U
 
 </h2>
+
+
+
 
 
 
@@ -379,6 +534,11 @@ id="transferName"
 placeholder="@username"
 
 >
+
+
+
+
+
 
 
 
@@ -394,52 +554,94 @@ placeholder="Количество U"
 
 
 
+
+
+
+
+
 <button
 
-class="gold-button"
+class="main-button"
 
 id="transferButton"
 
 >
 
+
 Перевести
 
+
 </button>
+
+
+
+
 
 
 
 </div>
 
 
+
 </section>
-<!-- ======================
-ТОП ИГРОКОВ
-====================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================
+TOP
+===================== -->
 
 
 <section class="page" id="tops">
 
 
-<div class="panel">
+
+
+
+<div class="glass-card">
+
 
 
 <h2>
 
 Топ игроков
 
+
 </h2>
+
+
+
+
 
 
 
 <div id="topList">
 
+
 Загрузка...
 
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 
-</div>
 
 
 </section>
@@ -449,21 +651,32 @@ id="transferButton"
 
 
 
-<!-- ======================
-РУЛЕТКА
-====================== -->
+
+
+
+
+
+
+<!-- =====================
+ROULETTE
+===================== -->
 
 
 <section class="page" id="roulette">
 
 
-<div class="panel roulette-panel">
+
+
+
+<div class="roulette-card">
 
 
 
 <h2>
 
-🎡 Рулетка
+
+Рулетка 0-36
+
 
 </h2>
 
@@ -471,7 +684,10 @@ id="transferButton"
 
 
 
-<div class="roulette-timer">
+
+
+
+<div class="roulette-time">
 
 
 Раунд:
@@ -482,7 +698,7 @@ id="transferButton"
 
 </b>
 
-секунд
+сек
 
 
 </div>
@@ -492,15 +708,24 @@ id="transferButton"
 
 
 
-<div class="roulette-wheel-box">
 
 
 
-<div class="roulette-arrow">
+<div class="wheel-area">
+
+
+
+
+
+<div class="wheel-arrow">
+
 
 ▼
 
+
 </div>
+
+
 
 
 
@@ -510,19 +735,28 @@ id="transferButton"
 
 
 
-<div class="roulette-center">
+<div class="wheel-center">
 
-0
+
+U
+
+
+</div>
+
+
 
 </div>
 
 
+
+
+
+
+
+
 </div>
 
 
-
-
-</div>
 
 
 
@@ -542,25 +776,12 @@ id="transferButton"
 
 
 
-<!-- СУММА СТАВКИ СВЕРХУ -->
-
-<input
-
-id="rouletteAmount"
-
-type="number"
-
-placeholder="Сумма ставки"
-
->
 
 
 
+<div class="bets">
 
-<!-- ВЫБОР СТАВКИ -->
 
-
-<div class="roulette-bets">
 
 
 
@@ -572,9 +793,13 @@ data-bet="1-18"
 
 >
 
+
 1 - 18
 
+
 </button>
+
+
 
 
 
@@ -587,9 +812,13 @@ data-bet="13-24"
 
 >
 
+
 13 - 24
 
+
 </button>
+
+
 
 
 
@@ -602,9 +831,14 @@ data-bet="25-36"
 
 >
 
+
 25 - 36
 
+
 </button>
+
+
+
 
 
 
@@ -617,9 +851,15 @@ data-bet="19-36"
 
 >
 
+
 19 - 36
 
+
 </button>
+
+
+
+
 
 
 
@@ -632,9 +872,13 @@ data-bet="even"
 
 >
 
+
 Чёт
 
+
 </button>
+
+
 
 
 
@@ -647,9 +891,15 @@ data-bet="odd"
 
 >
 
+
 Нечёт
 
+
 </button>
+
+
+
+
 
 
 
@@ -661,17 +911,46 @@ data-bet="odd"
 
 
 
+
+
+<input
+
+
+id="rouletteAmount"
+
+
+type="number"
+
+
+placeholder="Сумма ставки"
+
+
+
+>
+
+
+
+
+
+
+
+
+
 <button
 
-class="gold-button"
+class="main-button"
 
 id="rouletteStart"
 
 >
 
+
 Сделать ставку
 
+
 </button>
+
+
 
 
 
@@ -680,7 +959,9 @@ id="rouletteStart"
 
 <div id="rouletteMessage">
 
+
 Ожидание ставок...
+
 
 </div>
 
@@ -690,34 +971,52 @@ id="rouletteStart"
 
 
 
-<!-- ИСТОРИЯ -->
 
 
-<div class="roulette-history-box">
+<div class="roulette-history">
+
 
 
 <h3>
 
-История раундов
+
+История
+
 
 </h3>
 
 
 
+
+
+
 <div id="rouletteHistory">
+
 
 Загрузка...
 
-</div>
-
-
 
 </div>
 
 
 
 
+
+
+
 </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
 
 
 </section>
@@ -729,22 +1028,34 @@ id="rouletteStart"
 
 
 
-<!-- ======================
-ЕЩЁ
-====================== -->
+
+
+
+
+
+
+<!-- =====================
+MORE
+===================== -->
 
 
 <section class="page" id="more">
 
 
 
-<div class="panel">
+
+
+<div class="glass-card">
+
+
 
 
 
 <h2>
 
+
 Ещё
+
 
 </h2>
 
@@ -752,9 +1063,12 @@ id="rouletteStart"
 
 
 
+
+
+
 <a
 
-class="gold-button"
+class="main-button"
 
 href="https://t.me/+NyqTkXAU-H5hNDky"
 
@@ -762,28 +1076,13 @@ target="_blank"
 
 >
 
-Канал UralCoin
+
+Канал
+
 
 </a>
 
 
-
-
-
-
-<a
-
-class="gold-button premium"
-
-href="https://t.me/BuysStarsBot?start=8265611469"
-
-target="_blank"
-
->
-
-Premium
-
-</a>
 
 
 
@@ -792,15 +1091,19 @@ Premium
 
 <button
 
-class="menu-card"
+class="menu-button"
 
 id="historyBtn"
 
 >
 
+
 История переводов
 
+
 </button>
+
+
 
 
 
@@ -809,15 +1112,19 @@ id="historyBtn"
 
 <button
 
-class="menu-card"
+class="menu-button"
 
 id="apiBtn"
 
 >
 
+
 API ключ
 
+
 </button>
+
+
 
 
 
@@ -826,7 +1133,9 @@ API ключ
 
 <h2>
 
+
 Улучшения
+
 
 </h2>
 
@@ -834,31 +1143,34 @@ API ключ
 
 
 
+
+
 <div id="upgradeList">
 
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
-
-
-</div>
 
 
 
 </section>
-
-
-
-
-
-
-</main>
-<!-- ======================
-НИЖНЯЯ НАВИГАЦИЯ
-====================== -->
+<!-- =====================
+BOTTOM NAVIGATION
+===================== -->
 
 
 <nav class="bottom-nav">
+
+
 
 
 
@@ -870,9 +1182,14 @@ data-page="game"
 
 >
 
+
 Главная
 
+
 </button>
+
+
+
 
 
 
@@ -886,9 +1203,14 @@ data-page="code"
 
 >
 
+
 Код
 
+
 </button>
+
+
+
 
 
 
@@ -902,9 +1224,14 @@ data-page="transfer"
 
 >
 
+
 Перевод
 
+
 </button>
+
+
+
 
 
 
@@ -918,9 +1245,14 @@ data-page="tops"
 
 >
 
+
 Топ
 
+
 </button>
+
+
+
 
 
 
@@ -934,9 +1266,14 @@ data-page="roulette"
 
 >
 
+
 Рулетка
 
+
 </button>
+
+
+
 
 
 
@@ -950,13 +1287,27 @@ data-page="more"
 
 >
 
+
 Ещё
+
 
 </button>
 
 
 
+
+
+
+
 </nav>
+
+
+
+
+
+
+</main>
+
 
 
 
@@ -969,9 +1320,13 @@ data-page="more"
 
 
 
-<!-- ======================
+
+
+
+<!-- =====================
 SCRIPTS
-====================== -->
+===================== -->
+
 
 
 <script src="config.js"></script>
@@ -986,7 +1341,6 @@ SCRIPTS
 <script src="telegram.js"></script>
 
 
-
 <script src="upgrade.js"></script>
 
 
@@ -999,23 +1353,134 @@ SCRIPTS
 <script src="transfer.js"></script>
 
 
-
-<script src="app.js"></script>
-
-
 <script src="top.js"></script>
 
 
 <script src="effects.js"></script>
 
 
-
 <script src="roulette.js"></script>
+
+
+<script src="app.js"></script>
+
+
+
+
+
+
+
+<script>
+
+
+// NEW рулетка кнопка
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+const button = document.getElementById(
+"newRouletteButton"
+);
+
+
+
+if(button){
+
+
+button.onclick=()=>{
+
+
+document
+
+.querySelectorAll(".page")
+
+.forEach(p=>{
+
+
+p.classList.remove("active");
+
+
+});
+
+
+
+
+
+
+document
+
+.getElementById("roulette")
+
+.classList.add("active");
+
+
+
+
+
+
+
+document
+
+.querySelectorAll(".nav")
+
+.forEach(n=>{
+
+
+n.classList.remove("active");
+
+
+});
+
+
+
+
+
+
+const nav = document.querySelector(
+
+'.nav[data-page="roulette"]'
+
+);
+
+
+
+if(nav){
+
+nav.classList.add("active");
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+</script>
+
+
+
 
 
 
 
 
 </body>
+
 
 </html>
