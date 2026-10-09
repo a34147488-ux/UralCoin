@@ -1,12 +1,10 @@
 // ===================================
-// URALcoin CONFIG v16
+// URALcoin CONFIG v17 FINAL
 // Railway API Connection
 // ===================================
 
 
-
 const CONFIG = {
-
 
 
 API_URL:
@@ -15,19 +13,21 @@ API_URL:
 
 
 
+// совместимость со всеми файлами
+
+API:
+
+"https://uralcoin-production-3504.up.railway.app",
+
 
 
 VERSION:
 
-"v16-stable"
-
+"v17-final"
 
 
 
 };
-
-
-
 
 
 
@@ -44,9 +44,8 @@ const BOT_USERNAME =
 
 window.CONFIG = CONFIG;
 
+
 window.BOT_USERNAME = BOT_USERNAME;
-
-
 
 
 
@@ -59,6 +58,6 @@ CONFIG.VERSION,
 
 "SERVER:",
 
-CONFIG.API_URL
+CONFIG.API
 
 );
