@@ -1,8 +1,7 @@
 /* ===================================
-URALcoin STYLE v24 FINAL
-MAIN + NEW ROULETTE
+URALcoin STYLE v25 FINAL
+NO CONFLICT VERSION
 =================================== */
-
 
 
 *{
@@ -13,11 +12,11 @@ box-sizing:border-box;
 
 
 
-html,body{
+html,
+body{
 
 
 margin:0;
-
 
 padding:0;
 
@@ -28,7 +27,12 @@ width:100%;
 min-height:100%;
 
 
-font-family:Arial,sans-serif;
+font-family:
+
+Arial,
+
+sans-serif;
+
 
 
 background:#050505;
@@ -46,27 +50,45 @@ overflow-x:hidden;
 
 
 
+body{
+
+
+-webkit-tap-highlight-color:transparent;
+
+
+}
+
+
+
+
+
 
 .app{
-
-
-min-height:100vh;
 
 
 position:relative;
 
 
+min-height:100vh;
+
+
+overflow:hidden;
+
+
+
 background:
+
 
 radial-gradient(
 
 circle at top,
 
-#222,
+#252525,
 
-#050505 55%
+#050505 60%
 
 );
+
 
 
 }
@@ -87,21 +109,23 @@ position:fixed;
 inset:0;
 
 
+
 background:
+
 
 linear-gradient(
 
 180deg,
 
-rgba(0,0,0,.2),
+rgba(255,215,0,.08),
 
-rgba(0,0,0,.8)
+rgba(0,0,0,.85)
 
 );
 
 
-z-index:-2;
 
+z-index:-2;
 
 
 }
@@ -111,10 +135,8 @@ z-index:-2;
 
 
 
-
-
 /* ===============================
-PAGES
+CONTENT
 =============================== */
 
 
@@ -125,7 +147,8 @@ PAGES
 width:100%;
 
 
-padding-bottom:110px;
+padding-bottom:120px;
+
 
 
 }
@@ -146,6 +169,8 @@ width:100%;
 
 
 
+
+
 .page.active{
 
 
@@ -154,7 +179,8 @@ display:block;
 
 animation:
 
-pageShow .3s ease;
+showPage .3s ease;
+
 
 
 }
@@ -163,7 +189,8 @@ pageShow .3s ease;
 
 
 
-@keyframes pageShow{
+
+@keyframes showPage{
 
 
 from{
@@ -172,7 +199,7 @@ from{
 opacity:0;
 
 
-transform:translateY(15px);
+transform:translateY(20px);
 
 
 }
@@ -200,8 +227,6 @@ transform:translateY(0);
 
 
 
-
-
 /* ===============================
 BALANCE
 =============================== */
@@ -214,26 +239,29 @@ BALANCE
 width:92%;
 
 
-margin:15px auto;
-
-
-padding:20px;
+margin:20px auto;
 
 
 
-border-radius:25px;
+padding:25px;
+
+
+
+border-radius:30px;
+
 
 
 
 background:
 
+
 linear-gradient(
 
 145deg,
 
-rgba(255,255,255,.08),
+rgba(255,255,255,.12),
 
-rgba(0,0,0,.7)
+rgba(0,0,0,.75)
 
 );
 
@@ -241,18 +269,19 @@ rgba(0,0,0,.7)
 
 border:
 
-1px solid rgba(255,215,0,.4);
+
+1px solid rgba(255,215,0,.5);
 
 
 
 box-shadow:
 
-0 0 25px rgba(255,215,0,.15);
+
+0 0 35px rgba(255,215,0,.15);
 
 
 
 text-align:center;
-
 
 
 }
@@ -269,17 +298,18 @@ text-align:center;
 display:flex;
 
 
-justify-content:center;
-
-
 align-items:center;
 
 
-gap:12px;
+justify-content:center;
 
 
 
-font-size:34px;
+gap:15px;
+
+
+
+font-size:38px;
 
 
 font-weight:900;
@@ -301,10 +331,11 @@ color:#ffd700;
 .coin-balance{
 
 
-width:55px;
+width:60px;
 
 
-height:55px;
+height:60px;
+
 
 
 border-radius:50%;
@@ -321,15 +352,23 @@ justify-content:center;
 
 
 
+font-size:32px;
+
+
+font-weight:900;
+
+
+
 background:
+
 
 radial-gradient(
 
 circle,
 
-#ffe88a,
+#fff0a0,
 
-#c48b00
+#b88600
 
 );
 
@@ -338,17 +377,15 @@ circle,
 color:white;
 
 
-font-size:30px;
-
 
 box-shadow:
 
-0 0 20px gold;
+
+0 0 30px gold;
 
 
 
 }
-
 
 
 
@@ -363,7 +400,11 @@ box-shadow:
 margin-top:15px;
 
 
-font-size:18px;
+font-size:20px;
+
+
+
+color:#fff;
 
 
 }
@@ -376,10 +417,12 @@ font-size:18px;
 display:block;
 
 
+
 font-size:12px;
 
 
 opacity:.7;
+
 
 
 margin-top:5px;
@@ -387,7 +430,6 @@ margin-top:5px;
 
 
 }
-
 
 
 
@@ -404,10 +446,15 @@ margin-top:15px;
 font-size:20px;
 
 
+font-weight:bold;
+
+
+
 color:#ffd700;
 
 
 }
+
 
 
 
@@ -428,14 +475,94 @@ font-size:18px;
 
 
 
-
-
-
-
 /* ===============================
-NEW ROULETTE CARD
+MAIN CLICK BUTTON
 =============================== */
 
+
+.fire-zone{
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+margin-top:25px;
+
+
+
+}
+
+
+
+
+.main-coin{
+
+
+width:190px;
+
+
+height:190px;
+
+
+
+border-radius:50%;
+
+
+
+border:8px solid #ffd700;
+
+
+
+background:
+
+
+radial-gradient(
+
+circle,
+
+#ffe889,
+
+#d49b00
+
+);
+
+
+
+font-size:70px;
+
+
+
+font-weight:900;
+
+
+
+color:white;
+
+
+
+box-shadow:
+
+
+0 0 40px gold,
+
+inset 0 0 30px white;
+
+
+
+transition:.15s;
+
+
+}
+
+
+
+.main-coin:active{
+  /* ===============================
+NEW ROULETTE CARD
+=============================== */
 
 
 .new-roulette-card{
@@ -444,25 +571,32 @@ NEW ROULETTE CARD
 width:92%;
 
 
-max-width:380px;
+max-width:390px;
 
 
-height:120px;
+
+height:130px;
 
 
-margin:20px auto;
 
+margin:25px auto;
 
-border-radius:30px;
 
 
 position:relative;
 
 
+
 overflow:hidden;
 
 
+
 cursor:pointer;
+
+
+
+border-radius:32px;
+
 
 
 
@@ -473,11 +607,11 @@ linear-gradient(
 
 135deg,
 
-#4b0000,
+#5a0000,
 
 #ff0000,
 
-#900000
+#800000
 
 );
 
@@ -485,22 +619,23 @@ linear-gradient(
 
 border:
 
-2px solid #ff5555;
+
+2px solid #ff7777;
 
 
 
 box-shadow:
 
 
-0 0 25px red,
+0 0 30px red,
 
-0 0 60px rgba(255,0,0,.7);
+0 0 80px rgba(255,0,0,.5);
 
 
 
 animation:
 
-newGlow 1.5s infinite;
+newPulse 1.5s infinite;
 
 
 
@@ -513,13 +648,60 @@ transition:.2s;
 
 
 
-
 .new-roulette-card:active{
 
 
-transform:
+transform:scale(.94);
 
-scale(.94);
+
+
+}
+
+
+
+
+@keyframes newPulse{
+
+
+0%{
+
+
+box-shadow:
+
+
+0 0 20px red;
+
+
+
+}
+
+
+50%{
+
+
+box-shadow:
+
+
+0 0 65px red;
+
+
+
+}
+
+
+
+100%{
+
+
+box-shadow:
+
+
+0 0 20px red;
+
+
+
+}
+
 
 
 }
@@ -536,24 +718,29 @@ scale(.94);
 position:absolute;
 
 
+
 right:15px;
 
 
-top:12px;
+top:15px;
 
 
 
-padding:7px 18px;
+
+padding:8px 18px;
 
 
-border-radius:30px;
+
+border-radius:25px;
 
 
 
 background:#ff1111;
 
 
-font-size:20px;
+
+font-size:22px;
+
 
 
 font-weight:900;
@@ -572,7 +759,6 @@ box-shadow:
 
 
 
-
 .new-title{
 
 
@@ -582,26 +768,32 @@ position:absolute;
 bottom:18px;
 
 
+
 left:0;
 
 
 right:0;
 
 
+
 text-align:center;
 
 
 
-font-size:26px;
+font-size:28px;
+
 
 
 font-weight:900;
 
 
+
 letter-spacing:5px;
 
 
+
 text-shadow:
+
 
 0 0 15px white;
 
@@ -613,25 +805,26 @@ text-shadow:
 
 
 
-
-
 .mini-wheel{
 
 
 position:absolute;
 
 
+
 left:25px;
 
 
-top:23px;
+top:25px;
 
 
 
-width:75px;
+
+width:80px;
 
 
-height:75px;
+height:80px;
+
 
 
 
@@ -640,6 +833,7 @@ border-radius:50%;
 
 
 border:
+
 
 5px solid gold;
 
@@ -679,13 +873,14 @@ justify-content:center;
 box-shadow:
 
 
-0 0 25px gold;
+0 0 30px gold;
 
 
 
 animation:
 
-miniRotate 5s linear infinite;
+
+miniSpin 5s linear infinite;
 
 
 
@@ -695,16 +890,19 @@ miniRotate 5s linear infinite;
 
 
 
+
 .mini-wheel span{
 
 
-width:30px;
+width:35px;
 
 
-height:30px;
+height:35px;
+
 
 
 border-radius:50%;
+
 
 
 background:#111;
@@ -714,6 +912,7 @@ background:#111;
 display:flex;
 
 
+
 align-items:center;
 
 
@@ -721,7 +920,8 @@ justify-content:center;
 
 
 
-font-weight:bold;
+font-weight:900;
+
 
 
 color:#ffd700;
@@ -733,8 +933,7 @@ color:#ffd700;
 
 
 
-
-@keyframes miniRotate{
+@keyframes miniSpin{
 
 
 from{
@@ -763,77 +962,136 @@ transform:rotate(360deg);
 
 
 
-@keyframes newGlow{
-
-
-0%{
-
-
-box-shadow:
-
-0 0 15px red;
-
-
-}
 
 
 
-50%{
-
-
-box-shadow:
-
-0 0 55px red;
-
-
-}
+/* ===============================
+PANELS
+=============================== */
 
 
 
-100%{
-
-
-box-shadow:
-
-0 0 15px red;
-
-
-}
-
-
-
-}
-/* ===================================
-ROULETTE SYSTEM
-=================================== */
-
-
-
-.roulette-panel{
+.panel{
 
 
 width:92%;
 
 
-margin:15px auto;
+
+margin:20px auto;
 
 
-padding:20px;
+
+padding:25px;
 
 
-border-radius:25px;
+
+border-radius:30px;
+
 
 
 
 background:
 
-rgba(0,0,0,.65);
+
+linear-gradient(
+
+145deg,
+
+rgba(255,255,255,.1),
+
+rgba(0,0,0,.8)
+
+);
 
 
 
 border:
 
-1px solid rgba(255,215,0,.4);
+
+1px solid rgba(255,215,0,.45);
+
+
+
+box-shadow:
+
+
+0 0 30px rgba(255,215,0,.15);
+
+
+
+}
+
+
+
+
+
+
+
+.panel h2{
+
+
+text-align:center;
+
+
+
+color:#ffd700;
+
+
+
+font-size:27px;
+
+
+
+margin:10px 0 20px;
+
+
+
+}
+
+
+
+
+
+.panel input{
+
+
+width:100%;
+
+
+
+height:55px;
+
+
+
+margin:8px 0;
+
+
+
+border-radius:18px;
+
+
+
+border:
+
+
+1px solid #777;
+
+
+
+background:#111;
+
+
+
+color:white;
+
+
+
+font-size:18px;
+
+
+
+padding:0 15px;
 
 
 
@@ -849,16 +1107,86 @@ text-align:center;
 
 
 
-.roulette-panel h2{
+
+/* ===============================
+GOLD BUTTON
+=============================== */
 
 
-font-size:28px;
+.gold-button{
 
 
-color:#ffd700;
+display:block;
 
 
-margin-bottom:15px;
+
+width:100%;
+
+
+
+height:58px;
+
+
+
+margin:15px auto;
+
+
+
+border-radius:22px;
+
+
+
+border:none;
+
+
+
+background:
+
+
+linear-gradient(
+
+145deg,
+
+#ffd700,
+
+#ff9900
+
+);
+
+
+
+color:#111;
+
+
+
+font-size:19px;
+
+
+
+font-weight:900;
+
+
+
+text-align:center;
+
+
+
+text-decoration:none;
+
+
+
+line-height:58px;
+
+
+
+box-shadow:
+
+
+0 0 25px rgba(255,215,0,.5);
+
+
+
+transition:.2s;
 
 
 
@@ -867,34 +1195,71 @@ margin-bottom:15px;
 
 
 
+.gold-button:active{
 
+
+transform:scale(.95);
+
+
+}
+  
+
+
+transform:scale(.92);
+
+
+
+}
+/* ===============================
+ROULETTE
+=============================== */
+
+
+.roulette-panel{
+
+
+text-align:center;
+
+
+}
+
+
+
+
+
+
+
+.roulette-timer{
+
+
+font-size:20px;
+
+
+
+margin:15px;
+
+
+
+color:white;
+
+
+
+}
 
 
 
 #rouletteTimer{
 
 
-font-size:20px;
-
-
-color:white;
-
-
-margin:15px;
-
-
-}
-
-
-
-
-#rouletteTimer b{
-
-
 color:#ffd700;
 
 
-font-size:26px;
+
+font-size:28px;
+
+
+
+font-weight:900;
 
 
 
@@ -904,34 +1269,33 @@ font-size:26px;
 
 
 
-
-
-
-
-/* ===============================
-WHEEL
-=============================== */
 
 
 .roulette-wheel-box{
 
 
-width:320px;
+width:330px;
 
 
-height:320px;
+
+height:330px;
 
 
-margin:20px auto;
+
+margin:25px auto;
+
 
 
 position:relative;
 
 
+
 display:flex;
 
 
+
 align-items:center;
+
 
 
 justify-content:center;
@@ -943,23 +1307,68 @@ justify-content:center;
 
 
 
+/* стрелка */
+
+
+.roulette-arrow{
+
+
+position:absolute;
+
+
+
+top:-5px;
+
+
+
+z-index:50;
+
+
+
+font-size:35px;
+
+
+
+color:#ffd700;
+
+
+
+text-shadow:
+
+
+0 0 20px gold;
+
+
+
+}
+
+
+
+
+
+
 
 
 #rouletteWheel{
 
 
-width:290px;
+width:300px;
 
 
-height:290px;
+
+height:300px;
 
 
 
 border-radius:50%;
 
 
+
 position:relative;
 
+
+
+overflow:visible;
 
 
 
@@ -1048,6 +1457,7 @@ conic-gradient(
 
 border:
 
+
 10px solid #d4af37;
 
 
@@ -1055,11 +1465,12 @@ border:
 box-shadow:
 
 
-0 0 35px gold;
+0 0 45px gold;
 
 
 
 transition:
+
 
 transform 6s cubic-bezier(.12,.8,.25,1);
 
@@ -1075,24 +1486,19 @@ transform 6s cubic-bezier(.12,.8,.25,1);
 
 
 
-#rouletteWheel:before{
+#rouletteWheel:after{
 
 
 content:"";
+
 
 
 position:absolute;
 
 
 
-width:75px;
-
-
-height:75px;
-
-
-
 left:50%;
+
 
 
 top:50%;
@@ -1105,19 +1511,28 @@ translate(-50%,-50%);
 
 
 
+width:75px;
+
+
+
+height:75px;
+
+
+
 border-radius:50%;
 
 
 
 background:
 
+
 radial-gradient(
 
 circle,
 
-#ffe88a,
+#fff0a0,
 
-#b8860b
+#b88600
 
 );
 
@@ -1125,17 +1540,15 @@ circle,
 
 border:
 
+
 5px solid white;
-
-
-
-z-index:5;
 
 
 
 box-shadow:
 
-0 0 20px gold;
+
+0 0 30px gold;
 
 
 
@@ -1148,7 +1561,7 @@ box-shadow:
 
 
 
-/* цифры */
+/* номера */
 
 
 .wheel-number{
@@ -1158,17 +1571,19 @@ position:absolute;
 
 
 
-width:32px;
-
-
-height:32px;
+width:34px;
 
 
 
-margin-left:-16px;
+height:34px;
 
 
-margin-top:-16px;
+
+margin-left:-17px;
+
+
+
+margin-top:-17px;
 
 
 
@@ -1179,7 +1594,9 @@ border-radius:50%;
 display:flex;
 
 
+
 align-items:center;
+
 
 
 justify-content:center;
@@ -1189,7 +1606,8 @@ justify-content:center;
 font-size:14px;
 
 
-font-weight:bold;
+
+font-weight:900;
 
 
 
@@ -1199,7 +1617,8 @@ color:white;
 
 border:
 
-2px solid #ffd700;
+
+2px solid gold;
 
 
 
@@ -1208,7 +1627,6 @@ z-index:10;
 
 
 }
-
 
 
 
@@ -1222,17 +1640,13 @@ background:#b00000;
 
 
 
-
 .wheel-number.black{
 
 
 background:#111;
 
 
-
 }
-
-
 
 
 
@@ -1242,12 +1656,7 @@ background:#111;
 background:#008000;
 
 
-
 }
-
-
-
-
 
 
 
@@ -1257,7 +1666,8 @@ background:#008000;
 
 animation:
 
-winnerPulse 1s infinite;
+
+winner 1s infinite;
 
 
 
@@ -1265,9 +1675,7 @@ winnerPulse 1s infinite;
 
 
 
-
-
-@keyframes winnerPulse{
+@keyframes winner{
 
 
 0%{
@@ -1282,12 +1690,14 @@ transform:scale(1);
 50%{
 
 
-transform:scale(1.35);
+transform:scale(1.4);
+
 
 
 box-shadow:
 
-0 0 30px gold;
+
+0 0 35px gold;
 
 
 
@@ -1316,8 +1726,59 @@ transform:scale(1);
 
 
 /* ===============================
-BET BUTTONS
-================================ */
+BET INPUT
+=============================== */
+
+
+#rouletteAmount{
+
+
+width:100%;
+
+
+
+height:60px;
+
+
+
+border-radius:20px;
+
+
+
+background:#111;
+
+
+
+border:
+
+
+1px solid gold;
+
+
+
+color:white;
+
+
+
+font-size:22px;
+
+
+
+text-align:center;
+
+
+
+margin-bottom:15px;
+
+
+
+}
+
+
+
+
+
+
 
 
 .roulette-bets{
@@ -1328,6 +1789,7 @@ display:grid;
 
 
 grid-template-columns:
+
 
 repeat(2,1fr);
 
@@ -1348,6 +1810,7 @@ margin:20px 0;
 
 
 
+
 .roulette-bet{
 
 
@@ -1359,15 +1822,20 @@ border-radius:20px;
 
 
 
+border:none;
+
+
+
 background:
+
 
 linear-gradient(
 
 145deg,
 
-#195cff,
+#165dff,
 
-#0033aa
+#002c99
 
 );
 
@@ -1380,11 +1848,8 @@ color:white;
 font-size:17px;
 
 
-font-weight:bold;
 
-
-
-border:none;
+font-weight:900;
 
 
 
@@ -1397,237 +1862,6 @@ border:none;
 
 background:
 
-linear-gradient(
-
-145deg,
-
-#ffd700,
-
-#ff9900
-
-);
-
-
-
-color:black;
-
-
-
-}
-
-
-
-
-
-
-
-
-#rouletteAmount{
-
-
-width:100%;
-
-
-height:55px;
-
-
-border-radius:18px;
-
-
-
-border:
-
-1px solid gold;
-
-
-
-background:#111;
-
-
-color:white;
-
-
-
-font-size:20px;
-
-
-
-text-align:center;
-
-
-
-margin-bottom:15px;
-
-
-
-}
-
-
-
-
-
-
-
-#rouletteStart{
-
-
-width:100%;
-
-
-height:60px;
-
-
-font-size:20px;
-
-
-}
-
-
-
-
-
-
-#rouletteResult{
-
-
-font-size:24px;
-
-
-color:#ffd700;
-
-
-
-margin:20px;
-
-
-
-}
-
-
-
-
-
-#rouletteMessage{
-
-
-font-size:18px;
-
-
-
-}
-
-
-
-
-
-
-
-/* ===============================
-HISTORY
-================================ */
-
-
-.roulette-history-box{
-
-
-margin-top:25px;
-
-
-padding-top:15px;
-
-
-
-border-top:
-
-1px solid gold;
-
-
-
-}
-
-
-
-
-
-.history-row{
-
-
-display:flex;
-
-
-justify-content:space-between;
-
-
-align-items:center;
-
-
-
-padding:10px;
-
-
-margin:8px 0;
-
-
-
-background:#111;
-
-
-
-border-radius:15px;
-
-
-
-}
-
-
-
-
-
-.history-row b{
-
-
-color:#ffd700;
-
-
-font-size:22px;
-
-
-
-}
-id="x7v2pq"
-/* ===================================
-BUTTONS + PANELS + MOBILE
-=================================== */
-
-
-
-.gold-button{
-
-
-display:block;
-
-
-
-width:90%;
-
-
-margin:12px auto;
-
-
-
-padding:15px;
-
-
-
-border-radius:20px;
-
-
-
-border:none;
-
-
-
-background:
 
 linear-gradient(
 
@@ -1645,43 +1879,6 @@ color:#111;
 
 
 
-font-size:18px;
-
-
-
-font-weight:900;
-
-
-
-text-align:center;
-
-
-
-text-decoration:none;
-
-
-
-box-shadow:
-
-
-0 0 20px rgba(255,215,0,.5);
-
-
-
-}
-
-
-
-
-
-
-
-.gold-button:active{
-
-
-transform:scale(.95);
-
-
 }
 
 
@@ -1691,46 +1888,14 @@ transform:scale(.95);
 
 
 
-.panel input,
+#rouletteStart{
 
 
-.panel textarea{
-
-
-width:100%;
-
-
-height:50px;
+height:60px;
 
 
 
-margin:8px 0;
-
-
-
-border-radius:15px;
-
-
-
-border:
-
-1px solid #555;
-
-
-
-background:#111;
-
-
-
-color:white;
-
-
-
-padding:0 15px;
-
-
-
-font-size:17px;
+font-size:20px;
 
 
 
@@ -1738,19 +1903,10 @@ font-size:17px;
 
 
 
+#rouletteResult{
 
 
-
-
-
-.panel h2{
-
-
-text-align:center;
-
-
-
-color:#ffd700;
+margin:20px;
 
 
 
@@ -1758,7 +1914,50 @@ font-size:26px;
 
 
 
-margin:15px 0;
+color:#ffd700;
+
+
+
+font-weight:900;
+
+
+
+}
+
+
+
+#rouletteMessage{
+
+
+font-size:18px;
+
+
+
+margin:15px;
+
+
+
+}
+/* ===============================
+ROULETTE HISTORY
+=============================== */
+
+
+.roulette-history-box{
+
+
+margin-top:25px;
+
+
+
+padding-top:20px;
+
+
+
+border-top:
+
+
+1px solid gold;
 
 
 
@@ -1767,22 +1966,54 @@ margin:15px 0;
 
 
 
+.roulette-history-box h3{
+
+
+color:#ffd700;
+
+
+
+font-size:22px;
+
+
+
+}
 
 
 
 
-.menu-card{
+#rouletteHistory{
 
 
-width:100%;
-
-
-
-height:55px;
+margin-top:15px;
 
 
 
-margin:10px 0;
+}
+
+
+
+
+.history-row{
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+justify-content:space-between;
+
+
+
+padding:12px;
+
+
+
+margin:8px 0;
 
 
 
@@ -1790,44 +2021,151 @@ border-radius:18px;
 
 
 
-border:none;
-
-
-
 background:
+
 
 linear-gradient(
 
 145deg,
 
-#222,
+#181818,
 
-#000
+#050505
 
 );
 
 
 
-color:white;
-
-
-
-font-size:17px;
-
-
-
-font-weight:bold;
-
-
-
 border:
 
-1px solid #ffd700;
+
+1px solid rgba(255,215,0,.3);
 
 
 
 }
 
+
+
+.history-row b{
+
+
+font-size:24px;
+
+
+
+color:#ffd700;
+
+
+
+}
+
+
+
+.history-row small{
+
+
+opacity:.7;
+
+
+
+}
+
+
+
+
+/* ===============================
+TOP PLAYERS
+=============================== */
+
+
+
+#topList{
+
+
+margin-top:15px;
+
+
+
+}
+
+
+
+
+
+.top-player{
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+gap:10px;
+
+
+
+padding:12px;
+
+
+
+margin:10px 0;
+
+
+
+border-radius:20px;
+
+
+
+background:#111;
+
+
+
+border:
+
+
+1px solid rgba(255,215,0,.25);
+
+
+
+}
+
+
+
+.top-player img{
+
+
+width:50px;
+
+
+
+height:50px;
+
+
+
+border-radius:50%;
+
+
+
+object-fit:cover;
+
+
+
+}
+
+
+
+.top-player b{
+
+
+color:#ffd700;
+
+
+
+}
 
 
 
@@ -1837,9 +2175,74 @@ border:
 
 
 /* ===============================
-BOTTOM NAV
-================================ */
+MENU BUTTONS
+=============================== */
 
+
+.menu-card{
+
+
+width:100%;
+
+
+
+height:58px;
+
+
+
+margin:12px 0;
+
+
+
+border-radius:20px;
+
+
+
+background:
+
+
+linear-gradient(
+
+145deg,
+
+#222,
+
+#050505
+
+);
+
+
+
+border:
+
+
+1px solid gold;
+
+
+
+color:white;
+
+
+
+font-size:18px;
+
+
+
+font-weight:800;
+
+
+
+}
+
+
+
+
+
+
+
+/* ===============================
+BOTTOM NAV
+=============================== */
 
 
 .bottom-nav{
@@ -1850,6 +2253,7 @@ position:fixed;
 
 
 left:4%;
+
 
 
 bottom:15px;
@@ -1864,17 +2268,19 @@ height:75px;
 
 
 
-border-radius:40px;
+border-radius:35px;
 
 
 
 background:
+
 
 rgba(0,0,0,.9);
 
 
 
 border:
+
 
 1px solid rgba(255,215,0,.5);
 
@@ -1892,14 +2298,18 @@ justify-content:space-around;
 
 
 
-z-index:1000;
+z-index:9999;
 
 
 
 box-shadow:
 
 
-0 0 30px black;
+0 0 35px black;
+
+
+
+padding:5px;
 
 
 
@@ -1915,15 +2325,19 @@ box-shadow:
 .nav{
 
 
-width:58px;
+flex:1;
 
 
 
-height:58px;
+height:55px;
 
 
 
-border-radius:50%;
+margin:3px;
+
+
+
+border-radius:18px;
 
 
 
@@ -1938,9 +2352,9 @@ linear-gradient(
 
 145deg,
 
-#1d8cff,
+#222,
 
-#0044aa
+#111
 
 );
 
@@ -1950,11 +2364,11 @@ color:white;
 
 
 
-font-size:11px;
+font-size:12px;
 
 
 
-font-weight:bold;
+font-weight:900;
 
 
 
@@ -1962,13 +2376,8 @@ font-weight:bold;
 
 
 
+
 .nav.active{
-
-
-box-shadow:
-
-0 0 30px #00aaff;
-
 
 
 background:
@@ -1978,91 +2387,27 @@ linear-gradient(
 
 145deg,
 
-#00bfff,
+#ffd700,
 
-#0055ff
+#ff9900
 
 );
 
 
 
-}
+color:#111;
 
 
 
+box-shadow:
 
 
-
-
-
-/* ===============================
-TOP LIST
-================================ */
-
-
-
-#topList{
-
-
-margin-top:15px;
-
-
-}
-
-
-
-
-.top-player{
-
-
-display:flex;
-
-
-
-align-items:center;
-
-
-
-justify-content:space-between;
-
-
-
-background:#111;
-
-
-
-border-radius:15px;
-
-
-
-padding:12px;
-
-
-
-margin:8px 0;
+0 0 25px gold;
 
 
 
 }
 
-
-
-
-
-.top-player img{
-
-
-width:45px;
-
-
-height:45px;
-
-
-border-radius:50%;
-
-
-
-}
 
 
 
@@ -2072,17 +2417,17 @@ border-radius:50%;
 
 /* ===============================
 INFO
-================================ */
+=============================== */
 
 
 .info{
 
 
-margin:12px 0;
-
-
-
 font-size:18px;
+
+
+
+margin:12px 0;
 
 
 
@@ -2092,14 +2437,10 @@ font-size:18px;
 
 
 
-
-
 hr{
 
 
-border:
-
-0;
+border:none;
 
 
 
@@ -2111,12 +2452,11 @@ background:#ffd700;
 
 
 
-margin:20px 0;
+margin:25px 0;
 
 
 
 }
-
 
 
 
@@ -2126,81 +2466,41 @@ margin:20px 0;
 
 
 /* ===============================
-SCROLL
-================================ */
-
-
-
-.content{
-
-
-height:100vh;
-
-
-overflow-y:auto;
-
-
-scroll-behavior:smooth;
-
-
-
-}
-
-
-
-
-
-
-
-::-webkit-scrollbar{
-
-
-width:3px;
-
-
-}
-
-
-
-
-::-webkit-scrollbar-thumb{
-
-
-background:#ffd700;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===============================
-MOBILE FIX
-================================ */
-
+MOBILE
+=============================== */
 
 
 @media(max-width:500px){
 
 
 
-
-
 .balance{
 
 
-font-size:28px;
+font-size:30px;
 
 
 }
 
 
+
+
+.main-coin{
+
+
+width:160px;
+
+
+
+height:160px;
+
+
+
+font-size:60px;
+
+
+
+}
 
 
 
@@ -2210,9 +2510,8 @@ font-size:28px;
 font-size:22px;
 
 
+
 }
-
-
 
 
 
@@ -2222,25 +2521,40 @@ font-size:22px;
 width:280px;
 
 
+
 height:280px;
 
 
+
 }
-
-
 
 
 
 #rouletteWheel{
 
 
-width:250px;
+width:260px;
 
 
-height:250px;
+
+height:260px;
+
 
 
 }
+
+
+
+
+.panel{
+
+
+padding:18px;
+
+
+
+}
+
 
 
 
@@ -2252,6 +2566,10 @@ height:70px;
 
 
 
+bottom:10px;
+
+
+
 }
 
 
@@ -2259,26 +2577,13 @@ height:70px;
 .nav{
 
 
-width:55px;
+height:50px;
 
-
-height:55px;
 
 
 font-size:10px;
 
 
-}
-
-
-
-
-
-.panel{
-
-
-padding:15px;
-
 
 }
 
@@ -2286,6 +2591,5 @@ padding:15px;
 
 
 }
-
 
 
