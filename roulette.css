@@ -1,47 +1,101 @@
 /* ===================================
-URALcoin ROULETTE DESIGN v4
+URALcoin ROULETTE DESIGN v5
+FULL WHEEL FIX
 =================================== */
 
 
 .roulette-panel{
-    width:100%;
-    text-align:center;
+
+width:100%;
+
+text-align:center;
+
+padding-bottom:30px;
+
 }
+
+
 
 
 
 #rouletteTimer{
 
-    margin:15px;
+font-size:22px;
 
-    font-size:20px;
+font-weight:800;
 
-    font-weight:bold;
+color:#ffd700;
 
-    color:#ffd700;
+margin:15px;
 
 }
+
 
 
 
 
 .roulette-wheel-box{
 
-    width:340px;
+width:360px;
 
-    height:340px;
+height:360px;
 
-    margin:20px auto;
+margin:20px auto;
 
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    justify-content:center;
+justify-content:center;
 
-    position:relative;
+position:relative;
 
 }
+
+
+
+
+
+/* СТРЕЛКА */
+
+.roulette-wheel-box:before{
+
+
+content:"▼";
+
+
+position:absolute;
+
+
+top:-5px;
+
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+
+font-size:35px;
+
+
+color:#ffd700;
+
+
+text-shadow:
+
+0 0 15px black;
+
+
+
+z-index:20;
+
+
+
+}
+
+
 
 
 
@@ -51,9 +105,11 @@ URALcoin ROULETTE DESIGN v4
 #rouletteWheel{
 
 
-width:320px;
+width:340px;
 
-height:320px;
+
+height:340px;
+
 
 
 border-radius:50%;
@@ -62,102 +118,111 @@ border-radius:50%;
 position:relative;
 
 
+
+overflow:hidden;
+
+
+
 background:
 
 conic-gradient(
 
-#008000 0deg 9.7deg,
+green 0deg 9.72deg,
 
-#b00000 9.7deg 19.4deg,
+#b40000 9.72deg 19.44deg,
 
-#111 19.4deg 29.1deg,
+#111 19.44deg 29.16deg,
 
-#b00000 29.1deg 38.8deg,
+#b40000 29.16deg 38.88deg,
 
-#111 38.8deg 48.5deg,
+#111 38.88deg 48.6deg,
 
-#b00000 48.5deg 58.2deg,
+#b40000 48.6deg 58.32deg,
 
-#111 58.2deg 67.9deg,
+#111 58.32deg 68.04deg,
 
-#b00000 67.9deg 77.6deg,
+#b40000 68.04deg 77.76deg,
 
-#111 77.6deg 87.3deg,
+#111 77.76deg 87.48deg,
 
-#b00000 87.3deg 97deg,
+#b40000 87.48deg 97.2deg,
 
-#111 97deg 106.7deg,
+#111 97.2deg 106.92deg,
 
-#b00000 106.7deg 116.4deg,
+#b40000 106.92deg 116.64deg,
 
-#111 116.4deg 126.1deg,
+#111 116.64deg 126.36deg,
 
-#b00000 126.1deg 135.8deg,
+#b40000 126.36deg 136.08deg,
 
-#111 135.8deg 145.5deg,
+#111 136.08deg 145.8deg,
 
-#b00000 145.5deg 155.2deg,
+#b40000 145.8deg 155.52deg,
 
-#111 155.2deg 164.9deg,
+#111 155.52deg 165.24deg,
 
-#b00000 164.9deg 174.6deg,
+#b40000 165.24deg 174.96deg,
 
-#111 174.6deg 184.3deg,
+#111 174.96deg 184.68deg,
 
-#b00000 184.3deg 194deg,
+#b40000 184.68deg 194.4deg,
 
-#111 194deg 203.7deg,
+#111 194.4deg 204.12deg,
 
-#b00000 203.7deg 213.4deg,
+#b40000 204.12deg 213.84deg,
 
-#111 213.4deg 223.1deg,
+#111 213.84deg 223.56deg,
 
-#b00000 223.1deg 232.8deg,
+#b40000 223.56deg 233.28deg,
 
-#111 232.8deg 242.5deg,
+#111 233.28deg 243deg,
 
-#b00000 242.5deg 252.2deg,
+#b40000 243deg 252.72deg,
 
-#111 252.2deg 261.9deg,
+#111 252.72deg 262.44deg,
 
-#b00000 261.9deg 271.6deg,
+#b40000 262.44deg 272.16deg,
 
-#111 271.6deg 281.3deg,
+#111 272.16deg 281.88deg,
 
-#b00000 281.3deg 291deg,
+#b40000 281.88deg 291.6deg,
 
-#111 291deg 300.7deg,
+#111 291.6deg 301.32deg,
 
-#b00000 300.7deg 310.4deg,
+#b40000 301.32deg 311.04deg,
 
-#111 310.4deg 320.1deg,
+#111 311.04deg 320.76deg,
 
-#b00000 320.1deg 329.8deg,
+#b40000 320.76deg 330.48deg,
 
-#111 329.8deg 339.5deg,
+#111 330.48deg 340.2deg,
 
-#b00000 339.5deg 349.2deg,
+#b40000 340.2deg 349.92deg,
 
-#111 349.2deg 360deg
+#111 349.92deg 360deg
 
 );
 
 
 
-border:10px solid #d4af37;
+border:
+
+12px solid #d4af37;
+
 
 
 box-shadow:
 
-0 0 40px gold,
+0 0 50px gold,
 
-inset 0 0 50px #000;
+inset 0 0 50px black;
 
 
 
 transition:
 
-transform 5s cubic-bezier(.15,.8,.2,1);
+transform 5s cubic-bezier(.15,.85,.2,1);
+
 
 
 }
@@ -169,10 +234,15 @@ transform 5s cubic-bezier(.15,.8,.2,1);
 
 
 
+
+/* ЦИФРЫ */
+
+
 .wheel-number{
 
 
 position:absolute;
+
 
 
 left:50%;
@@ -181,15 +251,22 @@ top:50%;
 
 
 
-width:34px;
-
-height:34px;
+width:30px;
 
 
+height:30px;
 
-margin-left:-17px;
 
-margin-top:-17px;
+
+margin-left:-15px;
+
+
+margin-top:-15px;
+
+
+
+
+border-radius:50%;
 
 
 
@@ -203,11 +280,9 @@ justify-content:center;
 
 
 
-border-radius:50%;
 
+font-size:13px;
 
-
-font-size:14px;
 
 
 font-weight:900;
@@ -218,13 +293,24 @@ color:white;
 
 
 
-border:2px solid #ffd700;
+
+border:
+
+2px solid #ffd700;
+
+
+
+
+text-shadow:
+
+0 2px 3px black;
+
 
 
 
 box-shadow:
 
-0 0 10px rgba(255,215,0,.8);
+0 0 8px black;
 
 
 
@@ -238,25 +324,66 @@ z-index:5;
 
 
 
+
 .wheel-number.red{
 
-background:#b00000;
+
+background:
+
+linear-gradient(
+
+145deg,
+
+#ff3333,
+
+#800000
+
+);
+
 
 }
+
+
 
 
 
 .wheel-number.black{
 
-background:#050505;
+
+background:
+
+linear-gradient(
+
+145deg,
+
+#444,
+
+#000
+
+);
+
 
 }
+
+
 
 
 
 .wheel-number.green{
 
-background:#008000;
+
+background:
+
+linear-gradient(
+
+145deg,
+
+#00c853,
+
+#005500
+
+);
+
 
 }
 
@@ -265,6 +392,10 @@ background:#008000;
 
 
 
+
+
+
+/* ЦЕНТР */
 
 
 #rouletteWheel:after{
@@ -273,23 +404,35 @@ background:#008000;
 content:"";
 
 
+
 position:absolute;
-
-
-
-width:90px;
-
-height:90px;
 
 
 
 left:50%;
 
+
 top:50%;
 
 
 
-transform:translate(-50%,-50%);
+transform:
+
+translate(-50%,-50%);
+
+
+
+
+width:70px;
+
+
+height:70px;
+
+
+
+
+border-radius:50%;
+
 
 
 
@@ -299,7 +442,7 @@ radial-gradient(
 
 circle,
 
-#fff0a0,
+#fff3a0,
 
 #b88600
 
@@ -307,11 +450,11 @@ circle,
 
 
 
-border-radius:50%;
 
+border:
 
+5px solid white;
 
-border:6px solid white;
 
 
 
@@ -321,7 +464,228 @@ box-shadow:
 
 
 
-z-index:10;
+
+z-index:15;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+#rouletteResult{
+
+
+font-size:24px;
+
+
+font-weight:bold;
+
+
+color:white;
+
+
+margin:10px;
+
+
+
+}
+
+
+
+
+
+
+
+
+.roulette-bets{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+
+
+gap:10px;
+
+
+padding:10px;
+
+
+
+}
+
+
+
+
+
+
+
+
+.roulette-bet{
+
+
+height:55px;
+
+
+
+border-radius:30px;
+
+
+
+border:none;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#2864ff,
+
+#1840a8
+
+);
+
+
+
+color:white;
+
+
+
+font-size:16px;
+
+
+
+font-weight:bold;
+
+
+
+}
+
+
+
+
+.roulette-bet.active{
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#ffd700,
+
+#ff9900
+
+);
+
+
+
+color:black;
+
+
+
+box-shadow:
+
+0 0 25px gold;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+#rouletteAmount{
+
+
+width:210px;
+
+
+
+height:45px;
+
+
+
+border-radius:20px;
+
+
+
+border:none;
+
+
+
+text-align:center;
+
+
+
+font-size:18px;
+
+
+
+}
+
+
+
+
+#rouletteStart{
+
+
+height:55px;
+
+
+
+padding:0 25px;
+
+
+
+border-radius:30px;
+
+
+
+border:none;
+
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#ffd700,
+
+#ff9900
+
+);
+
+
+
+font-size:18px;
+
+
+
+font-weight:bold;
+
 
 
 }
