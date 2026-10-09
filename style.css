@@ -1628,3 +1628,54 @@ font-size:24px;
 
 
 }
+/* ===================================
+FINAL CLICK AND BUTTON FIX
+=================================== */
+
+
+.content{
+    z-index:100;
+    pointer-events:auto;
+}
+
+
+.page{
+    pointer-events:auto;
+}
+
+
+.fire-zone{
+    z-index:150;
+    pointer-events:auto;
+}
+
+
+.main-coin{
+    position:relative;
+    z-index:200;
+    pointer-events:auto;
+}
+
+
+.bottom-nav{
+    z-index:500;
+}
+
+
+.nav,
+.gold-button,
+.menu-card,
+button,
+a,
+input{
+    pointer-events:auto;
+}
+
+
+.city-bg,
+.snow,
+.garland,
+.fire-effect{
+    z-index:1;
+    pointer-events:none;
+}
