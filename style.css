@@ -1,0 +1,2977 @@
+/* =====================================
+URALcoin FINAL STYLE
+GLASS BLUE SYSTEM
+CLEAN VERSION
+PART 1/4
+===================================== */
+
+
+/* =========================
+RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+
+html,
+body{
+
+    margin:0;
+    padding:0;
+
+    width:100%;
+    height:100%;
+
+    font-family:Arial,sans-serif;
+
+    color:white;
+
+    overflow-x:hidden;
+
+    touch-action:manipulation;
+
+    -webkit-text-size-adjust:100%;
+
+    user-select:none;
+
+}
+
+
+
+body{
+
+    background:
+
+    linear-gradient(
+        180deg,
+        #001437,
+        #004cff,
+        #00102d
+    );
+
+}
+
+
+
+
+/* =========================
+APP
+========================= */
+
+
+.app{
+
+    width:100%;
+    min-height:100vh;
+
+    position:relative;
+
+}
+
+
+
+
+.content{
+
+    width:100%;
+
+    position:relative;
+
+    z-index:5;
+
+}
+
+
+
+
+/* =========================
+PAGES
+========================= */
+
+
+.page{
+
+    display:none;
+
+    width:100%;
+
+}
+
+
+
+.page.active{
+
+    display:block;
+
+    animation:
+
+    pageShow .3s ease;
+
+}
+
+
+
+@keyframes pageShow{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+
+
+/* =========================
+MAIN PAGE FIX
+ONLY HOME NO SCROLL
+========================= */
+
+
+#game{
+
+    height:calc(100vh - 90px);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+
+
+#game .content{
+
+    height:100%;
+
+    overflow:hidden;
+
+}
+
+
+
+
+
+/* =========================
+OTHER PAGES SCROLL
+========================= */
+
+
+.page:not(#game){
+
+    min-height:100vh;
+
+    height:auto;
+
+    overflow-y:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+
+
+.page:not(#game).active{
+
+    display:block;
+
+}
+
+
+
+
+.page:not(#game) .panel,
+.page:not(#game) .glass-box,
+.page:not(#game) .upgrade-card,
+.page:not(#game) .chip-card{
+
+    margin-bottom:120px;
+
+}
+
+
+
+
+
+/* =========================
+SNOW EFFECT
+========================= */
+
+
+.snow{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:30;
+
+
+    background-image:
+
+    radial-gradient(
+        white 2px,
+        transparent 3px
+    );
+
+
+    background-size:
+
+    70px 70px;
+
+
+    opacity:.3;
+
+
+    animation:
+
+    snowMove 12s linear infinite;
+
+}
+
+
+
+
+@keyframes snowMove{
+
+
+    from{
+
+        background-position:
+
+        0 0;
+
+    }
+
+
+
+    to{
+
+        background-position:
+
+        0 500px;
+
+    }
+
+
+}
+
+
+
+
+
+
+/* =========================
+GARLAND
+========================= */
+
+
+.garland{
+
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+
+    height:45px;
+
+
+    display:flex;
+
+    justify-content:space-around;
+
+
+    z-index:40;
+
+
+    pointer-events:none;
+
+}
+
+
+
+
+
+.garland span{
+
+
+    width:16px;
+
+    height:16px;
+
+
+    border-radius:50%;
+
+
+    background:#00ffff;
+
+
+    box-shadow:
+
+    0 0 25px cyan;
+
+
+    animation:
+
+    lightPulse 1.5s infinite alternate;
+
+}
+
+
+
+
+
+.garland span:nth-child(2){
+
+    background:#ffd700;
+
+    box-shadow:
+
+    0 0 25px gold;
+
+}
+
+
+
+
+
+.garland span:nth-child(3){
+
+    background:#ff0033;
+
+    box-shadow:
+
+    0 0 25px red;
+
+}
+
+
+
+
+.garland span:nth-child(4){
+
+    background:#00ff55;
+
+    box-shadow:
+
+    0 0 25px lime;
+
+}
+
+
+
+
+
+.garland span:nth-child(5){
+
+    background:#ff00ff;
+
+    box-shadow:
+
+    0 0 25px magenta;
+
+}
+
+
+
+
+
+@keyframes lightPulse{
+
+
+    from{
+
+        transform:scale(.8);
+
+        opacity:.5;
+
+    }
+
+
+
+    to{
+
+        transform:scale(1.2);
+
+        opacity:1;
+
+    }
+
+}
+
+
+
+
+
+
+
+/* =========================
+GLASS BLOCKS
+========================= */
+
+
+.panel,
+.glass-box,
+.glass-info{
+
+
+    width:92%;
+
+
+    margin:18px auto;
+
+
+    padding:20px;
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+
+    box-shadow:
+
+    0 0 35px rgba(0,220,255,.35);
+
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+.panel:before,
+.glass-box:before,
+.glass-info:before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    top:0;
+
+
+    left:-100%;
+
+
+    width:200%;
+
+
+    height:2px;
+
+
+
+    background:
+
+    linear-gradient(
+
+    90deg,
+
+    transparent,
+
+    white,
+
+    transparent
+
+    );
+
+
+
+    animation:
+
+    glassMove 5s infinite;
+
+
+}
+
+
+
+
+
+@keyframes glassMove{
+
+
+    from{
+
+        left:-100%;
+
+    }
+
+
+    to{
+
+        left:100%;
+
+    }
+
+}
+
+
+
+
+
+h2{
+
+
+    text-align:center;
+
+
+    font-size:28px;
+
+
+    text-shadow:
+
+    0 0 20px cyan;
+
+
+}
+/* =========================
+BALANCE CARD
+========================= */
+
+
+.balance-card{
+
+
+    width:92%;
+
+    margin:55px auto 20px;
+
+
+    padding:25px;
+
+
+    border-radius:30px;
+
+
+    background:
+
+    rgba(255,255,255,.12);
+
+
+    border:
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+
+    box-shadow:
+
+    0 0 45px rgba(0,220,255,.35);
+
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+
+.coin-icon{
+
+
+    width:70px;
+
+    height:70px;
+
+
+    margin:auto;
+
+
+    border-radius:50%;
+
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+
+    font-size:42px;
+
+
+    font-weight:900;
+
+
+
+    background:
+
+
+    radial-gradient(
+
+    circle,
+
+    #fff8a0,
+
+    #ffd700,
+
+    #996600
+
+    );
+
+
+
+    box-shadow:
+
+
+    0 0 45px gold;
+
+
+
+}
+
+
+
+
+
+
+.balance-value{
+
+
+    font-size:42px;
+
+
+    font-weight:900;
+
+
+    margin:15px;
+
+
+
+    text-shadow:
+
+
+    0 0 25px cyan;
+
+
+}
+
+
+
+
+
+
+
+.stats{
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    flex-wrap:wrap;
+
+
+    gap:12px;
+
+
+}
+
+
+
+
+.stats div{
+
+
+    padding:10px 18px;
+
+
+    border-radius:20px;
+
+
+    background:
+
+    rgba(0,0,0,.25);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,.35);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+ROULETTE PREVIEW CARD
+========================= */
+
+
+.new-card{
+
+
+    width:92%;
+
+
+    height:135px;
+
+
+    margin:20px auto;
+
+
+
+    border-radius:35px;
+
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #8b0000,
+
+    #ff0000,
+
+    #650000
+
+    );
+
+
+
+    border:
+
+    2px solid rgba(255,255,255,.5);
+
+
+
+    box-shadow:
+
+
+    0 0 50px red;
+
+
+
+}
+
+
+
+
+
+.mini-wheel{
+
+
+    position:absolute;
+
+
+
+    left:25px;
+
+
+    top:25px;
+
+
+
+    width:80px;
+
+
+    height:80px;
+
+
+
+    border-radius:50%;
+
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+
+    font-size:25px;
+
+
+    font-weight:900;
+
+
+
+    background:
+
+
+    conic-gradient(
+
+    green,
+
+    red,
+
+    black,
+
+    red,
+
+    black
+
+    );
+
+
+
+    border:
+
+    5px solid gold;
+
+
+
+    box-shadow:
+
+
+    0 0 35px gold;
+
+
+
+}
+
+
+
+
+
+
+.new{
+
+
+    position:absolute;
+
+
+    right:20px;
+
+
+    top:15px;
+
+
+
+    padding:8px 18px;
+
+
+    border-radius:20px;
+
+
+
+    background:red;
+
+
+
+    font-weight:900;
+
+
+
+    box-shadow:
+
+
+    0 0 20px white;
+
+
+
+}
+
+
+
+
+
+
+.new-card h2{
+
+
+    position:absolute;
+
+
+    left:125px;
+
+
+    bottom:25px;
+
+
+
+    margin:0;
+
+
+    font-size:27px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+FINAL CLICK BUTTON
+STATIC
+========================= */
+
+
+/*
+Кнопка:
+- ниже рулетки
+- не плавает
+- не задевает NAV
+- не увеличивает экран
+*/
+
+
+#game .click-zone{
+
+
+    position:absolute;
+
+
+    top:390px;
+
+
+    left:0;
+
+
+    right:0;
+
+
+
+    height:330px;
+
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:flex-start;
+
+
+
+    overflow:hidden;
+
+
+
+    pointer-events:none;
+
+
+    z-index:10;
+
+
+}
+
+
+
+
+
+#game .big-coin{
+
+
+    pointer-events:auto;
+
+
+
+    width:260px;
+
+
+    height:260px;
+
+
+
+    margin:25px 0 0 0;
+
+
+
+    border-radius:50%;
+
+
+
+    border:
+
+    8px solid rgba(255,215,0,.9);
+
+
+
+    background:
+
+
+    radial-gradient(
+
+    circle at 35% 30%,
+
+    #fffbd0,
+
+    #ffd700 40%,
+
+    #ff9800 75%,
+
+    #8b5200
+
+    );
+
+
+
+    color:white;
+
+
+
+    font-size:85px;
+
+
+    font-weight:900;
+
+
+
+    box-shadow:
+
+
+    0 0 70px gold,
+
+    inset 0 0 40px white;
+
+
+
+    animation:none;
+
+
+
+    transform:none;
+
+
+}
+
+
+
+
+
+#game .big-coin:active{
+
+
+    transform:
+
+    scale(.94);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+ROULETTE PAGE
+========================= */
+
+
+.roulette-panel{
+
+
+    width:92%;
+
+
+    margin:auto;
+
+
+
+    padding:20px;
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+
+}
+
+
+
+
+
+.wheel-box{
+
+
+    width:330px;
+
+
+    height:330px;
+
+
+    margin:25px auto;
+
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+
+}
+
+
+
+
+#rouletteWheel{
+
+
+    width:300px;
+
+
+    height:300px;
+
+
+
+    border-radius:50%;
+
+
+
+    border:
+
+    12px solid gold;
+
+
+
+    box-shadow:
+
+
+    0 0 70px gold;
+
+
+
+}
+
+
+
+
+
+
+#rouletteResult{
+
+
+    text-align:center;
+
+
+    font-size:25px;
+
+
+    color:#ffd700;
+
+
+
+}
+
+
+
+
+
+
+#rouletteAmount{
+
+
+    width:90%;
+
+
+    height:55px;
+
+
+    margin:15px auto;
+
+
+    display:block;
+
+
+
+    border-radius:22px;
+
+
+
+    background:
+
+
+    rgba(0,0,0,.35);
+
+
+
+    border:
+
+    1px solid white;
+
+
+
+    color:white;
+
+
+    text-align:center;
+
+
+    font-size:20px;
+
+
+}
+/* =========================
+BET BUTTONS
+========================= */
+
+
+.bets{
+
+
+    width:92%;
+
+
+    margin:20px auto;
+
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+
+    repeat(2,1fr);
+
+
+
+    gap:12px;
+
+
+}
+
+
+
+
+
+.bets button{
+
+
+    height:58px;
+
+
+    border-radius:25px;
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,.6);
+
+
+
+    background:
+
+
+    rgba(255,255,255,.15);
+
+
+
+    color:white;
+
+
+
+    font-size:18px;
+
+
+    font-weight:900;
+
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+
+    box-shadow:
+
+
+    0 0 25px cyan;
+
+
+
+}
+
+
+
+
+
+
+.bets button.active{
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    gold,
+
+    orange
+
+    );
+
+
+
+    color:black;
+
+
+
+    box-shadow:
+
+
+    0 0 40px gold;
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+NUMBER SELECT
+========================= */
+
+
+.number-area{
+
+
+    width:92%;
+
+
+    margin:20px auto;
+
+
+
+    padding:20px;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+}
+
+
+
+
+
+.roulette-numbers{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+
+    repeat(6,1fr);
+
+
+
+    gap:10px;
+
+
+
+}
+
+
+
+
+
+.roulette-numbers button{
+
+
+    height:45px;
+
+
+
+    border-radius:50%;
+
+
+
+    border:
+
+
+    2px solid white;
+
+
+
+    color:white;
+
+
+
+    font-weight:900;
+
+
+
+    background:#111;
+
+
+
+    box-shadow:
+
+
+    0 0 15px rgba(255,255,255,.5);
+
+
+
+}
+
+
+
+
+
+.roulette-numbers button.red{
+
+
+    background:#b00000;
+
+
+}
+
+
+
+.roulette-numbers button.black{
+
+
+    background:#000;
+
+
+}
+
+
+
+.roulette-numbers button.green{
+
+
+    background:#008000;
+
+
+}
+
+
+
+
+
+.roulette-numbers button:active{
+
+
+    transform:
+
+    scale(.9);
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+TOP PLAYERS
+========================= */
+
+
+#topList{
+
+
+    width:92%;
+
+
+    margin:auto;
+
+
+}
+
+
+
+
+
+.top-player{
+
+
+    position:relative;
+
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+
+    gap:15px;
+
+
+
+    padding:18px;
+
+
+
+    margin:15px 0;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+}
+
+
+
+
+
+
+.top-player img{
+
+
+    width:60px;
+
+
+    height:60px;
+
+
+
+    border-radius:50%;
+
+
+
+    border:
+
+
+    2px solid white;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+UPGRADES
+========================= */
+
+
+
+.upgrade-card{
+
+
+    width:92%;
+
+
+    margin:18px auto;
+
+
+
+    padding:22px;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+
+    2px solid white;
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+    transition:.25s;
+
+
+}
+
+
+
+
+
+
+.upgrade-card:active{
+
+
+    transform:
+
+    scale(.97);
+
+
+}
+
+
+
+
+
+
+
+.upgrade-card button{
+
+
+    width:100%;
+
+
+
+    height:55px;
+
+
+
+    margin-top:15px;
+
+
+
+    border-radius:25px;
+
+
+
+    border:
+
+
+    1px solid white;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.2);
+
+
+
+    color:white;
+
+
+
+    font-size:18px;
+
+
+
+    font-weight:900;
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+CITY COLORS
+========================= */
+
+
+
+.city-ekaterinburg{
+
+
+    border-color:#00ffff;
+
+
+
+    box-shadow:
+
+
+    0 0 45px cyan;
+
+
+
+}
+
+
+
+
+
+.city-artemovskiy{
+
+
+    border-color:#ff6600;
+
+
+
+    box-shadow:
+
+
+    0 0 45px orange;
+
+
+
+}
+
+
+
+
+
+.city-rezh{
+
+
+    border-color:#cc00ff;
+
+
+
+    box-shadow:
+
+
+    0 0 45px purple;
+
+
+
+}
+
+
+
+
+
+.city-chelyabinsk{
+
+
+    border-color:#ff0033;
+
+
+
+    box-shadow:
+
+
+    0 0 45px red;
+
+
+
+}
+
+
+
+
+
+.city-irbit{
+
+
+    border-color:#ffd700;
+
+
+
+    box-shadow:
+
+
+    0 0 55px gold;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================
+CHIP AUTO INCOME
+========================= */
+
+
+.chip-card{
+
+
+    width:92%;
+
+
+    margin:15px auto;
+
+
+
+    padding:22px;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.1);
+
+
+
+    border:
+
+
+    1px solid cyan;
+
+
+
+    box-shadow:
+
+
+    0 0 40px cyan;
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+}
+
+
+
+
+
+
+
+.chip-card h3{
+
+
+    margin:0;
+
+
+
+    font-size:25px;
+
+
+
+}
+
+
+
+
+
+
+.chip-income{
+
+
+    font-size:20px;
+
+
+    color:#00ffff;
+
+
+
+}
+
+
+
+
+
+
+
+.chip-card button{
+
+
+    width:100%;
+
+
+
+    height:55px;
+
+
+
+    margin-top:15px;
+
+
+
+    border-radius:25px;
+
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    cyan,
+
+    blue
+
+    );
+
+
+
+    border:none;
+
+
+
+    color:white;
+
+
+
+    font-size:18px;
+
+
+
+    font-weight:900;
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+GLASS BUTTONS
+========================= */
+
+
+.glass-button{
+
+
+    width:90%;
+
+
+
+    height:60px;
+
+
+
+    margin:15px auto;
+
+
+
+    display:block;
+
+
+
+    border-radius:25px;
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.6);
+
+
+
+    background:
+
+
+    rgba(255,255,255,.15);
+
+
+
+    color:white;
+
+
+
+    font-size:20px;
+
+
+
+    font-weight:900;
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+    box-shadow:
+
+
+    0 0 30px cyan;
+
+
+
+}
+
+
+
+
+
+.glass-button:active{
+
+
+    transform:
+
+    scale(.94);
+
+
+}
+/* =========================
+API + HISTORY + CHANNEL
+========================= */
+
+
+.channel-card{
+
+
+    width:92%;
+
+
+    margin:20px auto;
+
+
+
+    padding:25px;
+
+
+
+    border-radius:35px;
+
+
+
+    text-align:center;
+
+
+
+    text-decoration:none;
+
+
+
+    color:white;
+
+
+
+    font-size:22px;
+
+
+
+    font-weight:900;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.12);
+
+
+
+    border:
+
+
+    2px solid gold;
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+    box-shadow:
+
+
+    0 0 55px gold;
+
+
+
+}
+
+
+
+
+
+
+.crown-wheel{
+
+
+    font-size:40px;
+
+
+
+    color:gold;
+
+
+
+    text-shadow:
+
+
+    0 0 30px gold;
+
+
+
+}
+
+
+
+
+
+
+.history-box{
+
+
+    width:92%;
+
+
+
+    margin:20px auto;
+
+
+
+    padding:20px;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(0,0,0,.25);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+
+    blur(20px);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+INPUTS
+========================= */
+
+
+input{
+
+
+    width:90%;
+
+
+
+    height:55px;
+
+
+
+    margin:10px auto;
+
+
+
+    display:block;
+
+
+
+    border-radius:22px;
+
+
+
+    background:
+
+
+    rgba(0,0,0,.35);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.5);
+
+
+
+    color:white;
+
+
+
+    font-size:18px;
+
+
+
+    text-align:center;
+
+
+
+    outline:none;
+
+
+
+    backdrop-filter:
+
+
+    blur(15px);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+BOTTOM NAV
+========================= */
+
+
+.bottom-nav{
+
+
+    position:fixed;
+
+
+
+    left:4%;
+
+
+
+    bottom:15px;
+
+
+
+    width:92%;
+
+
+
+    height:75px;
+
+
+
+    border-radius:40px;
+
+
+
+    display:flex;
+
+
+
+    align-items:center;
+
+
+
+    justify-content:space-around;
+
+
+
+    background:
+
+
+    rgba(0,0,0,.45);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.4);
+
+
+
+    backdrop-filter:
+
+
+    blur(25px);
+
+
+
+    box-shadow:
+
+
+    0 0 45px cyan;
+
+
+
+    z-index:999999;
+
+
+
+}
+
+
+
+
+
+
+
+.nav{
+
+
+    width:58px;
+
+
+
+    height:58px;
+
+
+
+    border-radius:50%;
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.5);
+
+
+
+    background:
+
+
+    rgba(255,255,255,.15);
+
+
+
+    color:white;
+
+
+
+    font-size:12px;
+
+
+
+    font-weight:900;
+
+
+
+    touch-action:manipulation;
+
+
+
+}
+
+
+
+
+
+
+
+.nav.active{
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    cyan,
+
+    blue
+
+    );
+
+
+
+    box-shadow:
+
+
+    0 0 40px cyan;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+NO ZOOM FIX
+========================= */
+
+
+html,
+body{
+
+
+    touch-action:manipulation;
+
+
+
+    -webkit-text-size-adjust:100%;
+
+
+
+    overflow-x:hidden;
+
+
+
+}
+
+
+
+
+
+button,
+input{
+
+
+    touch-action:manipulation;
+
+
+
+    -webkit-user-select:none;
+
+
+
+    user-select:none;
+
+
+
+}
+
+
+
+
+
+button{
+
+
+    -webkit-tap-highlight-color:transparent;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+SCROLL SYSTEM
+========================= */
+
+
+/*
+Главная:
+- без скролла
+- кнопка статичная
+
+Остальные:
+- можно листать вверх/вниз
+*/
+
+
+
+#game{
+
+
+    height:calc(100vh - 90px)!important;
+
+
+
+    overflow:hidden!important;
+
+
+
+}
+
+
+
+
+
+#game .content{
+
+
+    height:100%!important;
+
+
+
+    overflow:hidden!important;
+
+
+
+}
+
+
+
+
+
+
+.page:not(#game){
+
+
+    height:auto!important;
+
+
+
+    min-height:100vh;
+
+
+
+    overflow-y:auto!important;
+
+
+
+    -webkit-overflow-scrolling:touch;
+
+
+
+}
+
+
+
+
+
+
+.page:not(#game).active{
+
+
+    display:block;
+
+
+
+}
+
+
+
+
+
+.page:not(#game) .panel{
+
+
+    padding-bottom:130px;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+MOBILE
+========================= */
+
+
+@media(max-width:500px){
+
+
+
+.balance-value{
+
+
+    font-size:35px;
+
+
+}
+
+
+
+
+
+.big-coin{
+
+
+    width:260px;
+
+
+    height:260px;
+
+
+    font-size:80px;
+
+
+
+}
+
+
+
+
+
+#game .click-zone{
+
+
+    top:390px;
+
+
+
+}
+
+
+
+
+
+.wheel-box{
+
+
+    width:280px;
+
+
+
+    height:280px;
+
+
+
+}
+
+
+
+
+
+#rouletteWheel{
+
+
+    width:250px;
+
+
+
+    height:250px;
+
+
+
+}
+
+
+
+
+
+.roulette-numbers{
+
+
+    grid-template-columns:
+
+
+    repeat(5,1fr);
+
+
+
+}
+
+
+
+
+
+.bottom-nav{
+
+
+    height:70px;
+
+
+
+}
+
+
+
+
+
+.nav{
+
+
+    width:52px;
+
+
+
+    height:52px;
+
+
+
+    font-size:10px;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+FINAL CLICK LOCK
+========================= */
+
+
+/*
+Фиксируем кнопку.
+Она:
+- не двигается
+- не прыгает
+- не закрывает меню
+- не уходит вверх
+*/
+
+
+
+#game .click-zone{
+
+
+    top:390px!important;
+
+
+
+    height:320px!important;
+
+
+
+    overflow:hidden!important;
+
+
+
+}
+
+
+
+
+
+#game .big-coin{
+
+
+    position:relative!important;
+
+
+
+    top:20px!important;
+
+
+
+    animation:none!important;
+
+
+
+}
+
+
+
+
+
+
+
+#game .big-coin:active{
+
+
+    transform:scale(.94)!important;
+
+
+
+}
