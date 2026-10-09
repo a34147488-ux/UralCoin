@@ -1,14 +1,13 @@
 // ===================================
-// URALcoin SERVER v15.2
-// Balance Sync FIX
-// Top FIX
-// Transfer FIX
+// URALcoin SERVER v16
+// Full API System
 // ===================================
 
 
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+
 
 
 const app = express();
@@ -24,14 +23,13 @@ const PORT =
 process.env.PORT || 3000;
 
 
+
 const DB =
 "users.json";
 
 
 
-let users=[];
-
-
+let users = [];
 
 
 
@@ -50,8 +48,7 @@ try{
 if(fs.existsSync(DB)){
 
 
-users =
-JSON.parse(
+users = JSON.parse(
 
 fs.readFileSync(
 DB,
@@ -65,12 +62,12 @@ DB,
 
 
 }
-
 catch(e){
 
 
 console.log(
-"LOAD ERROR"
+"DB LOAD ERROR",
+e
 );
 
 
@@ -86,7 +83,6 @@ users=[];
 
 
 
-
 function saveUsers(){
 
 
@@ -95,20 +91,16 @@ fs.writeFileSync(
 DB,
 
 JSON.stringify(
-
 users,
-
 null,
-
 2
-
 )
 
 );
 
 
-}
 
+}
 
 
 
@@ -128,18 +120,19 @@ loadUsers();
 // ===============================
 
 
-function createPromo(){
+function generatePromo(){
+
 
 
 let code;
 
 
+
 do{
 
 
-code=
-
-"URAL-"+
+code =
+"URAL-" +
 
 Math.random()
 
@@ -166,6 +159,7 @@ u=>u.promoCode===code
 return code;
 
 
+
 }
 
 
@@ -177,19 +171,22 @@ return code;
 
 
 // ===============================
-// USER REGISTER
+// CREATE USER
 // ===============================
 
 
-app.post("/user",(req,res)=>{
-
+app.post(
+"/user",
+(req,res)=>{
 
 
 let data=req.body;
 
 
 
-if(!data.id)
+
+if(!data.id){
+
 
 return res.json({
 
@@ -198,24 +195,19 @@ error:"NO_ID"
 });
 
 
+}
 
 
 
 
-let user =
 
-users.find(
+let user = users.find(
 
 u=>
 
-String(u.id)
-
-===
-
-String(data.id)
+String(u.id)===String(data.id)
 
 );
-
 
 
 
@@ -253,19 +245,23 @@ autoPower:0,
 friends:0,
 
 
-earnedFromPromo:0,
-
-
-promoCode:createPromo(),
+promoCode:generatePromo(),
 
 
 activatedCodes:[],
 
 
+earnedFromPromo:0,
+
+
 upgrades:{},
 
 
+history:[],
+
+
 created:Date.now()
+
 
 
 };
@@ -281,35 +277,25 @@ users.push(user);
 else{
 
 
-
 user.name =
-
 data.name ||
-
 user.name;
 
 
-
-
 user.username =
-
 data.username ||
-
 user.username;
 
 
-
 user.photo =
-
 data.photo ||
-
 user.photo;
 
 
 
 if(!user.promoCode)
 
-user.promoCode=createPromo();
+user.promoCode=generatePromo();
 
 
 
@@ -317,8 +303,10 @@ user.promoCode=createPromo();
 
 
 
-saveUsers();
 
+
+
+saveUsers();
 
 
 
@@ -341,20 +329,16 @@ res.json(user);
 // ===============================
 
 
-app.get("/user/:id",(req,res)=>{
+app.get(
+"/user/:id",
+(req,res)=>{
 
 
-let user =
-
-users.find(
+let user = users.find(
 
 u=>
 
-String(u.id)
-
-===
-
-String(req.params.id)
+String(u.id)===String(req.params.id)
 
 );
 
@@ -365,6 +349,7 @@ user || null
 );
 
 
+
 });
 
 
@@ -376,24 +361,21 @@ user || null
 
 
 // ===============================
-// BALANCE SYNC
+// SYNC BALANCE
 // ===============================
 
 
-app.post("/sync",(req,res)=>{
+app.post(
+"/sync",
+(req,res)=>{
 
 
 let user =
-
 users.find(
 
 u=>
 
-String(u.id)
-
-===
-
-String(req.body.id)
+String(u.id)===String(req.body.id)
 
 );
 
@@ -401,34 +383,16 @@ String(req.body.id)
 
 
 
-if(!user){
 
-
-return res.json({
-
-success:false,
-
-message:"USER NOT FOUND"
-
-});
-
-
-}
-
-
-
+if(user){
 
 
 
 user.balance =
 
 Number(
-
 req.body.balance || 0
-
 );
-
-
 
 
 
@@ -436,14 +400,84 @@ saveUsers();
 
 
 
+}
 
 
 
 res.json({
 
-success:true,
+success:true
 
-balance:user.balance
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// TOP
+// ===============================
+
+
+app.get(
+"/top",
+(req,res)=>{
+
+
+
+let top =
+
+[...users]
+
+.sort(
+
+(a,b)=>
+
+Number(b.balance)-Number(a.balance)
+
+)
+
+.slice(0,50)
+
+.map(u=>({
+
+
+id:u.id,
+
+
+name:u.name,
+
+
+username:u.username,
+
+
+photo:u.photo,
+
+
+balance:u.balance,
+
+
+friends:u.friends
+
+
+
+}));
+
+
+
+
+
+res.json({
+
+players:top
 
 });
 
@@ -464,7 +498,9 @@ balance:user.balance
 // ===============================
 
 
-app.get("/search-users",(req,res)=>{
+app.get(
+"/search-users",
+(req,res)=>{
 
 
 let q =
@@ -473,60 +509,32 @@ String(
 req.query.q || ""
 )
 
-.toLowerCase()
-
-.trim();
+.toLowerCase();
 
 
 
 
 
-let result =
 
-users
+let result = users
 
 .filter(u=>{
 
 
-let name =
+return (
 
-String(
-u.name || ""
-)
-
-.toLowerCase();
-
-
-
-let username =
-
-String(
-u.username || ""
-)
-
-.toLowerCase();
-
-
-
-
-
-return(
-
-name.includes(q)
+u.name.toLowerCase()
+.includes(q)
 
 ||
 
-username.includes(
-q.replace("@","")
-)
+(u.username || "")
+.toLowerCase()
+.includes(q)
 
 );
 
-
-
 })
-
-
 
 .slice(0,10)
 
@@ -535,13 +543,18 @@ q.replace("@","")
 
 id:u.id,
 
+
 name:u.name,
+
 
 username:u.username,
 
+
 photo:u.photo,
 
-balance:u.balance || 0
+
+balance:u.balance
+
 
 
 }));
@@ -575,23 +588,22 @@ users:result
 // ===============================
 
 
-app.post("/transfer",(req,res)=>{
+app.post(
+"/transfer",
+(req,res)=>{
 
 
 let from =
-
 String(req.body.from);
 
 
 
 let to =
-
 String(req.body.to);
 
 
 
 let amount =
-
 Number(req.body.amount);
 
 
@@ -600,17 +612,21 @@ Number(req.body.amount);
 
 
 
-let sender =
-
-users.find(
+let sender = users.find(
 
 u=>
 
-String(u.id)
+String(u.id)===from
 
-===
+);
 
-from
+
+
+let receiver = users.find(
+
+u=>
+
+String(u.id)===to
 
 );
 
@@ -619,56 +635,28 @@ from
 
 
 
-let receiver =
 
-users.find(
+if(!sender || !receiver){
 
-u=>
-
-String(u.id)
-
-===
-
-to
-
-);
-
-
-
-
-
-
-if(!sender)
 
 return res.json({
 
 success:false,
 
-message:"Отправитель не найден"
+message:"Пользователь не найден"
 
 });
 
 
-
-
-
-
-if(!receiver)
-
-return res.json({
-
-success:false,
-
-message:"Получатель не найден"
-
-});
+}
 
 
 
 
 
 
-if(sender.balance < amount)
+if(sender.balance < amount){
+
 
 return res.json({
 
@@ -679,6 +667,7 @@ message:"Недостаточно средств"
 });
 
 
+}
 
 
 
@@ -687,7 +676,116 @@ message:"Недостаточно средств"
 sender.balance -= amount;
 
 
+
 receiver.balance += amount;
+
+
+
+
+
+sender.history.push({
+
+type:"Отправлено",
+
+to:receiver.name,
+
+amount:amount,
+
+date:new Date().toLocaleString()
+
+});
+
+
+
+
+
+receiver.history.push({
+
+type:"Получено",
+
+from:sender.name,
+
+amount:amount,
+
+date:new Date().toLocaleString()
+
+});
+
+
+
+
+
+
+saveUsers();
+
+
+
+
+
+
+res.json({
+
+success:true
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// CREATE PROMO
+// ===============================
+
+
+app.post(
+"/create-promo",
+(req,res)=>{
+
+
+let user =
+users.find(
+
+u=>
+
+String(u.id)===String(req.body.id)
+
+);
+
+
+
+
+
+
+if(!user){
+
+
+return res.json({
+
+success:false
+
+});
+
+
+}
+
+
+
+
+
+if(!user.promoCode)
+
+user.promoCode=generatePromo();
+
+
 
 
 
@@ -701,9 +799,7 @@ res.json({
 
 success:true,
 
-fromBalance:sender.balance,
-
-receiverBalance:receiver.balance
+code:user.promoCode
 
 });
 
@@ -720,33 +816,127 @@ receiverBalance:receiver.balance
 
 
 // ===============================
-// TOP
+// ACTIVATE PROMO
 // ===============================
 
 
-app.get("/top",(req,res)=>{
+app.post(
+"/activate-promo",
+(req,res)=>{
 
 
-let players =
+let user =
+users.find(
 
-[...users]
+u=>
 
-.sort(
+String(u.id)===String(req.body.userId)
 
-(a,b)=>
-
-Number(b.balance || 0)
-
--
-
-Number(a.balance || 0)
-
-)
+);
 
 
 
-.slice(0,50);
 
+
+let code =
+String(req.body.code || "")
+.toUpperCase();
+
+
+
+
+
+let owner =
+users.find(
+
+u=>
+
+u.promoCode===code
+
+);
+
+
+
+
+
+
+if(!user || !owner){
+
+
+return res.json({
+
+success:false,
+
+message:"Код не найден"
+
+});
+
+
+}
+
+
+
+
+
+
+if(user.id===owner.id){
+
+
+return res.json({
+
+success:false,
+
+message:"Свой код нельзя"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(user.activatedCodes.includes(code)){
+
+
+return res.json({
+
+success:false,
+
+message:"Уже использован"
+
+});
+
+
+}
+
+
+
+
+
+
+
+user.activatedCodes.push(code);
+
+
+
+owner.balance +=5000;
+
+
+owner.friends +=1;
+
+
+owner.earnedFromPromo +=5000;
+
+
+
+
+
+
+saveUsers();
 
 
 
@@ -755,7 +945,7 @@ Number(a.balance || 0)
 
 res.json({
 
-players:players
+success:true
 
 });
 
@@ -772,39 +962,17 @@ players:players
 
 
 // ===============================
-// DEBUG
+// START
 // ===============================
 
 
-app.get("/debug-users",(req,res)=>{
-
-
-res.json({
-
-count:users.length,
-
-users:users
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-
-app.get("/",(req,res)=>{
+app.get(
+"/",
+(req,res)=>{
 
 
 res.send(
-
-"URALcoin v15.2 ONLINE"
-
+"URALcoin server v16 online"
 );
 
 
@@ -814,20 +982,19 @@ res.send(
 
 
 
-
-
-
-
-app.listen(PORT,()=>{
+app.listen(
+PORT,
+()=>{
 
 
 console.log(
 
-"URALcoin SERVER STARTED",
+"URALcoin v16 started",
 
 PORT
 
 );
+
 
 
 });
