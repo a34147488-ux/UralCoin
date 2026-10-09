@@ -25,7 +25,25 @@
 <div class="city-bg"></div>
 
 
+<div class="garland">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
 <div class="snow"></div>
+
+
+
+<header class="header">
+
+</header>
+
 
 
 
@@ -69,6 +87,11 @@ U
 </span>
 
 
+<small>
+кристаллы появятся после связки кошельков
+</small>
+
+
 </div>
 
 
@@ -87,7 +110,9 @@ U
 за клик
 
 
-<span id="heartPower"></span>
+<span id="heartPower">
+🫀
+</span>
 
 
 </div>
@@ -97,7 +122,6 @@ U
 
 
 <div class="second-power">
-
 
 В секунду:
 
@@ -109,8 +133,6 @@ U
 </div>
 
 
-
-
 </div>
 
 
@@ -119,6 +141,9 @@ U
 
 
 <div class="fire-zone" id="fireZone">
+
+
+
 
 
 <button id="clickButton" class="main-coin">
@@ -132,7 +157,13 @@ U
 
 
 
+
+
+
+
 </section>
+
+
 
 
 
@@ -155,6 +186,7 @@ U
 
 
 
+
 <button class="gold-button" id="copyCode">
 
 Скопировать код
@@ -173,6 +205,7 @@ U
 0
 </b>
 
+
 </div>
 
 
@@ -187,6 +220,7 @@ U
 0 U
 </b>
 
+
 </div>
 
 
@@ -198,15 +232,18 @@ U
 
 
 
+
 <h2>
-
 Активировать код
-
 </h2>
 
 
 
+
+
 <input id="promoInput" placeholder="Введите код">
+
+
 
 
 
@@ -218,10 +255,14 @@ U
 
 
 
+
 </div>
 
 
 </section>
+
+
+
 
 
 
@@ -235,10 +276,10 @@ U
 
 
 <h2>
-
 Переводы
-
 </h2>
+
+
 
 
 
@@ -246,7 +287,11 @@ U
 
 
 
+
+
 <input id="transferSum" type="number" placeholder="Количество U">
+
+
 
 
 
@@ -258,10 +303,21 @@ U
 
 
 
+
+
 </div>
 
 
 </section>
+
+
+
+
+
+
+
+
+
 <section class="page" id="tops">
 
 
@@ -269,10 +325,10 @@ U
 
 
 <h2>
-
 Топ игроков
-
 </h2>
+
+
 
 
 
@@ -284,10 +340,13 @@ U
 
 
 
+
+
 </div>
 
 
 </section>
+
 
 
 
@@ -303,10 +362,9 @@ U
 
 
 <h2>
-
 Ещё
-
 </h2>
+
 
 
 
@@ -335,13 +393,11 @@ target="_blank">
 
 
 
-
 <button class="menu-card" id="historyBtn">
 
 История
 
 </button>
-
 
 
 
@@ -357,12 +413,11 @@ API ключ
 
 
 
-
 <h2>
-
 Улучшения
-
 </h2>
+
+
 
 
 
@@ -372,12 +427,12 @@ API ключ
 
 
 
+
+
 </div>
 
 
 </section>
-
-
 
 
 
@@ -460,36 +515,31 @@ API ключ
 
 
 
+
+
+
+
 <script src="config.js"></script>
 
 <script src="storage.js"></script>
 
+<script src="api.js"></script>
+
 <script src="telegram.js"></script>
 
+<script src="upgrade.js"></script>
 
+<script src="promo.js"></script>
 
+<script src="referral.js"></script>
 
+<script src="transfer.js"></script>
 
+<script src="app.js"></script>
 
-<script>
+<script src="top.js"></script>
 
-
-// защита от увеличения экрана при тапах
-
-document.addEventListener(
-"gesturestart",
-function(e){
-
-e.preventDefault();
-
-}
-);
-
-
-
-</script>
-
-
+<script src="effects.js"></script>
 
 
 
