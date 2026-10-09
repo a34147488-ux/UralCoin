@@ -1282,7 +1282,405 @@ box-shadow:
 
 
 }
+/* ===================================
+URALcoin GLASS CODE + TOP v23
+=================================== */
 
+
+/* ===== КОД ===== */
+
+
+#code .panel{
+
+padding:20px;
+
+}
+
+
+
+#code .panel input{
+
+
+height:60px;
+
+font-size:18px;
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+border:
+
+2px solid rgba(255,255,255,.35);
+
+
+border-radius:25px;
+
+
+backdrop-filter:blur(15px);
+
+
+}
+
+
+
+
+
+#code .gold-button{
+
+
+height:65px;
+
+
+width:100%;
+
+
+font-size:20px;
+
+
+border-radius:25px;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+border:
+
+2px solid rgba(255,255,255,.45);
+
+
+backdrop-filter:blur(20px);
+
+
+box-shadow:
+
+0 0 25px rgba(0,180,255,.25);
+
+
+
+}
+
+
+
+
+
+#code .gold-button:active{
+
+
+background:
+
+rgba(0,170,255,.35);
+
+
+transform:scale(.96);
+
+
+}
+
+
+
+
+
+
+
+/* ===== TOP ===== */
+
+
+#topList{
+
+
+padding:5px;
+
+
+}
+
+
+
+.top-player{
+
+
+min-height:95px;
+
+
+border-radius:30px;
+
+
+padding:20px;
+
+
+margin:15px 0;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:18px;
+
+
+background:
+
+
+rgba(255,255,255,.13);
+
+
+
+border:
+
+2px solid rgba(255,255,255,.35);
+
+
+
+backdrop-filter:blur(20px);
+
+
+}
+
+
+
+
+.top-avatar-letter,
+.top-photo{
+
+
+width:75px;
+
+height:75px;
+
+
+border-radius:50%;
+
+
+font-size:30px;
+
+
+border:
+
+3px solid rgba(255,255,255,.7);
+
+
+}
+
+
+
+
+.top-name{
+
+
+font-size:22px;
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+.top-balance{
+
+
+font-size:20px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+
+
+/* ===== 1 PLACE GOLD ===== */
+
+
+.top-player:nth-child(1){
+
+
+background:
+
+linear-gradient(
+120deg,
+rgba(255,215,0,.35),
+rgba(255,255,255,.15),
+rgba(255,170,0,.35)
+);
+
+
+background-size:300% 300%;
+
+
+animation:goldFlow 4s infinite;
+
+
+border-color:#ffd700;
+
+
+}
+
+
+
+
+
+@keyframes goldFlow{
+
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* ===== 2 PLACE RED ===== */
+
+
+.top-player:nth-child(2){
+
+
+background:
+
+linear-gradient(
+120deg,
+rgba(255,0,0,.35),
+rgba(255,255,255,.15),
+rgba(180,0,0,.4)
+);
+
+
+background-size:300% 300%;
+
+
+animation:redFlow 4s infinite;
+
+
+border-color:#ff3030;
+
+
+}
+
+
+
+
+@keyframes redFlow{
+
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* ===== 3 PLACE YELLOW ===== */
+
+
+.top-player:nth-child(3){
+
+
+background:
+
+linear-gradient(
+120deg,
+rgba(255,230,0,.35),
+rgba(255,255,255,.15),
+rgba(255,180,0,.4)
+);
+
+
+background-size:300% 300%;
+
+
+animation:yellowFlow 4s infinite;
+
+
+border-color:#ffe600;
+
+
+}
+
+
+
+
+
+@keyframes yellowFlow{
+
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+
+}
 
 
 
