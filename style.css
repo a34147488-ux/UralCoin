@@ -1,0 +1,555 @@
+/* =====================================
+URALcoin STYLE v1
+BLUE GLASS DESIGN
+===================================== */
+
+
+*{
+
+box-sizing:border-box;
+
+}
+
+
+
+html,body{
+
+
+margin:0;
+
+padding:0;
+
+
+width:100%;
+
+min-height:100%;
+
+
+font-family:Arial,sans-serif;
+
+
+color:white;
+
+
+overflow-x:hidden;
+
+
+}
+
+
+
+/* =====================================
+BACKGROUND
+===================================== */
+
+
+body{
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#00143d,
+
+#003cff,
+
+#00aaff,
+
+#00113d
+
+);
+
+
+
+background-size:400% 400%;
+
+
+animation:
+
+bgMove 15s ease infinite;
+
+
+
+}
+
+
+
+
+@keyframes bgMove{
+
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+
+
+}
+
+
+
+
+.app{
+
+
+min-height:100vh;
+
+
+position:relative;
+
+
+overflow:hidden;
+
+
+}
+
+
+
+
+
+.app:before{
+
+
+content:"";
+
+
+position:fixed;
+
+
+inset:0;
+
+
+
+background:
+
+radial-gradient(
+
+circle at top,
+
+rgba(0,220,255,.35),
+
+transparent 45%
+
+),
+
+
+radial-gradient(
+
+circle at bottom,
+
+rgba(0,60,255,.5),
+
+transparent 55%
+
+);
+
+
+
+pointer-events:none;
+
+
+z-index:-1;
+
+
+
+}
+
+
+
+
+
+
+
+/* =====================================
+SNOW
+===================================== */
+
+
+.snow{
+
+
+position:fixed;
+
+
+inset:0;
+
+
+pointer-events:none;
+
+
+z-index:5;
+
+
+background-image:
+
+
+radial-gradient(circle,white 2px,transparent 3px),
+
+
+radial-gradient(circle,white 1px,transparent 2px),
+
+
+radial-gradient(circle,white 3px,transparent 4px);
+
+
+
+background-size:
+
+80px 80px,
+
+120px 120px,
+
+200px 200px;
+
+
+
+animation:
+
+snowMove 15s linear infinite;
+
+
+opacity:.7;
+
+
+
+}
+
+
+
+
+@keyframes snowMove{
+
+
+from{
+
+background-position:
+
+0 0,
+
+0 0,
+
+0 0;
+
+
+}
+
+
+
+to{
+
+
+background-position:
+
+0 600px,
+
+0 900px,
+
+0 1200px;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================
+GARLAND
+===================================== */
+
+
+.garland{
+
+
+position:fixed;
+
+
+top:0;
+
+
+left:0;
+
+
+width:100%;
+
+
+height:45px;
+
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+z-index:10;
+
+
+
+}
+
+
+
+
+.garland span{
+
+
+width:18px;
+
+
+height:18px;
+
+
+border-radius:50%;
+
+
+background:#00ffff;
+
+
+box-shadow:
+
+0 0 20px #00ffff;
+
+
+animation:
+
+lamp 1.5s infinite;
+
+
+
+}
+
+
+
+
+.garland span:nth-child(2){
+
+background:#ffd700;
+
+box-shadow:
+
+0 0 20px gold;
+
+animation-delay:.3s;
+
+}
+
+
+
+.garland span:nth-child(3){
+
+background:#ff0055;
+
+box-shadow:
+
+0 0 20px red;
+
+animation-delay:.6s;
+
+}
+
+
+
+
+.garland span:nth-child(4){
+
+background:#00ff66;
+
+box-shadow:
+
+0 0 20px lime;
+
+animation-delay:.9s;
+
+}
+
+
+
+.garland span:nth-child(5){
+
+background:white;
+
+box-shadow:
+
+0 0 20px white;
+
+animation-delay:1.2s;
+
+}
+
+
+
+
+@keyframes lamp{
+
+
+50%{
+
+transform:scale(1.4);
+
+opacity:.6;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+CONTENT
+===================================== */
+
+
+.content{
+
+
+padding-bottom:120px;
+
+
+}
+
+
+
+
+.page{
+
+
+display:none;
+
+
+width:100%;
+
+
+}
+
+
+
+.page.active{
+
+
+display:block;
+
+
+animation:
+
+showPage .35s ease;
+
+
+}
+
+
+
+
+@keyframes showPage{
+
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+GLASS
+===================================== */
+
+
+.glass{
+
+
+width:92%;
+
+
+margin:20px auto;
+
+
+padding:20px;
+
+
+border-radius:30px;
+
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.25);
+
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+
+box-shadow:
+
+
+0 0 30px rgba(0,200,255,.35);
+
+
+
+}
+
+
