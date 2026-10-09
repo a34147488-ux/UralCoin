@@ -1,42 +1,46 @@
 // ===================================
-// URALcoin ROULETTE v6
-// Wheel + Numbers Fix
+// URALcoin ROULETTE v7
+// FULL FIX
 // ===================================
 
 
-let rouletteStarted = false;
+let rouletteBet = null;
 
-let currentBet = null;
-
-
+let rouletteLoaded = false;
 
 
 
+
+
+// ===============================
+// START
+// ===============================
 
 
 function startRoulette(){
 
 
-if(rouletteStarted)
+if(rouletteLoaded)
 
 return;
 
 
-rouletteStarted = true;
+
+rouletteLoaded=true;
 
 
 
-createRouletteWheel();
+createWheel();
 
 
 
-loadRouletteState();
+loadRoulette();
 
 
 
 setInterval(
 
-loadRouletteState,
+loadRoulette,
 
 1000
 
@@ -59,7 +63,7 @@ loadRouletteState,
 // ===============================
 
 
-function createRouletteWheel(){
+function createWheel(){
 
 
 
@@ -77,8 +81,6 @@ return;
 
 
 
-
-
 wheel.innerHTML="";
 
 
@@ -86,7 +88,7 @@ wheel.innerHTML="";
 
 
 
-let redNumbers=[
+const redNumbers = [
 
 1,3,5,7,9,
 
@@ -104,8 +106,7 @@ let redNumbers=[
 
 
 
-const radius = 125;
-
+const radius = 105;
 
 
 
@@ -116,7 +117,7 @@ for(let i=0;i<=36;i++){
 
 
 
-let number =
+const el =
 
 document.createElement(
 "div"
@@ -124,10 +125,9 @@ document.createElement(
 
 
 
-number.className=
+el.className=
 
 "wheel-number";
-
 
 
 
@@ -136,7 +136,7 @@ number.className=
 if(i===0){
 
 
-number.classList.add(
+el.classList.add(
 "green"
 );
 
@@ -145,11 +145,10 @@ number.classList.add(
 
 else if(
 redNumbers.includes(i)
-
 ){
 
 
-number.classList.add(
+el.classList.add(
 "red"
 );
 
@@ -159,7 +158,7 @@ number.classList.add(
 else{
 
 
-number.classList.add(
+el.classList.add(
 "black"
 );
 
@@ -172,7 +171,8 @@ number.classList.add(
 
 
 
-number.innerText=i;
+el.innerText=i;
+
 
 
 
@@ -181,7 +181,7 @@ number.innerText=i;
 
 let angle =
 
-(i * (360/37)) - 90;
+(i*(360/37))-90;
 
 
 
@@ -223,13 +223,15 @@ radius;
 
 
 
-number.style.left=
+
+el.style.left =
 
 "calc(50% + "+x+"px)";
 
 
 
-number.style.top=
+
+el.style.top =
 
 "calc(50% + "+y+"px)";
 
@@ -238,7 +240,8 @@ number.style.top=
 
 
 
-wheel.appendChild(number);
+
+wheel.appendChild(el);
 
 
 
@@ -257,7 +260,7 @@ wheel.appendChild(number);
 
 
 // ===============================
-// SELECT BET
+// CHOOSE BET
 // ===============================
 
 
@@ -269,9 +272,8 @@ function(e){
 
 
 
-
-
 if(
+
 e.target.classList.contains(
 "roulette-bet"
 )
@@ -288,9 +290,7 @@ document
 
 .forEach(
 
-b=>
-
-b.classList.remove(
+b=>b.classList.remove(
 "active"
 )
 
@@ -309,10 +309,9 @@ e.target.classList.add(
 
 
 
-currentBet=
+rouletteBet =
 
 e.target.dataset.bet;
-
 
 
 
@@ -347,10 +346,12 @@ async function(e){
 
 
 
-
-
 if(
-e.target.id!=="rouletteStart"
+
+e.target.id !==
+
+"rouletteStart"
+
 )
 
 return;
@@ -360,8 +361,7 @@ return;
 
 
 
-
-let amountInput=
+const amountInput =
 
 document.getElementById(
 "rouletteAmount"
@@ -371,7 +371,8 @@ document.getElementById(
 
 
 
-let message=
+
+const message =
 
 document.getElementById(
 "rouletteMessage"
@@ -382,10 +383,10 @@ document.getElementById(
 
 
 
+if(!rouletteBet){
 
-if(!currentBet){
 
-
+if(message)
 
 message.innerText=
 
@@ -404,7 +405,8 @@ return;
 
 
 
-let amount=
+
+let amount =
 
 Number(
 
@@ -417,14 +419,13 @@ amountInput.value
 
 
 
-
 if(amount<=0){
 
 
 
 message.innerText=
 
-"Введите сумму";
+"Введите сумму ставки";
 
 
 
@@ -440,9 +441,10 @@ return;
 
 
 
-let player=
+let player =
 
 Storage.getPlayer();
+
 
 
 
@@ -453,7 +455,7 @@ try{
 
 
 
-let response=
+let response =
 
 await fetch(
 
@@ -487,7 +489,7 @@ id:player.id,
 amount:amount,
 
 
-type:currentBet
+type:rouletteBet
 
 
 
@@ -504,8 +506,7 @@ type:currentBet
 
 
 
-
-let data=
+let data =
 
 await response.json();
 
@@ -514,7 +515,8 @@ await response.json();
 
 
 
-message.innerText=
+
+message.innerText =
 
 data.message;
 
@@ -526,13 +528,18 @@ catch(err){
 
 
 
-console.log(err);
+console.log(
+"roulette bet error",
+
+err
+
+);
 
 
 
 message.innerText=
 
-"Ошибка подключения";
+"Ошибка соединения";
 
 
 }
@@ -552,11 +559,11 @@ message.innerText=
 
 
 // ===============================
-// LOAD STATE
+// LOAD ROULETTE
 // ===============================
 
 
-async function loadRouletteState(){
+async function loadRoulette(){
 
 
 
@@ -564,7 +571,7 @@ try{
 
 
 
-let response=
+let response =
 
 await fetch(
 
@@ -576,7 +583,7 @@ CONFIG.API+
 
 
 
-let data=
+let data =
 
 await response.json();
 
@@ -585,7 +592,8 @@ await response.json();
 
 
 
-let timer=
+
+let timer =
 
 document.getElementById(
 "rouletteTimer"
@@ -597,14 +605,25 @@ if(timer)
 
 timer.innerText=
 
-"Раунд: "+data.timeLeft+" сек";
+"Раунд: "
+
++
+
+data.timeLeft
+
++
+
+" секунд";
 
 
 
 
 
 
-let bank=
+
+
+
+let bank =
 
 document.getElementById(
 "rouletteBank"
@@ -616,7 +635,13 @@ if(bank)
 
 bank.innerText=
 
-"Ставок: "+data.bets;
+"Ставок игроков: "
+
++
+
+data.bets;
+
+
 
 
 
@@ -625,17 +650,18 @@ bank.innerText=
 
 
 if(
-data.result!==null
+
+data.result !== null
 
 &&
 
-data.result!==undefined
+data.result !== undefined
 
 ){
 
 
 
-rotateRoulette(
+spinWheel(
 
 data.result
 
@@ -650,18 +676,21 @@ data.result
 
 
 
-
 }
 
 catch(e){
 
 
+
 console.log(
-"roulette error",
+"roulette state error",
+
 e
+
 );
 
 
+
 }
 
 
@@ -677,15 +706,15 @@ e
 
 
 // ===============================
-// ROTATE
+// SPIN
 // ===============================
 
 
-function rotateRoulette(number){
+function spinWheel(number){
 
 
 
-let wheel=
+const wheel =
 
 document.getElementById(
 "rouletteWheel"
@@ -703,7 +732,7 @@ return;
 
 
 
-let angle=
+let angle =
 
 3600 -
 
@@ -715,7 +744,7 @@ let angle=
 
 
 
-wheel.style.transform=
+wheel.style.transform =
 
 "rotate("+angle+"deg)";
 
@@ -724,7 +753,9 @@ wheel.style.transform=
 
 
 
-let result=
+
+
+let result =
 
 document.getElementById(
 "rouletteResult"
@@ -732,12 +763,58 @@ document.getElementById(
 
 
 
+
+
+
+
 if(result)
 
 result.innerText=
 
-"Выпало: "+number;
+"Выпало: "
+
++
+
+number;
 
 
 
 }
+
+
+
+
+
+
+
+
+
+// ===============================
+// AUTO START
+// ===============================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+setTimeout(
+
+()=>{
+
+
+startRoulette();
+
+
+
+},
+
+500
+
+);
+
+
+});
