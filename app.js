@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin APP v16
-// Stable Click + Balance Sync
+// URALcoin APP v16.2
+// Navigation + Stable Click
 // ===================================
 
 
@@ -9,10 +9,129 @@ let player = null;
 
 
 
+// ===============================
+// NAVIGATION
+// ===============================
+
+
+function initNavigation(){
+
+
+document.querySelectorAll(".nav")
+.forEach(btn=>{
+
+
+btn.addEventListener("click",()=>{
+
+
+document.querySelectorAll(".page")
+.forEach(page=>{
+
+
+page.classList.remove("active");
+
+
+});
+
+
+
+
+
+let page = document.getElementById(
+btn.dataset.page
+);
+
+
+
+
+
+if(page){
+
+
+page.classList.add("active");
+
+
+}
+
+
+
+
+
+
+document.querySelectorAll(".nav")
+.forEach(item=>{
+
+
+item.classList.remove("active");
+
+
+});
+
+
+
+
+
+btn.classList.add("active");
+
+
+
+
+
+
+if(btn.dataset.page==="tops"){
+
+
+
+if(typeof loadTop==="function"){
+
+loadTop();
+
+}
+
+
+}
+
+
+
+
+
+if(btn.dataset.page==="more"){
+
+
+
+if(typeof drawUpgrades==="function"){
+
+drawUpgrades();
+
+}
+
+
+}
+
+
+
+
+
+});
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
 
 
 // ===============================
-// LOAD PLAYER
+// LOAD USER
 // ===============================
 
 
@@ -29,17 +148,12 @@ player = Storage.getPlayer();
 
 if(!player.id){
 
-
-console.log(
-"NO TELEGRAM ID"
-);
-
+updateScreen();
 
 return;
 
 
 }
-
 
 
 
@@ -51,10 +165,8 @@ try{
 
 let response = await fetch(
 
-CONFIG.API_URL +
-
-"/user/" +
-
+CONFIG.API_URL+
+"/user/"+
 player.id
 
 );
@@ -64,31 +176,24 @@ player.id
 
 
 
-let serverUser = await response.json();
+let data = await response.json();
 
 
 
 
 
 
-
-if(serverUser){
-
+if(data){
 
 
-player = {
 
+player={
 
 ...player,
 
-
-...serverUser
-
-
+...data
 
 };
-
-
 
 
 
@@ -103,69 +208,29 @@ Storage.savePlayer(player);
 
 
 
+
 updateScreen();
 
 
 
-
-
-
-if(typeof drawUpgrades==="function"){
-
-
-drawUpgrades();
-
-
 }
 
 
 
-
-
-
-if(typeof createPromo==="function"){
-
-
-createPromo();
-
-
-}
-
-
-
-
-
-if(typeof loadTop==="function"){
-
-
-loadTop();
-
-
-}
-
-
-
-
-
-
-}
-
-
-
-catch(error){
+catch(e){
 
 
 console.log(
 
-"LOAD PLAYER ERROR",
+"USER LOAD ERROR",
 
-error
+e
 
 );
 
 
-
 }
+
 
 
 
@@ -180,9 +245,8 @@ error
 
 
 // ===============================
-// CLICKER
+// CLICK
 // ===============================
-
 
 
 function initClicker(){
@@ -211,7 +275,8 @@ return;
 
 
 
-button.onclick = ()=>{
+
+button.onclick = function(){
 
 
 
@@ -224,10 +289,7 @@ let user = Storage.getPlayer();
 
 let power =
 
-Number(
-user.clickPower || 0.01
-);
-
+Number(user.clickPower || 0.01);
 
 
 
@@ -236,9 +298,7 @@ user.clickPower || 0.01
 
 user.balance =
 
-Number(
-user.balance || 0
-)
+Number(user.balance || 0)
 
 +
 
@@ -265,7 +325,16 @@ updateScreen();
 
 
 
+
+if(typeof syncBalance==="function"){
+
+
 syncBalance();
+
+
+}
+
+
 
 
 
@@ -279,6 +348,23 @@ createClickEffect(power);
 
 
 }
+
+
+
+
+
+
+
+
+if(typeof registerClickEffect==="function"){
+
+
+registerClickEffect();
+
+
+}
+
+
 
 
 
@@ -299,9 +385,8 @@ createClickEffect(power);
 
 
 // ===============================
-// SYNC BALANCE
+// SERVER SYNC
 // ===============================
-
 
 
 async function syncBalance(){
@@ -318,6 +403,7 @@ let user = Storage.getPlayer();
 if(!user.id)
 
 return;
+
 
 
 
@@ -359,7 +445,6 @@ balance:Number(user.balance)
 })
 
 
-
 }
 
 );
@@ -368,19 +453,10 @@ balance:Number(user.balance)
 
 }
 
+catch(e){
 
 
-catch(error){
-
-
-console.log(
-
-"SYNC ERROR",
-
-error
-
-);
-
+console.log(e);
 
 
 }
@@ -398,9 +474,8 @@ error
 
 
 // ===============================
-// UPDATE SCREEN
+// SCREEN
 // ===============================
-
 
 
 function updateScreen(){
@@ -414,7 +489,7 @@ let user = Storage.getPlayer();
 
 
 
-const balance =
+let balance =
 
 document.getElementById(
 
@@ -424,22 +499,16 @@ document.getElementById(
 
 
 
-
-
 if(balance){
-
 
 
 balance.innerText =
 
-Number(
-user.balance || 0
-)
+Number(user.balance || 0)
 
 .toFixed(3)
 
 .replace(".",",");
-
 
 
 }
@@ -449,7 +518,8 @@ user.balance || 0
 
 
 
-const power =
+
+let power =
 
 document.getElementById(
 
@@ -459,22 +529,14 @@ document.getElementById(
 
 
 
-
-
 if(power){
-
 
 
 power.innerText =
 
-Number(
-user.clickPower || 0.01
-)
+Number(user.clickPower || 0)
 
-.toFixed(3)
-
-.replace(".",",");
-
+.toFixed(3);
 
 
 }
@@ -484,7 +546,8 @@ user.clickPower || 0.01
 
 
 
-const second =
+
+let auto =
 
 document.getElementById(
 
@@ -494,53 +557,12 @@ document.getElementById(
 
 
 
+if(auto){
 
 
+auto.innerText =
 
-if(second){
-
-
-
-second.innerText =
-
-Number(
-user.autoPower || 0
-)
-
-.toFixed(3)
-
-.replace(".",",");
-
-
-
-}
-
-
-
-
-
-
-const crystals =
-
-document.getElementById(
-
-"crystals"
-
-);
-
-
-
-
-
-
-if(crystals){
-
-
-
-crystals.innerText =
-
-user.crystals || 0;
-
+Number(user.autoPower || 0);
 
 
 }
@@ -548,68 +570,6 @@ user.crystals || 0;
 
 
 }
-
-
-
-
-
-
-
-
-
-// ===============================
-// AUTO INCOME
-// ===============================
-
-
-
-setInterval(()=>{
-
-
-
-let user = Storage.getPlayer();
-
-
-
-
-
-
-if(
-Number(user.autoPower)>0
-){
-
-
-
-user.balance =
-
-Number(user.balance || 0)
-
-+
-
-Number(user.autoPower);
-
-
-
-
-
-
-Storage.savePlayer(user);
-
-
-
-updateScreen();
-
-
-
-syncBalance();
-
-
-
-}
-
-
-
-},1000);
 
 
 
@@ -624,7 +584,6 @@ syncBalance();
 // ===============================
 
 
-
 document.addEventListener(
 
 "DOMContentLoaded",
@@ -632,13 +591,13 @@ document.addEventListener(
 ()=>{
 
 
+initNavigation();
+
 
 initClicker();
 
 
-
 loadPlayer();
-
 
 
 });
@@ -648,5 +607,4 @@ loadPlayer();
 
 
 window.updateScreen = updateScreen;
-
 window.syncBalance = syncBalance;
