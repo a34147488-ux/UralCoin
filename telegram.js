@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin Telegram Connect v14
-// Auto Register Player
+// URALcoin Telegram Connect v14.5
+// Profile + Username Fix
 // ===================================
 
 
@@ -12,128 +12,79 @@ tg.ready();
 tg.expand();
 
 
+tg.setHeaderColor("#090414");
+tg.setBackgroundColor("#090414");
+
+
 
 const tgUser = tg.initDataUnsafe?.user;
 
 
 
-async function registerUser(){
 
 
-let player = Storage.getPlayer();
-
-
-
-if(tgUser){
-
-
-player.id = String(tgUser.id);
-
-player.name =
-tgUser.first_name || "Игрок";
-
-player.username =
-tgUser.username || "";
-
-player.photo =
-tgUser.photo_url || "";
-
-
-Storage.savePlayer(player);
-
-
-}
-
-
-
-
-if(!player.id || player.id==="guest"){
-
-console.log("NO TELEGRAM ID");
-
-return;
-
-}
-
-
-
+async function connectPlayerToServer(player){
 
 
 try{
 
 
-let response = await fetch(
+await fetch(
 
 CONFIG.API_URL + "/user",
 
 {
 
-
 method:"POST",
 
 headers:{
-
 
 "Content-Type":"application/json"
 
 },
 
-
 body:JSON.stringify({
 
 id:String(player.id),
 
-name:player.name,
+name:player.name || "Игрок",
 
-photo:player.photo
+username:player.username || "",
+
+photo:player.photo || ""
 
 })
 
-
 }
 
 );
 
 
-
-let data = await response.json();
-
-
-console.log("SERVER USER:",data);
-
-
-
-if(data.promoCode){
-
-
-player.promoCode=data.promoCode;
-
-
-}
-
-
-Storage.savePlayer(player);
-
-
-
-updateAvatar();
-
-
-
-}
-
-catch(e){
 
 console.log(
-"REGISTER ERROR",
-e
+"PLAYER SYNC OK"
+);
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"SERVER ERROR",
+error
 );
 
 
 }
 
 
+
 }
+
+
 
 
 
@@ -144,31 +95,46 @@ e
 function updateAvatar(){
 
 
-let player=Storage.getPlayer();
+let player =
+Storage.getPlayer();
 
 
 
-let img=document.getElementById(
+let avatar =
+document.getElementById(
 "userAvatar"
 );
 
 
-let letter=document.getElementById(
+
+let letter =
+document.getElementById(
 "avatarLetter"
 );
+
+
 
 
 
 if(player.photo){
 
 
-img.src=player.photo;
+if(avatar){
 
-img.style.display="block";
+
+avatar.src=player.photo;
+
+avatar.style.display="block";
+
+
+}
+
 
 
 if(letter)
+
 letter.style.display="none";
+
 
 
 }
@@ -176,11 +142,12 @@ letter.style.display="none";
 else{
 
 
-if(letter)
+if(letter){
 
-letter.innerText=
 
-(player.name||"U")
+letter.innerText =
+
+(player.name || "U")
 .charAt(0)
 .toUpperCase();
 
@@ -189,10 +156,68 @@ letter.innerText=
 }
 
 
+
+}
+
+
+
 }
 
 
 
 
 
-registerUser();
+
+
+
+if(tgUser){
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+player.id =
+String(tgUser.id);
+
+
+
+player.name =
+tgUser.first_name || "Игрок";
+
+
+
+player.username =
+tgUser.username || "";
+
+
+
+player.photo =
+tgUser.photo_url || "";
+
+
+
+
+Storage.savePlayer(player);
+
+
+
+connectPlayerToServer(player);
+
+
+
+updateAvatar();
+
+
+
+}
+
+else{
+
+
+updateAvatar();
+
+
+}
