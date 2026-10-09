@@ -3315,3 +3315,131 @@ position:fixed!important;
 z-index:999999!important;
 
 }
+/* =====================================
+FINAL SCROLL + NO ZOOM FIX
+===================================== */
+
+
+/* запрет приближения */
+
+html,
+body{
+
+touch-action:manipulation;
+
+-webkit-text-size-adjust:100%;
+
+overflow-x:hidden;
+
+}
+
+
+
+
+
+button{
+
+touch-action:manipulation;
+
+-webkit-user-select:none;
+
+user-select:none;
+
+}
+
+
+
+
+
+/* =========================
+ГЛАВНАЯ БЕЗ СКРОЛЛА
+========================= */
+
+
+#game{
+
+
+height:calc(100vh - 90px)!important;
+
+
+overflow:hidden!important;
+
+
+position:relative;
+
+
+}
+
+
+
+
+#game .content{
+
+
+height:100%;
+
+
+overflow:hidden!important;
+
+
+padding-bottom:0;
+
+
+}
+
+
+
+
+
+/* =========================
+ОСТАЛЬНЫЕ ВКЛАДКИ СО СКРОЛЛОМ
+========================= */
+
+
+
+.page:not(#game){
+
+
+min-height:100vh;
+
+
+height:auto!important;
+
+
+overflow-y:auto!important;
+
+
+-webkit-overflow-scrolling:touch;
+
+
+}
+
+
+
+
+
+.page:not(#game) .panel{
+
+
+padding-bottom:120px;
+
+
+}
+
+
+
+
+
+/* меню всегда сверху */
+
+
+.bottom-nav{
+
+
+position:fixed!important;
+
+
+z-index:999999!important;
+
+
+}
