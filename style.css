@@ -665,3 +665,85 @@ transform:translateY(-100px);
 
 
 }
+/* ===================================
+URALcoin MOBILE TAP FIX v16.5
+No Zoom On Tap
+=================================== */
+
+
+/* запрет увеличения текста и масштаба */
+html,
+body{
+
+touch-action: manipulation;
+
+-webkit-text-size-adjust:100%;
+
+text-size-adjust:100%;
+
+}
+
+
+
+
+
+/* все кнопки без задержки и зума */
+
+button,
+a,
+input,
+.nav,
+.menu-card,
+.gold-button,
+.main-coin{
+
+
+touch-action: manipulation;
+
+-webkit-user-select:none;
+
+user-select:none;
+
+}
+
+
+
+
+
+/* убираем подсветку тапов */
+
+*{
+
+-webkit-tap-highlight-color:transparent;
+
+}
+
+
+
+
+
+/* фиксируем приложение */
+
+body{
+
+overflow:hidden;
+
+width:100%;
+
+height:100%;
+
+position:fixed;
+
+}
+
+
+
+
+
+.app{
+
+height:100vh;
+
+overflow:hidden;
+
+}
