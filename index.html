@@ -5,16 +5,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>UralCoin</title>
 
-
 <link rel="stylesheet" href="style.css">
 
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 
 </head>
 
@@ -23,15 +20,16 @@
 <body>
 
 
-
 <div class="app">
-
 
 
 <div class="city-bg"></div>
 
 
-<div class="snow"></div>
+<div class="snow">
+❄️ ❄️ ❄️ ❄️ ❄️
+</div>
+
 
 
 
@@ -46,18 +44,14 @@
 
 
 <span id="avatarLetter">
-
 U
-
 </span>
 
 
 </div>
 
 
-
 </header>
-
 
 
 
@@ -78,7 +72,6 @@ U
 <div class="balance-box">
 
 
-
 <div class="balance">
 
 
@@ -96,24 +89,6 @@ U
 </span>
 
 
-</div>
-
-
-
-
-
-
-<div class="crystals">
-
-
-💎
-
-<span id="crystals">
-
-0
-
-</span>
-
 
 </div>
 
@@ -125,9 +100,7 @@ U
 <div class="click-power">
 
 
-+
-
-<span id="clickPower">
++ <span id="clickPower">
 
 0.010
 
@@ -136,16 +109,7 @@ U
 за клик
 
 
-<span id="heartPower">
-
-🫀
-
-</span>
-
-
 </div>
-
-
 
 
 
@@ -174,19 +138,7 @@ U
 
 
 
-
-
-<div class="fire-zone" id="fireZone">
-
-
-
-<div class="fire-effect">
-
-🔥
-
-</div>
-
-
+<div class="fire-zone">
 
 
 <button id="clickButton" class="main-coin">
@@ -194,7 +146,6 @@ U
 U
 
 </button>
-
 
 
 </div>
@@ -216,14 +167,11 @@ U
 <section class="page" id="code">
 
 
-
 <div class="panel">
 
 
 <h2>
-
 Персональный код
-
 </h2>
 
 
@@ -234,12 +182,14 @@ U
 
 <button class="gold-button" id="copyCode">
 
-Скопировать
+Скопировать код
 
 </button>
 
 
 
+
+<hr>
 
 
 
@@ -252,6 +202,7 @@ U
 
 
 
+
 <input id="promoInput" placeholder="Введите код">
 
 
@@ -261,6 +212,7 @@ U
 Активировать
 
 </button>
+
 
 
 
@@ -280,7 +232,6 @@ U
 <section class="page" id="transfer">
 
 
-
 <div class="panel">
 
 
@@ -292,7 +243,7 @@ U
 
 
 
-<input id="transferName" placeholder="@username или имя">
+<input id="transferName" placeholder="@username">
 
 
 
@@ -300,7 +251,11 @@ U
 
 
 
-<button id="transferButton" class="gold-button">
+<div id="transferResults"></div>
+
+
+
+<button class="gold-button" id="transferButton">
 
 Перевести
 
@@ -359,7 +314,9 @@ U
 <section class="page" id="more">
 
 
-<div class="panel">
+
+<div class="panel more-scroll">
+
 
 
 <h2>
@@ -372,15 +329,63 @@ U
 
 
 
+
 <a class="gold-button"
 
 href="https://t.me/+NyqTkXAU-H5hNDky"
 
 target="_blank">
 
-Канал
+Канал проекта
 
 </a>
+
+
+
+
+
+
+
+<button class="menu-card" id="historyBtn">
+
+История операций
+
+</button>
+
+
+
+
+
+
+
+<button class="menu-card" id="apiBtn">
+
+API ключ
+
+</button>
+
+
+
+
+
+
+<div id="apiBlock" style="display:none;">
+
+
+
+<input id="apiResult" readonly placeholder="Ключ не создан">
+
+
+
+<button class="gold-button" id="createApi">
+
+Создать API ключ
+
+</button>
+
+
+
+</div>
 
 
 
@@ -396,16 +401,22 @@ target="_blank">
 
 
 
+
 <div id="upgradeList">
 
 </div>
 
 
 
+
+
 </div>
 
 
+
 </section>
+
+
 
 
 
@@ -421,8 +432,8 @@ target="_blank">
 
 
 
-<nav class="bottom-nav">
 
+<nav class="bottom-nav">
 
 
 <button class="nav active" data-page="game">
@@ -443,6 +454,7 @@ target="_blank">
 
 
 
+
 <button class="nav" data-page="transfer">
 
 Перевод
@@ -452,11 +464,13 @@ target="_blank">
 
 
 
+
 <button class="nav" data-page="tops">
 
 Топ
 
 </button>
+
 
 
 
@@ -484,15 +498,9 @@ target="_blank">
 
 
 
-
-<!-- SYSTEM -->
-
-
 <script src="config.js"></script>
 
 <script src="storage.js"></script>
-
-<script src="telegram.js"></script>
 
 <script src="upgrade.js"></script>
 
@@ -500,12 +508,13 @@ target="_blank">
 
 <script src="transfer.js"></script>
 
+<script src="app.js"></script>
+
 <script src="top.js"></script>
 
 <script src="effects.js"></script>
 
-<script src="app.js"></script>
-
+<script src="more.js"></script>
 
 
 
