@@ -5,52 +5,61 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>UralCoin</title>
 
+
 <link rel="stylesheet" href="style.css">
+
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+
 </head>
+
 
 
 <body>
 
 
+
 <div class="app">
 
 
+
 <div class="city-bg"></div>
-
-
-<div class="garland">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-</div>
 
 
 <div class="snow"></div>
 
 
 
+
 <header class="header">
+
 
 <div class="avatar">
 
+
 <img id="userAvatar">
 
+
 <span id="avatarLetter">
+
 U
+
 </span>
+
 
 </div>
 
+
+
 </header>
+
+
+
 
 
 
@@ -60,60 +69,77 @@ U
 
 
 
+
+
 <section class="page active" id="game">
 
 
+
 <div class="balance-box">
+
 
 
 <div class="balance">
 
 
 <div class="coin-balance">
+
 U
+
 </div>
 
 
 <span id="balance">
+
 0
+
 </span>
 
 
 </div>
+
+
 
 
 
 
 <div class="crystals">
 
+
 💎
 
 <span id="crystals">
+
 0
+
 </span>
 
-<small>
-кристаллы появятся после связки кошельков
-</small>
 
 </div>
+
+
 
 
 
 
 <div class="click-power">
 
+
 +
 
 <span id="clickPower">
+
 0.010
+
 </span>
 
 за клик
 
 
 <span id="heartPower">
+
 🫀
+
 </span>
 
 
@@ -121,18 +147,30 @@ U
 
 
 
+
+
+
 <div class="second-power">
 
+
 В секунду:
+
 <b id="secondPower">
+
 0
+
 </b>
 
+
+</div>
+
+
+
 </div>
 
 
 
-</div>
+
 
 
 
@@ -141,11 +179,13 @@ U
 <div class="fire-zone" id="fireZone">
 
 
-<div class="fire-effect" id="fireEffect">
+
+<div class="fire-effect">
 
 🔥
 
 </div>
+
 
 
 
@@ -156,17 +196,10 @@ U
 </button>
 
 
-</div>
-
-
-
-
-
-<div class="year-label">
-
-2026 UralCoin
 
 </div>
+
+
 
 
 
@@ -180,62 +213,41 @@ U
 
 
 
-
 <section class="page" id="code">
+
 
 
 <div class="panel">
 
 
 <h2>
+
 Персональный код
+
 </h2>
+
 
 
 <input id="myPromo" readonly>
 
 
+
 <button class="gold-button" id="copyCode">
 
-Скопировать код
+Скопировать
 
 </button>
 
 
 
-<div class="info">
-
-Активировали:
-
-<b id="activatedCount">
-0
-</b>
-
-</div>
-
-
-
-<div class="info">
-
-Получено:
-
-<b id="promoEarn">
-0 U
-</b>
-
-</div>
-
-
-
-
-
-<hr>
 
 
 
 
 <h2>
+
 Активировать код
+
 </h2>
 
 
@@ -268,16 +280,19 @@ U
 <section class="page" id="transfer">
 
 
+
 <div class="panel">
 
 
 <h2>
-Переводы
+
+Перевод
+
 </h2>
 
 
 
-<input id="transferName" placeholder="@username">
+<input id="transferName" placeholder="@username или имя">
 
 
 
@@ -285,7 +300,7 @@ U
 
 
 
-<button class="gold-button" id="transferButton">
+<button id="transferButton" class="gold-button">
 
 Перевести
 
@@ -313,8 +328,11 @@ U
 
 
 <h2>
+
 Топ игроков
+
 </h2>
+
 
 
 <div id="topList">
@@ -345,53 +363,35 @@ U
 
 
 <h2>
+
 Ещё
+
 </h2>
 
 
 
+
+
 <a class="gold-button"
+
 href="https://t.me/+NyqTkXAU-H5hNDky"
+
 target="_blank">
 
-Подписаться на канал
+Канал
 
 </a>
 
 
-
-<a class="gold-button premium"
-href="https://t.me/BuysStarsBot?start=8265611469"
-target="_blank">
-
-Оплатить PREMIUM
-
-</a>
-
-
-
-
-
-<button class="menu-card" id="historyBtn">
-
-История
-
-</button>
-
-
-
-<button class="menu-card" id="apiBtn">
-
-API ключ
-
-</button>
 
 
 
 
 
 <h2>
+
 Улучшения
+
 </h2>
 
 
@@ -419,40 +419,59 @@ API ключ
 
 
 
+
+
 <nav class="bottom-nav">
 
 
+
 <button class="nav active" data-page="game">
+
 Главная
+
 </button>
+
 
 
 
 <button class="nav" data-page="code">
+
 Код
+
 </button>
+
 
 
 
 <button class="nav" data-page="transfer">
+
 Перевод
+
 </button>
+
 
 
 
 <button class="nav" data-page="tops">
+
 Топ
+
 </button>
 
 
 
+
 <button class="nav" data-page="more">
+
 Ещё
+
 </button>
 
 
 
 </nav>
+
+
 
 
 
@@ -465,6 +484,10 @@ API ключ
 
 
 
+
+<!-- SYSTEM -->
+
+
 <script src="config.js"></script>
 
 <script src="storage.js"></script>
@@ -475,12 +498,17 @@ API ключ
 
 <script src="promo.js"></script>
 
-<script src="referral.js"></script>
-
 <script src="transfer.js"></script>
-
-<script src="app.js"></script>
 
 <script src="top.js"></script>
 
 <script src="effects.js"></script>
+
+<script src="app.js"></script>
+
+
+
+
+</body>
+
+</html>
