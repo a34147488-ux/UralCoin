@@ -1,6 +1,7 @@
 // ===================================
-// URALcoin SERVER v14.1 FINAL
-// Promo + Top + Sync
+// URALcoin SERVER v14.2 FINAL
+// Promo + Top + Sync + Transfer
+// Telegram Users
 // JSON DATABASE
 // ===================================
 
@@ -21,9 +22,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-
 const DB = "users.json";
-
 
 
 let users = [];
@@ -56,7 +55,6 @@ DB,
 
 
 }
-
 
 
 }
@@ -105,6 +103,7 @@ null,
 
 
 }
+
 
 
 
@@ -175,14 +174,23 @@ return code;
 
 
 // ===============================
-// CREATE / UPDATE USER
+// CREATE USER
 // ===============================
 
 
 app.post("/user",(req,res)=>{
 
 
-let data=req.body;
+const data=req.body;
+
+
+
+
+
+console.log(
+"USER CONNECT:",
+data
+);
 
 
 
@@ -219,6 +227,7 @@ String(u.id)===String(data.id)
 
 
 
+
 if(!user){
 
 
@@ -232,34 +241,47 @@ id:String(data.id),
 name:data.name || "Игрок",
 
 
+username:data.username || "",
+
+
 photo:data.photo || "",
+
 
 
 balance:0,
 
 
+
 clickPower:0.01,
+
 
 
 autoPower:0,
 
 
+
 friends:0,
+
 
 
 earnedFromPromo:0,
 
 
+
 promoCode:createPromoCode(),
+
 
 
 activatedCodes:[],
 
 
+
 upgrades:{},
 
 
+
 apiKey:"",
+
 
 
 created:Date.now()
@@ -287,6 +309,14 @@ user.name =
 data.name ||
 
 user.name;
+
+
+
+user.username =
+
+data.username ||
+
+user.username;
 
 
 
@@ -328,6 +358,7 @@ saveUsers();
 
 
 
+
 res.json(user);
 
 
@@ -361,6 +392,7 @@ String(u.id)===String(req.params.id)
 
 
 
+
 res.json(user || null);
 
 
@@ -386,14 +418,19 @@ String(u.id)===String(req.body.id)
 
 
 
-
 if(user){
 
 
 
-user.balance =
+if(req.body.balance !== undefined){
 
-Number(req.body.balance || user.balance);
+
+user.balance = Number(
+req.body.balance
+);
+
+
+}
 
 
 
@@ -402,9 +439,6 @@ saveUsers();
 
 
 }
-
-
-
 
 
 
@@ -717,6 +751,7 @@ Number(owner.earnedFromPromo || 0)
 
 
 
+
 saveUsers();
 
 
@@ -746,7 +781,221 @@ reward:5000
 
 
 // ===============================
-// TOP
+// TRANSFER
+// ===============================
+// Перевод U между игроками
+// ===============================
+
+
+app.post("/transfer",(req,res)=>{
+
+
+
+let from =
+
+String(req.body.from);
+
+
+
+let username =
+
+String(req.body.username || "")
+
+.replace("@","")
+
+.toLowerCase();
+
+
+
+let amount =
+
+Number(req.body.amount);
+
+
+
+
+
+
+
+let sender = users.find(
+
+u=>
+
+String(u.id)===from
+
+);
+
+
+
+
+
+
+
+
+let receiver = users.find(
+
+u=>
+
+String(u.username || "")
+
+.toLowerCase()===username
+
+);
+
+
+
+
+
+
+
+
+if(!sender){
+
+
+return res.json({
+
+success:false,
+
+message:"Отправитель не найден"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+if(!receiver){
+
+
+return res.json({
+
+success:false,
+
+message:"Получатель не найден"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+if(sender.id===receiver.id){
+
+
+return res.json({
+
+success:false,
+
+message:"Нельзя отправить себе"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+if(!amount || amount<=0){
+
+
+return res.json({
+
+success:false,
+
+message:"Неверная сумма"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+if(sender.balance < amount){
+
+
+return res.json({
+
+success:false,
+
+message:"Недостаточно U"
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+sender.balance -= amount;
+
+
+receiver.balance += amount;
+
+
+
+
+
+
+saveUsers();
+
+
+
+
+
+
+
+res.json({
+
+success:true,
+
+fromBalance:sender.balance,
+
+toBalance:receiver.balance
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// TOP PLAYERS
 // ===============================
 
 
@@ -770,6 +1019,7 @@ Number(a.balance || 0)
 
 )
 
+
 .slice(0,50)
 
 .map(u=>({
@@ -778,11 +1028,13 @@ id:u.id,
 
 name:u.name || "Игрок",
 
+username:u.username || "",
+
 photo:u.photo || "",
 
-balance:u.balance || 0,
+balance:Number(u.balance || 0),
 
-friends:u.friends || 0
+friends:Number(u.friends || 0)
 
 }));
 
@@ -800,17 +1052,8 @@ players:players
 
 
 });
-
-
-
-
-
-
-
-
-
 // ===============================
-// DEBUG
+// DEBUG USERS
 // ===============================
 
 
@@ -819,19 +1062,29 @@ app.get("/debug-users",(req,res)=>{
 
 res.json({
 
+
 count:users.length,
 
+
 users:users.map(u=>({
+
 
 id:u.id,
 
 name:u.name,
 
+username:u.username,
+
 balance:u.balance,
 
-promoCode:u.promoCode
+promoCode:u.promoCode,
+
+friends:u.friends
+
 
 }))
+
+
 
 });
 
@@ -847,7 +1100,7 @@ promoCode:u.promoCode
 
 
 // ===============================
-// STATUS
+// SERVER STATUS
 // ===============================
 
 
@@ -856,7 +1109,7 @@ app.get("/",(req,res)=>{
 
 res.send(
 
-"URALcoin server v14.1 FINAL online"
+"URALcoin server v14.2 FINAL online"
 
 );
 
@@ -869,6 +1122,46 @@ res.send(
 
 
 
+
+
+// ===============================
+// ERROR PROTECTION
+// ===============================
+
+
+app.use((err,req,res,next)=>{
+
+
+console.log(
+
+"SERVER ERROR:",
+
+err
+
+);
+
+
+
+res.status(500).json({
+
+error:"SERVER_ERROR"
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// START SERVER
+// ===============================
 
 
 app.listen(PORT,()=>{
@@ -876,12 +1169,12 @@ app.listen(PORT,()=>{
 
 console.log(
 
-"URALcoin v14.1 started:",
+"URALcoin v14.2 FINAL started:",
 
 PORT
 
 );
 
 
-});
 
+});
