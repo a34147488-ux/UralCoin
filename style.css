@@ -1,43 +1,43 @@
 /* ===================================
-URALcoin STYLE v17
-WINTER GOLD EDITION
-SAFE UI VERSION
+URALcoin STYLE v16
+Winter Gold Design
 =================================== */
 
 
 *{
+
 box-sizing:border-box;
-margin:0;
-padding:0;
--webkit-tap-highlight-color:transparent;
-}
-
-
-html,
-body{
-
-width:100%;
-height:100%;
-
-overflow:hidden;
 
 font-family:Arial,sans-serif;
 
-background:#080312;
+}
+
+
+
+body{
+
+
+margin:0;
+
+background:#07101d;
 
 color:white;
 
+overflow-x:hidden;
+
+
 }
+
 
 
 .app{
 
-width:100%;
-height:100vh;
+
+min-height:100vh;
 
 position:relative;
 
-overflow:hidden;
+padding-bottom:90px;
 
 }
 
@@ -45,88 +45,84 @@ overflow:hidden;
 
 
 
-/* BACKGROUND */
-
 .city-bg{
 
-position:absolute;
+
+position:fixed;
 
 inset:0;
-
 
 background:
 
 linear-gradient(
+
 180deg,
-rgba(8,3,20,.25),
-rgba(8,3,20,.85)
+
+rgba(0,0,0,.35),
+
+rgba(0,0,0,.8)
+
 ),
 
-url("ekaterinburg.jpg");
+url("city.jpg");
 
 
 background-size:cover;
 
 background-position:center;
 
+z-index:-3;
+
 
 }
+
+
+
+
 
 
 
 .snow{
 
-position:absolute;
+
+position:fixed;
 
 inset:0;
 
-overflow:hidden;
-
 pointer-events:none;
 
+background-image:
+
+radial-gradient(circle,#fff 2px,transparent 3px);
+
+background-size:80px 80px;
+
+animation:snow 10s linear infinite;
+
+opacity:.7;
+
+z-index:-1;
+
+
 }
 
 
 
 
-.snow:before{
 
-content:"❄  ❅  ❆  ❄  ❅";
-
-position:absolute;
-
-top:-100px;
-
-left:10%;
-
-
-font-size:30px;
-
-letter-spacing:30px;
-
-
-animation:snowfall 18s linear infinite;
-
-
-opacity:.5;
-
-}
-
-
-
-@keyframes snowfall{
+@keyframes snow{
 
 
 from{
 
-transform:translateY(-100px);
+background-position:0 0;
 
 }
 
 
 to{
 
-transform:translateY(110vh);
+background-position:0 500px;
 
 }
 
@@ -136,78 +132,15 @@ transform:translateY(110vh);
 
 
 
-.garland{
-
-position:absolute;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:45px;
 
 
-display:flex;
-
-justify-content:space-around;
-
-align-items:center;
-
-
-}
-
-
-
-.garland span{
-
-width:10px;
-
-height:10px;
-
-border-radius:50%;
-
-
-background:#ffd700;
-
-
-box-shadow:0 0 15px gold;
-
-
-animation:lamp 1.5s infinite alternate;
-
-
-}
-
-
-@keyframes lamp{
-
-from{
-
-opacity:.4;
-
-}
-
-to{
-
-opacity:1;
-
-}
-
-}
-/* ===================================
-HEADER
-=================================== */
 
 
 .header{
 
-position:absolute;
 
-top:55px;
+padding:20px;
 
-left:20px;
 
 }
 
@@ -215,26 +148,28 @@ left:20px;
 
 .avatar{
 
-width:60px;
 
-height:60px;
+width:55px;
+
+height:55px;
 
 border-radius:50%;
 
 overflow:hidden;
 
-
-border:3px solid #ffd700;
-
-
-background:#160c25;
-
+background:#c99620;
 
 display:flex;
 
+align-items:center;
+
 justify-content:center;
 
-align-items:center;
+font-size:25px;
+
+font-weight:bold;
+
+box-shadow:0 0 20px gold;
 
 
 }
@@ -243,23 +178,13 @@ align-items:center;
 
 .avatar img{
 
+
 width:100%;
 
 height:100%;
 
 object-fit:cover;
 
-}
-
-
-
-#avatarLetter{
-
-font-size:28px;
-
-font-weight:bold;
-
-color:#ffd700;
 
 }
 
@@ -268,16 +193,14 @@ color:#ffd700;
 
 
 
-/* ===================================
-CONTENT
-=================================== */
+
 
 
 .content{
 
-position:absolute;
 
-inset:0;
+padding:15px;
+
 
 }
 
@@ -285,18 +208,8 @@ inset:0;
 
 .page{
 
+
 display:none;
-
-
-height:100%;
-
-
-padding:
-
-120px 18px 90px;
-
-
-overflow-y:auto;
 
 
 }
@@ -305,7 +218,9 @@ overflow-y:auto;
 
 .page.active{
 
+
 display:block;
+
 
 }
 
@@ -315,18 +230,30 @@ display:block;
 
 
 
-/* ===================================
-BALANCE
-=================================== */
 
 
 .balance-box{
 
+
+background:
+
+rgba(255,255,255,.08);
+
+
+border-radius:25px;
+
+padding:20px;
+
 text-align:center;
 
-padding-top:20px;
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,215,0,.25);
+
 
 }
+
+
 
 
 
@@ -334,19 +261,18 @@ padding-top:20px;
 
 .balance{
 
+
 display:flex;
 
 justify-content:center;
 
 align-items:center;
 
+gap:10px;
 
-gap:12px;
+font-size:38px;
 
-
-font-size:42px;
-
-font-weight:800;
+font-weight:bold;
 
 
 }
@@ -355,47 +281,26 @@ font-weight:800;
 
 .coin-balance{
 
-width:38px;
 
-height:38px;
+width:35px;
 
+height:35px;
 
 border-radius:50%;
 
+background:gold;
 
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#fff2a0,
-
-#d18b00
-
-);
-
-
+color:#332000;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-
-color:#4b2600;
-
-
-font-size:22px;
+justify-content:center;
 
 font-weight:bold;
 
-
-box-shadow:
-
-0 0 15px gold;
+font-size:20px;
 
 
 }
@@ -403,111 +308,21 @@ box-shadow:
 
 
 
-.crystals{
+
+
+
+
+.click-power,
+.second-power{
+
 
 margin-top:12px;
 
-font-size:18px;
-
-}
-
-
-
-.crystals small{
-
-display:block;
-
-font-size:12px;
-
-opacity:.6;
-
-margin-top:5px;
-
-}
-
-
-
-
-
-.click-power{
-
-margin-top:15px;
-
-color:#ffd86b;
-
-font-size:18px;
-
-}
-
-
-
-.second-power{
-
-margin-top:8px;
-
-}
-
-
-
-
-
-
-
-
-/* ===================================
-MAIN CLICKER
-=================================== */
-
-
-.fire-zone{
-
-
-height:360px;
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:center;
-
+color:#ddd;
 
 
 }
 
-
-
-.fire-effect{
-
-position:absolute;
-
-font-size:70px;
-
-
-opacity:.35;
-
-
-animation:pulse 2s infinite;
-
-
-}
-
-
-
-
-@keyframes pulse{
-
-
-50%{
-
-transform:scale(1.2);
-
-}
-
-
-}
 
 
 
@@ -518,54 +333,31 @@ transform:scale(1.2);
 .main-coin{
 
 
-width:175px;
+width:170px;
 
-
-height:175px;
-
+height:170px;
 
 border-radius:50%;
 
-
 border:none;
-
 
 background:
 
-
-radial-gradient(
-
-circle,
-
-#fff4a5,
-
-#e09b00
-
-);
-
+radial-gradient(circle,#ffe98a,#d39b00);
 
 
 font-size:70px;
 
-
 font-weight:bold;
 
-
-color:#4a2500;
-
+color:#5a3b00;
 
 
 box-shadow:
 
+0 0 40px gold,
 
-0 0 45px gold,
-
-inset 0 0 20px white;
-
-
-
-cursor:pointer;
-
+inset 0 0 30px white;
 
 
 }
@@ -575,23 +367,48 @@ cursor:pointer;
 .main-coin:active{
 
 
-transform:scale(.94);
+transform:scale(.92);
 
 
 }
 
 
 
-.year-label{
+
+
+
+
+
+.fire-zone{
+
 
 text-align:center;
 
-opacity:.7;
+margin-top:40px;
+
 
 }
-/* ===================================
-PANELS
-=================================== */
+
+
+
+.fire-effect{
+
+
+font-size:40px;
+
+margin-bottom:-20px;
+
+opacity:.7;
+
+
+}
+
+
+
+
+
+
+
 
 
 .panel{
@@ -599,57 +416,21 @@ PANELS
 
 background:
 
-linear-gradient(
-
-145deg,
-
-rgba(35,18,55,.9),
-
-rgba(10,4,25,.9)
-
-);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
-border-radius:24px;
+rgba(255,255,255,.08);
 
 
 padding:20px;
 
+border-radius:25px;
 
-box-shadow:
+backdrop-filter:blur(15px);
 
-0 0 25px rgba(0,0,0,.5);
-
-
-}
-
-
-
-
-
-.panel h2{
-
-
-text-align:center;
-
-
-color:#ffd86b;
-
-
-font-size:26px;
-
-
-margin-bottom:20px;
+border:1px solid rgba(255,215,0,.2);
 
 
 }
+
+
 
 
 
@@ -660,174 +441,131 @@ input{
 
 width:100%;
 
+padding:15px;
 
-height:50px;
-
+margin:8px 0;
 
 border-radius:15px;
 
+border:none;
+
+background:#101b2c;
+
+color:white;
+
+font-size:16px;
+
+
+}
+
+
+
+
+
+
+
+
+button,
+.gold-button,
+.menu-card{
+
+
+width:100%;
+
+padding:15px;
+
+margin:8px 0;
+
+border-radius:18px;
 
 border:
 
 1px solid rgba(255,215,0,.35);
 
 
-
 background:
 
-rgba(0,0,0,.35);
-
+rgba(255,215,0,.15);
 
 
 color:white;
 
-
-
 font-size:16px;
-
-
-
-padding:0 15px;
-
-
-
-margin-bottom:12px;
-
-
-
-}
-
-
-
-
-
-
-
-/* ===================================
-BUTTONS
-=================================== */
-
-
-.gold-button{
-
-
-width:100%;
-
-
-height:52px;
-
-
-
-border:none;
-
-
-border-radius:18px;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#ffe36b,
-
-#d18b00
-
-);
-
-
-
-color:#3b2000;
-
-
 
 font-weight:bold;
 
 
+}
 
-font-size:16px;
 
 
+
+
+
+
+button:active{
+
+
+transform:scale(.95);
+
+
+}
+
+
+
+
+
+
+
+
+
+.bottom-nav{
+
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+right:0;
 
 display:flex;
 
+gap:5px;
 
-
-align-items:center;
-
-
-
-justify-content:center;
-
-
-
-text-decoration:none;
-
-
-
-cursor:pointer;
-
-
-
-}
-
-
-
-
-
-.gold-button:active{
-
-
-transform:scale(.96);
-
-
-}
-
-
-
-
-
-.menu-card{
-
-
-width:100%;
-
-
-height:52px;
-
-
-margin-top:12px;
-
-
-
-border-radius:18px;
-
-
+padding:10px;
 
 background:
 
-rgba(255,255,255,.08);
+rgba(0,0,0,.7);
+
+backdrop-filter:blur(15px);
+
+
+}
 
 
 
-border:
-
-1px solid rgba(255,215,0,.3);
+.nav{
 
 
+font-size:13px;
 
-color:white;
+padding:12px 5px;
 
-
-
-font-size:16px;
+}
 
 
 
-cursor:pointer;
 
+
+.nav.active{
+
+
+background:gold;
+
+color:#332000;
 
 
 }
@@ -839,27 +577,8 @@ cursor:pointer;
 
 
 
-/* ===================================
-TOP
-=================================== */
 
-
-#topList{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:12px;
-
-
-}
-
-
-
+/* TOP */
 
 
 .top-player{
@@ -867,64 +586,51 @@ gap:12px;
 
 display:flex;
 
-
 align-items:center;
 
-
-gap:12px;
-
-
+gap:15px;
 
 background:
 
 rgba(255,255,255,.08);
 
+border:1px solid rgba(255,215,0,.3);
 
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
-border-radius:22px;
-
-
+border-radius:20px;
 
 padding:12px;
 
+margin:10px 0;
 
 
 }
 
 
 
-
-
-.top-player img{
+.top-photo,
+.top-avatar-letter{
 
 
 width:55px;
 
-
 height:55px;
-
 
 border-radius:50%;
 
-
-
-border:2px solid gold;
-
-
-
 object-fit:cover;
 
+background:#b8860b;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:22px;
 
 
 }
-
-
 
 
 
@@ -943,7 +649,6 @@ flex:1;
 
 font-size:18px;
 
-
 font-weight:bold;
 
 
@@ -957,36 +662,11 @@ font-weight:bold;
 color:#ffd700;
 
 
-margin-top:5px;
-
-
 }
 
 
 
 
-
-
-
-/* ===================================
-UPGRADES
-=================================== */
-
-
-#upgradeList{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-
-gap:12px;
-
-
-}
 
 
 
@@ -999,86 +679,13 @@ background:
 rgba(255,255,255,.08);
 
 
-
-border:
-
-1px solid rgba(255,215,0,.35);
-
-
-
 border-radius:20px;
-
-
 
 padding:15px;
 
+margin:12px 0;
 
-
-}
-
-
-
-.upgrade-card h3{
-
-
-color:#ffd86b;
-
-
-}
-
-
-
-.upgrade-card button{
-
-
-margin-top:10px;
-
-
-}
-/* ===================================
-BOTTOM MENU
-=================================== */
-
-
-.bottom-nav{
-
-position:absolute;
-
-left:0;
-
-bottom:0;
-
-
-width:100%;
-
-
-height:75px;
-
-
-
-display:flex;
-
-
-justify-content:space-around;
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(8,3,20,.92);
-
-
-
-border-top:
-
-1px solid rgba(255,215,0,.25);
-
-
-
-backdrop-filter:blur(12px);
+border:1px solid rgba(255,215,0,.25);
 
 
 }
@@ -1087,106 +694,7 @@ backdrop-filter:blur(12px);
 
 
 
-.nav{
 
-
-background:none;
-
-
-border:none;
-
-
-
-color:white;
-
-
-
-font-size:14px;
-
-
-
-opacity:.65;
-
-
-
-cursor:pointer;
-
-
-
-padding:10px;
-
-
-
-}
-
-
-
-
-
-.nav.active{
-
-
-color:#ffd700;
-
-
-opacity:1;
-
-
-}
-
-
-
-
-
-.nav:active{
-
-
-transform:scale(.9);
-
-
-}
-
-
-
-
-
-
-/* ===================================
-PREMIUM
-=================================== */
-
-
-.premium{
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#b86cff,
-
-#ffd700
-
-);
-
-
-
-color:#27003f;
-
-
-}
-
-
-
-
-
-
-
-/* ===================================
-CLICK NUMBER
-=================================== */
 
 
 .click-number{
@@ -1194,134 +702,40 @@ CLICK NUMBER
 
 position:fixed;
 
-
-left:50%;
-
-
-top:55%;
-
-
-
-transform:translateX(-50%);
-
-
-
 font-size:28px;
 
+color:gold;
 
 font-weight:bold;
 
-
-
-color:#ffd700;
-
-
-
-text-shadow:
-
-0 0 15px gold;
-
-
+animation:fly  .8s forwards;
 
 pointer-events:none;
 
 
-
-animation:
-
-floatCoin .8s forwards;
-
-
-
 }
 
 
 
-@keyframes floatCoin{
+@keyframes fly{
 
 
-0%{
-
+from{
 
 opacity:1;
 
-
-transform:
-
-translate(-50%,0);
-
+transform:translateY(0);
 
 }
 
 
-
-100%{
-
+to{
 
 opacity:0;
 
-
-transform:
-
-translate(-50%,-100px);
-
+transform:translateY(-120px);
 
 }
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ===================================
-MOBILE FIX
-=================================== */
-
-
-@media(max-width:500px){
-
-
-
-.balance{
-
-
-font-size:36px;
-
-
-}
-
-
-
-.main-coin{
-
-
-width:160px;
-
-
-height:160px;
-
-
-font-size:65px;
-
-
-}
-
-
-
-.panel h2{
-
-
-font-size:23px;
-
-
-}
-
 
 
 }
