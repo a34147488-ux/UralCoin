@@ -3855,7 +3855,103 @@ PASTE AT END
     z-index:99999!important;
 
 }
+/* =================================
+FORCE CLICK BUTTON FIX
+================================= */
 
+
+/* ловим любой вариант кнопки клика */
+
+#clickButton,
+.click-button,
+.coin-button,
+.main-click,
+#coinButton{
+
+
+position:absolute!important;
+
+
+left:50%!important;
+
+
+top:60px!important;
+
+
+transform:translateX(-50%)!important;
+
+
+
+width:320px!important;
+
+
+height:320px!important;
+
+
+border-radius:50%!important;
+
+
+
+background:
+
+radial-gradient(
+
+circle at 35% 30%,
+
+#fff8a0,
+
+#ffd700 40%,
+
+#ff9900 75%,
+
+#8b4500
+
+)!important;
+
+
+
+border:
+
+8px solid rgba(255,255,255,.7)!important;
+
+
+
+box-shadow:
+
+0 0 70px gold,
+
+inset 0 0 50px white!important;
+
+
+
+font-size:90px!important;
+
+
+z-index:50!important;
+
+
+}
+
+
+
+
+/* главная без прокрутки */
+
+#home,
+.page.active{
+
+overflow:hidden;
+
+}
+
+
+
+
+.bottom-nav{
+
+z-index:999999!important;
+
+}
 
 
 
