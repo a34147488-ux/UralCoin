@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin SERVER v16
-// Full API System
+// URALcoin SERVER v17
+// Full API + API KEY
 // ===================================
 
 
@@ -150,6 +150,7 @@ while(
 
 users.some(
 u=>u.promoCode===code
+
 )
 
 );
@@ -170,6 +171,32 @@ return code;
 
 
 
+// ===============================
+// API KEY GENERATOR
+// ===============================
+
+
+function generateApiKey(){
+
+
+return (
+
+"URAL-"
+
++
+
+Math.random()
+
+.toString(36)
+
+.substring(2,12)
+
+.toUpperCase()
+
+);
+
+
+}
 // ===============================
 // CREATE USER
 // ===============================
@@ -242,6 +269,9 @@ clickPower:0.01,
 autoPower:0,
 
 
+crystals:0,
+
+
 friends:0,
 
 
@@ -252,6 +282,9 @@ activatedCodes:[],
 
 
 earnedFromPromo:0,
+
+
+apiKey:"",
 
 
 upgrades:{},
@@ -494,6 +527,78 @@ players:top
 
 
 // ===============================
+// API KEY
+// ===============================
+
+
+app.post(
+"/api-key",
+(req,res)=>{
+
+
+let user =
+users.find(
+
+u=>
+
+String(u.id)===String(req.body.id)
+
+);
+
+
+
+
+
+
+if(!user){
+
+
+return res.json({
+
+success:false,
+
+message:"Пользователь не найден"
+
+});
+
+
+}
+
+
+
+
+
+
+if(!user.apiKey || user.apiKey===""){
+
+
+
+user.apiKey = generateApiKey();
+
+
+
+saveUsers();
+
+
+
+}
+
+
+
+
+
+res.json({
+
+success:true,
+
+key:user.apiKey
+
+});
+
+
+
+});
+// ===============================
 // SEARCH USERS
 // ===============================
 
@@ -683,6 +788,24 @@ receiver.balance += amount;
 
 
 
+
+
+if(!sender.history)
+
+sender.history=[];
+
+
+
+if(!receiver.history)
+
+receiver.history=[];
+
+
+
+
+
+
+
 sender.history.push({
 
 type:"Отправлено",
@@ -694,6 +817,8 @@ amount:amount,
 date:new Date().toLocaleString()
 
 });
+
+
 
 
 
@@ -972,7 +1097,7 @@ app.get(
 
 
 res.send(
-"URALcoin server v16 online"
+"URALcoin server v17 online"
 );
 
 
@@ -989,7 +1114,7 @@ PORT,
 
 console.log(
 
-"URALcoin v16 started",
+"URALcoin v17 started",
 
 PORT
 
