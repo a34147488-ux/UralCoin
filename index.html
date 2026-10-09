@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>URALcoin</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- СНЕГ -->
+
+<div class="snow"></div>
+
+
+<!-- ГИРЛЯНДА -->
+
+<div class="garland">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+
+
+<main class="content">
+
+
+
+
+
+<!-- =====================
+ГЛАВНАЯ
+===================== -->
+
+
+<section class="page active" id="game">
+
+
+
+<div class="glass balance-card">
+
+
+<div class="coin-icon">
+
+U
+
+</div>
+
+
+
+<div class="balance-value">
+
+
+<span id="balance">
+
+0
+
+</span>
+
+U
+
+
+</div>
+
+
+
+<div class="stats">
+
+
+<div>
+
+⚡
+
+<span id="clickPower">
+
+0.01
+
+</span>
+
+за клик
+
+</div>
+
+
+
+<div>
+
+В секунду:
+
+<span id="secondPower">
+
+0
+
+</span>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="new-card" id="openRoulette">
+
+
+<div class="new">
+
+NEW
+
+</div>
+
+
+
+<div class="mini-wheel">
+
+👑
+
+</div>
+
+
+
+<h2>
+
+РУЛЕТКА
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="click-zone">
+
+
+<button id="clickButton" class="big-coin">
+
+
+U
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ПРОМО
+===================== -->
+
+
+<section class="page" id="promo">
+
+
+<div class="glass panel">
+
+
+<h2>
+
+Промокоды
+
+</h2>
+
+
+
+<input id="personalCode" readonly>
+
+
+
+<button id="copyReferral">
+
+Скопировать
+
+</button>
+
+
+
+<div>
+
+Приглашено:
+
+<b id="promoFriends">
+
+0
+
+</b>
+
+</div>
+
+
+
+<div>
+
+Получено:
+
+<b id="promoEarned">
+
+0 U
+
+</b>
+
+</div>
+
+
+
+
+
+<hr>
+
+
+
+
+<input id="promoInput" placeholder="Введите код">
+
+
+
+<button id="activatePromo">
+
+Активировать
+
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ПЕРЕВОДЫ
+===================== -->
+
+
+<section class="page" id="transfer">
+
+
+
+<div class="glass panel">
+
+
+<h2>
+
+Перевод
+
+</h2>
+
+
+
+<div class="glass input-box">
+
+
+<input id="transferName" placeholder="@username">
+
+
+</div>
+
+
+
+<div class="glass input-box">
+
+
+<input id="transferSum" placeholder="Количество U" type="number">
+
+
+</div>
+
+
+
+
+<button id="transferButton">
+
+Отправить
+
+</button>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ТОП
+===================== -->
+
+
+<section class="page" id="tops">
+
+
+<div class="glass panel">
+
+
+<h2>
+
+ТОП игроков
+
+</h2>
+
+
+
+<div id="topList">
+
+Загрузка...
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+РУЛЕТКА
+===================== -->
+
+
+<section class="page" id="roulette">
+
+
+<div class="glass panel">
+
+
+<h2>
+
+РУЛЕТКА
+
+</h2>
+
+
+
+<div id="rouletteTimer">
+
+Раунд: 25
+
+</div>
+
+
+
+
+
+<div class="wheel-box">
+
+
+<div id="rouletteWheel"></div>
+
+
+</div>
+
+
+
+
+<div id="rouletteResult">
+
+Выпало:
+
+-
+
+</div>
+
+
+
+
+
+
+<input id="rouletteAmount" type="number" placeholder="Ставка">
+
+
+
+
+
+<div class="bets">
+
+
+<button data-bet="red">
+
+Красное
+
+</button>
+
+
+<button data-bet="black">
+
+Чёрное
+
+</button>
+
+
+<button data-bet="even">
+
+Чёт
+
+</button>
+
+
+<button data-bet="odd">
+
+Нечёт
+
+</button>
+
+
+</div>
+
+
+
+
+
+<button id="rouletteStart">
+
+Сделать ставку
+
+</button>
+
+
+
+
+<h3>
+
+История
+
+</h3>
+
+
+<div id="rouletteHistory">
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ЕЩЁ
+===================== -->
+
+
+<section class="page" id="more">
+
+
+<div class="glass panel">
+
+
+<h2>
+
+Ещё
+
+</h2>
+
+
+
+<a class="channel-card" href="https://t.me/+NyqTkXAU-H5hNDky">
+
+👑 👑 👑
+
+<br>
+
+Канал URALcoin
+
+
+</a>
+
+
+
+
+<button>
+
+API ключ
+
+</button>
+
+
+
+<button>
+
+История
+
+</button>
+
+
+
+<h2>
+
+Улучшения
+
+</h2>
+
+
+
+<div id="upgradeList"></div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+<nav class="bottom-nav">
+
+
+<button class="nav active" data-page="game">
+
+Главная
+
+</button>
+
+
+<button class="nav" data-page="promo">
+
+Код
+
+</button>
+
+
+<button class="nav" data-page="transfer">
+
+Перевод
+
+</button>
+
+
+<button class="nav" data-page="tops">
+
+Топ
+
+</button>
+
+
+<button class="nav" data-page="roulette">
+
+Рулетка
+
+</button>
+
+
+<button class="nav" data-page="more">
+
+Ещё
+
+</button>
+
+
+
+</nav>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<script src="config.js"></script>
+<script src="storage.js"></script>
+<script src="telegram.js"></script>
+<script src="app.js"></script>
+<script src="promo.js"></script>
+<script src="referral.js"></script>
+<script src="transfer.js"></script>
+<script src="top.js"></script>
+<script src="roulette.js"></script>
+<script src="upgrade.js"></script>
+<script src="effects.js"></script>
+
+
+
+</body>
+
+</html>
