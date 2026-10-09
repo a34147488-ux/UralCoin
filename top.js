@@ -1,29 +1,39 @@
 // ===================================
-// URALcoin TOP v15.5
-// Players Rating
+// URALcoin TOP v16
+// Players Rating System
 // ===================================
+
 
 
 async function loadTop(){
 
 
-const list = document.getElementById(
+
+const list =
+
+document.getElementById(
+
 "topList"
+
 );
 
 
 
-if(!list){
+
+
+if(!list)
 
 return;
 
-}
+
 
 
 
 
 list.innerHTML =
+
 "Загрузка...";
+
 
 
 
@@ -32,11 +42,17 @@ list.innerHTML =
 try{
 
 
+
 let response = await fetch(
 
-CONFIG.API_URL + "/top"
+CONFIG.API_URL+
+
+"/top"
 
 );
+
+
+
 
 
 
@@ -46,21 +62,34 @@ let data = await response.json();
 
 
 
-let players = data.players || data || [];
+
+
+let players =
+
+data.players || [];
 
 
 
 
 
 
-if(!players.length){
+
+if(
+
+players.length===0
+
+){
+
 
 
 list.innerHTML =
+
 "Игроков пока нет";
 
 
+
 return;
+
 
 
 }
@@ -70,51 +99,119 @@ return;
 
 
 
-list.innerHTML = "";
+list.innerHTML="";
 
 
 
 
 
-players.forEach((player,index)=>{
+
+
+players.forEach(
+
+(player,index)=>{
+
+
 
 
 
 let card = document.createElement(
+
 "div"
+
 );
 
 
 
-card.className =
+
+
+card.className=
+
 "top-player";
 
 
 
 
 
-let avatar = player.photo
 
-?
 
-`<img src="${player.photo}">`
 
-:
-
-`<div class="top-avatar-letter">
-${(player.name || "U").charAt(0)}
-</div>`;
+let avatar = "";
 
 
 
 
 
 
+if(player.photo){
 
-card.innerHTML = `
+
+
+avatar =
+
+`
+
+<img class="top-photo"
+
+src="${player.photo}">
+
+`;
+
+
+
+}
+
+else{
+
+
+
+avatar =
+
+`
+
+<div class="top-avatar-letter">
+
+${
+
+(player.name || "U")
+
+.charAt(0)
+
+.toUpperCase()
+
+}
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+card.innerHTML =
+
+
+
+`
+
+<div class="top-place">
+
+#${index+1}
+
+</div>
 
 
 ${avatar}
+
 
 
 <div class="top-info">
@@ -122,22 +219,26 @@ ${avatar}
 
 <div class="top-name">
 
-#${index+1}
-
 ${player.name || "Игрок"}
 
 </div>
 
 
-
 <div class="top-balance">
 
-${Number(player.balance || 0)
+${
+
+Number(player.balance || 0)
+
 .toFixed(3)
-.replace(".",",")} U
+
+.replace(".",",")
+
+}
+
+U
 
 </div>
-
 
 
 </div>
@@ -149,7 +250,14 @@ ${Number(player.balance || 0)
 
 
 
+
+
+
 list.appendChild(card);
+
+
+
+
 
 
 
@@ -159,26 +267,28 @@ list.appendChild(card);
 
 
 
+
+
 }
-
-
 
 catch(error){
 
 
+
 console.log(
+
 "TOP ERROR",
+
 error
+
 );
+
 
 
 
 list.innerHTML =
 
-"Ошибка загрузки топа";
-
-
-}
+"Ошибка загрузки";
 
 
 
@@ -186,38 +296,73 @@ list.innerHTML =
 
 
 
+}
 
 
 
 
 
 
-// обновление при открытии вкладки
 
 
-document.querySelectorAll(".nav").forEach(btn=>{
+
+// открытие вкладки ТОП
 
 
-btn.addEventListener(
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+
+
+
+document
+
+.querySelectorAll(".nav")
+
+.forEach(button=>{
+
+
+
+
+
+button.addEventListener(
 
 "click",
 
 ()=>{
 
 
-if(btn.dataset.page==="tops"){
+
+
+
+if(
+
+button.dataset.page==="tops"
+
+){
+
 
 
 loadTop();
 
 
+
 }
 
 
+
 }
+
 
 
 );
+
+
+
 
 
 
@@ -229,7 +374,15 @@ loadTop();
 
 
 
-// первый запуск
+
+});
 
 
-loadTop();
+
+
+
+
+
+
+
+window.loadTop = loadTop;
