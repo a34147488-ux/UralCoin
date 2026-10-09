@@ -1,52 +1,51 @@
 /* ===================================
-URALcoin STYLE v16
-Winter Gold Design
+URALcoin STYLE v16.3
+Winter Gold Fix
 =================================== */
 
 
 *{
-
 box-sizing:border-box;
-
-font-family:Arial,sans-serif;
-
+-webkit-tap-highlight-color:transparent;
 }
 
 
 
 body{
 
-
 margin:0;
 
-background:#07101d;
+background:#07111f;
 
 color:white;
 
+font-family:Arial,sans-serif;
+
 overflow-x:hidden;
 
-
 }
+
+
 
 
 
 .app{
 
-
 min-height:100vh;
+
+padding-bottom:100px;
 
 position:relative;
 
-padding-bottom:90px;
-
 }
+
+
 
 
 
 
 
 .city-bg{
-
 
 position:fixed;
 
@@ -55,24 +54,18 @@ inset:0;
 background:
 
 linear-gradient(
-
 180deg,
-
 rgba(0,0,0,.35),
-
-rgba(0,0,0,.8)
-
+rgba(0,0,0,.85)
 ),
 
 url("city.jpg");
-
 
 background-size:cover;
 
 background-position:center;
 
 z-index:-3;
-
 
 }
 
@@ -84,7 +77,6 @@ z-index:-3;
 
 .snow{
 
-
 position:fixed;
 
 inset:0;
@@ -95,14 +87,13 @@ background-image:
 
 radial-gradient(circle,#fff 2px,transparent 3px);
 
-background-size:80px 80px;
+background-size:70px 70px;
 
-animation:snow 10s linear infinite;
+animation:snowMove 12s linear infinite;
 
 opacity:.7;
 
 z-index:-1;
-
 
 }
 
@@ -110,8 +101,7 @@ z-index:-1;
 
 
 
-@keyframes snow{
-
+@keyframes snowMove{
 
 from{
 
@@ -119,16 +109,13 @@ background-position:0 0;
 
 }
 
-
 to{
 
 background-position:0 500px;
 
 }
 
-
 }
-
 
 
 
@@ -138,16 +125,15 @@ background-position:0 500px;
 
 .header{
 
-
 padding:20px;
-
 
 }
 
 
 
-.avatar{
 
+
+.avatar{
 
 width:55px;
 
@@ -157,7 +143,11 @@ border-radius:50%;
 
 overflow:hidden;
 
-background:#c99620;
+background:linear-gradient(
+135deg,
+#ffd700,
+#9c6900
+);
 
 display:flex;
 
@@ -171,13 +161,11 @@ font-weight:bold;
 
 box-shadow:0 0 20px gold;
 
-
 }
 
 
 
 .avatar img{
-
 
 width:100%;
 
@@ -185,10 +173,7 @@ height:100%;
 
 object-fit:cover;
 
-
 }
-
-
 
 
 
@@ -198,19 +183,17 @@ object-fit:cover;
 
 .content{
 
-
 padding:15px;
-
 
 }
 
 
 
+
+
 .page{
 
-
 display:none;
-
 
 }
 
@@ -218,9 +201,7 @@ display:none;
 
 .page.active{
 
-
 display:block;
-
 
 }
 
@@ -234,26 +215,19 @@ display:block;
 
 .balance-box{
 
-
 background:
 
-rgba(255,255,255,.08);
-
+rgba(255,255,255,.06);
 
 border-radius:25px;
 
-padding:20px;
+padding:18px;
 
-text-align:center;
+border:1px solid rgba(255,215,0,.18);
 
 backdrop-filter:blur(15px);
 
-border:1px solid rgba(255,215,0,.25);
-
-
 }
-
-
 
 
 
@@ -261,19 +235,17 @@ border:1px solid rgba(255,215,0,.25);
 
 .balance{
 
-
 display:flex;
 
 justify-content:center;
 
 align-items:center;
 
-gap:10px;
+gap:12px;
 
 font-size:38px;
 
-font-weight:bold;
-
+font-weight:700;
 
 }
 
@@ -281,16 +253,15 @@ font-weight:bold;
 
 .coin-balance{
 
+width:32px;
 
-width:35px;
-
-height:35px;
+height:32px;
 
 border-radius:50%;
 
 background:gold;
 
-color:#332000;
+color:#5b3b00;
 
 display:flex;
 
@@ -299,9 +270,6 @@ align-items:center;
 justify-content:center;
 
 font-weight:bold;
-
-font-size:20px;
-
 
 }
 
@@ -315,60 +283,11 @@ font-size:20px;
 .click-power,
 .second-power{
 
+text-align:center;
 
 margin-top:12px;
 
 color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-
-.main-coin{
-
-
-width:170px;
-
-height:170px;
-
-border-radius:50%;
-
-border:none;
-
-background:
-
-radial-gradient(circle,#ffe98a,#d39b00);
-
-
-font-size:70px;
-
-font-weight:bold;
-
-color:#5a3b00;
-
-
-box-shadow:
-
-0 0 40px gold,
-
-inset 0 0 30px white;
-
-
-}
-
-
-
-.main-coin:active{
-
-
-transform:scale(.92);
-
 
 }
 
@@ -381,25 +300,55 @@ transform:scale(.92);
 
 .fire-zone{
 
-
 text-align:center;
 
-margin-top:40px;
+margin-top:35px;
+
+}
+
+
+
+
+
+.main-coin{
+
+width:165px;
+
+height:165px;
+
+border-radius:50%;
+
+border:none;
+
+background:
+
+radial-gradient(
+circle at 30% 30%,
+#fff2a0,
+#d59c00
+);
+
+
+font-size:65px;
+
+font-weight:bold;
+
+color:#543500;
+
+box-shadow:
+
+0 0 45px rgba(255,215,0,.7),
+
+inset 0 0 25px white;
 
 
 }
 
 
 
-.fire-effect{
+.main-coin:active{
 
-
-font-size:40px;
-
-margin-bottom:-20px;
-
-opacity:.7;
-
+transform:scale(.92);
 
 }
 
@@ -413,48 +362,17 @@ opacity:.7;
 
 .panel{
 
-
 background:
 
-rgba(255,255,255,.08);
-
-
-padding:20px;
+rgba(255,255,255,.07);
 
 border-radius:25px;
 
-backdrop-filter:blur(15px);
+padding:18px;
 
 border:1px solid rgba(255,215,0,.2);
 
-
-}
-
-
-
-
-
-
-
-input{
-
-
-width:100%;
-
-padding:15px;
-
-margin:8px 0;
-
-border-radius:15px;
-
-border:none;
-
-background:#101b2c;
-
-color:white;
-
-font-size:16px;
-
+backdrop-filter:blur(15px);
 
 }
 
@@ -467,33 +385,36 @@ font-size:16px;
 
 button,
 .gold-button,
-.menu-card{
+.menu-card,
+.nav{
 
 
-width:100%;
-
-padding:15px;
-
-margin:8px 0;
+border:none;
 
 border-radius:18px;
 
-border:
-
-1px solid rgba(255,215,0,.35);
-
+padding:14px;
 
 background:
 
 rgba(255,215,0,.15);
 
-
 color:white;
 
-font-size:16px;
+font-size:15px;
 
 font-weight:bold;
 
+cursor:pointer;
+
+}
+
+
+
+
+button:active{
+
+transform:scale(.96);
 
 }
 
@@ -503,11 +424,131 @@ font-weight:bold;
 
 
 
-button:active{
 
 
-transform:scale(.95);
+input{
 
+width:100%;
+
+padding:14px;
+
+margin:8px 0;
+
+border-radius:15px;
+
+border:none;
+
+background:#111d30;
+
+color:white;
+
+}
+
+
+
+
+
+/* TOP */
+
+
+.top-player{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:12px;
+
+margin:10px 0;
+
+background:
+
+rgba(255,255,255,.08);
+
+border-radius:20px;
+
+border:1px solid rgba(255,215,0,.3);
+
+}
+
+
+
+.top-photo,
+.top-avatar-letter{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+background:#b8860b;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:22px;
+
+overflow:hidden;
+
+}
+
+
+
+
+
+.top-photo{
+
+object-fit:cover;
+
+}
+
+
+
+
+
+.top-info{
+
+flex:1;
+
+}
+
+
+
+.top-balance{
+
+color:#ffd700;
+
+margin-top:5px;
+
+}
+
+
+
+
+
+
+
+
+
+.upgrade-card{
+
+background:
+
+rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:15px;
+
+margin:12px 0;
+
+border:1px solid rgba(255,215,0,.25);
 
 }
 
@@ -521,7 +562,6 @@ transform:scale(.95);
 
 .bottom-nav{
 
-
 position:fixed;
 
 bottom:0;
@@ -529,6 +569,8 @@ bottom:0;
 left:0;
 
 right:0;
+
+height:85px;
 
 display:flex;
 
@@ -538,157 +580,38 @@ padding:10px;
 
 background:
 
-rgba(0,0,0,.7);
+rgba(0,0,0,.8);
 
 backdrop-filter:blur(15px);
 
+z-index:100;
 
 }
+
+
 
 
 
 .nav{
 
+flex:1;
 
-font-size:13px;
+padding:10px 3px;
 
-padding:12px 5px;
+font-size:12px;
 
 }
-
-
 
 
 
 .nav.active{
 
+background:#ffd700;
 
-background:gold;
-
-color:#332000;
-
+color:#4a3200;
 
 }
 
-
-
-
-
-
-
-
-
-/* TOP */
-
-
-.top-player{
-
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-background:
-
-rgba(255,255,255,.08);
-
-border:1px solid rgba(255,215,0,.3);
-
-border-radius:20px;
-
-padding:12px;
-
-margin:10px 0;
-
-
-}
-
-
-
-.top-photo,
-.top-avatar-letter{
-
-
-width:55px;
-
-height:55px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-background:#b8860b;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:22px;
-
-
-}
-
-
-
-.top-info{
-
-
-flex:1;
-
-
-}
-
-
-
-.top-name{
-
-
-font-size:18px;
-
-font-weight:bold;
-
-
-}
-
-
-
-.top-balance{
-
-
-color:#ffd700;
-
-
-}
-
-
-
-
-
-
-
-
-.upgrade-card{
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-border-radius:20px;
-
-padding:15px;
-
-margin:12px 0;
-
-border:1px solid rgba(255,215,0,.25);
-
-
-}
 
 
 
@@ -699,25 +622,27 @@ border:1px solid rgba(255,215,0,.25);
 
 .click-number{
 
-
 position:fixed;
 
-font-size:28px;
-
-color:gold;
+font-size:26px;
 
 font-weight:bold;
 
-animation:fly  .8s forwards;
+color:#ffd700;
 
 pointer-events:none;
 
+animation:
+
+clickFly .7s forwards;
+
+z-index:200;
 
 }
 
 
 
-@keyframes fly{
+@keyframes clickFly{
 
 
 from{
@@ -729,11 +654,12 @@ transform:translateY(0);
 }
 
 
+
 to{
 
 opacity:0;
 
-transform:translateY(-120px);
+transform:translateY(-100px);
 
 }
 
