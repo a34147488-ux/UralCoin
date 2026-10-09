@@ -1,9 +1,7 @@
 // ===================================
-// URALcoin STORAGE v13.1
-// Stable Player Database
-// Personal Promo System
+// URALcoin STORAGE v16
+// Stable Local Database
 // ===================================
-
 
 
 const Storage = {
@@ -17,9 +15,7 @@ getPlayer(){
 let player = JSON.parse(
 
 localStorage.getItem(
-
 "ural_player"
-
 )
 
 );
@@ -28,66 +24,52 @@ localStorage.getItem(
 
 
 
-
-
-
 if(!player){
-
 
 
 player={
 
 
-id:"guest",
-
+id:"",
 
 
 name:"Игрок",
 
 
+username:"",
+
 
 photo:"",
-
 
 
 balance:0,
 
 
-
 clickPower:0.01,
-
 
 
 autoPower:0,
 
 
-
 crystals:0,
-
 
 
 friends:0,
 
 
-
 promoCode:"",
-
 
 
 activatedCodes:[],
 
 
-
 earnedFromPromo:0,
-
 
 
 upgrades:{},
 
 
-
 history:[],
-
 
 
 created:Date.now()
@@ -107,18 +89,27 @@ created:Date.now()
 
 
 
-
-
 // ===============================
-// FIX OLD USERS
+// FIX OLD DATA
 // ===============================
 
 
 
-if(!player.upgrades)
+if(!player.id)
 
-player.upgrades={};
+player.id="";
 
+
+
+if(!player.username)
+
+player.username="";
+
+
+
+if(!player.photo)
+
+player.photo="";
 
 
 
@@ -128,6 +119,11 @@ player.activatedCodes=[];
 
 
 
+if(!player.upgrades)
+
+player.upgrades={};
+
+
 
 if(!player.history)
 
@@ -135,11 +131,15 @@ player.history=[];
 
 
 
-
 if(!player.promoCode)
 
 player.promoCode="";
 
+
+
+if(!player.friends)
+
+player.friends=0;
 
 
 
@@ -150,46 +150,18 @@ player.earnedFromPromo=0;
 
 
 
-if(!player.crystals)
-
-player.crystals=0;
-
-
-
-
-
-if(!player.friends)
-
-player.friends=0;
-
-
-
-
-
-
-
-
 
 player.balance =
-
 Number(player.balance || 0);
 
 
 
-
-
-
 player.clickPower =
-
 Number(player.clickPower || 0.01);
 
 
 
-
-
-
 player.autoPower =
-
 Number(player.autoPower || 0);
 
 
@@ -197,11 +169,7 @@ Number(player.autoPower || 0);
 
 
 
-
 this.savePlayer(player);
-
-
-
 
 
 
@@ -215,14 +183,6 @@ return player;
 
 
 
-
-
-
-
-
-// ===============================
-// SAVE
-// ===============================
 
 
 savePlayer(player){
@@ -249,87 +209,10 @@ JSON.stringify(player)
 
 
 
-
-// ===============================
-// TELEGRAM DATA
-// ===============================
-
-
-
-updateTelegramProfile(data){
-
-
-
-let player=this.getPlayer();
-
-
-
-
-
-
-if(data.id)
-
-player.id=
-
-String(data.id);
-
-
-
-
-
-
-if(data.first_name)
-
-player.name=
-
-data.first_name;
-
-
-
-
-
-
-
-if(data.username)
-
-player.username=
-
-data.username;
-
-
-
-
-
-
-if(data.photo_url)
-
-player.photo=
-
-data.photo_url;
-
-
-
-
-
-
-this.savePlayer(player);
-
-
-
-},
-
-
-
-
-
-
-
-
-
-
 // ===============================
 // BALANCE
 // ===============================
+
 
 
 addBalance(amount){
@@ -340,13 +223,9 @@ let player=this.getPlayer();
 
 
 
-
-
 player.balance +=
 
 Number(amount);
-
-
 
 
 
@@ -355,8 +234,6 @@ this.savePlayer(player);
 
 
 },
-
-
 
 
 
@@ -377,10 +254,17 @@ let player=this.getPlayer();
 
 
 
-if(player.balance < amount)
+if(
+
+player.balance < amount
+
+){
+
 
 return false;
 
+
+}
 
 
 
@@ -393,9 +277,6 @@ Number(amount);
 
 
 
-
-
-
 this.savePlayer(player);
 
 
@@ -408,118 +289,6 @@ return true;
 
 
 },
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// PERSONAL PROMO
-// ===============================
-
-
-
-setPromoCode(code){
-
-
-
-let player=this.getPlayer();
-
-
-
-
-
-player.promoCode=
-
-code;
-
-
-
-
-
-
-this.savePlayer(player);
-
-
-
-},
-
-
-
-
-
-
-
-
-
-
-
-activatePromo(code){
-
-
-
-let player=this.getPlayer();
-
-
-
-
-
-
-
-code=
-
-String(code)
-
-.toUpperCase();
-
-
-
-
-
-
-
-
-if(
-
-player.activatedCodes.includes(code)
-
-)
-
-return false;
-
-
-
-
-
-
-
-player.activatedCodes.push(code);
-
-
-
-
-
-
-
-this.savePlayer(player);
-
-
-
-
-
-
-
-return true;
-
-
-
-},
-
 
 
 
@@ -543,15 +312,7 @@ let player=this.getPlayer();
 
 
 
-
-
-
-
 player.history.push(item);
-
-
-
-
 
 
 
@@ -567,15 +328,11 @@ this.savePlayer(player);
 
 
 
-
-
-
-
 getHistory(){
 
 
 
-return this.getPlayer().history;
+return this.getPlayer().history || [];
 
 
 
@@ -589,10 +346,66 @@ return this.getPlayer().history;
 
 
 
+// ===============================
+// API KEY
+// ===============================
 
-// ===============================
-// CLEAR
-// ===============================
+
+
+generateApiKey(){
+
+
+
+let key =
+
+"URAL-" +
+
+Math.random()
+
+.toString(36)
+
+.substring(2,15)
+
+.toUpperCase();
+
+
+
+
+let player=this.getPlayer();
+
+
+
+player.apiKey=key;
+
+
+
+this.savePlayer(player);
+
+
+
+return key;
+
+
+
+},
+
+
+
+
+
+
+getApiKey(){
+
+
+return this.getPlayer().apiKey || "";
+
+
+
+},
+
+
+
+
 
 
 
@@ -612,11 +425,7 @@ localStorage.removeItem(
 
 
 
-
-
-
 };
-
 
 
 
