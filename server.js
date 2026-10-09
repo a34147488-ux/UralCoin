@@ -1,6 +1,8 @@
 // ===================================
-// URALcoin SERVER v15 FINAL
-// Promo + Top + Transfer + Search
+// URALcoin SERVER v15.2
+// Balance Sync FIX
+// Top FIX
+// Transfer FIX
 // ===================================
 
 
@@ -33,6 +35,7 @@ let users=[];
 
 
 
+
 // ===============================
 // DATABASE
 // ===============================
@@ -47,7 +50,8 @@ try{
 if(fs.existsSync(DB)){
 
 
-users = JSON.parse(
+users =
+JSON.parse(
 
 fs.readFileSync(
 DB,
@@ -66,7 +70,7 @@ catch(e){
 
 
 console.log(
-"DB LOAD ERROR"
+"LOAD ERROR"
 );
 
 
@@ -81,6 +85,8 @@ users=[];
 
 
 
+
+
 function saveUsers(){
 
 
@@ -89,15 +95,21 @@ fs.writeFileSync(
 DB,
 
 JSON.stringify(
+
 users,
+
 null,
+
 2
+
 )
 
 );
 
 
 }
+
+
 
 
 
@@ -109,8 +121,10 @@ loadUsers();
 
 
 
+
+
 // ===============================
-// USER
+// CREATE PROMO
 // ===============================
 
 
@@ -162,7 +176,13 @@ return code;
 
 
 
+// ===============================
+// USER REGISTER
+// ===============================
+
+
 app.post("/user",(req,res)=>{
+
 
 
 let data=req.body;
@@ -172,23 +192,30 @@ let data=req.body;
 if(!data.id)
 
 return res.json({
+
 error:"NO_ID"
+
 });
 
 
 
 
 
+
 let user =
+
 users.find(
 
 u=>
 
 String(u.id)
+
 ===
+
 String(data.id)
 
 );
+
 
 
 
@@ -204,9 +231,12 @@ user={
 
 id:String(data.id),
 
+
 name:data.name || "Игрок",
 
+
 username:data.username || "",
+
 
 photo:data.photo || "",
 
@@ -214,10 +244,10 @@ photo:data.photo || "",
 balance:0,
 
 
-promoCode:createPromo(),
+clickPower:0.01,
 
 
-activatedCodes:[],
+autoPower:0,
 
 
 friends:0,
@@ -226,11 +256,16 @@ friends:0,
 earnedFromPromo:0,
 
 
+promoCode:createPromo(),
+
+
+activatedCodes:[],
+
+
 upgrades:{},
 
 
 created:Date.now()
-
 
 
 };
@@ -246,18 +281,28 @@ users.push(user);
 else{
 
 
+
 user.name =
+
 data.name ||
+
 user.name;
 
 
+
+
 user.username =
+
 data.username ||
+
 user.username;
 
 
+
 user.photo =
+
 data.photo ||
+
 user.photo;
 
 
@@ -276,7 +321,131 @@ saveUsers();
 
 
 
+
 res.json(user);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// GET USER
+// ===============================
+
+
+app.get("/user/:id",(req,res)=>{
+
+
+let user =
+
+users.find(
+
+u=>
+
+String(u.id)
+
+===
+
+String(req.params.id)
+
+);
+
+
+
+res.json(
+user || null
+);
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// BALANCE SYNC
+// ===============================
+
+
+app.post("/sync",(req,res)=>{
+
+
+let user =
+
+users.find(
+
+u=>
+
+String(u.id)
+
+===
+
+String(req.body.id)
+
+);
+
+
+
+
+
+if(!user){
+
+
+return res.json({
+
+success:false,
+
+message:"USER NOT FOUND"
+
+});
+
+
+}
+
+
+
+
+
+
+user.balance =
+
+Number(
+
+req.body.balance || 0
+
+);
+
+
+
+
+
+saveUsers();
+
+
+
+
+
+
+res.json({
+
+success:true,
+
+balance:user.balance
+
+});
 
 
 
@@ -299,39 +468,70 @@ app.get("/search-users",(req,res)=>{
 
 
 let q =
-String(req.query.q || "")
+
+String(
+req.query.q || ""
+)
+
 .toLowerCase()
+
 .trim();
+
 
 
 
 
 let result =
 
-users.filter(u=>{
+users
+
+.filter(u=>{
 
 
-return (
+let name =
 
-(u.name &&
-u.name.toLowerCase()
-.includes(q))
+String(
+u.name || ""
+)
+
+.toLowerCase();
+
+
+
+let username =
+
+String(
+u.username || ""
+)
+
+.toLowerCase();
+
+
+
+
+
+return(
+
+name.includes(q)
 
 ||
 
-(u.username &&
-u.username.toLowerCase()
-.includes(q))
-
+username.includes(
+q.replace("@","")
+)
 
 );
 
 
+
 })
+
+
 
 .slice(0,10)
 
 .map(u=>({
+
 
 id:u.id,
 
@@ -345,6 +545,8 @@ balance:u.balance || 0
 
 
 }));
+
+
 
 
 
@@ -377,16 +579,19 @@ app.post("/transfer",(req,res)=>{
 
 
 let from =
+
 String(req.body.from);
 
 
 
 let to =
+
 String(req.body.to);
 
 
 
 let amount =
+
 Number(req.body.amount);
 
 
@@ -394,13 +599,17 @@ Number(req.body.amount);
 
 
 
+
 let sender =
+
 users.find(
 
 u=>
 
 String(u.id)
+
 ===
+
 from
 
 );
@@ -408,17 +617,21 @@ from
 
 
 
+
+
 let receiver =
+
 users.find(
 
 u=>
 
 String(u.id)
+
 ===
+
 to
 
 );
-
 
 
 
@@ -455,51 +668,15 @@ message:"Получатель не найден"
 
 
 
-
-
-if(sender.id===receiver.id)
-
-return res.json({
-
-success:false,
-
-message:"Нельзя себе"
-
-});
-
-
-
-
-
-
-
-if(!amount || amount<=0)
-
-return res.json({
-
-success:false,
-
-message:"Сумма ошибка"
-
-});
-
-
-
-
-
-
-
-
 if(sender.balance < amount)
 
 return res.json({
 
 success:false,
 
-message:"Недостаточно U"
+message:"Недостаточно средств"
 
 });
-
 
 
 
@@ -522,7 +699,11 @@ saveUsers();
 
 res.json({
 
-success:true
+success:true,
+
+fromBalance:sender.balance,
+
+receiverBalance:receiver.balance
 
 });
 
@@ -554,59 +735,30 @@ let players =
 
 (a,b)=>
 
-(b.balance||0)
+Number(b.balance || 0)
+
 -
-(a.balance||0)
+
+Number(a.balance || 0)
 
 )
+
+
 
 .slice(0,50);
 
 
 
 
+
+
+
 res.json({
 
-players
+players:players
 
 });
 
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// GET USER
-// ===============================
-
-
-app.get("/user/:id",(req,res)=>{
-
-
-let user=
-
-users.find(
-
-u=>
-
-String(u.id)
-===
-String(req.params.id)
-
-);
-
-
-
-res.json(
-user || null
-);
 
 
 });
@@ -631,7 +783,7 @@ res.json({
 
 count:users.length,
 
-users
+users:users
 
 });
 
@@ -650,7 +802,9 @@ app.get("/",(req,res)=>{
 
 
 res.send(
-"URALcoin SERVER v15 ONLINE"
+
+"URALcoin v15.2 ONLINE"
+
 );
 
 
@@ -661,12 +815,18 @@ res.send(
 
 
 
+
+
+
 app.listen(PORT,()=>{
 
 
 console.log(
-"URALcoin v15 started",
+
+"URALcoin SERVER STARTED",
+
 PORT
+
 );
 
 
