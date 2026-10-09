@@ -1,0 +1,354 @@
+/* ===================================
+URALcoin Roulette v1
+Wheel + Animation
+=================================== */
+
+
+.roulette-panel{
+
+text-align:center;
+
+}
+
+
+
+
+
+.roulette-timer{
+
+margin:15px;
+
+padding:12px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.2);
+
+font-size:18px;
+
+}
+
+
+
+
+
+.roulette-wheel-wrap{
+
+position:relative;
+
+width:300px;
+
+height:300px;
+
+margin:20px auto;
+
+}
+
+
+
+
+
+.roulette-arrow{
+
+position:absolute;
+
+top:-15px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:30px;
+
+z-index:5;
+
+color:white;
+
+text-shadow:
+
+0 0 15px white;
+
+}
+
+
+
+
+
+.roulette-wheel{
+
+
+width:300px;
+
+height:300px;
+
+
+border-radius:50%;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+
+background:
+
+conic-gradient(
+
+green 0deg,
+
+red 10deg,
+
+black 20deg,
+
+red 30deg,
+
+black 40deg,
+
+red 50deg,
+
+black 60deg,
+
+red 70deg,
+
+black 80deg,
+
+red 90deg,
+
+black 100deg,
+
+red 110deg,
+
+black 120deg,
+
+red 130deg,
+
+black 140deg,
+
+red 150deg,
+
+black 160deg,
+
+red 170deg,
+
+black 180deg,
+
+red 190deg,
+
+black 200deg,
+
+red 210deg,
+
+black 220deg,
+
+red 230deg,
+
+black 240deg,
+
+red 250deg,
+
+black 260deg,
+
+red 270deg,
+
+black 280deg,
+
+red 290deg,
+
+black 300deg,
+
+red 310deg,
+
+black 320deg,
+
+red 330deg,
+
+black 340deg,
+
+green 360deg
+
+);
+
+
+
+border:
+
+8px solid #d4af37;
+
+
+box-shadow:
+
+
+0 0 40px rgba(255,215,0,.8),
+
+inset 0 0 30px black;
+
+
+
+transition:
+
+transform 6s cubic-bezier(.15,.8,.2,1);
+
+
+
+}
+
+
+
+
+
+.roulette-wheel.spin{
+
+
+transform:
+
+rotate(
+
+2160deg
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+.roulette-number{
+
+display:none;
+
+}
+
+
+
+
+
+
+
+
+.roulette-result{
+
+
+margin:15px;
+
+font-size:22px;
+
+
+}
+
+
+
+
+
+.roulette-bets{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+
+gap:12px;
+
+
+margin:20px 0;
+
+
+}
+
+
+
+
+
+.roulette-bet{
+
+
+padding:16px;
+
+
+border-radius:20px;
+
+
+background:
+
+rgba(255,255,255,.1);
+
+
+color:white;
+
+
+border:
+
+1px solid rgba(255,255,255,.25);
+
+
+
+font-size:16px;
+
+
+transition:.2s;
+
+
+
+}
+
+
+
+.roulette-bet:active{
+
+
+transform:
+
+scale(.9);
+
+
+
+}
+
+
+
+
+
+#rouletteAmount{
+
+
+width:90%;
+
+
+padding:15px;
+
+
+border-radius:20px;
+
+
+background:
+
+rgba(255,255,255,.1);
+
+
+color:white;
+
+
+border:
+
+1px solid rgba(255,255,255,.3);
+
+
+font-size:18px;
+
+
+
+}
