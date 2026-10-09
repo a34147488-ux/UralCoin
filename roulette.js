@@ -1,5 +1,6 @@
 // ===================================
-// URALcoin ROULETTE v2
+// URALcoin ROULETTE v3
+// Wheel numbers + bets
 // ===================================
 
 
@@ -9,52 +10,221 @@ document.addEventListener(
 
 
 
+const wheel =
+
+document.getElementById(
+"rouletteWheel"
+);
+
+
+
+const resultText =
+
+document.getElementById(
+"rouletteResult"
+);
+
+
+
+const timerText =
+
+document.getElementById(
+"rouletteTimer"
+);
+
+
+
+const message =
+
+document.getElementById(
+"rouletteMessage"
+);
+
+
+
+const amountInput =
+
+document.getElementById(
+"rouletteAmount"
+);
+
+
+
+
+
 let selectedBet = null;
 
 
 
 
 
-const buttons =
+// ===============================
+// CREATE NUMBERS
+// ===============================
 
-document.querySelectorAll(
-".roulette-bet"
+
+if(wheel){
+
+
+
+let colors = {
+
+
+
+0:"green",
+
+
+
+1:"red",
+2:"black",
+3:"red",
+4:"black",
+5:"red",
+6:"black",
+7:"red",
+8:"black",
+9:"red",
+10:"black",
+11:"black",
+12:"red",
+13:"black",
+14:"red",
+15:"black",
+16:"red",
+17:"black",
+18:"red",
+19:"red",
+20:"black",
+21:"red",
+22:"black",
+23:"red",
+24:"black",
+25:"red",
+26:"black",
+27:"red",
+28:"black",
+29:"black",
+30:"red",
+31:"black",
+32:"red",
+33:"black",
+34:"red",
+35:"black",
+36:"red"
+
+
+
+};
+
+
+
+
+
+
+for(let i=0;i<=36;i++){
+
+
+
+let n=document.createElement(
+"div"
 );
 
 
 
+n.className=
 
-
-buttons.forEach(btn=>{
-
-
-btn.addEventListener(
-"click",
-()=>{
-
-
-buttons.forEach(b=>{
-
-b.classList.remove("active");
-
-});
+"wheel-number "+colors[i];
 
 
 
-btn.classList.add("active");
+n.innerHTML=i;
 
 
 
-selectedBet =
+let angle =
+
+(i*9.73)-90;
+
+
+
+n.style.transform=
+
+`
+
+rotate(${angle}deg)
+
+translate(125px)
+
+rotate(-${angle}deg)
+
+`;
+
+
+
+wheel.appendChild(n);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// BET BUTTONS
+// ===============================
+
+
+document
+.querySelectorAll(
+".roulette-bet"
+)
+
+.forEach(btn=>{
+
+
+
+btn.onclick=()=>{
+
+
+
+document
+.querySelectorAll(
+".roulette-bet"
+)
+
+.forEach(b=>
+
+b.classList.remove(
+"active"
+)
+
+);
+
+
+
+btn.classList.add(
+"active"
+);
+
+
+
+selectedBet=
 
 btn.dataset.bet;
 
 
 
-console.log(
-"bet selected",
-selectedBet
-);
+};
 
 
 
@@ -62,17 +232,18 @@ selectedBet
 
 
 
-});
 
 
 
 
 
 
+// ===============================
+// SEND BET
+// ===============================
 
 
-
-const betButton =
+let startBtn=
 
 document.getElementById(
 "rouletteStart"
@@ -82,21 +253,19 @@ document.getElementById(
 
 
 
-
-
-if(betButton){
+if(startBtn){
 
 
 
-betButton.addEventListener(
-"click",
+startBtn.onclick=
+
 async()=>{
 
 
 
 
 
-let player =
+let player=
 
 Storage.getPlayer();
 
@@ -105,15 +274,12 @@ Storage.getPlayer();
 
 
 
-let amount =
+let amount=
 
 Number(
-
-document.getElementById(
-"rouletteAmount"
-).value
-
+amountInput.value
 );
+
 
 
 
@@ -123,27 +289,9 @@ document.getElementById(
 if(!selectedBet){
 
 
-alert(
-"Выберите ставку"
-);
+message.innerText=
 
-
-return;
-
-
-}
-
-
-
-
-
-
-if(!amount || amount<=0){
-
-
-alert(
-"Введите сумму"
-);
+"Выберите ставку";
 
 
 return;
@@ -157,11 +305,27 @@ return;
 
 
 
-try{
+if(!amount){
+
+
+message.innerText=
+
+"Введите сумму";
+
+
+return;
+
+
+}
 
 
 
-let response =
+
+
+
+
+
+let response=
 
 await fetch(
 
@@ -182,6 +346,7 @@ headers:{
 
 "application/json"
 
+
 },
 
 
@@ -191,10 +356,10 @@ body:JSON.stringify({
 id:player.id,
 
 
-type:selectedBet,
+amount:amount,
 
 
-amount:amount
+type:selectedBet
 
 
 
@@ -210,7 +375,8 @@ amount:amount
 
 
 
-let data =
+
+let data=
 
 await response.json();
 
@@ -219,32 +385,13 @@ await response.json();
 
 
 
-document.getElementById(
-"rouletteMessage"
-).innerText =
+message.innerText=
 
 data.message;
 
 
 
-}
-
-catch(e){
-
-
-
-console.log(e);
-
-
-
-}
-
-
-
-}
-
-
-);
+};
 
 
 
@@ -258,7 +405,12 @@ console.log(e);
 
 
 
-async function rouletteUpdate(){
+// ===============================
+// STATE
+// ===============================
+
+
+async function update(){
 
 
 
@@ -266,7 +418,7 @@ try{
 
 
 
-let response =
+let response=
 
 await fetch(
 
@@ -278,7 +430,8 @@ CONFIG.API+
 
 
 
-let data =
+
+let data=
 
 await response.json();
 
@@ -287,11 +440,13 @@ await response.json();
 
 
 
-document.getElementById(
-"rouletteTimer"
-).innerText =
+if(timerText)
+
+timerText.innerText=
 
 data.timeLeft;
+
+
 
 
 
@@ -302,42 +457,54 @@ if(data.result!==null){
 
 
 
-let wheel =
-
-document.getElementById(
-"rouletteWheel"
-);
 
 
+let deg=
 
-wheel.style.transform =
+(360*10)
 
-"rotate("+
+-
 
-(
-
-360*8 +
-
-data.result*9.7
-
-)
-
-+"deg)";
+(data.result*9.73);
 
 
 
 
 
 
-document.getElementById(
-"rouletteResult"
-).innerText =
+if(wheel){
+
+
+
+wheel.style.transform=
+
+`
+
+rotate(${deg}deg)
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+if(resultText)
+
+resultText.innerText=
 
 data.result;
 
 
 
 }
+
+
 
 
 
@@ -348,7 +515,8 @@ catch(e){
 
 
 console.log(
-"roulette state error"
+"roulette",
+e
 );
 
 
@@ -366,7 +534,7 @@ console.log(
 
 setInterval(
 
-rouletteUpdate,
+update,
 
 1000
 
@@ -374,9 +542,7 @@ rouletteUpdate,
 
 
 
-
-
-rouletteUpdate();
+update();
 
 
 
