@@ -25,27 +25,7 @@
 <div class="city-bg"></div>
 
 
-<div class="garland">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-</div>
-
-
 <div class="snow"></div>
-
-
-
-
-<!-- Верхний аватар убран -->
-
-<header class="header">
-
-</header>
-
-
 
 
 
@@ -78,7 +58,9 @@ U
 
 
 
+
 <div class="crystals">
+
 
 💎
 
@@ -86,16 +68,15 @@ U
 0
 </span>
 
-<small>
-кристаллы появятся после связки кошельков
-</small>
 
 </div>
 
 
 
 
+
 <div class="click-power">
+
 
 +
 
@@ -106,41 +87,38 @@ U
 за клик
 
 
-<span id="heartPower">
-🫀
-</span>
+<span id="heartPower"></span>
 
 
 </div>
+
+
 
 
 
 <div class="second-power">
 
+
 В секунду:
+
 <b id="secondPower">
 0
 </b>
 
-</div>
-
-
 
 </div>
+
+
+
+
+</div>
+
 
 
 
 
 
 <div class="fire-zone" id="fireZone">
-
-
-<div class="fire-effect" id="fireEffect">
-
-🔥
-
-</div>
-
 
 
 <button id="clickButton" class="main-coin">
@@ -154,20 +132,7 @@ U
 
 
 
-
-
-<div class="year-label">
-
-2026 UralCoin
-
-</div>
-
-
-
 </section>
-
-
-
 
 
 
@@ -189,11 +154,14 @@ U
 <input id="myPromo" readonly>
 
 
+
 <button class="gold-button" id="copyCode">
 
 Скопировать код
 
 </button>
+
+
 
 
 
@@ -206,6 +174,8 @@ U
 </b>
 
 </div>
+
+
 
 
 
@@ -229,7 +199,9 @@ U
 
 
 <h2>
+
 Активировать код
+
 </h2>
 
 
@@ -256,9 +228,6 @@ U
 
 
 
-
-
-
 <section class="page" id="transfer">
 
 
@@ -266,7 +235,9 @@ U
 
 
 <h2>
+
 Переводы
+
 </h2>
 
 
@@ -291,15 +262,6 @@ U
 
 
 </section>
-
-
-
-
-
-
-
-
-
 <section class="page" id="tops">
 
 
@@ -307,8 +269,11 @@ U
 
 
 <h2>
+
 Топ игроков
+
 </h2>
+
 
 
 <div id="topList">
@@ -331,7 +296,6 @@ U
 
 
 
-
 <section class="page" id="more">
 
 
@@ -339,8 +303,11 @@ U
 
 
 <h2>
+
 Ещё
+
 </h2>
+
 
 
 
@@ -351,6 +318,8 @@ target="_blank">
 Подписаться на канал
 
 </a>
+
+
 
 
 
@@ -366,11 +335,15 @@ target="_blank">
 
 
 
+
 <button class="menu-card" id="historyBtn">
 
 История
 
 </button>
+
+
+
 
 
 
@@ -384,8 +357,11 @@ API ключ
 
 
 
+
 <h2>
+
 Улучшения
+
 </h2>
 
 
@@ -398,7 +374,10 @@ API ключ
 
 </div>
 
+
 </section>
+
+
 
 
 
@@ -412,36 +391,59 @@ API ключ
 
 
 
+
+
 <nav class="bottom-nav">
 
 
+
 <button class="nav active" data-page="game">
+
 Главная
+
 </button>
+
+
 
 
 
 <button class="nav" data-page="code">
+
 Код
+
 </button>
+
+
 
 
 
 <button class="nav" data-page="transfer">
+
 Перевод
+
 </button>
+
+
 
 
 
 <button class="nav" data-page="tops">
+
 Топ
+
 </button>
+
+
 
 
 
 <button class="nav" data-page="more">
+
 Ещё
+
 </button>
+
+
 
 
 
@@ -449,7 +451,11 @@ API ключ
 
 
 
+
+
+
 </div>
+
 
 
 
@@ -477,6 +483,31 @@ API ключ
 <script src="top.js"></script>
 
 <script src="effects.js"></script>
+
+
+
+
+
+<script>
+
+
+// защита от увеличения экрана при тапах
+
+document.addEventListener(
+"gesturestart",
+function(e){
+
+e.preventDefault();
+
+}
+);
+
+
+
+</script>
+
+
+
 
 
 </body>
