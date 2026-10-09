@@ -1,71 +1,60 @@
 /* =====================================
-URALcoin STYLE v1
+URALcoin STYLE FINAL
 GLASS BLUE SYSTEM
+PART 1/4
 ===================================== */
 
 
+/* RESET */
+
 *{
-
 box-sizing:border-box;
-
+-webkit-tap-highlight-color:transparent;
 }
 
 
-
-html,body{
-
+html,
+body{
 
 margin:0;
-
-
 padding:0;
 
-
 width:100%;
-
-
 height:100%;
 
-
-font-family:
-
-Arial, sans-serif;
-
+font-family:Arial,sans-serif;
 
 color:white;
 
-
 overflow-x:hidden;
 
+touch-action:manipulation;
 
+-webkit-text-size-adjust:100%;
 
 }
-
-
 
 
 
 body{
 
-
 background:
-
 
 linear-gradient(
 
 180deg,
 
-#001b55,
+#001437,
 
 #003cff,
 
-#00102e
+#00102d
 
 );
 
-
-
 }
+
+
 
 
 
@@ -77,35 +66,24 @@ APP
 
 .app{
 
-
 min-height:100vh;
-
 
 position:relative;
 
-
 overflow:hidden;
-
-
 
 }
 
 
 
 
-
 .content{
-
-
-padding-bottom:120px;
-
 
 position:relative;
 
-
 z-index:5;
 
-
+padding-bottom:120px;
 
 }
 
@@ -115,64 +93,50 @@ z-index:5;
 
 .page{
 
-
 display:none;
 
-
+width:100%;
 
 }
+
 
 
 
 .page.active{
 
-
 display:block;
-
 
 animation:
 
-showPage .35s ease;
-
-
+pageShow .35s ease;
 
 }
 
 
 
-@keyframes showPage{
+
+@keyframes pageShow{
 
 
 from{
 
-
 opacity:0;
 
-
-transform:translateY(20px);
-
-
+transform:translateY(15px);
 
 }
 
 
 to{
 
-
 opacity:1;
-
 
 transform:translateY(0);
 
-
-
 }
 
 
-
 }
-
-
 
 
 
@@ -186,17 +150,13 @@ SNOW
 
 .snow{
 
-
 position:fixed;
-
 
 inset:0;
 
-
 pointer-events:none;
 
-
-z-index:20;
+z-index:50;
 
 
 background-image:
@@ -205,29 +165,25 @@ radial-gradient(
 
 white 2px,
 
-transparent 2px
+transparent 3px
 
 );
 
 
-
 background-size:
 
-70px 70px;
-
+65px 65px;
 
 
 opacity:.35;
-
 
 
 animation:
 
 snowMove 12s linear infinite;
 
-
-
 }
+
 
 
 
@@ -236,31 +192,23 @@ snowMove 12s linear infinite;
 
 from{
 
-
 background-position:
 
 0 0;
 
-
 }
 
 
-
 to{
-
 
 background-position:
 
 0 500px;
 
-
 }
 
 
-
 }
-
-
 
 
 
@@ -277,12 +225,9 @@ GARLAND
 
 position:fixed;
 
-
 top:0;
 
-
 left:0;
-
 
 right:0;
 
@@ -290,18 +235,17 @@ right:0;
 height:45px;
 
 
-z-index:30;
-
-
 display:flex;
-
 
 justify-content:space-around;
 
 
+z-index:60;
+
+
+pointer-events:none;
 
 }
-
 
 
 
@@ -309,10 +253,9 @@ justify-content:space-around;
 .garland span{
 
 
-width:18px;
+width:16px;
 
-
-height:18px;
+height:16px;
 
 
 border-radius:50%;
@@ -323,13 +266,12 @@ background:#00ffff;
 
 box-shadow:
 
-0 0 20px cyan;
+0 0 25px cyan;
 
 
 animation:
 
-light 1.5s infinite alternate;
-
+garlandLight 1.5s infinite alternate;
 
 
 }
@@ -339,109 +281,86 @@ light 1.5s infinite alternate;
 
 .garland span:nth-child(2){
 
-
 background:#ffd700;
-
 
 box-shadow:
 
-0 0 20px gold;
-
+0 0 25px gold;
 
 animation-delay:.3s;
 
-
 }
+
 
 
 
 .garland span:nth-child(3){
 
-
 background:#ff0033;
-
 
 box-shadow:
 
-0 0 20px red;
-
+0 0 25px red;
 
 animation-delay:.6s;
 
-
 }
+
 
 
 
 .garland span:nth-child(4){
 
-
-background:#00ff55;
-
+background:#00ff66;
 
 box-shadow:
 
-0 0 20px lime;
-
+0 0 25px lime;
 
 animation-delay:.9s;
 
-
 }
+
 
 
 
 .garland span:nth-child(5){
 
-
 background:#ff00ff;
-
 
 box-shadow:
 
-0 0 20px magenta;
-
+0 0 25px magenta;
 
 animation-delay:1.2s;
-
 
 }
 
 
 
 
-@keyframes light{
+@keyframes garlandLight{
 
 
 from{
 
-
 transform:scale(.8);
-
 
 opacity:.5;
 
-
 }
-
 
 
 to{
 
-
 transform:scale(1.2);
-
 
 opacity:1;
 
-
 }
 
 
-
 }
-
-
 
 
 
@@ -449,16 +368,12 @@ opacity:1;
 
 
 /* =====================================
-GLASS PANELS
+GLASS SYSTEM
 ===================================== */
 
 
 .panel,
-
-
 .glass-box,
-
-
 .glass-info{
 
 
@@ -474,11 +389,9 @@ padding:20px;
 border-radius:30px;
 
 
-
 background:
 
 rgba(255,255,255,.12);
-
 
 
 border:
@@ -486,40 +399,114 @@ border:
 1px solid rgba(255,255,255,.35);
 
 
-
 backdrop-filter:
 
 blur(20px);
 
 
-
 box-shadow:
-
 
 0 0 35px rgba(0,220,255,.35);
 
 
+position:relative;
+
+
+overflow:hidden;
+
 
 }
+
+
+
+
+.panel:before,
+.glass-box:before,
+.glass-info:before{
+
+
+content:"";
+
+
+position:absolute;
+
+
+top:0;
+
+left:-100%;
+
+
+width:200%;
+
+
+height:2px;
+
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+white,
+
+transparent
+
+);
+
+
+animation:
+
+glassLine 5s infinite;
+
+
+}
+
+
+
+@keyframes glassLine{
+
+
+from{
+
+left:-100%;
+
+}
+
+
+to{
+
+left:100%;
+
+}
+
+
+}
+
+
+
+
 
 
 
 h2{
 
-
 text-align:center;
 
-
 font-size:28px;
-
 
 text-shadow:
 
 0 0 20px cyan;
 
-
-
 }
+
+
+
+
+
 /* =====================================
 BALANCE
 ===================================== */
@@ -528,10 +515,37 @@ BALANCE
 .balance-card{
 
 
+width:92%;
+
+margin:55px auto 20px;
+
+padding:25px;
+
+
+border-radius:30px;
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+backdrop-filter:
+
+blur(20px);
+
+
+box-shadow:
+
+0 0 40px rgba(0,220,255,.35);
+
+
 text-align:center;
-
-
-margin-top:55px;
 
 
 }
@@ -552,22 +566,17 @@ height:70px;
 margin:auto;
 
 
-
 border-radius:50%;
-
 
 
 display:flex;
 
-
 align-items:center;
-
 
 justify-content:center;
 
 
-
-font-size:45px;
+font-size:42px;
 
 
 font-weight:900;
@@ -580,31 +589,24 @@ radial-gradient(
 
 circle,
 
-#fff6a0,
+#fff8a0,
 
 #ffd700,
 
-#b88600
+#9b6500
 
 );
 
 
 
-color:white;
-
-
-
 box-shadow:
 
-
-0 0 40px gold;
-
+0 0 45px gold;
 
 
 animation:
 
 coinPulse 2s infinite;
-
 
 
 }
@@ -623,12 +625,10 @@ transform:scale(1.08);
 
 box-shadow:
 
-0 0 70px gold;
-
+0 0 80px gold;
 
 
 }
-
 
 
 }
@@ -641,7 +641,7 @@ box-shadow:
 .balance-value{
 
 
-font-size:45px;
+font-size:42px;
 
 
 font-weight:900;
@@ -650,9 +650,7 @@ font-weight:900;
 margin:15px;
 
 
-
-color:#fff;
-
+color:white;
 
 
 text-shadow:
@@ -661,9 +659,7 @@ text-shadow:
 0 0 25px cyan;
 
 
-
 }
-
 
 
 
@@ -673,16 +669,11 @@ text-shadow:
 
 display:flex;
 
-
 justify-content:center;
 
-
-gap:15px;
-
+gap:12px;
 
 flex-wrap:wrap;
-
-
 
 }
 
@@ -692,11 +683,10 @@ flex-wrap:wrap;
 .stats div{
 
 
-padding:10px 15px;
+padding:10px 18px;
 
 
 border-radius:20px;
-
 
 
 background:
@@ -704,10 +694,170 @@ background:
 rgba(0,0,0,.25);
 
 
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+font-weight:bold;
+
+
+}
+/* =====================================
+CLICK BUTTON
+PART 2/4
+===================================== */
+
+
+/* главная страница фиксированная */
+
+#home{
+
+height:calc(100vh - 90px);
+
+overflow:hidden!important;
+
+position:relative;
+
+}
+
+
+
+
+
+#home .content{
+
+height:100%;
+
+overflow:hidden;
+
+padding-bottom:0;
+
+}
+
+
+
+
+
+
+/* зона кнопки клика */
+
+.click-zone{
+
+
+position:absolute;
+
+
+left:0;
+
+right:0;
+
+
+top:430px;
+
+
+height:380px;
+
+
+overflow:hidden;
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+z-index:15;
+
+
+pointer-events:none;
+
+
+}
+
+
+
+
+
+
+
+/* сама кнопка */
+
+.big-coin{
+
+
+pointer-events:auto;
+
+
+width:320px;
+
+
+height:320px;
+
+
+
+border-radius:50%;
+
+
 
 border:
 
-1px solid rgba(255,255,255,.3);
+8px solid rgba(255,255,255,.7);
+
+
+
+background:
+
+
+radial-gradient(
+
+circle at 35% 25%,
+
+#fffbd0,
+
+#ffd700 40%,
+
+#ff9900 70%,
+
+#8b5200
+
+);
+
+
+
+font-size:100px;
+
+
+font-weight:900;
+
+
+color:white;
+
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+
+box-shadow:
+
+
+0 0 80px gold,
+
+inset 0 0 50px rgba(255,255,255,.5);
+
+
+
+animation:
+
+coinMove 3s infinite;
 
 
 
@@ -717,8 +867,46 @@ border:
 
 
 
+.big-coin:active{
+
+
+transform:
+
+scale(.92);
+
+
+}
+
+
+
+
+
+@keyframes coinMove{
+
+
+50%{
+
+
+transform:
+
+translateY(-12px);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
 /* =====================================
-NEW ROULETTE
+ROULETTE CARD
 ===================================== */
 
 
@@ -728,10 +916,10 @@ NEW ROULETTE
 width:92%;
 
 
-height:140px;
+height:135px;
 
 
-margin:25px auto;
+margin:20px auto;
 
 
 
@@ -745,22 +933,16 @@ position:relative;
 overflow:hidden;
 
 
-cursor:pointer;
-
-
 
 background:
-
 
 linear-gradient(
 
 135deg,
 
-#800000,
+rgba(255,0,0,.7),
 
-#ff0000,
-
-#660000
+rgba(120,0,0,.8)
 
 );
 
@@ -768,20 +950,20 @@ linear-gradient(
 
 border:
 
-2px solid #ff7777;
+2px solid rgba(255,255,255,.5);
 
 
 
 box-shadow:
 
 
-0 0 40px red;
+0 0 50px red;
 
 
 
 animation:
 
-newPulse 2s infinite;
+rouletteGlow 2s infinite;
 
 
 
@@ -790,7 +972,7 @@ newPulse 2s infinite;
 
 
 
-@keyframes newPulse{
+@keyframes rouletteGlow{
 
 
 50%{
@@ -798,57 +980,10 @@ newPulse 2s infinite;
 
 box-shadow:
 
-
-0 0 80px red;
-
-
-}
-
+0 0 90px red;
 
 
 }
-
-
-
-
-
-
-
-.new{
-
-
-position:absolute;
-
-
-right:15px;
-
-
-top:15px;
-
-
-padding:8px 20px;
-
-
-border-radius:30px;
-
-
-
-background:red;
-
-
-
-font-size:22px;
-
-
-font-weight:900;
-
-
-
-box-shadow:
-
-
-0 0 25px white;
-
 
 
 }
@@ -867,49 +1002,34 @@ position:absolute;
 left:25px;
 
 
-top:30px;
+top:25px;
 
 
+width:80px;
 
-width:75px;
 
-
-height:75px;
-
+height:80px;
 
 
 border-radius:50%;
 
 
 
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-
-font-weight:900;
-
-
-
 background:
 
-
 conic-gradient(
-
-red,
-
-black,
 
 green,
 
 red,
 
-black
+black,
+
+red,
+
+black,
+
+green
 
 );
 
@@ -923,14 +1043,13 @@ border:
 
 box-shadow:
 
-
-0 0 30px gold;
+0 0 35px gold;
 
 
 
 animation:
 
-rotateWheel 5s linear infinite;
+spinMini 5s linear infinite;
 
 
 
@@ -938,20 +1057,20 @@ rotateWheel 5s linear infinite;
 
 
 
-@keyframes rotateWheel{
+
+
+@keyframes spinMini{
 
 
 to{
 
-
 transform:rotate(360deg);
 
-
 }
 
 
-
 }
+
 
 
 
@@ -964,27 +1083,26 @@ transform:rotate(360deg);
 position:absolute;
 
 
-bottom:20px;
+left:125px;
 
 
-left:120px;
+bottom:25px;
 
 
+font-size:26px;
 
-font-size:28px;
+
+margin:0;
 
 
 color:white;
-
 
 
 text-shadow:
 
-
 0 0 20px white;
 
 
-
 }
 
 
@@ -994,237 +1112,42 @@ text-shadow:
 
 
 /* =====================================
-BIG CLICK BUTTON
+ROULETTE MAIN
 ===================================== */
 
-
-.click-zone{
-
-
-height:230px;
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:flex-end;
-
-
-overflow:hidden;
-
-
-
-}
-
-
-
-
-.big-coin{
-
-
-width:360px;
-
-
-height:360px;
-
-
-
-margin-bottom:-190px;
-
-
-
-border-radius:50%;
-
-
-
-border:
-
-10px solid gold;
-
-
-
-background:
-
-
-radial-gradient(
-
-circle,
-
-#ffe88a,
-
-#d49b00,
-
-#7a5200
-
-);
-
-
-
-font-size:120px;
-
-
-
-font-weight:900;
-
-
-color:white;
-
-
-
-box-shadow:
-
-
-0 0 60px gold;
-
-
-
-cursor:pointer;
-
-
-
-animation:
-
-coinFloat 3s infinite;
-
-
-
-}
-
-
-
-
-.big-coin:active{
-
-
-transform:scale(.92);
-
-
-
-}
-
-
-
-
-@keyframes coinFloat{
-
-
-50%{
-
-
-transform:translateY(-15px);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-/* =====================================
-GLASS BUTTON
-===================================== */
-
-
-.glass-button{
-
-
-width:90%;
-
-
-margin:15px auto;
-
-
-height:60px;
-
-
-
-display:block;
-
-
-
-border-radius:25px;
-
-
-
-border:
-
-1px solid rgba(255,255,255,.5);
-
-
-
-background:
-
-
-rgba(255,255,255,.15);
-
-
-
-color:white;
-
-
-
-font-size:20px;
-
-
-font-weight:900;
-
-
-
-backdrop-filter:
-
-blur(15px);
-
-
-
-box-shadow:
-
-
-0 0 30px cyan;
-
-
-
-transition:.3s;
-
-
-
-}
-
-
-
-
-.glass-button:active{
-
-
-transform:scale(.95);
-
-
-box-shadow:
-
-
-0 0 50px white;
-
-
-
-}
-/* =====================================
-ROULETTE
-===================================== */
 
 
 .roulette-panel{
 
 
-text-align:center;
+width:92%;
+
+
+margin:auto;
+
+
+padding:20px;
+
+
+border-radius:30px;
+
+
+background:
+
+rgba(255,255,255,.12);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+
+backdrop-filter:
+
+blur(20px);
+
 
 
 }
@@ -1255,14 +1178,10 @@ align-items:center;
 justify-content:center;
 
 
-
 position:relative;
 
 
-
 }
-
-
 
 
 
@@ -1277,7 +1196,6 @@ width:300px;
 height:300px;
 
 
-
 border-radius:50%;
 
 
@@ -1288,7 +1206,7 @@ position:relative;
 
 border:
 
-12px solid #ffd700;
+12px solid gold;
 
 
 
@@ -1374,8 +1292,7 @@ black 350deg 360deg
 
 box-shadow:
 
-
-0 0 60px gold;
+0 0 70px gold;
 
 
 
@@ -1384,8 +1301,9 @@ transition:
 transform 6s cubic-bezier(.12,.8,.25,1);
 
 
-
 }
+
+
 
 
 
@@ -1413,10 +1331,10 @@ translate(-50%,-50%);
 
 
 
-width:70px;
+width:75px;
 
 
-height:70px;
+height:75px;
 
 
 
@@ -1430,7 +1348,7 @@ radial-gradient(
 
 circle,
 
-#fff,
+white,
 
 gold,
 
@@ -1442,12 +1360,11 @@ gold,
 
 border:
 
-4px solid white;
+5px solid white;
 
 
 
 box-shadow:
-
 
 0 0 35px gold;
 
@@ -1461,11 +1378,9 @@ box-shadow:
 
 
 
-
 /* =====================================
-NUMBERS ON WHEEL
+NUMBERS
 ===================================== */
-
 
 
 .wheel-number{
@@ -1503,10 +1418,10 @@ justify-content:center;
 
 
 
-font-weight:900;
-
-
 font-size:14px;
+
+
+font-weight:900;
 
 
 
@@ -1519,12 +1434,11 @@ border:
 2px solid white;
 
 
-
-z-index:5;
-
+z-index:10;
 
 
 }
+
 
 
 
@@ -1532,16 +1446,16 @@ z-index:5;
 .wheel-number.red{
 
 
-background:#d00000;
+background:#c00000;
 
 
 box-shadow:
 
-0 0 15px red;
-
+0 0 20px red;
 
 
 }
+
 
 
 
@@ -1550,12 +1464,6 @@ box-shadow:
 
 
 background:#050505;
-
-
-box-shadow:
-
-0 0 15px black;
-
 
 
 }
@@ -1575,11 +1483,7 @@ box-shadow:
 0 0 20px lime;
 
 
-
 }
-
-
-
 
 
 
@@ -1588,36 +1492,36 @@ box-shadow:
 .wheel-number.selected{
 
 
-transform:scale(1.25);
+transform:
+
+scale(1.3);
 
 
 
 box-shadow:
 
-
-0 0 35px gold;
-
+0 0 40px gold;
 
 
 }
-
-
-
-
-
-
-
-
 /* =====================================
 BET BUTTONS
+PART 3/4
 ===================================== */
+
 
 
 .bets{
 
 
-display:grid;
+width:92%;
 
+
+margin:20px auto;
+
+
+
+display:grid;
 
 
 grid-template-columns:
@@ -1629,13 +1533,8 @@ repeat(2,1fr);
 gap:12px;
 
 
-margin:20px 0;
-
-
 
 }
-
-
 
 
 
@@ -1643,17 +1542,10 @@ margin:20px 0;
 .bets button{
 
 
-height:55px;
+height:58px;
 
 
-
-border-radius:22px;
-
-
-
-background:
-
-rgba(255,255,255,.15);
+border-radius:25px;
 
 
 
@@ -1663,11 +1555,17 @@ border:
 
 
 
+background:
+
+rgba(255,255,255,.15);
+
+
+
 color:white;
 
 
 
-font-size:17px;
+font-size:18px;
 
 
 font-weight:900;
@@ -1676,14 +1574,13 @@ font-weight:900;
 
 backdrop-filter:
 
-blur(15px);
+blur(20px);
 
 
 
 box-shadow:
 
-
-0 0 20px cyan;
+0 0 25px cyan;
 
 
 
@@ -1692,11 +1589,11 @@ box-shadow:
 
 
 
+
 .bets button.active{
 
 
 background:
-
 
 linear-gradient(
 
@@ -1714,7 +1611,13 @@ color:black;
 
 
 
+box-shadow:
+
+0 0 40px gold;
+
+
 }
+
 
 
 
@@ -1731,22 +1634,14 @@ width:90%;
 height:55px;
 
 
-
 margin:15px auto;
-
 
 
 display:block;
 
 
 
-border-radius:20px;
-
-
-
-background:
-
-rgba(0,0,0,.4);
+border-radius:22px;
 
 
 
@@ -1756,19 +1651,25 @@ border:
 
 
 
+background:
+
+rgba(0,0,0,.35);
+
+
+
 color:white;
-
-
-
-text-align:center;
 
 
 
 font-size:20px;
 
 
+text-align:center;
+
 
 }
+
+
 
 
 
@@ -1781,29 +1682,40 @@ NUMBER SELECT
 ===================================== */
 
 
+
 .number-area{
 
 
-margin-top:30px;
+width:92%;
 
 
-padding:15px;
+margin:20px auto;
 
 
 
-border-radius:25px;
+padding:20px;
+
+
+
+border-radius:30px;
 
 
 
 background:
 
-rgba(255,255,255,.1);
+rgba(255,255,255,.12);
 
 
 
 border:
 
 1px solid rgba(255,255,255,.4);
+
+
+
+backdrop-filter:
+
+blur(20px);
 
 
 
@@ -1826,14 +1738,11 @@ repeat(6,1fr);
 
 
 
-gap:8px;
+gap:10px;
 
 
 
 }
-
-
-
 
 
 
@@ -1845,18 +1754,13 @@ gap:8px;
 height:45px;
 
 
-
 border-radius:50%;
 
 
 
 border:
 
-1px solid white;
-
-
-
-font-weight:900;
+2px solid white;
 
 
 
@@ -1864,11 +1768,22 @@ color:white;
 
 
 
+font-weight:900;
+
+
+
 background:#111;
 
 
 
+box-shadow:
+
+0 0 15px rgba(255,255,255,.5);
+
+
+
 }
+
 
 
 
@@ -1880,6 +1795,7 @@ background:#b00000;
 
 
 }
+
 
 
 
@@ -1906,23 +1822,21 @@ background:#008000;
 
 
 
-#rouletteResult{
+
+.roulette-numbers button:active{
 
 
-font-size:25px;
-
-
-margin:20px;
-
-
-
-color:#ffd700;
-
+transform:scale(.9);
 
 
 }
+
+
+
+
+
 /* =====================================
-TOP PLAYERS
+TOP LIST
 ===================================== */
 
 
@@ -1933,7 +1847,6 @@ width:92%;
 
 
 margin:auto;
-
 
 
 }
@@ -1951,14 +1864,16 @@ position:relative;
 display:flex;
 
 
+
 align-items:center;
+
 
 
 gap:15px;
 
 
 
-padding:15px;
+padding:18px;
 
 
 
@@ -1978,13 +1893,17 @@ rgba(255,255,255,.12);
 
 border:
 
-1px solid rgba(255,255,255,.35);
+1px solid rgba(255,255,255,.4);
 
 
 
 backdrop-filter:
 
 blur(20px);
+
+
+
+transition:.3s;
 
 
 
@@ -1996,14 +1915,13 @@ blur(20px);
 .top-player img{
 
 
-width:55px;
+width:60px;
 
 
-height:55px;
+height:60px;
 
 
 border-radius:50%;
-
 
 
 border:
@@ -2011,13 +1929,13 @@ border:
 2px solid white;
 
 
-
 }
 
 
 
 
-/* 1 место */
+
+/* первое место */
 
 
 .top-player:nth-child(1){
@@ -2031,18 +1949,17 @@ border:
 
 box-shadow:
 
-
-0 0 45px gold;
+0 0 60px gold;
 
 
 
 animation:
 
-goldPlace 2s infinite;
-
+goldRank 2s infinite;
 
 
 }
+
 
 
 
@@ -2056,14 +1973,22 @@ content:"👑";
 position:absolute;
 
 
+
 right:20px;
 
 
-top:-15px;
+
+top:-18px;
+
 
 
 font-size:35px;
 
+
+
+filter:
+
+drop-shadow(0 0 15px gold);
 
 
 }
@@ -2073,7 +1998,7 @@ font-size:35px;
 
 
 
-@keyframes goldPlace{
+@keyframes goldRank{
 
 
 50%{
@@ -2081,7 +2006,7 @@ font-size:35px;
 
 box-shadow:
 
-0 0 80px gold;
+0 0 100px gold;
 
 
 }
@@ -2097,11 +2022,10 @@ box-shadow:
 
 
 
-/* 2 место */
+/* второе место */
 
 
 .top-player:nth-child(2){
-
 
 
 border:
@@ -2112,9 +2036,7 @@ border:
 
 box-shadow:
 
-
-0 0 40px red;
-
+0 0 55px red;
 
 
 }
@@ -2138,8 +2060,13 @@ right:20px;
 top:-15px;
 
 
-font-size:30px;
+font-size:32px;
 
+
+
+filter:
+
+drop-shadow(0 0 15px red);
 
 
 }
@@ -2150,7 +2077,9 @@ font-size:30px;
 
 
 
-/* 3 место */
+
+
+/* третье место */
 
 
 .top-player:nth-child(3){
@@ -2164,13 +2093,10 @@ border:
 
 box-shadow:
 
-
-0 0 40px lime;
-
+0 0 55px lime;
 
 
 }
-
 
 
 
@@ -2190,8 +2116,13 @@ right:20px;
 top:-15px;
 
 
-font-size:30px;
+font-size:32px;
 
+
+
+filter:
+
+drop-shadow(0 0 15px lime);
 
 
 }
@@ -2208,6 +2139,7 @@ UPGRADES
 ===================================== */
 
 
+
 .upgrade-card{
 
 
@@ -2218,7 +2150,7 @@ margin:18px auto;
 
 
 
-padding:20px;
+padding:22px;
 
 
 
@@ -2234,7 +2166,7 @@ rgba(255,255,255,.12);
 
 border:
 
-2px solid;
+2px solid white;
 
 
 
@@ -2244,24 +2176,7 @@ blur(20px);
 
 
 
-transition:.3s;
-
-
-
 }
-
-
-
-.upgrade-card:hover{
-
-
-transform:translateY(-5px);
-
-
-
-}
-
-
 
 
 
@@ -2269,6 +2184,7 @@ transform:translateY(-5px);
 
 
 width:100%;
+
 
 
 height:55px;
@@ -2283,15 +2199,15 @@ border-radius:25px;
 
 
 
-border:
-
-1px solid white;
-
-
-
 background:
 
 rgba(255,255,255,.2);
+
+
+
+border:
+
+1px solid white;
 
 
 
@@ -2312,22 +2228,19 @@ font-weight:900;
 
 
 
-
-
 /* ГОРОДА */
+
 
 
 .city-ekaterinburg{
 
 
-border-color:#00eaff;
+border-color:#00ffff;
 
 
 box-shadow:
 
-
-0 0 45px #00eaff;
-
+0 0 45px cyan;
 
 
 }
@@ -2342,9 +2255,7 @@ border-color:#ff6600;
 
 box-shadow:
 
-
-0 0 45px #ff6600;
-
+0 0 45px orange;
 
 
 }
@@ -2352,17 +2263,16 @@ box-shadow:
 
 
 
+
 .city-rezh{
 
 
-border-color:#c000ff;
+border-color:#cc00ff;
 
 
 box-shadow:
 
-
-0 0 45px #c000ff;
-
+0 0 45px purple;
 
 
 }
@@ -2379,9 +2289,7 @@ border-color:#ff0033;
 
 box-shadow:
 
-
-0 0 45px #ff0033;
-
+0 0 45px red;
 
 
 }
@@ -2398,9 +2306,7 @@ border-color:#ffd700;
 
 box-shadow:
 
-
 0 0 55px gold;
-
 
 
 }
@@ -2414,7 +2320,7 @@ box-shadow:
 
 
 /* =====================================
-CHIP
+CHIP AUTO INCOME
 ===================================== */
 
 
@@ -2427,7 +2333,8 @@ width:92%;
 margin:15px auto;
 
 
-padding:20px;
+
+padding:22px;
 
 
 
@@ -2449,9 +2356,13 @@ border:
 
 box-shadow:
 
+0 0 40px cyan;
 
-0 0 35px cyan;
 
+
+backdrop-filter:
+
+blur(20px);
 
 
 }
@@ -2459,17 +2370,14 @@ box-shadow:
 
 
 
+
 .chip-card h3{
 
 
+font-size:25px;
+
+
 margin:0;
-
-
-font-size:24px;
-
-
-color:white;
-
 
 
 }
@@ -2481,10 +2389,11 @@ color:white;
 .chip-income{
 
 
+font-size:20px;
+
+
 color:#00ffff;
 
-
-font-size:20px;
 
 
 }
@@ -2492,18 +2401,17 @@ font-size:20px;
 
 
 
-
 .chip-card button{
-
-
-margin-top:15px;
-
 
 
 width:100%;
 
 
 height:55px;
+
+
+
+margin-top:15px;
 
 
 
@@ -2541,26 +2449,14 @@ font-weight:900;
 
 
 }
-
-
-
-
-
-
-
-
-
 /* =====================================
 API + HISTORY + CHANNEL
+PART 4/4
 ===================================== */
 
 
 
 .channel-card{
-
-
-display:block;
-
 
 
 width:92%;
@@ -2569,16 +2465,15 @@ width:92%;
 margin:20px auto;
 
 
-
 padding:25px;
 
 
 
-text-align:center;
-
-
-
 border-radius:35px;
+
+
+
+text-align:center;
 
 
 
@@ -2591,6 +2486,7 @@ color:white;
 
 
 font-size:22px;
+
 
 
 font-weight:900;
@@ -2609,16 +2505,15 @@ border:
 
 
 
-box-shadow:
-
-
-0 0 50px gold;
-
-
-
 backdrop-filter:
 
 blur(20px);
+
+
+
+box-shadow:
+
+0 0 55px gold;
 
 
 
@@ -2627,20 +2522,20 @@ blur(20px);
 
 
 
-
-
-
 .crown-wheel{
 
 
-font-size:35px;
+font-size:40px;
+
 
 
 color:gold;
 
 
 
-margin-bottom:15px;
+text-shadow:
+
+0 0 30px gold;
 
 
 
@@ -2649,10 +2544,7 @@ animation:
 crownGlow 2s infinite;
 
 
-
 }
-
-
 
 
 
@@ -2661,20 +2553,14 @@ crownGlow 2s infinite;
 
 50%{
 
-
 text-shadow:
 
-0 0 40px gold;
-
-
+0 0 60px gold;
 
 }
 
 
-
 }
-
-
 
 
 
@@ -2683,10 +2569,15 @@ text-shadow:
 .history-box{
 
 
-margin-top:25px;
+width:92%;
+
+
+margin:20px auto;
+
 
 
 padding:20px;
+
 
 
 border-radius:30px;
@@ -2705,108 +2596,54 @@ border:
 
 
 
+backdrop-filter:
+
+blur(20px);
+
+
 }
+
+
+
+
+
+
+
 /* =====================================
-BOTTOM NAV
+GLASS BUTTONS
 ===================================== */
 
 
-.bottom-nav{
+
+.glass-button{
 
 
-position:fixed;
+width:90%;
 
 
-
-left:4%;
-
-
-bottom:15px;
+height:60px;
 
 
 
-width:92%;
+margin:15px auto;
 
 
 
-height:75px;
+display:block;
 
 
 
-border-radius:40px;
-
-
-
-display:flex;
-
-
-
-justify-content:space-around;
-
-
-align-items:center;
-
-
-
-background:
-
-
-rgba(0,0,0,.45);
+border-radius:25px;
 
 
 
 border:
 
-1px solid rgba(255,255,255,.4);
-
-
-
-backdrop-filter:
-
-blur(25px);
-
-
-
-box-shadow:
-
-
-0 0 40px cyan;
-
-
-
-z-index:100;
-
-
-
-}
-
-
-
-
-
-
-.nav{
-
-
-width:58px;
-
-
-height:58px;
-
-
-
-border-radius:50%;
-
-
-
-border:
-
-1px solid rgba(255,255,255,.5);
+1px solid rgba(255,255,255,.6);
 
 
 
 background:
-
 
 rgba(255,255,255,.15);
 
@@ -2816,39 +2653,23 @@ color:white;
 
 
 
-font-size:12px;
+font-size:20px;
+
 
 
 font-weight:900;
 
 
 
-}
+backdrop-filter:
 
-
-
-.nav.active{
-
-
-background:
-
-
-linear-gradient(
-
-135deg,
-
-cyan,
-
-blue
-
-);
+blur(20px);
 
 
 
 box-shadow:
 
-
-0 0 35px cyan;
+0 0 30px cyan;
 
 
 
@@ -2857,6 +2678,16 @@ box-shadow:
 
 
 
+
+.glass-button:active{
+
+
+transform:
+
+scale(.94);
+
+
+}
 
 
 
@@ -2890,16 +2721,15 @@ border-radius:22px;
 
 
 
+background:
+
+rgba(0,0,0,.35);
+
+
+
 border:
 
 1px solid rgba(255,255,255,.5);
-
-
-
-background:
-
-
-rgba(0,0,0,.35);
 
 
 
@@ -2931,86 +2761,148 @@ blur(15px);
 
 
 
-
-
-
 /* =====================================
-GLASS SHINE
+BOTTOM MENU
 ===================================== */
 
 
-.panel,
 
-.glass-box,
-
-.upgrade-card,
-
-.chip-card,
+.bottom-nav{
 
 
-.new-card,
-
-.channel-card{
-
-
-overflow:hidden;
+position:fixed;
 
 
 
-}
+left:4%;
 
 
 
-.panel:before,
-
-.glass-box:before,
-
-.upgrade-card:before,
-
-
-.chip-card:before{
-
-
-content:"";
-
-
-position:absolute;
-
-
-width:200%;
-
-
-height:2px;
+bottom:15px;
 
 
 
-top:0;
+width:92%;
 
 
-left:-100%;
+
+height:75px;
+
+
+
+border-radius:40px;
+
+
+
+display:flex;
+
+
+
+align-items:center;
+
+
+
+justify-content:space-around;
 
 
 
 background:
 
+rgba(0,0,0,.45);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.4);
+
+
+
+backdrop-filter:
+
+blur(25px);
+
+
+
+box-shadow:
+
+0 0 45px cyan;
+
+
+
+z-index:99999;
+
+
+
+}
+
+
+
+
+
+.nav{
+
+
+width:58px;
+
+
+height:58px;
+
+
+
+border-radius:50%;
+
+
+
+border:
+
+1px solid rgba(255,255,255,.5);
+
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+
+color:white;
+
+
+
+font-size:12px;
+
+
+
+font-weight:900;
+
+
+
+}
+
+
+
+
+.nav.active{
+
+
+background:
 
 linear-gradient(
 
-90deg,
+135deg,
 
-transparent,
+cyan,
 
-white,
-
-transparent
+blue
 
 );
 
 
 
-animation:
+box-shadow:
 
-shine 4s infinite;
+0 0 40px cyan;
 
 
 
@@ -3020,26 +2912,83 @@ shine 4s infinite;
 
 
 
-@keyframes shine{
 
 
-from{
+/* =====================================
+NO ZOOM
+===================================== */
 
 
-left:-100%;
+button,
+input,
+textarea,
+select{
+
+
+touch-action:manipulation;
+
+
+
+font-size:16px;
 
 
 }
 
 
 
-to{
+
+html,
+body{
 
 
-left:100%;
+touch-action:manipulation;
+
+
+-webkit-text-size-adjust:100%;
 
 
 }
+
+
+
+
+
+
+/* =====================================
+OTHER PAGES SCROLL
+===================================== */
+
+
+
+.page:not(#home){
+
+
+overflow-y:auto;
+
+
+
+min-height:100vh;
+
+
+
+height:auto;
+
+
+
+}
+
+
+
+
+
+.page:not(#home) .content{
+
+
+height:auto;
+
+
+
+overflow-y:auto;
 
 
 
@@ -3062,32 +3011,22 @@ MOBILE
 
 
 
-
-
 .balance-value{
 
-
 font-size:35px;
-
 
 }
 
 
 
 
-
 .coin-icon{
-
 
 width:60px;
 
-
 height:60px;
 
-
-font-size:38px;
-
-
+font-size:36px;
 
 }
 
@@ -3104,17 +3043,10 @@ width:300px;
 height:300px;
 
 
-font-size:90px;
-
-
-
-margin-bottom:-160px;
-
+font-size:85px;
 
 
 }
-
-
 
 
 
@@ -3122,51 +3054,10 @@ margin-bottom:-160px;
 .click-zone{
 
 
-height:190px;
+top:400px;
 
 
-}
-
-
-
-
-
-
-.new-card{
-
-
-height:120px;
-
-
-}
-
-
-
-
-
-.new-card h2{
-
-
-font-size:22px;
-
-
-left:100px;
-
-
-
-}
-
-
-
-
-
-.mini-wheel{
-
-
-width:65px;
-
-
-height:65px;
+height:350px;
 
 
 }
@@ -3184,8 +3075,8 @@ width:280px;
 height:280px;
 
 
-
 }
+
 
 
 
@@ -3199,9 +3090,7 @@ width:250px;
 height:250px;
 
 
-
 }
-
 
 
 
@@ -3213,7 +3102,6 @@ height:250px;
 grid-template-columns:
 
 repeat(5,1fr);
-
 
 
 }
@@ -3251,6 +3139,7 @@ font-size:10px;
 
 
 
+
 }
 
 
@@ -3258,10 +3147,8 @@ font-size:10px;
 
 
 
-
-
 /* =====================================
-SMOOTH EFFECTS
+FINAL BUTTON EFFECTS
 ===================================== */
 
 
@@ -3269,6 +3156,7 @@ button{
 
 
 cursor:pointer;
+
 
 
 transition:.25s;
@@ -3279,15 +3167,16 @@ transition:.25s;
 
 
 
+
 button:active{
 
 
-transform:scale(.93);
+transform:
+
+scale(.93);
 
 
 }
-
-
 
 
 
@@ -3312,646 +3201,12 @@ border:none;
 height:1px;
 
 
-
 background:
 
 rgba(255,255,255,.3);
 
 
-
 margin:25px 0;
 
 
-
 }
-/* =====================================
-CLICK BUTTON FIX
-===================================== */
-
-
-html,
-body{
-
-overflow:hidden;
-
-height:100%;
-
-}
-
-
-
-.content{
-
-height:100vh;
-
-overflow:hidden;
-
-}
-
-
-
-
-.click-zone{
-
-
-position:absolute;
-
-
-bottom:-170px;
-
-
-left:0;
-
-
-right:0;
-
-
-
-height:380px;
-
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-
-z-index:10;
-
-
-
-pointer-events:none;
-
-
-}
-
-
-
-
-.big-coin{
-
-
-pointer-events:auto;
-
-
-
-width:420px;
-
-
-height:420px;
-
-
-
-border-radius:50%;
-
-
-
-font-size:130px;
-
-
-
-border:
-
-12px solid gold;
-
-
-
-margin:0;
-
-
-
-background:
-
-radial-gradient(
-
-circle,
-
-#fff5a0,
-
-#ffd000,
-
-#8b6200
-
-);
-
-
-
-box-shadow:
-
-
-0 0 80px gold;
-
-
-
-}
-
-
-
-
-
-.big-coin:active{
-
-
-transform:
-
-scale(.92);
-
-
-
-}
-/* =================================
-MAIN PAGE FIX
-================================= */
-
-
-/* только главная без скролла */
-
-.page#home,
-#home{
-
-height:
-
-calc(100vh - 90px);
-
-overflow:hidden;
-
-position:relative;
-
-}
-
-
-
-
-/* контейнер главной */
-
-#home .content{
-
-overflow:hidden;
-
-height:100%;
-
-padding-bottom:0;
-
-}
-
-
-
-
-
-
-
-/* большая кнопка клика */
-
-.click-button{
-
-
-position:absolute;
-
-
-left:50%;
-
-
-bottom:-260px;
-
-
-
-transform:translateX(-50%);
-
-
-
-width:520px;
-
-
-height:520px;
-
-
-
-border-radius:50%;
-
-
-
-background:
-
-radial-gradient(
-
-circle,
-
-#ffe800,
-
-#ffb300 45%,
-
-#ff6600
-
-);
-
-
-
-box-shadow:
-
-0 0 80px gold,
-
-inset 0 0 50px white;
-
-
-
-border:
-
-8px solid rgba(255,255,255,.5);
-
-
-
-z-index:5;
-
-
-
-}
-
-
-
-
-
-
-/* скрываем низ кнопки */
-
-#home{
-
-overflow:hidden!important;
-
-}
-
-
-
-
-
-
-/* меню поверх кнопки */
-
-.bottom-nav{
-
-z-index:9999!important;
-
-}
-
-
-
-
-
-
-/* остальные страницы скроллятся */
-
-
-.page:not(#home){
-
-overflow-y:auto;
-
-height:auto;
-
-min-height:100vh;
-
-}
-
-
-
-
-.page:not(#home) .content{
-
-overflow-y:auto;
-
-height:auto;
-
-}
-/* ===============================
-FIX CLICK BUTTON CUT
-=============================== */
-
-
-#home{
-
-position:relative;
-
-height:100vh;
-
-overflow:hidden!important;
-
-}
-
-
-
-
-.click-area{
-
-position:absolute;
-
-left:0;
-
-bottom:0;
-
-width:100%;
-
-height:420px;
-
-overflow:hidden;
-
-z-index:5;
-
-pointer-events:none;
-
-}
-
-
-
-
-.click-button{
-
-pointer-events:auto;
-
-
-position:absolute;
-
-
-left:50%;
-
-top:120px;
-
-
-transform:translateX(-50%);
-
-
-
-width:520px;
-
-height:520px;
-
-
-border-radius:50%;
-
-
-
-background:
-
-radial-gradient(
-
-circle at 40% 30%,
-
-#fff36b,
-
-#ffc400 35%,
-
-#d88900 70%,
-
-#8b5200
-
-);
-
-
-
-border:
-
-10px solid rgba(255,215,0,.9);
-
-
-
-box-shadow:
-
-0 0 80px gold,
-
-inset 0 0 80px rgba(255,255,255,.5);
-
-
-
-z-index:5;
-
-}
-
-
-
-
-/* меню полностью закрывает кнопку */
-
-
-.bottom-nav{
-
-position:fixed!important;
-
-bottom:15px;
-
-left:4%;
-
-width:92%;
-
-z-index:99999!important;
-
-
-}
-/* =================================
-NEW CLICK BUTTON POSITION
-PASTE AT END
-================================= */
-
-
-#home{
-    overflow:hidden!important;
-    height:100vh!important;
-    position:relative;
-}
-
-
-
-/* зона кнопки под рулеткой */
-
-.click-area{
-
-    position:absolute;
-
-    left:0;
-    right:0;
-
-    top:430px;
-
-    height:380px;
-
-    overflow:hidden;
-
-    z-index:10;
-
-}
-
-
-
-
-/* сама кнопка клика */
-
-.click-button{
-
-    position:absolute;
-
-    left:50%;
-
-    top:40px;
-
-    transform:translateX(-50%);
-
-
-    width:320px;
-
-    height:320px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-    radial-gradient(
-    circle at 35% 30%,
-    #fffbd0,
-    #ffd700 35%,
-    #ff9800 70%,
-    #9b5600
-    );
-
-
-    border:
-
-    8px solid rgba(255,255,255,.7);
-
-
-    box-shadow:
-
-    0 0 70px gold,
-    inset 0 0 50px rgba(255,255,255,.6);
-
-
-    color:white;
-
-    font-size:90px;
-
-    font-weight:900;
-
-
-}
-
-
-
-
-.click-button:active{
-
-    transform:
-
-    translateX(-50%)
-
-    scale(.94);
-
-}
-
-
-
-/* нижнее меню поверх */
-
-.bottom-nav{
-
-    z-index:99999!important;
-
-}
-/* =================================
-FORCE CLICK BUTTON FIX
-================================= */
-
-
-/* ловим любой вариант кнопки клика */
-
-#clickButton,
-.click-button,
-.coin-button,
-.main-click,
-#coinButton{
-
-
-position:absolute!important;
-
-
-left:50%!important;
-
-
-top:60px!important;
-
-
-transform:translateX(-50%)!important;
-
-
-
-width:320px!important;
-
-
-height:320px!important;
-
-
-border-radius:50%!important;
-
-
-
-background:
-
-radial-gradient(
-
-circle at 35% 30%,
-
-#fff8a0,
-
-#ffd700 40%,
-
-#ff9900 75%,
-
-#8b4500
-
-)!important;
-
-
-
-border:
-
-8px solid rgba(255,255,255,.7)!important;
-
-
-
-box-shadow:
-
-0 0 70px gold,
-
-inset 0 0 50px white!important;
-
-
-
-font-size:90px!important;
-
-
-z-index:50!important;
-
-
-}
-
-
-
-
-/* главная без прокрутки */
-
-#home,
-.page.active{
-
-overflow:hidden;
-
-}
-
-
-
-
-.bottom-nav{
-
-z-index:999999!important;
-
-}
-
-
-
