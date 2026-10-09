@@ -1,31 +1,35 @@
-// =================================
-// URALcoin TOP v14
-// SERVER TOP FIX
-// =================================
-
+// ===================================
+// URALcoin TOP v15.5
+// Players Rating
+// ===================================
 
 
 async function loadTop(){
 
 
-const box =
-
-document.getElementById(
+const list = document.getElementById(
 "topList"
 );
 
 
 
-if(!box)
+if(!list){
 
 return;
+
+}
+
+
+
+
+list.innerHTML =
+"Загрузка...";
 
 
 
 
 
 try{
-
 
 
 let response = await fetch(
@@ -36,19 +40,13 @@ CONFIG.API_URL + "/top"
 
 
 
-
-
 let data = await response.json();
 
 
 
 
 
-
-let players =
-
-data.players || [];
-
+let players = data.players || data || [];
 
 
 
@@ -58,16 +56,9 @@ data.players || [];
 if(!players.length){
 
 
+list.innerHTML =
+"Игроков пока нет";
 
-box.innerHTML = `
-
-<div class="top-card">
-
-Игроков пока нет
-
-</div>
-
-`;
 
 return;
 
@@ -79,9 +70,7 @@ return;
 
 
 
-
-box.innerHTML="";
-
+list.innerHTML = "";
 
 
 
@@ -91,7 +80,30 @@ players.forEach((player,index)=>{
 
 
 
-let avatar = "";
+let card = document.createElement(
+"div"
+);
+
+
+
+card.className =
+"top-player";
+
+
+
+
+
+let avatar = player.photo
+
+?
+
+`<img src="${player.photo}">`
+
+:
+
+`<div class="top-avatar-letter">
+${(player.name || "U").charAt(0)}
+</div>`;
 
 
 
@@ -99,93 +111,30 @@ let avatar = "";
 
 
 
-if(player.photo){
-
-
-avatar = `
-
-<img class="top-avatar-img"
-
-src="${player.photo}">
-
-`;
-
-
-}
-
-else{
-
-
-
-avatar = `
-
-<div class="top-avatar">
-
-${
-
-(player.name || "U")
-
-.charAt(0)
-
-.toUpperCase()
-
-}
-
-</div>
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-box.innerHTML += `
-
-
-<div class="top-card">
-
-
-
-<div class="place">
-
-#${index+1}
-
-</div>
-
-
+card.innerHTML = `
 
 
 ${avatar}
 
 
-
-
 <div class="top-info">
 
 
-<b>
+<div class="top-name">
+
+#${index+1}
 
 ${player.name || "Игрок"}
 
-</b>
+</div>
 
 
 
 <div class="top-balance">
 
-${formatNumber(player.balance)} U
-
-</div>
-
-
+${Number(player.balance || 0)
+.toFixed(3)
+.replace(".",",")} U
 
 </div>
 
@@ -196,6 +145,79 @@ ${formatNumber(player.balance)} U
 
 `;
 
+
+
+
+
+list.appendChild(card);
+
+
+
+});
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"TOP ERROR",
+error
+);
+
+
+
+list.innerHTML =
+
+"Ошибка загрузки топа";
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// обновление при открытии вкладки
+
+
+document.querySelectorAll(".nav").forEach(btn=>{
+
+
+btn.addEventListener(
+
+"click",
+
+()=>{
+
+
+if(btn.dataset.page==="tops"){
+
+
+loadTop();
+
+
+}
+
+
+}
+
+
+);
 
 
 
@@ -206,55 +228,8 @@ ${formatNumber(player.balance)} U
 
 
 
-}
 
-catch(error){
-
-
-
-console.log(
-
-"TOP ERROR",
-
-error
-
-);
-
-
-
-box.innerHTML = `
-
-<div class="top-card">
-
-Ошибка загрузки топа
-
-</div>
-
-`;
-
-
-
-}
-
-
-
-}
-
-
-
-
-
+// первый запуск
 
 
 loadTop();
-
-
-
-
-setInterval(
-
-loadTop,
-
-30000
-
-);
