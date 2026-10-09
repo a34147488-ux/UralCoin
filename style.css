@@ -1880,5 +1880,248 @@ font-size:18px;
 
 
 }
+/* ===================================
+URALcoin Bottom Menu v25
+Circle buttons + press + glow
+=================================== */
 
 
+.bottom-nav{
+
+position:fixed;
+
+bottom:10px;
+
+left:50%;
+
+right:auto;
+
+transform:translateX(-50%);
+
+
+width:96%;
+
+height:82px;
+
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+gap:8px;
+
+
+padding:10px;
+
+
+background:
+
+rgba(20,0,50,.75);
+
+
+backdrop-filter:
+
+blur(18px);
+
+
+border-radius:
+
+45px;
+
+
+border:
+
+1px solid rgba(255,255,255,.18);
+
+
+z-index:1000;
+
+
+}
+
+
+
+
+
+
+.bottom-nav .nav{
+
+
+flex:0 0 auto;
+
+
+width:58px;
+
+
+height:58px;
+
+
+padding:0;
+
+
+border-radius:50%;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+text-align:center;
+
+
+
+
+background:
+
+
+linear-gradient(
+
+145deg,
+
+rgba(0,180,255,.9),
+
+rgba(0,70,190,.9)
+
+);
+
+
+
+
+border:
+
+1px solid rgba(255,255,255,.45);
+
+
+
+
+box-shadow:
+
+
+0 8px 20px rgba(0,0,0,.35),
+
+
+inset 0 0 12px rgba(255,255,255,.25);
+
+
+
+
+transition:.25s ease;
+
+
+
+}
+/* ===============================
+   BUTTON PRESS EFFECT
+=============================== */
+
+
+.bottom-nav .nav:active{
+
+
+transform:
+
+translateY(5px)
+
+scale(.9);
+
+
+
+box-shadow:
+
+
+0 2px 8px rgba(0,0,0,.5),
+
+
+inset 0 0 18px rgba(255,255,255,.35);
+
+
+
+}
+
+
+
+
+
+
+
+/* ===============================
+   ACTIVE BUTTON
+=============================== */
+
+
+.bottom-nav .nav.active{
+
+
+transform:
+
+translateY(-8px);
+
+
+
+
+background:
+
+
+linear-gradient(
+
+145deg,
+
+#00d9ff,
+
+#0066ff
+
+);
+
+
+
+
+
+box-shadow:
+
+
+0 0 20px #00cfff,
+
+
+0 0 45px rgba(0,180,255,.8);
+
+
+
+
+
+border-color:
+
+
+white;
+
+
+
+}
+
+
+
+
+
+
+/* ===============================
+   HOVER GLOW
+=============================== */
+
+
+.bottom-nav .nav:hover{
+
+
+box-shadow:
+
+
+0 0 20px #00cfff;
+
+
+
+}
