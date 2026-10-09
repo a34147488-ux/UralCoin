@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin Telegram Connect v13
-// Profile + Avatar + Server Sync FIX
+// URALcoin Telegram Connect v14
+// Auto Register Player
 // ===================================
 
 
@@ -12,30 +12,54 @@ tg.ready();
 tg.expand();
 
 
-tg.setHeaderColor("#090414");
 
-tg.setBackgroundColor("#090414");
-
+const tgUser = tg.initDataUnsafe?.user;
 
 
 
-
-const user =
-
-tg.initDataUnsafe?.user;
+async function registerUser(){
 
 
+let player = Storage.getPlayer();
 
 
 
+if(tgUser){
 
 
-async function connectPlayerToServer(player){
+player.id = String(tgUser.id);
+
+player.name =
+tgUser.first_name || "Игрок";
+
+player.username =
+tgUser.username || "";
+
+player.photo =
+tgUser.photo_url || "";
+
+
+Storage.savePlayer(player);
+
+
+}
+
+
+
+
+if(!player.id || player.id==="guest"){
+
+console.log("NO TELEGRAM ID");
+
+return;
+
+}
+
+
 
 
 
 try{
-
 
 
 let response = await fetch(
@@ -44,15 +68,27 @@ CONFIG.API_URL + "/user",
 
 {
 
+
 method:"POST",
 
 headers:{
+
 
 "Content-Type":"application/json"
 
 },
 
-body:JSON.stringify(player)
+
+body:JSON.stringify({
+
+id:String(player.id),
+
+name:player.name,
+
+photo:player.photo
+
+})
+
 
 }
 
@@ -60,121 +96,44 @@ body:JSON.stringify(player)
 
 
 
+let data = await response.json();
 
 
-let serverPlayer = await response.json();
-
-
-
-
+console.log("SERVER USER:",data);
 
 
 
-if(serverPlayer){
+if(data.promoCode){
 
 
-
-let local = Storage.getPlayer();
-
-
-
-
-
-local.id =
-
-String(serverPlayer.id);
-
-
-
-local.name =
-
-serverPlayer.name || local.name;
-
-
-
-local.photo =
-
-serverPlayer.photo || local.photo;
-
-
-
-
-
-local.promoCode =
-
-serverPlayer.promoCode || local.promoCode;
-
-
-
-
-
-local.friends =
-
-serverPlayer.friends || 0;
-
-
-
-
-
-local.earnedFromPromo =
-
-serverPlayer.earnedFromPromo || 0;
-
-
-
-
-
-
-local.balance =
-
-Number(serverPlayer.balance || local.balance);
-
-
-
-
-
-
-
-Storage.savePlayer(local);
-
+player.promoCode=data.promoCode;
 
 
 }
 
 
+Storage.savePlayer(player);
 
 
 
+updateAvatar();
+
+
+
+}
+
+catch(e){
 
 console.log(
-"SERVER SYNC OK"
+"REGISTER ERROR",
+e
 );
 
 
-
-}
-
-catch(error){
-
-
-
-console.log(
-
-"SERVER ERROR",
-
-error
-
-);
-
-
-
 }
 
 
-
 }
-
-
 
 
 
@@ -185,51 +144,31 @@ error
 function updateAvatar(){
 
 
+let player=Storage.getPlayer();
 
-const avatar =
 
-document.getElementById(
+
+let img=document.getElementById(
 "userAvatar"
 );
 
 
-
-const letter =
-
-document.getElementById(
+let letter=document.getElementById(
 "avatarLetter"
 );
-
-
-
-
-
-let player = Storage.getPlayer();
-
-
-
-
 
 
 
 if(player.photo){
 
 
+img.src=player.photo;
 
-if(avatar){
-
-avatar.src=player.photo;
-
-avatar.style.display="block";
-
-}
-
+img.style.display="block";
 
 
 if(letter)
-
 letter.style.display="none";
-
 
 
 }
@@ -237,15 +176,12 @@ letter.style.display="none";
 else{
 
 
-
 if(letter)
 
 letter.innerText=
 
-(player.name || "U")
-
+(player.name||"U")
 .charAt(0)
-
 .toUpperCase();
 
 
@@ -253,96 +189,10 @@ letter.innerText=
 }
 
 
-
 }
 
 
 
 
 
-
-
-
-
-if(user){
-
-
-
-let player = Storage.getPlayer();
-
-
-
-
-player.id=
-
-String(user.id);
-
-
-
-player.name=
-
-user.first_name ||
-
-"Игрок";
-
-
-
-
-
-player.username=
-
-user.username || "";
-
-
-
-
-
-player.photo=
-
-user.photo_url || "";
-
-
-
-
-
-Storage.savePlayer(player);
-
-
-
-
-
-
-
-connectPlayerToServer({
-
-
-id:String(user.id),
-
-
-name:player.name,
-
-
-photo:player.photo
-
-
-});
-
-
-
-
-
-
-
-updateAvatar();
-
-
-
-}
-
-else{
-
-
-updateAvatar();
-
-
-}
+registerUser();
