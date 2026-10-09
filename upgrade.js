@@ -1,9 +1,12 @@
-// =================================
-// URALcoin UPGRADE v13.3
-// =================================
+// ===================================
+// URALcoin UPGRADE v16
+// Stable Upgrade System
+// ===================================
+
 
 
 const upgrades = [
+
 
 
 {
@@ -14,12 +17,14 @@ power:0.005
 },
 
 
+
 {
 name:"PURLES",
 price:25000,
 type:"click",
 power:0.010
 },
+
 
 
 {
@@ -30,12 +35,14 @@ power:0.020
 },
 
 
+
 {
 name:"PURPUR",
 price:300000,
 type:"auto",
 power:1
 },
+
 
 
 {
@@ -46,12 +53,14 @@ power:3
 },
 
 
+
 {
 name:"VLADET",
 price:1500000,
 type:"click",
 power:0.050
 },
+
 
 
 {
@@ -80,8 +89,11 @@ function drawUpgrades(){
 let list =
 
 document.getElementById(
+
 "upgradeList"
+
 );
+
 
 
 
@@ -96,20 +108,20 @@ return;
 
 
 
-let player =
-Storage.getPlayer();
+
+let player = Storage.getPlayer();
 
 
 
 
 
-if(!player.upgrades){
 
-player.upgrades=[];
+if(!player.upgrades)
 
-Storage.savePlayer(player);
+player.upgrades={};
 
-}
+
+
 
 
 
@@ -123,13 +135,23 @@ list.innerHTML="";
 
 
 
+
+
 upgrades.forEach((item,index)=>{
+
+
 
 
 
 let level =
 
-player.upgrades[index] || 0;
+Number(
+
+player.upgrades[index] || 0
+
+);
+
+
 
 
 
@@ -146,23 +168,30 @@ item.price *
 
 
 
-let div =
 
-document.createElement(
+
+let card = document.createElement(
+
 "div"
+
 );
 
 
 
-div.className =
-"upgrade-card";
+
+
+
+card.className="upgrade-card";
 
 
 
 
 
-div.innerHTML = `
 
+
+card.innerHTML =
+
+`
 
 <h3>
 
@@ -174,6 +203,7 @@ ${item.name}
 <p>
 
 Уровень:
+
 <b>${level}</b>
 
 </p>
@@ -182,21 +212,26 @@ ${item.name}
 <p>
 
 Цена:
-<b>${price.toLocaleString()} U</b>
+
+<b>
+
+${price.toLocaleString()} U
+
+</b>
 
 </p>
 
 
-<button 
 
-class="gold-button upgrade-buy"
+<button
 
-data-id="${index}">
+class="gold-button"
+
+data-upgrade="${index}">
 
 Купить
 
 </button>
-
 
 `;
 
@@ -204,7 +239,11 @@ data-id="${index}">
 
 
 
-list.appendChild(div);
+
+
+
+
+list.appendChild(card);
 
 
 
@@ -217,23 +256,28 @@ list.appendChild(div);
 
 
 
-
 document
 
-.querySelectorAll(".upgrade-buy")
+.querySelectorAll(
+
+"[data-upgrade]"
+
+)
 
 .forEach(button=>{
 
 
 
-button.onclick=function(){
+button.onclick=()=>{
 
 
 
 buyUpgrade(
 
 Number(
-this.dataset.id
+
+button.dataset.upgrade
+
 )
 
 );
@@ -262,17 +306,24 @@ function buyUpgrade(id){
 
 
 
-let player =
-
-Storage.getPlayer();
+let player = Storage.getPlayer();
 
 
 
 
 
-let item =
+let item = upgrades[id];
 
-upgrades[id];
+
+
+
+
+
+
+if(!item)
+
+return;
+
 
 
 
@@ -280,7 +331,12 @@ upgrades[id];
 
 let level =
 
-player.upgrades[id] || 0;
+Number(
+
+player.upgrades[id] || 0
+
+);
+
 
 
 
@@ -299,12 +355,18 @@ item.price *
 
 
 
-if(player.balance < price){
+if(
+
+player.balance < price
+
+){
 
 
 
 alert(
+
 "Недостаточно U"
+
 );
 
 
@@ -321,7 +383,10 @@ return;
 
 
 
+
+
 player.balance -= price;
+
 
 
 
@@ -344,15 +409,26 @@ if(item.type==="click"){
 
 player.clickPower =
 
-Number(player.clickPower)
+Number(
+
+player.clickPower || 0.01
+
+)
 
 +
 
-Number(item.power);
+Number(
+
+item.power
+
+);
 
 
 
 }
+
+
+
 
 
 
@@ -365,15 +441,25 @@ if(item.type==="auto"){
 
 player.autoPower =
 
-Number(player.autoPower)
+Number(
+
+player.autoPower || 0
+
+)
 
 +
 
-Number(item.power);
+Number(
+
+item.power
+
+);
 
 
 
 }
+
+
 
 
 
@@ -388,7 +474,32 @@ Storage.savePlayer(player);
 
 
 
+
+if(typeof updateScreen==="function"){
+
+
 updateScreen();
+
+
+}
+
+
+
+
+
+
+
+if(typeof syncBalance==="function"){
+
+
+syncBalance();
+
+
+}
+
+
+
+
 
 
 
@@ -398,9 +509,28 @@ drawUpgrades();
 
 
 
+
 }
 
 
+
+
+
+
+
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+drawUpgrades();
+
+
+});
 
 
 
