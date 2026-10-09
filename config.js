@@ -1,10 +1,12 @@
 // ===================================
-// URALcoin CONFIG v14 FINAL
-// Railway Connection
+// URALcoin CONFIG v16
+// Railway API Connection
 // ===================================
 
 
+
 const CONFIG = {
+
 
 
 API_URL:
@@ -13,13 +15,18 @@ API_URL:
 
 
 
+
+
 VERSION:
 
-"v14-final"
+"v16-stable"
+
 
 
 
 };
+
+
 
 
 
@@ -38,6 +45,7 @@ const BOT_USERNAME =
 window.CONFIG = CONFIG;
 
 window.BOT_USERNAME = BOT_USERNAME;
+
 
 
 
