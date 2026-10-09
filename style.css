@@ -1,28 +1,21 @@
 /* ===================================
-URALcoin STYLE v18
-Purple Blue Clean UI
+URALcoin STYLE v19
+Purple Animated Blue UI
 =================================== */
 
 
 *{
-
 box-sizing:border-box;
-
 -webkit-tap-highlight-color:transparent;
-
 font-family:Arial,sans-serif;
-
 }
-
 
 
 html,
 body{
 
 margin:0;
-
 width:100%;
-
 height:100%;
 
 overflow:hidden;
@@ -34,28 +27,51 @@ touch-action:manipulation;
 }
 
 
-
 body{
 
 background:
-
 linear-gradient(
-
-160deg,
-
+130deg,
 #7b2cff,
-
-#3b0b8f 45%,
-
-#12002f
-
+#005cff,
+#b000ff,
+#180052
 );
 
+background-size:400% 400%;
+
+animation:bgMove 12s ease infinite;
 
 color:white;
 
 }
 
+
+
+@keyframes bgMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+
+
+.city-bg,
+.snow{
+
+display:none!important;
+
+}
 
 
 
@@ -72,29 +88,15 @@ padding-bottom:90px;
 
 
 
-
-.city-bg,
-.snow{
-
-display:none!important;
-
-}
-
-
-
-
-
-
-
 .content{
 
-height:calc(100vh - 150px);
-
-padding:15px;
+height:calc(100vh - 140px);
 
 overflow-y:auto;
 
 -webkit-overflow-scrolling:touch;
+
+padding:15px;
 
 }
 
@@ -124,40 +126,34 @@ display:block;
 
 
 
-
-.header{
-
-padding:20px;
-
-}
-
-
-
+/* AVATAR */
 
 
 .avatar{
 
-width:55px;
+width:60px;
 
-height:55px;
+height:60px;
 
 border-radius:50%;
 
-background:#246bff;
+padding:3px;
 
-display:flex;
+background:
 
-align-items:center;
+linear-gradient(
+45deg,
+#00eaff,
+#ffffff,
+#8b00ff
+);
 
-justify-content:center;
 
-overflow:hidden;
+box-shadow:
 
-font-weight:bold;
+0 0 20px #00d9ff;
 
 }
-
-
 
 
 
@@ -167,11 +163,11 @@ width:100%;
 
 height:100%;
 
+border-radius:50%;
+
 object-fit:cover;
 
 }
-
-
 
 
 
@@ -184,11 +180,9 @@ object-fit:cover;
 
 .balance-box{
 
-background:transparent;
+text-align:center;
 
-border:none;
-
-padding:10px;
+background:none;
 
 }
 
@@ -200,13 +194,13 @@ padding:10px;
 
 display:flex;
 
-align-items:center;
-
 justify-content:center;
 
-gap:10px;
+align-items:center;
 
-font-size:38px;
+gap:8px;
+
+font-size:42px;
 
 font-weight:900;
 
@@ -216,40 +210,63 @@ font-weight:900;
 
 
 
-
 .coin-balance{
 
-width:28px;
+width:30px;
 
-height:28px;
+height:30px;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
 
 border-radius:50%;
 
 
 background:
 
-radial-gradient(
-
-circle at 30% 30%,
-
-#8be9ff,
-
-#006cff
-
+linear-gradient(
+135deg,
+#00eaff,
+#0066ff
 );
 
+
+font-size:16px;
+
+font-weight:900;
 
 
 color:white;
 
-font-size:15px;
-
-font-weight:bold;
-
 
 box-shadow:
 
-0 0 15px #008cff;
+0 0 18px #00c8ff;
+
+}
+
+
+
+
+
+.crystals{
+
+margin-top:12px;
+
+font-size:18px;
+
+}
+
+
+
+.crystals span{
+
+font-weight:bold;
 
 }
 
@@ -260,45 +277,18 @@ box-shadow:
 
 
 
-
-.click-power,
-.second-power{
-
-text-align:center;
-
-margin-top:10px;
-
-}
-
-
-
-
-
-
+/* CLICK BUTTON */
 
 
 .fire-zone{
+
+margin-top:35px;
 
 display:flex;
 
 justify-content:center;
 
-margin-top:45px;
-
 }
-
-
-
-
-
-.fire-effect{
-
-display:none;
-
-}
-
-
-
 
 
 
@@ -306,9 +296,9 @@ display:none;
 
 .main-coin{
 
-width:170px;
+width:210px;
 
-height:170px;
+height:210px;
 
 border-radius:50%;
 
@@ -319,31 +309,51 @@ border:none;
 background:
 
 radial-gradient(
-
-circle at 35% 30%,
-
-#74e8ff,
-
-#006dff 55%,
-
-#003b9e
-
+circle at 30% 25%,
+#a5f5ff,
+#0077ff 50%,
+#003b99
 );
-
 
 
 color:white;
 
 
-font-size:65px;
+font-size:75px;
 
 font-weight:900;
 
 
 box-shadow:
 
-0 0 35px #008cff;
+0 0 50px #00bfff;
 
+
+position:relative;
+
+}
+
+
+
+
+
+.main-coin::after{
+
+content:"⚡ 0 онлайн";
+
+position:absolute;
+
+bottom:22px;
+
+left:0;
+
+right:0;
+
+font-size:15px;
+
+font-weight:bold;
+
+color:white;
 
 }
 
@@ -365,43 +375,7 @@ transform:scale(.94);
 
 
 
-
-.panel{
-
-background:
-
-rgba(0,0,0,.25);
-
-border-radius:25px;
-
-padding:18px;
-
-min-height:100%;
-
-
-}
-
-
-
-
-
-
-
-
-.more-scroll{
-
-overflow-y:auto;
-
-padding-bottom:120px;
-
-}
-
-
-
-
-
-
-
+/* BUTTONS */
 
 
 button,
@@ -409,68 +383,19 @@ button,
 .menu-card,
 .nav{
 
-
 border:none;
 
 border-radius:18px;
 
 padding:14px;
 
-margin:7px 0;
-
-background:
-
-#246bff;
-
+background:#246bff;
 
 color:white;
-
-font-size:15px;
 
 font-weight:bold;
 
 }
-
-
-
-
-
-button:active{
-
-transform:scale(.96);
-
-}
-
-
-
-
-
-
-
-
-input{
-
-
-width:100%;
-
-padding:14px;
-
-border-radius:15px;
-
-border:none;
-
-background:
-
-rgba(255,255,255,.15);
-
-
-color:white;
-
-margin:6px 0;
-
-}
-
-
 
 
 
@@ -483,63 +408,22 @@ margin:6px 0;
 
 .top-player{
 
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
 background:
 
-rgba(255,255,255,.12);
-
+rgba(255,255,255,.15);
 
 border-radius:20px;
 
-padding:14px;
+padding:15px;
 
 margin:10px 0;
 
-border:1px solid rgba(255,255,255,.25);
-
-}
-
-
-
-
-
-.top-avatar-letter,
-.top-photo{
-
-
-width:55px;
-
-height:55px;
-
-border-radius:50%;
-
-background:#246bff;
-
 display:flex;
+
+gap:12px;
 
 align-items:center;
 
-justify-content:center;
-
-overflow:hidden;
-
-font-weight:bold;
-
-}
-
-
-
-
-
-.top-photo{
-
-object-fit:cover;
-
 }
 
 
@@ -548,11 +432,10 @@ object-fit:cover;
 
 
 
-
+/* BOTTOM */
 
 
 .bottom-nav{
-
 
 position:fixed;
 
@@ -562,9 +445,7 @@ left:0;
 
 right:0;
 
-
 height:85px;
-
 
 display:flex;
 
@@ -572,17 +453,11 @@ gap:5px;
 
 padding:10px;
 
-
 background:
 
-rgba(20,0,50,.9);
-
-
-z-index:100;
+rgba(20,0,50,.85);
 
 }
-
-
 
 
 
@@ -592,17 +467,13 @@ flex:1;
 
 font-size:12px;
 
-padding:10px 2px;
-
 }
-
-
 
 
 
 .nav.active{
 
-background:#4d8dff;
+background:#00aaff;
 
 }
 
@@ -610,20 +481,18 @@ background:#4d8dff;
 
 
 
-
+/* CLICK EFFECT */
 
 
 .click-number{
 
 position:fixed;
 
-font-size:26px;
+color:#7deaff;
 
-color:#7de4ff;
+font-size:25px;
 
 font-weight:bold;
-
-pointer-events:none;
 
 animation:fly .7s forwards;
 
