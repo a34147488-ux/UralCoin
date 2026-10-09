@@ -1,9 +1,14 @@
 // ===================================
-// URALcoin ROULETTE v5
+// URALcoin ROULETTE v6
+// Wheel + Numbers Fix
 // ===================================
 
 
 let rouletteStarted = false;
+
+let currentBet = null;
+
+
 
 
 
@@ -17,23 +22,21 @@ if(rouletteStarted)
 return;
 
 
-rouletteStarted=true;
+rouletteStarted = true;
 
 
 
-
-
-createWheel();
+createRouletteWheel();
 
 
 
-loadRoulette();
+loadRouletteState();
 
 
 
 setInterval(
 
-loadRoulette,
+loadRouletteState,
 
 1000
 
@@ -50,16 +53,17 @@ loadRoulette,
 
 
 
+
 // ===============================
 // CREATE WHEEL
 // ===============================
 
 
-function createWheel(){
+function createRouletteWheel(){
 
 
 
-let wheel =
+const wheel =
 
 document.getElementById(
 "rouletteWheel"
@@ -73,6 +77,8 @@ return;
 
 
 
+
+
 wheel.innerHTML="";
 
 
@@ -80,13 +86,25 @@ wheel.innerHTML="";
 
 
 
-let reds=[
+let redNumbers=[
 
-1,3,5,7,9,12,14,16,18,
+1,3,5,7,9,
 
-19,21,23,25,27,30,32,34,36
+12,14,16,18,
+
+19,21,23,25,27,
+
+30,32,34,36
 
 ];
+
+
+
+
+
+
+
+const radius = 125;
 
 
 
@@ -98,36 +116,63 @@ for(let i=0;i<=36;i++){
 
 
 
-let num=document.createElement(
+let number =
+
+document.createElement(
 "div"
 );
 
 
 
-num.className="wheel-number";
+number.className=
+
+"wheel-number";
 
 
 
-if(i===0)
 
-num.classList.add("green");
+
+
+if(i===0){
+
+
+number.classList.add(
+"green"
+);
+
+
+}
 
 else if(
-reds.includes(i)
-)
+redNumbers.includes(i)
 
-num.classList.add("red");
-
-else
-
-num.classList.add("black");
+){
 
 
+number.classList.add(
+"red"
+);
+
+
+}
+
+else{
+
+
+number.classList.add(
+"black"
+);
+
+
+}
 
 
 
 
-num.innerHTML=i;
+
+
+
+number.innerText=i;
 
 
 
@@ -136,30 +181,64 @@ num.innerHTML=i;
 
 let angle =
 
-(i*9.73);
+(i * (360/37)) - 90;
 
 
 
 
 
 
-num.style.transform=
+let x =
 
-`
+Math.cos(
 
-rotate(${angle}deg)
+angle*Math.PI/180
 
-translateY(-130px)
+)
 
-rotate(-${angle}deg)
+*
 
-`;
-
-
+radius;
 
 
 
-wheel.appendChild(num);
+
+
+
+
+let y =
+
+Math.sin(
+
+angle*Math.PI/180
+
+)
+
+*
+
+radius;
+
+
+
+
+
+
+number.style.left=
+
+"calc(50% + "+x+"px)";
+
+
+
+number.style.top=
+
+"calc(50% + "+y+"px)";
+
+
+
+
+
+
+wheel.appendChild(number);
 
 
 
@@ -178,7 +257,7 @@ wheel.appendChild(num);
 
 
 // ===============================
-// BET BUTTONS
+// SELECT BET
 // ===============================
 
 
@@ -186,12 +265,13 @@ document.addEventListener(
 
 "click",
 
-(e)=>{
+function(e){
+
+
 
 
 
 if(
-
 e.target.classList.contains(
 "roulette-bet"
 )
@@ -201,17 +281,21 @@ e.target.classList.contains(
 
 
 document
+
 .querySelectorAll(
 ".roulette-bet"
 )
 
-.forEach(b=>{
+.forEach(
+
+b=>
 
 b.classList.remove(
 "active"
+)
+
 );
 
-});
 
 
 
@@ -223,9 +307,14 @@ e.target.classList.add(
 
 
 
-window.currentRouletteBet=
+
+
+currentBet=
 
 e.target.dataset.bet;
+
+
+
 
 
 
@@ -233,7 +322,9 @@ e.target.dataset.bet;
 
 
 
-});
+}
+
+);
 
 
 
@@ -244,7 +335,7 @@ e.target.dataset.bet;
 
 
 // ===============================
-// BET
+// MAKE BET
 // ===============================
 
 
@@ -252,7 +343,9 @@ document.addEventListener(
 
 "click",
 
-async(e)=>{
+async function(e){
+
+
 
 
 
@@ -267,9 +360,46 @@ return;
 
 
 
-let player=
 
-Storage.getPlayer();
+let amountInput=
+
+document.getElementById(
+"rouletteAmount"
+);
+
+
+
+
+
+let message=
+
+document.getElementById(
+"rouletteMessage"
+);
+
+
+
+
+
+
+
+if(!currentBet){
+
+
+
+message.innerText=
+
+"Выберите ставку";
+
+
+
+return;
+
+
+
+}
+
+
 
 
 
@@ -278,9 +408,7 @@ let amount=
 
 Number(
 
-document.getElementById(
-"rouletteAmount"
-).value
+amountInput.value
 
 );
 
@@ -289,15 +417,19 @@ document.getElementById(
 
 
 
-if(!window.currentRouletteBet){
+
+if(amount<=0){
 
 
-alert(
-"Выберите ставку"
-);
+
+message.innerText=
+
+"Введите сумму";
+
 
 
 return;
+
 
 
 }
@@ -308,7 +440,20 @@ return;
 
 
 
-let res=
+let player=
+
+Storage.getPlayer();
+
+
+
+
+
+
+try{
+
+
+
+let response=
 
 await fetch(
 
@@ -329,6 +474,7 @@ headers:{
 
 "application/json"
 
+
 },
 
 
@@ -341,9 +487,7 @@ id:player.id,
 amount:amount,
 
 
-type:
-
-window.currentRouletteBet
+type:currentBet
 
 
 
@@ -359,26 +503,45 @@ window.currentRouletteBet
 
 
 
+
+
 let data=
 
-await res.json();
+await response.json();
 
 
 
 
 
 
-document.getElementById(
-
-"rouletteMessage"
-
-).innerHTML=
+message.innerText=
 
 data.message;
 
 
 
-});
+}
+
+catch(err){
+
+
+
+console.log(err);
+
+
+
+message.innerText=
+
+"Ошибка подключения";
+
+
+}
+
+
+
+}
+
+);
 
 
 
@@ -393,7 +556,7 @@ data.message;
 // ===============================
 
 
-async function loadRoulette(){
+async function loadRouletteState(){
 
 
 
@@ -401,7 +564,7 @@ try{
 
 
 
-let res=
+let response=
 
 await fetch(
 
@@ -415,7 +578,7 @@ CONFIG.API+
 
 let data=
 
-await res.json();
+await response.json();
 
 
 
@@ -432,11 +595,9 @@ document.getElementById(
 
 if(timer)
 
-timer.innerHTML=
+timer.innerText=
 
-"До конца: "+data.timeLeft+" сек";
-
-
+"Раунд: "+data.timeLeft+" сек";
 
 
 
@@ -453,7 +614,7 @@ document.getElementById(
 
 if(bank)
 
-bank.innerHTML=
+bank.innerText=
 
 "Ставок: "+data.bets;
 
@@ -463,11 +624,10 @@ bank.innerHTML=
 
 
 
-
-
 if(
+data.result!==null
 
-data.result!==null &&
+&&
 
 data.result!==undefined
 
@@ -475,8 +635,10 @@ data.result!==undefined
 
 
 
-spinWheel(
+rotateRoulette(
+
 data.result
+
 );
 
 
@@ -494,13 +656,12 @@ data.result
 catch(e){
 
 
-
 console.log(
-"roulette load error"
+"roulette error",
+e
 );
 
 
-
 }
 
 
@@ -515,7 +676,12 @@ console.log(
 
 
 
-function spinWheel(number){
+// ===============================
+// ROTATE
+// ===============================
+
+
+function rotateRoulette(number){
 
 
 
@@ -537,11 +703,12 @@ return;
 
 
 
-let rotate=
+let angle=
 
 3600 -
 
-(number*9.73);
+(number*(360/37));
+
 
 
 
@@ -550,7 +717,7 @@ let rotate=
 
 wheel.style.transform=
 
-"rotate("+rotate+"deg)";
+"rotate("+angle+"deg)";
 
 
 
@@ -567,7 +734,7 @@ document.getElementById(
 
 if(result)
 
-result.innerHTML=
+result.innerText=
 
 "Выпало: "+number;
 
