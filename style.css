@@ -3519,3 +3519,123 @@ font-size:100px!important;
 
 
 }
+/* =====================================
+FINAL SCROLL FIX
+===================================== */
+
+
+/* общий контейнер */
+
+.content{
+
+height:auto!important;
+
+overflow:visible!important;
+
+}
+
+
+
+
+
+/* только главная без движения */
+
+#game{
+
+
+height:calc(100vh - 90px)!important;
+
+
+overflow:hidden!important;
+
+
+}
+
+
+
+
+
+#game .content{
+
+
+height:100%!important;
+
+
+overflow:hidden!important;
+
+
+}
+
+
+
+
+
+/* остальные страницы листаются */
+
+
+.page:not(#game){
+
+
+display:none;
+
+
+min-height:100vh;
+
+
+height:auto!important;
+
+
+overflow:visible!important;
+
+
+}
+
+
+
+
+.page:not(#game).active{
+
+
+display:block;
+
+
+overflow-y:auto!important;
+
+
+-webkit-overflow-scrolling:touch;
+
+
+}
+
+
+
+
+
+.page:not(#game).active .panel{
+
+
+padding-bottom:150px;
+
+
+}
+
+
+
+
+
+/* меню поверх */
+
+
+.bottom-nav{
+
+
+position:fixed!important;
+
+
+bottom:15px!important;
+
+
+z-index:999999!important;
+
+
+}
