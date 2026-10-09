@@ -1,75 +1,39 @@
 // ===================================
-// URALcoin ROULETTE JS v1
+// URALcoin ROULETTE v2
 // ===================================
 
 
-let rouletteBetType = null;
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+
+let selectedBet = null;
 
 
 
 
 
-const rouletteWheel =
+const buttons =
 
-document.getElementById(
-"rouletteWheel"
-);
-
-
-
-const rouletteTimer =
-
-document.getElementById(
-"rouletteTimer"
-);
-
-
-
-const rouletteResult =
-
-document.getElementById(
-"rouletteResult"
-);
-
-
-
-const rouletteMessage =
-
-document.getElementById(
-"rouletteMessage"
+document.querySelectorAll(
+".roulette-bet"
 );
 
 
 
 
 
-const rouletteAmount =
-
-document.getElementById(
-"rouletteAmount"
-);
+buttons.forEach(btn=>{
 
 
+btn.addEventListener(
+"click",
+()=>{
 
 
-
-
-// ===============================
-// SELECT BET
-// ===============================
-
-
-document
-.querySelectorAll(".roulette-bet")
-.forEach(btn=>{
-
-
-btn.onclick=()=>{
-
-
-document
-.querySelectorAll(".roulette-bet")
-.forEach(b=>{
+buttons.forEach(b=>{
 
 b.classList.remove("active");
 
@@ -81,13 +45,21 @@ btn.classList.add("active");
 
 
 
-rouletteBetType =
+selectedBet =
 
 btn.dataset.bet;
 
 
 
-};
+console.log(
+"bet selected",
+selectedBet
+);
+
+
+
+});
+
 
 
 });
@@ -100,12 +72,7 @@ btn.dataset.bet;
 
 
 
-// ===============================
-// PLACE BET
-// ===============================
-
-
-const rouletteStart =
+const betButton =
 
 document.getElementById(
 "rouletteStart"
@@ -115,27 +82,15 @@ document.getElementById(
 
 
 
-if(rouletteStart){
 
 
-rouletteStart.onclick = async()=>{
+if(betButton){
 
 
 
-if(!rouletteBetType){
-
-
-rouletteMessage.innerText=
-
-"Выберите ставку";
-
-
-return;
-
-
-}
-
-
+betButton.addEventListener(
+"click",
+async()=>{
 
 
 
@@ -150,15 +105,33 @@ Storage.getPlayer();
 
 
 
-
 let amount =
 
 Number(
 
-rouletteAmount.value
+document.getElementById(
+"rouletteAmount"
+).value
 
 );
 
+
+
+
+
+
+if(!selectedBet){
+
+
+alert(
+"Выберите ставку"
+);
+
+
+return;
+
+
+}
 
 
 
@@ -168,9 +141,9 @@ rouletteAmount.value
 if(!amount || amount<=0){
 
 
-rouletteMessage.innerText=
-
-"Введите сумму";
+alert(
+"Введите сумму"
+);
 
 
 return;
@@ -184,7 +157,11 @@ return;
 
 
 
-let res =
+try{
+
+
+
+let response =
 
 await fetch(
 
@@ -205,7 +182,6 @@ headers:{
 
 "application/json"
 
-
 },
 
 
@@ -215,7 +191,7 @@ body:JSON.stringify({
 id:player.id,
 
 
-type:rouletteBetType,
+type:selectedBet,
 
 
 amount:amount
@@ -231,24 +207,45 @@ amount:amount
 
 
 
+
+
+
 let data =
 
-await res.json();
+await response.json();
 
 
 
 
 
 
-rouletteMessage.innerText =
+document.getElementById(
+"rouletteMessage"
+).innerText =
 
-data.message ||
-
-"Готово";
+data.message;
 
 
 
-};
+}
+
+catch(e){
+
+
+
+console.log(e);
+
+
+
+}
+
+
+
+}
+
+
+);
+
 
 
 }
@@ -261,12 +258,7 @@ data.message ||
 
 
 
-// ===============================
-// CHECK STATE
-// ===============================
-
-
-async function updateRoulette(){
+async function rouletteUpdate(){
 
 
 
@@ -274,7 +266,7 @@ try{
 
 
 
-let res =
+let response =
 
 await fetch(
 
@@ -288,102 +280,84 @@ CONFIG.API+
 
 let data =
 
-await res.json();
+await response.json();
 
 
 
 
 
 
-
-if(rouletteTimer){
-
-
-rouletteTimer.innerText =
+document.getElementById(
+"rouletteTimer"
+).innerText =
 
 data.timeLeft;
 
 
-}
+
+
+
+
+if(data.result!==null){
+
+
+
+let wheel =
+
+document.getElementById(
+"rouletteWheel"
+);
+
+
+
+wheel.style.transform =
+
+"rotate("+
+
+(
+
+360*8 +
+
+data.result*9.7
+
+)
+
++"deg)";
 
 
 
 
 
 
-if(
-
-data.result!==null &&
-
-data.result!==undefined
-
-){
-
-
-
-rouletteResult.innerText =
+document.getElementById(
+"rouletteResult"
+).innerText =
 
 data.result;
 
 
 
-
-
-
-if(rouletteWheel){
-
-
-
-rouletteWheel.classList.add(
-"spin"
-);
-
-
-
-setTimeout(()=>{
-
-
-rouletteWheel.classList.remove(
-"spin"
-);
-
-
-},6000);
-
-
-
 }
 
 
 
-
 }
-
-
-
-
-
-
-}
-
 
 catch(e){
 
 
+
 console.log(
-"roulette error",
-e
+"roulette state error"
 );
 
 
-}
-
-
 
 }
 
 
 
+}
 
 
 
@@ -392,7 +366,7 @@ e
 
 setInterval(
 
-updateRoulette,
+rouletteUpdate,
 
 1000
 
@@ -401,4 +375,9 @@ updateRoulette,
 
 
 
-updateRoulette();
+
+rouletteUpdate();
+
+
+
+});
