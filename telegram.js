@@ -1,201 +1,174 @@
 // ===================================
-// URALcoin Telegram Connect v14.5
-// Profile + Username Fix
+// URALcoin TELEGRAM v16
+// Telegram User Connect
 // ===================================
 
 
-const tg = window.Telegram.WebApp;
+
+function initTelegram(){
+
+
+
+let tg = null;
+
+
+
+if(
+window.Telegram &&
+window.Telegram.WebApp
+){
+
+
+tg = window.Telegram.WebApp;
 
 
 tg.ready();
 
+
 tg.expand();
 
 
-tg.setHeaderColor("#090414");
-tg.setBackgroundColor("#090414");
-
-
-
-const tgUser = tg.initDataUnsafe?.user;
+}
 
 
 
 
 
-async function connectPlayerToServer(player){
+
+let userData = null;
 
 
-try{
 
 
-await fetch(
 
-CONFIG.API_URL + "/user",
 
-{
+if(
+tg &&
+tg.initDataUnsafe &&
+tg.initDataUnsafe.user
+){
 
-method:"POST",
 
-headers:{
 
-"Content-Type":"application/json"
+userData = tg.initDataUnsafe.user;
 
-},
 
-body:JSON.stringify({
-
-id:String(player.id),
-
-name:player.name || "Игрок",
-
-username:player.username || "",
-
-photo:player.photo || ""
-
-})
 
 }
+
+
+
+
+
+
+
+
+let player = Storage.getPlayer();
+
+
+
+
+
+
+if(userData){
+
+
+
+player.id = String(
+
+userData.id
 
 );
 
 
-
-console.log(
-"PLAYER SYNC OK"
-);
-
-
-
-}
-
-catch(error){
-
-
-console.log(
-"SERVER ERROR",
-error
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function updateAvatar(){
-
-
-let player =
-Storage.getPlayer();
-
-
-
-let avatar =
-document.getElementById(
-"userAvatar"
-);
-
-
-
-let letter =
-document.getElementById(
-"avatarLetter"
-);
-
-
-
-
-
-if(player.photo){
-
-
-if(avatar){
-
-
-avatar.src=player.photo;
-
-avatar.style.display="block";
-
-
-}
-
-
-
-if(letter)
-
-letter.style.display="none";
-
-
-
-}
-
-else{
-
-
-if(letter){
-
-
-letter.innerText =
-
-(player.name || "U")
-.charAt(0)
-.toUpperCase();
-
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-if(tgUser){
-
-
-
-let player =
-Storage.getPlayer();
-
-
-
-player.id =
-String(tgUser.id);
 
 
 
 player.name =
-tgUser.first_name || "Игрок";
+
+userData.first_name ||
+
+"Игрок";
+
+
+
+
+
+if(userData.last_name){
+
+
+
+player.name +=
+
+" " +
+
+userData.last_name;
+
+
+}
+
+
+
 
 
 
 player.username =
-tgUser.username || "";
+
+userData.username ||
+
+"";
+
+
+
 
 
 
 player.photo =
-tgUser.photo_url || "";
+
+userData.photo_url ||
+
+"";
+
+
+
+
+
+
+}
+
+
+
+
+// запасной вариант
+
+if(!player.id){
+
+
+
+let savedId =
+
+localStorage.getItem(
+
+"telegram_id"
+
+);
+
+
+
+if(savedId){
+
+
+player.id = savedId;
+
+
+}
+
+
+
+}
+
+
+
 
 
 
@@ -204,20 +177,124 @@ Storage.savePlayer(player);
 
 
 
-connectPlayerToServer(player);
 
 
 
-updateAvatar();
+// профиль
+
+
+const avatar = document.getElementById(
+
+"userAvatar"
+
+);
+
+
+
+const letter = document.getElementById(
+
+"avatarLetter"
+
+);
+
+
+
+
+
+
+if(
+avatar &&
+player.photo
+){
+
+
+
+avatar.src = player.photo;
+
+
+avatar.style.display="block";
+
+
+
+if(letter){
+
+
+letter.style.display="none";
+
+
+}
 
 
 
 }
 
-else{
 
 
-updateAvatar();
+
+
+
+if(
+letter &&
+player.name
+){
+
+
+
+letter.innerText =
+
+player.name
+
+.charAt(0)
+
+.toUpperCase();
+
 
 
 }
+
+
+
+
+
+
+console.log(
+
+"Telegram user",
+
+player
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// запуск
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+initTelegram();
+
+
+});
+
+
+
+
+
+
+window.initTelegram = initTelegram;
