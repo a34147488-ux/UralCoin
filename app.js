@@ -1,17 +1,27 @@
-// =================================
-// URALcoin APP v13.3
-// CORE FIX
-// =================================
+// ===================================
+// URALcoin APP v15.1
+// Click + Server Balance Sync Fix
+// ===================================
 
 
-let player = Storage.getPlayer();
+let player =
+Storage.getPlayer();
 
+
+
+
+
+// ===============================
+// FORMAT
+// ===============================
 
 
 function formatNumber(value){
 
 return Number(value || 0)
+
 .toFixed(3)
+
 .replace(".",",");
 
 }
@@ -21,76 +31,93 @@ return Number(value || 0)
 
 
 
+
+
+
+// ===============================
+// UPDATE SCREEN
+// ===============================
+
+
 function updateScreen(){
 
 
-player = Storage.getPlayer();
+player =
+Storage.getPlayer();
+
 
 
 
 let balance =
-document.getElementById("balance");
+document.getElementById(
+"balance"
+);
+
 
 
 let power =
-document.getElementById("clickPower");
+document.getElementById(
+"clickPower"
+);
+
+
+
+let friends =
+document.getElementById(
+"friendsCount"
+);
+
 
 
 let second =
-document.getElementById("secondPower");
+document.getElementById(
+"secondPower"
+);
 
 
 
-if(balance){
+
+
+if(balance)
 
 balance.innerText =
-formatNumber(player.balance);
+formatNumber(
+player.balance
+);
 
-}
 
 
 
-if(power){
+if(power)
 
 power.innerText =
-formatNumber(player.clickPower);
+formatNumber(
+player.clickPower
+);
 
-}
 
 
 
-if(second){
+
+if(friends)
+
+friends.innerText =
+player.friends || 0;
+
+
+
+
+if(second)
 
 second.innerText =
-formatNumber(player.autoPower);
-
-}
-
-
-
-let crystals =
-document.getElementById("crystals");
-
-
-if(crystals){
-
-crystals.innerText =
-player.crystals || 0;
-
-}
-
-
-
-
-if(typeof checkPromo==="function"){
-
-checkPromo();
-
-}
+formatNumber(
+player.autoPower
+);
 
 
 
 }
+
 
 
 
@@ -100,68 +127,102 @@ checkPromo();
 
 
 // ===============================
-// TELEGRAM PROFILE
+// SERVER SYNC
 // ===============================
 
 
-function loadTelegram(){
+async function syncBalance(){
 
 
 
-if(!window.Telegram)
-
-return;
-
-
-
-let user =
-
-Telegram.WebApp.initDataUnsafe.user;
+player =
+Storage.getPlayer();
 
 
 
-if(!user)
+
+if(!player.id)
 
 return;
 
 
 
-if(Storage.updateTelegramProfile){
 
-Storage.updateTelegramProfile(user);
+
+
+try{
+
+
+
+let response =
+await fetch(
+
+CONFIG.API_URL+"/sync",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+
+"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+id:String(player.id),
+
+balance:Number(player.balance || 0)
+
+})
+
+
+}
+
+);
+
+
+
+
+
+let data =
+await response.json();
+
+
+
+console.log(
+"SYNC",
+data
+);
+
+
+
+}
+
+catch(e){
+
+
+console.log(
+"SYNC ERROR",
+e
+);
+
+
 
 }
 
 
 
-let img =
-document.getElementById("userAvatar");
-
-
-
-let letter =
-document.getElementById("avatarLetter");
-
-
-
-
-if(user.photo_url && img){
-
-
-img.src=user.photo_url;
-
-img.style.display="block";
-
-
-if(letter)
-
-letter.style.display="none";
-
-
 }
 
 
-}
+
+window.syncBalance =
+syncBalance;
 
 
 
@@ -176,18 +237,21 @@ letter.style.display="none";
 // ===============================
 
 
-let clickButton =
-
+const clickButton =
 document.getElementById(
 "clickButton"
 );
 
 
 
+
+
+
 if(clickButton){
 
 
-clickButton.onclick=function(){
+
+clickButton.onclick=()=>{
 
 
 
@@ -196,17 +260,22 @@ Storage.getPlayer();
 
 
 
+
+
 player.balance +=
 
-Number(player.clickPower || 0);
+Number(
+player.clickPower
+);
 
 
 
 
 
 
-Storage.savePlayer(player);
-
+Storage.savePlayer(
+player
+);
 
 
 
@@ -218,26 +287,72 @@ updateScreen();
 
 
 
+syncBalance();
 
-if(typeof showClickAnimation==="function"){
+
+
+
 
 showClickAnimation(
 player.clickPower
 );
 
-}
-
-
-
-if(typeof clickHeat==="function"){
-
-clickHeat();
-
-}
-
 
 
 };
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// CLICK EFFECT
+// ===============================
+
+
+function showClickAnimation(value){
+
+
+let text =
+document.createElement(
+"div"
+);
+
+
+
+text.className =
+"click-number";
+
+
+
+text.innerText =
+"+"+
+formatNumber(value)+
+" U";
+
+
+
+document.body.appendChild(text);
+
+
+
+
+
+setTimeout(()=>{
+
+
+text.remove();
+
+
+},800);
 
 
 
@@ -259,8 +374,11 @@ clickHeat();
 setInterval(()=>{
 
 
+
 player =
 Storage.getPlayer();
+
+
 
 
 
@@ -274,10 +392,19 @@ Number(player.autoPower)/60;
 
 
 
-Storage.savePlayer(player);
+
+Storage.savePlayer(
+player
+);
+
 
 
 updateScreen();
+
+
+
+syncBalance();
+
 
 
 }
@@ -294,81 +421,18 @@ updateScreen();
 
 
 
-
 // ===============================
-// API KEY
+// PERIOD SYNC
 // ===============================
 
 
+setInterval(
 
-let apiBtn =
+syncBalance,
 
-document.getElementById(
-"apiBtn"
-);
-
-
-
-
-if(apiBtn){
-
-
-
-apiBtn.onclick=function(){
-
-
-
-player =
-Storage.getPlayer();
-
-
-
-
-if(!player.apiKey){
-
-
-
-player.apiKey =
-
-"UC-"
-
-+
-
-Math.random()
-
-.toString(36)
-
-.substring(2,10)
-
-.toUpperCase();
-
-
-
-Storage.savePlayer(player);
-
-
-
-}
-
-
-
-alert(
-
-"Ваш API ключ:\n\n"
-
-+
-
-player.apiKey
+5000
 
 );
-
-
-
-};
-
-
-
-}
 
 
 
@@ -385,18 +449,20 @@ player.apiKey
 
 document
 
-.querySelectorAll(".nav")
+.querySelectorAll(
+".nav"
+)
 
 .forEach(button=>{
 
 
-button.onclick=function(){
+
+button.onclick=()=>{
 
 
 
 let page =
-
-this.dataset.page;
+button.dataset.page;
 
 
 
@@ -404,16 +470,19 @@ this.dataset.page;
 
 document
 
-.querySelectorAll(".page")
+.querySelectorAll(
+".page"
+)
 
-.forEach(item=>{
+.forEach(p=>{
 
 
-item.classList.remove("active");
+p.classList.remove(
+"active"
+);
 
 
 });
-
 
 
 
@@ -421,30 +490,35 @@ item.classList.remove("active");
 
 
 let target =
-
-document.getElementById(page);
-
-
-
+document.getElementById(
+page
+);
 
 
 
-if(target){
+if(target)
 
-target.classList.add("active");
+target.classList.add(
+"active"
+);
 
-}
+
+
 
 
 
 document
 
-.querySelectorAll(".nav")
+.querySelectorAll(
+".nav"
+)
 
-.forEach(btn=>{
+.forEach(b=>{
 
 
-btn.classList.remove("active");
+b.classList.remove(
+"active"
+);
 
 
 });
@@ -453,7 +527,10 @@ btn.classList.remove("active");
 
 
 
-this.classList.add("active");
+button.classList.add(
+"active"
+);
+
 
 
 
@@ -467,138 +544,6 @@ this.classList.add("active");
 
 
 
-
-
-
-
-// ===============================
-// SYNC
-// ===============================
-
-
-
-async function syncBalance(){
-
-
-
-try{
-
-
-if(!CONFIG.API_URL)
-
-return;
-
-
-
-
-player =
-Storage.getPlayer();
-
-
-
-
-
-await fetch(
-
-CONFIG.API_URL+"/sync",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":"application/json"
-
-},
-
-body:JSON.stringify({
-
-id:player.id,
-
-balance:player.balance
-
-})
-
-}
-
-);
-
-
-
-}
-
-catch(error){
-
-console.log(
-"SYNC ERROR"
-);
-
-}
-
-
-
-}
-
-
-
-
-
-
-setInterval(
-
-syncBalance,
-
-10000
-
-);
-
-
-
-
-
-
-
-
-
-// ===============================
-// START
-// ===============================
-
-
-loadTelegram();
-
-
-
-
-if(typeof registerPromo==="function"){
-
-registerPromo();
-
-}
-
-
-
-if(typeof checkPromo==="function"){
-
-checkPromo();
-
-}
-
-
-
-
-setTimeout(()=>{
-
-
-if(typeof drawUpgrades==="function"){
-
-drawUpgrades();
-
-}
-
-
-},500);
 
 
 
