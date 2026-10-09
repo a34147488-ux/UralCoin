@@ -1,10 +1,9 @@
 // =====================================
-// URALcoin TELEGRAM CONNECT
+// URALcoin TELEGRAM CONNECT v1
 // =====================================
 
 
-let tgUser = null;
-
+let telegramUser = null;
 
 
 
@@ -18,16 +17,15 @@ if(!window.Telegram || !Telegram.WebApp){
 
 
 console.log(
+
 "Telegram WebApp not found"
+
 );
 
 
 return;
 
-
 }
-
-
 
 
 
@@ -39,28 +37,27 @@ const tg = Telegram.WebApp;
 tg.ready();
 
 
-
 tg.expand();
 
 
 
 
 
-
-
-tgUser = tg.initDataUnsafe?.user || null;
+telegramUser = tg.initDataUnsafe.user;
 
 
 
 
 
 
-if(!tgUser){
+if(!telegramUser){
 
 
 
 console.log(
-"User not found"
+
+"Telegram user empty"
+
 );
 
 
@@ -76,9 +73,13 @@ return;
 
 
 
+
 console.log(
-"Telegram user:",
-tgUser
+
+"USER:",
+
+telegramUser
+
 );
 
 
@@ -86,8 +87,7 @@ tgUser
 
 
 
-
-createPlayer();
+loadPlayer();
 
 
 
@@ -102,17 +102,7 @@ createPlayer();
 
 
 
-async function createPlayer(){
-
-
-
-if(!tgUser)
-
-return;
-
-
-
-
+async function loadPlayer(){
 
 
 
@@ -122,31 +112,29 @@ let ref = "";
 
 
 
-const params =
 
-new URLSearchParams(
+const startParam =
 
-window.location.search
+Telegram.WebApp
 
-);
+.initDataUnsafe
 
-
-
+.start_param;
 
 
-if(params.has("tgWebAppStartParam")){
 
 
-ref =
 
-params.get(
 
-"tgWebAppStartParam"
+if(startParam){
 
-);
+
+ref = startParam;
 
 
 }
+
+
 
 
 
@@ -162,9 +150,7 @@ let response =
 
 await fetch(
 
-CONFIG.API_URL +
-
-"/player",
+CONFIG.API_URL + "/player",
 
 {
 
@@ -175,9 +161,7 @@ method:"POST",
 headers:{
 
 
-"Content-Type":
-
-"application/json"
+"Content-Type":"application/json"
 
 
 },
@@ -186,25 +170,36 @@ headers:{
 body:JSON.stringify({
 
 
-id:String(tgUser.id),
+
+id:String(
+
+telegramUser.id
+
+),
+
 
 
 username:
 
-tgUser.username || "",
+telegramUser.username || "",
+
+
 
 
 first_name:
 
-tgUser.first_name || "",
+telegramUser.first_name || "",
+
 
 
 avatar:
 
-tgUser.photo_url || "",
+telegramUser.photo_url || "",
+
 
 
 ref:ref
+
 
 
 })
@@ -220,7 +215,8 @@ ref:ref
 
 
 
-let player =
+
+let data =
 
 await response.json();
 
@@ -230,36 +226,24 @@ await response.json();
 
 
 
-localStorage.setItem(
 
-"URAL_player",
 
-JSON.stringify(player)
-
-);
+if(data.player){
 
 
 
+Storage.savePlayer(
 
-
-
-
-window.currentPlayer = player;
-
-
-
-
-
-
-
-console.log(
-
-"Player loaded",
-
-player
+data.player
 
 );
 
+
+
+
+
+
+window.player = data.player;
 
 
 
@@ -273,18 +257,23 @@ window.updateUI();
 
 
 
+}
+
+
+
+
 
 }
 
-catch(e){
+catch(error){
 
 
 
 console.log(
 
-"PLAYER ERROR",
+"Telegram player error",
 
-e
+error
 
 );
 
@@ -303,11 +292,10 @@ e
 
 
 
-
 function getTelegramUser(){
 
 
-return tgUser;
+return telegramUser;
 
 
 }
@@ -317,12 +305,12 @@ return tgUser;
 
 
 
-window.initTelegram =
-initTelegram;
+
+window.initTelegram = initTelegram;
 
 
-window.getTelegramUser =
-getTelegramUser;
+window.getTelegramUser = getTelegramUser;
+
 
 
 
