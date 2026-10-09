@@ -896,7 +896,392 @@ padding-bottom:220px;
 
 
 }
+/* ===================================
+URALcoin PREMIUM CARDS v22
+Code + Top Design
+=================================== */
 
+
+/* КОД */
+
+
+#code .panel > *{
+
+background:
+
+rgba(255,255,255,.10);
+
+
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+border-radius:22px;
+
+
+padding:16px;
+
+
+margin:12px 0;
+
+
+backdrop-filter:blur(12px);
+
+
+box-shadow:
+
+0 0 20px rgba(0,0,0,.25);
+
+
+}
+
+
+
+#code h2{
+
+
+background:
+
+transparent;
+
+
+border:none;
+
+
+text-align:center;
+
+
+font-size:24px;
+
+
+text-shadow:
+
+0 0 12px #00cfff;
+
+
+}
+
+
+
+
+#code input{
+
+
+background:
+
+rgba(0,0,0,.25);
+
+
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+}
+
+
+
+
+#code .gold-button{
+
+
+background:
+
+rgba(0,150,255,.35);
+
+
+border:
+
+1px solid rgba(255,255,255,.45);
+
+
+}
+
+
+
+
+
+/* TOP LIST */
+
+
+#topList{
+
+padding-bottom:120px;
+
+}
+
+
+
+
+
+.top-player{
+
+
+background:
+
+rgba(255,255,255,.10);
+
+
+border:
+
+1px solid rgba(255,255,255,.35);
+
+
+border-radius:24px;
+
+
+padding:16px;
+
+
+margin:12px 0;
+
+
+backdrop-filter:blur(12px);
+
+
+transition:.4s;
+
+
+overflow:hidden;
+
+
+position:relative;
+
+
+}
+
+
+
+
+
+/* 1 МЕСТО ЗОЛОТО */
+
+
+.top-player:nth-child(1){
+
+
+border-color:#ffd700;
+
+
+animation:goldPlace 3s infinite;
+
+
+}
+
+
+
+@keyframes goldPlace{
+
+
+0%{
+
+box-shadow:
+
+0 0 10px #ffd700;
+
+}
+
+
+50%{
+
+box-shadow:
+
+0 0 35px #fff000;
+
+
+}
+
+
+100%{
+
+box-shadow:
+
+0 0 10px #ffd700;
+
+
+}
+
+
+}
+
+
+
+
+
+
+/* 2 МЕСТО КРАСНЫЙ */
+
+
+.top-player:nth-child(2){
+
+
+border-color:#ff3030;
+
+
+animation:redPlace 3s infinite;
+
+
+}
+
+
+
+@keyframes redPlace{
+
+
+0%{
+
+box-shadow:
+
+0 0 10px #ff3030;
+
+}
+
+
+50%{
+
+box-shadow:
+
+0 0 35px #ff0000;
+
+
+}
+
+
+100%{
+
+box-shadow:
+
+0 0 10px #ff3030;
+
+
+}
+
+
+}
+
+
+
+
+
+/* 3 МЕСТО ЖЁЛТЫЙ */
+
+
+.top-player:nth-child(3){
+
+
+border-color:#ffe600;
+
+
+animation:yellowPlace 3s infinite;
+
+
+}
+
+
+
+@keyframes yellowPlace{
+
+
+0%{
+
+box-shadow:
+
+0 0 10px #ffe600;
+
+
+}
+
+
+50%{
+
+box-shadow:
+
+0 0 35px #ffff00;
+
+
+}
+
+
+100%{
+
+box-shadow:
+
+0 0 10px #ffe600;
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+.top-info{
+
+
+flex:1;
+
+
+}
+
+
+
+.top-name{
+
+
+font-size:18px;
+
+
+font-weight:800;
+
+
+}
+
+
+
+.top-balance{
+
+
+margin-top:5px;
+
+
+color:#c8efff;
+
+
+font-size:16px;
+
+
+}
+
+
+
+
+
+
+/* АВАТАРЫ ТОПА */
+
+
+.top-avatar-letter,
+.top-photo{
+
+
+border:
+
+2px solid rgba(255,255,255,.6);
+
+
+box-shadow:
+
+0 0 15px rgba(0,200,255,.7);
+
+
+}
 
 
 
