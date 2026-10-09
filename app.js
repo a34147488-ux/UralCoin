@@ -1,16 +1,17 @@
 // ===================================
-// URALcoin APP v18
-// Telegram Sync + Buttons Fix
+// URALcoin APP v20
+// Main Controller
+// Buttons + Pages + Click System
 // ===================================
 
 
-let player = null;
+let appPlayer = null;
 
 
 
 
 // ===============================
-// START APP
+// START
 // ===============================
 
 
@@ -18,17 +19,40 @@ async function startApp(){
 
 
 
-player = Storage.getPlayer();
+appPlayer = Storage.getPlayer();
 
 
 
 
-// создаём пользователя на сервере
 
+// обновляем Telegram данные
+
+if(typeof initTelegram === "function"){
+
+await initTelegram();
+
+}
+
+
+
+
+
+
+appPlayer = Storage.getPlayer();
+
+
+
+
+
+// серверная регистрация
 
 if(
-typeof API !== "undefined"
+window.API &&
+API.syncUser
 ){
+
+
+try{
 
 
 let serverUser = await API.syncUser();
@@ -38,18 +62,16 @@ let serverUser = await API.syncUser();
 if(serverUser){
 
 
-player = {
+appPlayer = {
 
-...player,
+...appPlayer,
 
 ...serverUser
 
 };
 
 
-
-Storage.savePlayer(player);
-
+Storage.savePlayer(appPlayer);
 
 
 }
@@ -57,6 +79,21 @@ Storage.savePlayer(player);
 
 
 }
+
+catch(e){
+
+console.log(
+"SERVER SYNC ERROR",
+e
+);
+
+
+}
+
+
+
+}
+
 
 
 
@@ -66,11 +103,24 @@ Storage.savePlayer(player);
 updateScreen();
 
 
+initNavigation();
+
+
+initClick();
 
 
 
 
-initButtons();
+
+
+if(
+typeof drawUpgrades==="function"
+){
+
+drawUpgrades();
+
+}
+
 
 
 
@@ -85,138 +135,39 @@ initButtons();
 
 
 // ===============================
-// BUTTONS
-// ===============================
-
-
-function initButtons(){
-
-
-
-
-
-const clickButton =
-document.getElementById(
-"clickButton"
-);
-
-
-
-
-
-if(clickButton){
-
-
-
-clickButton.onclick = ()=>{
-
-
-
-let p =
-Storage.getPlayer();
-
-
-
-
-
-let power =
-Number(
-p.clickPower || 0.01
-);
-
-
-
-
-
-
-p.balance =
-
-Number(
-p.balance || 0
-)
-
-+
-
-power;
-
-
-
-
-
-
-
-Storage.savePlayer(p);
-
-
-
-
-
-
-updateScreen();
-
-
-
-
-
-
-syncBalance();
-
-
-
-
-
-
-};
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
 // NAVIGATION
+// ===============================
+
+
+function initNavigation(){
+
 
 
 document
-
 .querySelectorAll(".nav")
-
-.forEach(btn=>{
-
+.forEach(button=>{
 
 
 
 
-btn.onclick = ()=>{
+
+button.onclick=function(){
 
 
 
 let page =
-btn.dataset.page;
-
+this.dataset.page;
 
 
 
 
 
 document
-
 .querySelectorAll(".page")
+.forEach(item=>{
 
-.forEach(p=>{
 
-
-p.classList.remove(
+item.classList.remove(
 "active"
 );
 
@@ -228,10 +179,8 @@ p.classList.remove(
 
 
 
-
 let target =
 document.getElementById(page);
-
 
 
 
@@ -252,16 +201,12 @@ target.classList.add(
 
 
 
-
-
 document
-
 .querySelectorAll(".nav")
+.forEach(btn=>{
 
-.forEach(n=>{
 
-
-n.classList.remove(
+btn.classList.remove(
 "active"
 );
 
@@ -272,9 +217,12 @@ n.classList.remove(
 
 
 
-btn.classList.add(
+
+this.classList.add(
 "active"
 );
+
+
 
 
 
@@ -291,7 +239,6 @@ loadTop();
 
 
 }
-
 
 
 
@@ -315,8 +262,102 @@ drawUpgrades();
 
 
 
+
 });
 
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// CLICK
+// ===============================
+
+
+function initClick(){
+
+
+
+const button =
+document.getElementById(
+"clickButton"
+);
+
+
+
+
+
+if(!button)
+
+return;
+
+
+
+
+
+
+
+button.onclick=function(){
+
+
+
+
+
+let player =
+Storage.getPlayer();
+
+
+
+
+
+player.balance =
+
+Number(player.balance || 0)
+
++
+
+Number(player.clickPower || 0.01);
+
+
+
+
+
+
+Storage.savePlayer(player);
+
+
+
+
+
+
+updateScreen();
+
+
+
+
+
+
+if(
+window.API &&
+API.syncBalance
+){
+
+API.syncBalance();
+
+}
+
+
+
+
+};
 
 
 
@@ -333,7 +374,7 @@ drawUpgrades();
 
 
 // ===============================
-// SCREEN
+// SCREEN UPDATE
 // ===============================
 
 
@@ -341,7 +382,7 @@ function updateScreen(){
 
 
 
-let p =
+let player =
 Storage.getPlayer();
 
 
@@ -360,9 +401,7 @@ if(balance){
 
 balance.innerText =
 
-Number(
-p.balance || 0
-)
+Number(player.balance || 0)
 
 .toFixed(3)
 
@@ -370,7 +409,6 @@ p.balance || 0
 
 
 }
-
 
 
 
@@ -389,13 +427,32 @@ if(power){
 
 power.innerText =
 
-Number(
-p.clickPower || 0
-)
+Number(player.clickPower || 0)
 
 .toFixed(3)
 
 .replace(".",",");
+
+
+}
+
+
+
+
+
+
+let crystal =
+document.getElementById(
+"crystals"
+);
+
+
+
+if(crystal){
+
+
+crystal.innerText =
+player.crystals || 0;
 
 
 }
@@ -416,10 +473,7 @@ if(second){
 
 
 second.innerText =
-
-Number(
-p.autoPower || 0
-);
+player.autoPower || 0;
 
 
 }
@@ -428,27 +482,12 @@ p.autoPower || 0
 
 
 
-
-let crystals =
-document.getElementById(
-"crystals"
-);
-
-
-
-if(crystals){
-
-
-crystals.innerText =
-p.crystals || 0;
-
-
 }
 
 
 
-}
-
+window.updateScreen =
+updateScreen;
 
 
 
@@ -458,92 +497,8 @@ p.crystals || 0;
 
 
 // ===============================
-// SERVER BALANCE
-// ===============================
-
-
-async function syncBalance(){
-
-
-
-let p =
-Storage.getPlayer();
-
-
-
-
-
-try{
-
-
-await fetch(
-
-CONFIG.API_URL+"/sync",
-
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-body:JSON.stringify({
-
-
-id:String(p.id),
-
-
-balance:Number(p.balance)
-
-
-})
-
-
-}
-
-
-
-);
-
-
-
-}
-
-catch(e){
-
-
-console.log(
-"SYNC ERROR",
-e
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
 // START
+// ===============================
 
 
 document.addEventListener(
