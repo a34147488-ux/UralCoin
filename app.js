@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin APP v17
-// Stable Buttons + Click Fix
+// URALcoin APP v18
+// Telegram Sync + Buttons Fix
 // ===================================
 
 
@@ -8,38 +8,140 @@ let player = null;
 
 
 
-function startApp(){
+
+// ===============================
+// START APP
+// ===============================
+
+
+async function startApp(){
+
 
 
 player = Storage.getPlayer();
+
+
+
+
+// создаём пользователя на сервере
+
+
+if(
+typeof API !== "undefined"
+){
+
+
+let serverUser = await API.syncUser();
+
+
+
+if(serverUser){
+
+
+player = {
+
+...player,
+
+...serverUser
+
+};
+
+
+
+Storage.savePlayer(player);
+
+
+
+}
+
+
+
+}
+
+
+
+
 
 
 updateScreen();
 
 
 
+
+
+
+initButtons();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// BUTTONS
+// ===============================
+
+
+function initButtons(){
+
+
+
+
+
 const clickButton =
-document.getElementById("clickButton");
+document.getElementById(
+"clickButton"
+);
+
+
 
 
 
 if(clickButton){
 
 
-clickButton.onclick = async function(){
+
+clickButton.onclick = ()=>{
 
 
-let p = Storage.getPlayer();
+
+let p =
+Storage.getPlayer();
+
+
 
 
 
 let power =
-Number(p.clickPower || 0.01);
+Number(
+p.clickPower || 0.01
+);
+
+
+
 
 
 
 p.balance =
-Number(p.balance || 0) + power;
+
+Number(
+p.balance || 0
+)
+
++
+
+power;
+
+
+
+
 
 
 
@@ -47,15 +149,20 @@ Storage.savePlayer(p);
 
 
 
+
+
+
 updateScreen();
 
 
 
-if(typeof syncBalance==="function"){
+
+
 
 syncBalance();
 
-}
+
+
 
 
 
@@ -63,37 +170,60 @@ syncBalance();
 
 
 
+
+
 }
 
 
 
 
 
-// ===============================
+
+
+
+
+
+
 // NAVIGATION
-// ===============================
 
 
 document
+
 .querySelectorAll(".nav")
-.forEach(button=>{
+
+.forEach(btn=>{
 
 
-button.onclick=function(){
+
+
+
+btn.onclick = ()=>{
+
 
 
 let page =
-this.dataset.page;
+btn.dataset.page;
+
+
+
 
 
 
 document
-.querySelectorAll(".page")
-.forEach(item=>{
 
-item.classList.remove("active");
+.querySelectorAll(".page")
+
+.forEach(p=>{
+
+
+p.classList.remove(
+"active"
+);
+
 
 });
+
+
 
 
 
@@ -104,36 +234,61 @@ document.getElementById(page);
 
 
 
+
+
+
 if(target){
 
-target.classList.add("active");
+
+target.classList.add(
+"active"
+);
+
 
 }
+
+
+
 
 
 
 
 
 document
-.querySelectorAll(".nav")
-.forEach(item=>{
 
-item.classList.remove("active");
+.querySelectorAll(".nav")
+
+.forEach(n=>{
+
+
+n.classList.remove(
+"active"
+);
+
 
 });
 
 
 
-this.classList.add("active");
+
+
+btn.classList.add(
+"active"
+);
 
 
 
 
 
-if(page==="tops" &&
-typeof loadTop==="function"){
+
+if(
+page==="tops" &&
+typeof loadTop==="function"
+){
+
 
 loadTop();
+
 
 }
 
@@ -141,10 +296,15 @@ loadTop();
 
 
 
-if(page==="more" &&
-typeof drawUpgrades==="function"){
+
+if(
+page==="more" &&
+typeof drawUpgrades==="function"
+){
+
 
 drawUpgrades();
+
 
 }
 
@@ -154,7 +314,11 @@ drawUpgrades();
 
 
 
+
 });
+
+
+
 
 
 
@@ -166,89 +330,146 @@ drawUpgrades();
 
 
 
+
+
+// ===============================
+// SCREEN
+// ===============================
 
 
 function updateScreen(){
 
 
-let p = Storage.getPlayer();
+
+let p =
+Storage.getPlayer();
+
+
 
 
 
 let balance =
-document.getElementById("balance");
+document.getElementById(
+"balance"
+);
 
 
 
 if(balance){
 
+
 balance.innerText =
-Number(p.balance || 0)
+
+Number(
+p.balance || 0
+)
+
 .toFixed(3)
+
 .replace(".",",");
+
 
 }
 
 
 
+
+
+
+
 let power =
-document.getElementById("clickPower");
+document.getElementById(
+"clickPower"
+);
 
 
 
 if(power){
 
+
 power.innerText =
-Number(p.clickPower || 0)
+
+Number(
+p.clickPower || 0
+)
+
 .toFixed(3)
+
 .replace(".",",");
+
 
 }
 
 
 
+
+
+
 let second =
-document.getElementById("secondPower");
+document.getElementById(
+"secondPower"
+);
 
 
 
 if(second){
 
+
 second.innerText =
-Number(p.autoPower || 0)
-.toFixed(3)
-.replace(".",",");
+
+Number(
+p.autoPower || 0
+);
+
 
 }
 
 
 
+
+
+
 let crystals =
-document.getElementById("crystals");
+document.getElementById(
+"crystals"
+);
 
 
 
 if(crystals){
 
+
 crystals.innerText =
 p.crystals || 0;
 
-}
-
-
 
 }
 
 
 
+}
 
+
+
+
+
+
+
+
+
+// ===============================
+// SERVER BALANCE
+// ===============================
 
 
 async function syncBalance(){
 
 
+
 let p =
 Storage.getPlayer();
+
+
 
 
 
@@ -264,19 +485,25 @@ CONFIG.API_URL+"/sync",
 
 method:"POST",
 
+
 headers:{
 
 
 "Content-Type":"application/json"
 
+
 },
+
 
 
 body:JSON.stringify({
 
+
 id:String(p.id),
 
+
 balance:Number(p.balance)
+
 
 })
 
@@ -284,14 +511,21 @@ balance:Number(p.balance)
 }
 
 
+
 );
+
 
 
 }
 
 catch(e){
 
-console.log(e);
+
+console.log(
+"SYNC ERROR",
+e
+);
+
 
 }
 
@@ -303,6 +537,13 @@ console.log(e);
 
 
 
+
+
+
+
+
+
+// START
 
 
 document.addEventListener(
