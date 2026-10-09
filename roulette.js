@@ -1,69 +1,233 @@
 // ===================================
-// URALcoin Roulette FIX v4
+// URALcoin ROULETTE v5
 // ===================================
 
 
-window.addEventListener(
-"load",
-()=>{
-
-
-let selectedBet = null;
-
-
-
-const message =
-document.getElementById("rouletteMessage");
-
-
-
-const amount =
-document.getElementById("rouletteAmount");
-
-
-
-const start =
-document.getElementById("rouletteStart");
+let rouletteStarted = false;
 
 
 
 
 
-document
-.querySelectorAll(".roulette-bet")
-.forEach(btn=>{
+function startRoulette(){
 
 
-btn.addEventListener(
+if(rouletteStarted)
+
+return;
+
+
+rouletteStarted=true;
+
+
+
+
+
+createWheel();
+
+
+
+loadRoulette();
+
+
+
+setInterval(
+
+loadRoulette,
+
+1000
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// CREATE WHEEL
+// ===============================
+
+
+function createWheel(){
+
+
+
+let wheel =
+
+document.getElementById(
+"rouletteWheel"
+);
+
+
+
+if(!wheel)
+
+return;
+
+
+
+wheel.innerHTML="";
+
+
+
+
+
+
+let reds=[
+
+1,3,5,7,9,12,14,16,18,
+
+19,21,23,25,27,30,32,34,36
+
+];
+
+
+
+
+
+
+
+for(let i=0;i<=36;i++){
+
+
+
+let num=document.createElement(
+"div"
+);
+
+
+
+num.className="wheel-number";
+
+
+
+if(i===0)
+
+num.classList.add("green");
+
+else if(
+reds.includes(i)
+)
+
+num.classList.add("red");
+
+else
+
+num.classList.add("black");
+
+
+
+
+
+
+num.innerHTML=i;
+
+
+
+
+
+
+let angle =
+
+(i*9.73);
+
+
+
+
+
+
+num.style.transform=
+
+`
+
+rotate(${angle}deg)
+
+translateY(-130px)
+
+rotate(-${angle}deg)
+
+`;
+
+
+
+
+
+wheel.appendChild(num);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// BET BUTTONS
+// ===============================
+
+
+document.addEventListener(
+
 "click",
-function(e){
+
+(e)=>{
 
 
-e.preventDefault();
 
+if(
 
-selectedBet=this.dataset.bet;
+e.target.classList.contains(
+"roulette-bet"
+)
+
+){
 
 
 
 document
-.querySelectorAll(".roulette-bet")
+.querySelectorAll(
+".roulette-bet"
+)
+
 .forEach(b=>{
 
-b.classList.remove("active");
+b.classList.remove(
+"active"
+);
 
 });
 
 
 
-this.classList.add("active");
+
+e.target.classList.add(
+"active"
+);
 
 
 
-if(message){
 
-message.innerText=
-"Выбрано: "+selectedBet;
+window.currentRouletteBet=
+
+e.target.dataset.bet;
+
+
 
 }
 
@@ -73,58 +237,64 @@ message.innerText=
 
 
 
-});
 
 
 
 
 
 
+// ===============================
+// BET
+// ===============================
 
 
+document.addEventListener(
 
-if(start){
-
-
-start.addEventListener(
 "click",
-async function(e){
 
-
-e.preventDefault();
-
+async(e)=>{
 
 
 
-let player =
+if(
+e.target.id!=="rouletteStart"
+)
+
+return;
+
+
+
+
+
+
+let player=
+
 Storage.getPlayer();
 
 
 
 
+let amount=
 
-if(!player || !player.id){
+Number(
 
+document.getElementById(
+"rouletteAmount"
+).value
 
-message.innerText=
-"Нет Telegram ID";
-
-
-return;
-
-
-}
+);
 
 
 
 
 
 
-if(!selectedBet){
+if(!window.currentRouletteBet){
 
 
-message.innerText=
-"Сначала выберите ставку";
+alert(
+"Выберите ставку"
+);
 
 
 return;
@@ -136,49 +306,15 @@ return;
 
 
 
-let sum =
-Number(amount.value);
 
 
-
-
-
-if(!sum || sum<=0){
-
-
-message.innerText=
-"Введите сумму";
-
-
-return;
-
-
-}
-
-
-
-
-
-try{
-
-
-
-let api =
-
-CONFIG.API_URL ||
-
-CONFIG.API;
-
-
-
-
-
-
-let response =
+let res=
 
 await fetch(
 
-api+"/roulette/bet",
+CONFIG.API+
+
+"/roulette/bet",
 
 {
 
@@ -198,11 +334,17 @@ headers:{
 
 body:JSON.stringify({
 
-id:String(player.id),
 
-type:selectedBet,
+id:player.id,
 
-amount:sum
+
+amount:amount,
+
+
+type:
+
+window.currentRouletteBet
+
 
 
 })
@@ -217,45 +359,22 @@ amount:sum
 
 
 
+let data=
 
-let data =
-
-await response.json();
-
+await res.json();
 
 
 
 
 
-message.innerText =
 
-data.message ||
+document.getElementById(
 
-"Ставка принята";
+"rouletteMessage"
 
+).innerHTML=
 
-
-
-
-}
-
-catch(err){
-
-
-
-console.log(err);
-
-
-
-message.innerText=
-
-"Ошибка соединения";
-
-
-
-}
-
-
+data.message;
 
 
 
@@ -263,6 +382,129 @@ message.innerText=
 
 
 
+
+
+
+
+
+
+// ===============================
+// LOAD STATE
+// ===============================
+
+
+async function loadRoulette(){
+
+
+
+try{
+
+
+
+let res=
+
+await fetch(
+
+CONFIG.API+
+
+"/roulette/state"
+
+);
+
+
+
+let data=
+
+await res.json();
+
+
+
+
+
+
+let timer=
+
+document.getElementById(
+"rouletteTimer"
+);
+
+
+
+if(timer)
+
+timer.innerHTML=
+
+"До конца: "+data.timeLeft+" сек";
+
+
+
+
+
+
+
+
+let bank=
+
+document.getElementById(
+"rouletteBank"
+);
+
+
+
+if(bank)
+
+bank.innerHTML=
+
+"Ставок: "+data.bets;
+
+
+
+
+
+
+
+
+
+if(
+
+data.result!==null &&
+
+data.result!==undefined
+
+){
+
+
+
+spinWheel(
+data.result
+);
+
+
+
+}
+
+
+
+
+
+
+
+}
+
+catch(e){
+
+
+
+console.log(
+"roulette load error"
+);
+
+
+
+}
+
+
+
 }
 
 
@@ -272,4 +514,63 @@ message.innerText=
 
 
 
-});
+
+function spinWheel(number){
+
+
+
+let wheel=
+
+document.getElementById(
+"rouletteWheel"
+);
+
+
+
+if(!wheel)
+
+return;
+
+
+
+
+
+
+
+let rotate=
+
+3600 -
+
+(number*9.73);
+
+
+
+
+
+
+wheel.style.transform=
+
+"rotate("+rotate+"deg)";
+
+
+
+
+
+
+let result=
+
+document.getElementById(
+"rouletteResult"
+);
+
+
+
+if(result)
+
+result.innerHTML=
+
+"Выпало: "+number;
+
+
+
+}
