@@ -1,96 +1,74 @@
-// UralCoin API CONNECT v2
-// Связь приложения с сервером
+// ===================================
+// URALcoin APP v16
+// Stable Click + Balance Sync
+// ===================================
 
 
-const API_URL =
-
-"https://ТВОЙ-АДРЕС-RAILWAY.up.railway.app";
+let tg = null;
 
 
+if(
+window.Telegram &&
+window.Telegram.WebApp
+){
+
+tg = window.Telegram.WebApp;
+
+tg.ready();
+
+tg.expand();
+
+}
+
+
+
+let player = null;
 
 
 
 
 
-const API = {
+// ===============================
+// LOAD PLAYER
+// ===============================
+
+
+async function loadPlayer(){
+
+
+player = Storage.getPlayer();
 
 
 
 
+if(!player.id){
 
-async syncUser(){
+
+console.log(
+"NO USER ID"
+);
+
+
+return;
+
+
+}
+
+
+
 
 
 
 try{
 
 
+let response = await fetch(
 
-const player =
-Storage.getPlayer();
+CONFIG.API_URL +
 
+"/user/" +
 
-
-
-
-if(
-!player.id
-){
-
-return null;
-
-}
-
-
-
-
-
-
-
-const response =
-
-await fetch(
-
-API_URL + "/user",
-
-{
-
-
-method:"POST",
-
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-body:JSON.stringify({
-
-
-id:player.id,
-
-
-name:player.name,
-
-
-username:player.username,
-
-
-photo:player.photo
-
-
-})
-
-
-}
-
-
+player.id
 
 );
 
@@ -98,46 +76,26 @@ photo:player.photo
 
 
 
-
-
-
-const serverPlayer =
-await response.json();
+let serverUser = await response.json();
 
 
 
 
 
-
-player.balance =
-
-Number(
-serverPlayer.balance || 0
-);
+if(serverUser){
 
 
 
+player = {
 
 
-
-player.friends =
-
-Number(
-serverPlayer.friends || 0
-);
+...player,
 
 
+...serverUser
 
 
-
-
-player.referrer =
-
-serverPlayer.referrer ||
-null;
-
-
-
+};
 
 
 
@@ -145,114 +103,51 @@ Storage.savePlayer(player);
 
 
 
-
-
-
-return serverPlayer;
-
-
-
-}
-
-catch(error){
-
-
-
-console.log(
-
-"API sync error",
-
-error
-
-);
-
-
-
-return null;
-
-
 }
 
 
 
-},
+
+updateScreen();
 
 
 
 
 
 
+// запуск промокода после синхронизации
 
 
+setTimeout(()=>{
 
 
-async syncBalance(){
+if(typeof createPromo === "function"){
 
 
-
-try{
-
-
-
-const player =
-Storage.getPlayer();
-
-
-
-
-
-
-await fetch(
-
-API_URL + "/balance",
-
-{
-
-
-method:"POST",
-
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-body:JSON.stringify({
-
-
-id:player.id,
-
-
-balance:player.balance
-
-
-})
+createPromo();
 
 
 }
 
 
 
-);
+},1500);
+
 
 
 
 
 
 }
+
+
 
 catch(error){
 
 
 console.log(
 
-"Balance sync error",
+"PLAYER LOAD ERROR",
 
 error
 
@@ -264,126 +159,28 @@ error
 
 
 
-},
-
-
-
-
-
-
-
-
-
-
-async getTop(){
-
-
-
-try{
-
-
-
-const response =
-
-await fetch(
-
-API_URL + "/top"
-
-);
-
-
-
-
-
-return await response.json();
-
-
-
-}
-
-catch(error){
-
-
-
-console.log(
-
-"Top error",
-
-error
-
-);
-
-
-
-return [];
-
 }
 
 
 
-},
 
 
 
 
 
 
+// ===============================
+// CLICK
+// ===============================
+
+
+function setupClick(){
 
 
 
+const button = document.getElementById(
 
-async sendReferral(referrerId){
-
-
-
-try{
-
-
-
-const player =
-Storage.getPlayer();
-
-
-
-
-
-
-await fetch(
-
-API_URL + "/referral",
-
-{
-
-
-method:"POST",
-
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-body:JSON.stringify({
-
-
-userId:player.id,
-
-
-referrerId:String(referrerId)
-
-
-})
-
-
-}
-
-
+"clickButton"
 
 );
 
@@ -392,24 +189,82 @@ referrerId:String(referrerId)
 
 
 
+if(!button){
+
+
+return;
+
+
 }
 
-catch(error){
 
 
 
-console.log(
 
-"Referral error",
 
-error
+
+button.onclick = async function(){
+
+
+
+let user = Storage.getPlayer();
+
+
+
+
+
+
+let power = Number(
+
+user.clickPower || 0.01
 
 );
 
 
 
-}
 
+
+
+user.balance =
+
+Number(user.balance || 0)
+
++
+
+power;
+
+
+
+
+
+
+
+Storage.savePlayer(user);
+
+
+
+
+
+
+
+updateScreen();
+
+
+
+
+
+
+syncBalance();
+
+
+
+
+
+
+if(typeof createClickEffect==="function"){
+
+
+createClickEffect(power);
 
 
 }
@@ -425,5 +280,330 @@ error
 
 
 
+}
 
-window.API = API;
+
+
+
+
+
+
+
+
+// ===============================
+// SERVER SYNC
+// ===============================
+
+
+async function syncBalance(){
+
+
+
+let user = Storage.getPlayer();
+
+
+
+
+
+try{
+
+
+await fetch(
+
+CONFIG.API_URL+"/sync",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+
+body:JSON.stringify({
+
+
+id:String(user.id),
+
+
+balance:Number(user.balance)
+
+
+})
+
+
+}
+
+);
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+
+"SYNC ERROR",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SCREEN UPDATE
+// ===============================
+
+
+function updateScreen(){
+
+
+
+let user = Storage.getPlayer();
+
+
+
+
+
+const balance = document.getElementById(
+
+"balance"
+
+);
+
+
+
+
+if(balance){
+
+
+
+balance.innerText =
+
+Number(user.balance || 0)
+
+.toFixed(3)
+
+.replace(".",",");
+
+
+
+}
+
+
+
+
+
+
+const power = document.getElementById(
+
+"clickPower"
+
+);
+
+
+
+
+
+
+if(power){
+
+
+
+power.innerText =
+
+Number(user.clickPower || 0.01)
+
+.toFixed(3)
+
+.replace(".",",");
+
+
+
+}
+
+
+
+
+
+
+const second = document.getElementById(
+
+"secondPower"
+
+);
+
+
+
+
+
+if(second){
+
+
+second.innerText =
+
+Number(user.autoPower || 0)
+
+.toFixed(3)
+
+.replace(".",",");
+
+
+
+}
+
+
+
+
+
+
+const crystals = document.getElementById(
+
+"crystals"
+
+);
+
+
+
+
+
+
+if(crystals){
+
+
+
+crystals.innerText =
+
+user.crystals || 0;
+
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// AUTO INCOME
+// ===============================
+
+
+setInterval(()=>{
+
+
+
+let user = Storage.getPlayer();
+
+
+
+
+
+if(
+
+Number(user.autoPower)>0
+
+){
+
+
+
+user.balance =
+
+Number(user.balance || 0)
+
++
+
+Number(user.autoPower);
+
+
+
+
+
+
+
+Storage.savePlayer(user);
+
+
+
+updateScreen();
+
+
+
+syncBalance();
+
+
+
+}
+
+
+
+},1000);
+
+
+
+
+
+
+
+
+
+// ===============================
+// START
+// ===============================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+setupClick();
+
+
+loadPlayer();
+
+
+
+}
+
+);
