@@ -3622,6 +3622,129 @@ overflow-y:auto;
 height:auto;
 
 }
+/* ===============================
+FIX CLICK BUTTON CUT
+=============================== */
+
+
+#home{
+
+position:relative;
+
+height:100vh;
+
+overflow:hidden!important;
+
+}
+
+
+
+
+.click-area{
+
+position:absolute;
+
+left:0;
+
+bottom:0;
+
+width:100%;
+
+height:420px;
+
+overflow:hidden;
+
+z-index:5;
+
+pointer-events:none;
+
+}
+
+
+
+
+.click-button{
+
+pointer-events:auto;
+
+
+position:absolute;
+
+
+left:50%;
+
+top:120px;
+
+
+transform:translateX(-50%);
+
+
+
+width:520px;
+
+height:520px;
+
+
+border-radius:50%;
+
+
+
+background:
+
+radial-gradient(
+
+circle at 40% 30%,
+
+#fff36b,
+
+#ffc400 35%,
+
+#d88900 70%,
+
+#8b5200
+
+);
+
+
+
+border:
+
+10px solid rgba(255,215,0,.9);
+
+
+
+box-shadow:
+
+0 0 80px gold,
+
+inset 0 0 80px rgba(255,255,255,.5);
+
+
+
+z-index:5;
+
+}
+
+
+
+
+/* меню полностью закрывает кнопку */
+
+
+.bottom-nav{
+
+position:fixed!important;
+
+bottom:15px;
+
+left:4%;
+
+width:92%;
+
+z-index:99999!important;
+
+
+}
 
 
 
