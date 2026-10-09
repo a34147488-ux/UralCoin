@@ -1,16 +1,16 @@
 // ===================================
-// URALcoin ROULETTE v12 FINAL
-// Animation + Result + History
+// URALcoin ROULETTE v13 FINAL
+// Wheel + Numbers + Animation
 // ===================================
 
 
-let selectedBet = null;
+let rouletteSelectedBet = null;
 
-let rouletteLocked = false;
+let rouletteBusy = false;
 
-let lastResult = null;
+let currentRotation = 0;
 
-let wheelRotation = 0;
+let lastRouletteResult = null;
 
 
 
@@ -19,35 +19,38 @@ let wheelRotation = 0;
 
 
 // ===================================
-// START
+// INIT
 // ===================================
 
 
 function initRoulette(){
 
 
-if(document.body.dataset.roulette)
+if(document.body.dataset.rouletteReady)
 
 return;
 
 
-document.body.dataset.roulette="on";
+
+document.body.dataset.rouletteReady="true";
 
 
 
-createNumbers();
 
 
-bindButtons();
+buildWheel();
 
 
-loadState();
+bindRouletteButtons();
+
+
+updateRouletteState();
 
 
 
 setInterval(
 
-loadState,
+updateRouletteState,
 
 1000
 
@@ -55,7 +58,7 @@ loadState,
 
 
 
-loadHistory();
+loadRouletteHistory();
 
 
 
@@ -70,17 +73,15 @@ loadHistory();
 
 
 // ===================================
-// CREATE WHEEL NUMBERS
+// WHEEL BUILD
 // ===================================
 
 
-function createNumbers(){
+function buildWheel(){
 
 
 
-let wheel=
-
-document.getElementById(
+let wheel = document.getElementById(
 "rouletteWheel"
 );
 
@@ -93,12 +94,16 @@ return;
 
 
 
+
 wheel.innerHTML="";
 
 
 
 
-let red=[
+
+
+let redNumbers=[
+
 
 1,3,5,7,9,
 
@@ -107,6 +112,7 @@ let red=[
 19,21,23,25,27,
 
 30,32,34,36
+
 
 ];
 
@@ -119,17 +125,17 @@ for(let i=0;i<=36;i++){
 
 
 
-let n=document.createElement(
+let number=document.createElement(
 "div"
 );
 
 
 
-n.className="wheel-number";
+number.className="wheel-number";
 
 
 
-n.innerText=i;
+number.innerHTML=i;
 
 
 
@@ -139,15 +145,23 @@ n.innerText=i;
 if(i===0){
 
 
-n.classList.add("green");
+
+number.classList.add(
+"green"
+);
+
 
 
 }
 
-else if(red.includes(i)){
+else if(redNumbers.includes(i)){
 
 
-n.classList.add("red");
+
+number.classList.add(
+"red"
+);
+
 
 
 }
@@ -155,7 +169,11 @@ n.classList.add("red");
 else{
 
 
-n.classList.add("black");
+
+number.classList.add(
+"black"
+);
+
 
 
 }
@@ -166,21 +184,27 @@ n.classList.add("black");
 
 
 
-let angle=
+let angle =
 
-(i*360/37)-90;
+(i*360/37)
 
+-
 
-
-
-
-let radius=115;
+90;
 
 
 
 
 
-let x=
+
+let radius=122;
+
+
+
+
+
+
+let x =
 
 Math.cos(
 
@@ -196,7 +220,7 @@ radius;
 
 
 
-let y=
+let y =
 
 Math.sin(
 
@@ -213,13 +237,15 @@ radius;
 
 
 
-n.style.left=
+
+number.style.left=
 
 "calc(50% + "+x+"px)";
 
 
 
-n.style.top=
+
+number.style.top=
 
 "calc(50% + "+y+"px)";
 
@@ -228,11 +254,21 @@ n.style.top=
 
 
 
-wheel.appendChild(n);
+
+number.dataset.number=i;
+
+
+
+
+
+
+wheel.appendChild(number);
 
 
 
 }
+
+
 
 
 
@@ -251,7 +287,9 @@ wheel.appendChild(n);
 // ===================================
 
 
-function bindButtons(){
+function bindRouletteButtons(){
+
+
 
 
 
@@ -259,17 +297,21 @@ document
 
 .querySelectorAll(".roulette-bet")
 
-.forEach(btn=>{
+.forEach(button=>{
 
 
 
-btn.onclick=function(){
+
+
+button.onclick=function(){
 
 
 
-if(rouletteLocked)
+if(rouletteBusy)
 
 return;
+
+
 
 
 
@@ -281,11 +323,15 @@ document
 
 .forEach(b=>{
 
+
 b.classList.remove(
 "active"
 );
 
+
+
 });
+
 
 
 
@@ -301,7 +347,8 @@ this.classList.add(
 
 
 
-selectedBet=
+
+rouletteSelectedBet=
 
 this.dataset.bet;
 
@@ -312,7 +359,11 @@ this.dataset.bet;
 
 
 
+
+
 });
+
+
 
 
 
@@ -328,13 +379,16 @@ document.getElementById(
 
 
 
+
+
+
 if(start){
 
 
 
 start.onclick=
 
-makeBet;
+sendRouletteBet;
 
 
 
@@ -353,15 +407,15 @@ makeBet;
 
 
 // ===================================
-// SEND BET
+// BET
 // ===================================
 
 
-async function makeBet(){
+async function sendRouletteBet(){
 
 
 
-let msg=
+let message=
 
 document.getElementById(
 "rouletteMessage"
@@ -371,38 +425,33 @@ document.getElementById(
 
 
 
-if(rouletteLocked){
 
-
-msg.innerText=
-
-"Раунд завершён, ждём результат";
-
-
-return;
-
-
-}
+if(!rouletteSelectedBet){
 
 
 
-
-
-
-
-if(!selectedBet){
-
-
-msg.innerText=
+message.innerText=
 
 "Выберите ставку";
 
 
+
 return;
+
 
 
 }
 
+
+
+
+
+
+let input=
+
+document.getElementById(
+"rouletteAmount"
+);
 
 
 
@@ -411,15 +460,8 @@ return;
 
 let amount=
 
-Number(
+Number(input.value);
 
-document.getElementById(
-
-"rouletteAmount"
-
-).value
-
-);
 
 
 
@@ -429,16 +471,18 @@ document.getElementById(
 if(amount<=0){
 
 
-msg.innerText=
+
+message.innerText=
 
 "Введите сумму";
+
 
 
 return;
 
 
-}
 
+}
 
 
 
@@ -458,7 +502,7 @@ try{
 
 
 
-let res=
+let response=
 
 await fetch(
 
@@ -472,23 +516,33 @@ method:"POST",
 
 headers:{
 
+
 "Content-Type":
 
 "application/json"
 
+
+
 },
+
 
 body:JSON.stringify({
 
+
 id:String(player.id),
+
 
 amount:amount,
 
-type:selectedBet
+
+type:rouletteSelectedBet
+
+
 
 })
 
 }
+
 
 );
 
@@ -497,17 +551,35 @@ type:selectedBet
 
 
 
+
+
 let data=
 
-await res.json();
+await response.json();
 
 
 
 
 
-msg.innerText=
+
+message.innerText=
 
 data.message;
+
+
+
+
+
+
+if(data.success){
+
+
+
+input.value="";
+
+
+
+}
 
 
 
@@ -517,13 +589,9 @@ catch(e){
 
 
 
-console.log(e);
+message.innerText=
 
-
-
-msg.innerText=
-
-"Ошибка соединения";
+"Нет соединения с сервером";
 
 
 
@@ -532,8 +600,6 @@ msg.innerText=
 
 
 }
-
-
 
 
 
@@ -546,7 +612,7 @@ msg.innerText=
 // ===================================
 
 
-async function loadState(){
+async function updateRouletteState(){
 
 
 
@@ -554,7 +620,7 @@ try{
 
 
 
-let res=
+let response=
 
 await fetch(
 
@@ -568,10 +634,10 @@ CONFIG.API_URL+
 
 
 
+
 let data=
 
-await res.json();
-
+await response.json();
 
 
 
@@ -583,6 +649,9 @@ let timer=
 document.getElementById(
 "rouletteTimer"
 );
+
+
+
 
 
 
@@ -611,26 +680,27 @@ data.timeLeft
 
 
 
-
 if(
 
 data.result &&
 
-data.result.number!==undefined &&
+data.result.number!==undefined
 
-data.result.number!==lastResult
+&&
+
+data.result.number!==lastRouletteResult
 
 ){
 
 
 
-lastResult=
+lastRouletteResult=
 
 data.result.number;
 
 
 
-spinWheel(
+startWheelAnimation(
 
 data.result.number
 
@@ -647,44 +717,41 @@ data.result.number
 catch(e){
 
 
+
 console.log(
-"state error",
+
+"roulette state error",
+
 e
+
 );
 
 
-}
-
-
 
 }
 
 
 
-
-
-
-
-
-
+}
 // ===================================
-// SPIN
+// SPIN ANIMATION
 // ===================================
 
 
-function spinWheel(number){
+function startWheelAnimation(number){
 
 
 
-rouletteLocked=true;
+rouletteBusy=true;
 
 
 
-let wheel=
 
-document.getElementById(
+let wheel=document.getElementById(
 "rouletteWheel"
 );
+
+
 
 
 
@@ -698,28 +765,49 @@ return;
 
 
 
-let one=
 
-360/37;
+let sector=
 
-
-
-
-
-let target=
-
-(number*one);
+360 / 37;
 
 
 
 
 
 
-wheelRotation +=
 
-(360*8)+
+// число должно попасть под верхнюю стрелку
 
-(360-target);
+let stop=
+
+360 -
+
+(number * sector);
+
+
+
+
+
+
+
+currentRotation +=
+
+(360 * 8)
+
++
+
+stop;
+
+
+
+
+
+
+
+wheel.style.transition=
+
+"transform 6s cubic-bezier(.15,.85,.25,1)";
+
 
 
 
@@ -728,7 +816,13 @@ wheelRotation +=
 
 wheel.style.transform=
 
-"rotate("+wheelRotation+"deg)";
+"rotate("+
+
+currentRotation+
+
+"deg)";
+
+
 
 
 
@@ -740,6 +834,47 @@ setTimeout(()=>{
 
 
 
+showRouletteResult(
+number
+);
+
+
+
+rouletteBusy=false;
+
+
+
+loadRouletteHistory();
+
+
+
+},6500);
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===================================
+// RESULT
+// ===================================
+
+
+function showRouletteResult(number){
+
+
+
 let result=
 
 document.getElementById(
@@ -748,17 +883,62 @@ document.getElementById(
 
 
 
-if(result){
 
 
 
-result.innerText=
+let color="";
 
-"Выпало: "
 
-+
 
-number;
+
+
+
+if(number===0){
+
+
+
+color=
+
+"🟢 Зеленое";
+
+
+
+}
+
+else{
+
+
+
+let red=[
+
+
+1,3,5,7,9,
+
+12,14,16,18,
+
+19,21,23,25,27,
+
+30,32,34,36
+
+
+];
+
+
+
+
+
+
+color=
+
+red.includes(number)
+
+?
+
+"🔴 Красное"
+
+:
+
+"⚫ Черное";
 
 
 
@@ -766,15 +946,84 @@ number;
 
 
 
-rouletteLocked=false;
 
 
 
-loadHistory();
+
+if(result){
 
 
 
-},5200);
+result.innerHTML=
+
+
+"Выпало: <b>"
+
++
+
+number
+
++
+
+"</b> "
+
++
+
+color;
+
+
+
+}
+
+
+
+
+
+
+let numbers=
+
+document.querySelectorAll(
+
+".wheel-number"
+
+);
+
+
+
+
+
+
+numbers.forEach(n=>{
+
+
+
+n.classList.remove(
+"winner"
+);
+
+
+
+if(
+
+Number(n.dataset.number)===number
+
+){
+
+
+
+n.classList.add(
+"winner"
+);
+
+
+
+}
+
+
+
+});
+
+
 
 
 
@@ -793,7 +1042,7 @@ loadHistory();
 // ===================================
 
 
-async function loadHistory(){
+async function loadRouletteHistory(){
 
 
 
@@ -802,6 +1051,8 @@ let box=
 document.getElementById(
 "rouletteHistory"
 );
+
+
 
 
 
@@ -818,7 +1069,7 @@ try{
 
 
 
-let res=
+let response=
 
 await fetch(
 
@@ -832,9 +1083,13 @@ CONFIG.API_URL+
 
 
 
+
+
 let data=
 
-await res.json();
+await response.json();
+
+
 
 
 
@@ -848,13 +1103,48 @@ box.innerHTML="";
 
 
 
+
+
+if(
+
+!data.history ||
+
+data.history.length===0
+
+){
+
+
+
+box.innerHTML=
+
+"История пуста";
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
 data.history.forEach(item=>{
 
 
 
-let row=document.createElement(
+let row=
+
+document.createElement(
 "div"
 );
+
+
 
 
 
@@ -866,9 +1156,48 @@ row.className=
 
 
 
+
+let icon="";
+
+
+
+
+
+
+if(item.color==="red")
+
+icon="🔴";
+
+
+
+if(item.color==="black")
+
+icon="⚫";
+
+
+
+if(item.color==="green")
+
+icon="🟢";
+
+
+
+
+
+
+
+
 row.innerHTML=
 
+
 `
+
+<span>
+
+${icon}
+
+</span>
+
 
 <b>
 
@@ -876,11 +1205,6 @@ ${item.number}
 
 </b>
 
-<span>
-
-${item.color}
-
-</span>
 
 <small>
 
@@ -889,6 +1213,8 @@ ${item.date}
 </small>
 
 `;
+
+
 
 
 
@@ -904,13 +1230,20 @@ box.appendChild(row);
 
 
 
-
 }
 
 catch(e){
 
 
-console.log(e);
+
+console.log(
+
+"history error",
+
+e
+
+);
+
 
 
 }
@@ -925,6 +1258,11 @@ console.log(e);
 
 
 
+
+
+// ===================================
+// START
+// ===================================
 
 
 document.addEventListener(
@@ -934,6 +1272,7 @@ document.addEventListener(
 ()=>{
 
 
+
 setTimeout(
 
 initRoulette,
@@ -941,6 +1280,7 @@ initRoulette,
 500
 
 );
+
 
 
 });
