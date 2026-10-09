@@ -1,28 +1,312 @@
 // ===================================
-// URALcoin APP v15.1
-// Click + Server Balance Sync Fix
+// URALcoin APP v15.5
+// Server Balance Sync
+// Stable Click System
 // ===================================
 
 
-let player =
-Storage.getPlayer();
+const tg = window.Telegram.WebApp;
+
+
+tg.ready();
+
+tg.expand();
+
+
+
+
+
+let player = null;
 
 
 
 
 
 // ===============================
-// FORMAT
+// LOAD PLAYER
 // ===============================
 
 
-function formatNumber(value){
+async function loadPlayer(){
 
-return Number(value || 0)
 
-.toFixed(3)
+player = Storage.getPlayer();
 
-.replace(".",",");
+
+
+if(!player.id){
+
+console.log("NO TELEGRAM USER");
+
+return;
+
+}
+
+
+
+
+try{
+
+
+let response = await fetch(
+
+CONFIG.API_URL +
+
+"/user/" +
+
+player.id
+
+);
+
+
+
+let serverUser = await response.json();
+
+
+
+
+
+if(serverUser){
+
+
+
+player = {
+
+
+...player,
+
+
+...serverUser
+
+
+};
+
+
+
+Storage.savePlayer(player);
+
+
+
+}
+
+
+
+
+
+updateScreen();
+
+
+
+}
+
+
+
+catch(e){
+
+
+console.log(
+
+"LOAD ERROR",
+
+e
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// CLICK
+// ===============================
+
+
+const clickButton =
+
+document.getElementById(
+
+"clickButton"
+
+);
+
+
+
+
+
+
+if(clickButton){
+
+
+
+clickButton.onclick = async ()=>{
+
+
+
+let player = Storage.getPlayer();
+
+
+
+
+
+let power =
+
+Number(
+
+player.clickPower || 0.01
+
+);
+
+
+
+
+
+
+
+player.balance =
+
+Number(player.balance || 0)
+
++
+
+power;
+
+
+
+
+
+
+
+Storage.savePlayer(player);
+
+
+
+
+
+updateScreen();
+
+
+
+
+
+
+// отправляем на сервер
+
+
+syncBalance();
+
+
+
+
+
+
+createClickEffect(power);
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SYNC SERVER
+// ===============================
+
+
+async function syncBalance(){
+
+
+
+let player = Storage.getPlayer();
+
+
+
+
+try{
+
+
+
+await fetch(
+
+CONFIG.API_URL+"/sync",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":
+
+"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+id:String(player.id),
+
+
+balance:Number(player.balance)
+
+
+})
+
+
+}
+
+);
+
+
+
+
+}
+
+
+
+catch(e){
+
+
+console.log(
+
+"SYNC ERROR",
+
+e
+
+);
+
+
+
+}
+
+
 
 }
 
@@ -42,81 +326,85 @@ return Number(value || 0)
 function updateScreen(){
 
 
-player =
-Storage.getPlayer();
+
+let player = Storage.getPlayer();
+
 
 
 
 
 let balance =
+
 document.getElementById(
+
 "balance"
+
 );
-
-
-
-let power =
-document.getElementById(
-"clickPower"
-);
-
-
-
-let friends =
-document.getElementById(
-"friendsCount"
-);
-
-
-
-let second =
-document.getElementById(
-"secondPower"
-);
-
-
 
 
 
 if(balance)
 
 balance.innerText =
-formatNumber(
-player.balance
-);
 
+Number(player.balance || 0)
+
+.toFixed(3)
+
+.replace(".",",");
+
+
+
+
+
+
+
+let power =
+
+document.getElementById(
+
+"clickPower"
+
+);
 
 
 
 if(power)
 
 power.innerText =
-formatNumber(
-player.clickPower
+
+Number(player.clickPower || 0)
+
+.toFixed(3)
+
+.replace(".",",");
+
+
+
+
+
+
+
+
+let second =
+
+document.getElementById(
+
+"secondPower"
+
 );
-
-
-
-
-
-if(friends)
-
-friends.innerText =
-player.friends || 0;
-
 
 
 
 if(second)
 
 second.innerText =
-formatNumber(
-player.autoPower
-);
 
+Number(player.autoPower || 0)
 
+.toFixed(3)
 
-}
+.replace(".",",");
 
 
 
@@ -124,182 +412,21 @@ player.autoPower
 
 
 
+let crystals =
 
-
-// ===============================
-// SERVER SYNC
-// ===============================
-
-
-async function syncBalance(){
-
-
-
-player =
-Storage.getPlayer();
-
-
-
-
-if(!player.id)
-
-return;
-
-
-
-
-
-
-try{
-
-
-
-let response =
-await fetch(
-
-CONFIG.API_URL+"/sync",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-
-"application/json"
-
-},
-
-
-body:JSON.stringify({
-
-id:String(player.id),
-
-balance:Number(player.balance || 0)
-
-})
-
-
-}
-
-);
-
-
-
-
-
-let data =
-await response.json();
-
-
-
-console.log(
-"SYNC",
-data
-);
-
-
-
-}
-
-catch(e){
-
-
-console.log(
-"SYNC ERROR",
-e
-);
-
-
-
-}
-
-
-
-}
-
-
-
-window.syncBalance =
-syncBalance;
-
-
-
-
-
-
-
-
-
-// ===============================
-// CLICK
-// ===============================
-
-
-const clickButton =
 document.getElementById(
-"clickButton"
+
+"crystals"
+
 );
 
 
 
+if(crystals)
 
+crystals.innerText =
 
-
-if(clickButton){
-
-
-
-clickButton.onclick=()=>{
-
-
-
-player =
-Storage.getPlayer();
-
-
-
-
-
-player.balance +=
-
-Number(
-player.clickPower
-);
-
-
-
-
-
-
-Storage.savePlayer(
-player
-);
-
-
-
-
-
-updateScreen();
-
-
-
-
-
-syncBalance();
-
-
-
-
-
-showClickAnimation(
-player.clickPower
-);
-
-
-
-};
+player.crystals || 0;
 
 
 
@@ -318,29 +445,36 @@ player.clickPower
 // ===============================
 
 
-function showClickAnimation(value){
+function createClickEffect(value){
 
 
-let text =
-document.createElement(
+
+let el=document.createElement(
+
 "div"
+
 );
 
 
 
-text.className =
-"click-number";
+el.className="click-number";
 
 
 
-text.innerText =
+el.innerText=
+
 "+"+
-formatNumber(value)+
-" U";
+
+Number(value)
+
+.toFixed(3);
 
 
 
-document.body.appendChild(text);
+
+
+document.body.appendChild(el);
+
 
 
 
@@ -349,7 +483,7 @@ document.body.appendChild(text);
 setTimeout(()=>{
 
 
-text.remove();
+el.remove();
 
 
 },800);
@@ -367,35 +501,33 @@ text.remove();
 
 
 // ===============================
-// AUTO POWER
+// AUTO INCOME
 // ===============================
 
 
 setInterval(()=>{
 
 
-
-player =
-Storage.getPlayer();
+let player = Storage.getPlayer();
 
 
 
 
+if(
 
-if(Number(player.autoPower)>0){
+Number(player.autoPower)>0
+
+){
 
 
 
 player.balance +=
 
-Number(player.autoPower)/60;
+Number(player.autoPower);
 
 
 
-
-Storage.savePlayer(
-player
-);
+Storage.savePlayer(player);
 
 
 
@@ -421,131 +553,7 @@ syncBalance();
 
 
 
-// ===============================
-// PERIOD SYNC
-// ===============================
+// START
 
 
-setInterval(
-
-syncBalance,
-
-5000
-
-);
-
-
-
-
-
-
-
-
-
-// ===============================
-// MENU
-// ===============================
-
-
-document
-
-.querySelectorAll(
-".nav"
-)
-
-.forEach(button=>{
-
-
-
-button.onclick=()=>{
-
-
-
-let page =
-button.dataset.page;
-
-
-
-
-
-document
-
-.querySelectorAll(
-".page"
-)
-
-.forEach(p=>{
-
-
-p.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-
-
-
-let target =
-document.getElementById(
-page
-);
-
-
-
-if(target)
-
-target.classList.add(
-"active"
-);
-
-
-
-
-
-
-document
-
-.querySelectorAll(
-".nav"
-)
-
-.forEach(b=>{
-
-
-b.classList.remove(
-"active"
-);
-
-
-});
-
-
-
-
-
-button.classList.add(
-"active"
-);
-
-
-
-
-};
-
-
-
-});
-
-
-
-
-
-
-
-
-
-updateScreen();
+loadPlayer();
