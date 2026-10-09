@@ -1,39 +1,31 @@
 /* ===================================
-URALcoin STYLE v15.4
-FIX DESIGN WITHOUT BREAKING JS
+URALcoin STYLE v16
+WINTER GOLD RESTORE
+NO JS BREAK
 =================================== */
 
 
 *{
-
 box-sizing:border-box;
-
 margin:0;
-
 padding:0;
-
 -webkit-tap-highlight-color:transparent;
-
 }
-
 
 
 html,
 body{
 
-
 width:100%;
-
 height:100%;
 
 overflow:hidden;
 
-font-family:Arial,sans-serif;
+font-family:Arial, sans-serif;
 
-background:#090414;
+background:#080312;
 
-color:white;
-
+color:#fff;
 
 }
 
@@ -41,17 +33,15 @@ color:white;
 
 .app{
 
-
 width:100%;
-
 height:100vh;
 
 position:relative;
 
 overflow:hidden;
 
-
 }
+
 
 
 
@@ -63,7 +53,6 @@ BACKGROUND
 
 .city-bg{
 
-
 position:absolute;
 
 inset:0;
@@ -72,19 +61,12 @@ inset:0;
 background:
 
 linear-gradient(
-
-135deg,
-
-rgba(255,190,0,.25),
-
-rgba(70,0,120,.75)
-
+180deg,
+rgba(10,5,25,.35),
+rgba(10,5,25,.85)
 ),
 
-
 url("ekaterinburg.jpg");
-
-
 
 background-size:cover;
 
@@ -93,7 +75,6 @@ background-position:center;
 
 z-index:0;
 
-
 }
 
 
@@ -101,12 +82,11 @@ z-index:0;
 
 
 /* ===============================
-SNOW FIX ONLY
+SNOW FIX
 =============================== */
 
 
 .snow{
-
 
 position:absolute;
 
@@ -116,8 +96,7 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:20;
-
+z-index:10;
 
 }
 
@@ -126,14 +105,17 @@ z-index:20;
 .snow::before{
 
 
-content:"❄  ❅  ❆  ❄  ❅";
+content:"❄  ❅  ❆  ❄  ❅  ❆";
 
 
 position:absolute;
 
-top:-50px;
+
+top:-80px;
+
 
 left:0;
+
 
 width:100%;
 
@@ -143,44 +125,71 @@ text-align:center;
 
 font-size:28px;
 
-letter-spacing:40px;
+
+letter-spacing:35px;
 
 
-opacity:.5;
+opacity:.65;
 
 
 
-animation:
-
-snowFall 14s linear infinite;
+animation:snowDown 15s linear infinite;
 
 
 }
 
 
 
-@keyframes snowFall{
+
+.snow::after{
 
 
-from{
+content:"❄  ❅  ❆";
 
+
+position:absolute;
+
+
+top:-120px;
+
+
+left:25%;
+
+
+font-size:22px;
+
+
+opacity:.45;
+
+
+
+animation:snowDown 22s linear infinite;
+
+
+}
+
+
+
+@keyframes snowDown{
+
+
+0%{
 
 transform:translateY(-100px);
 
+}
+
+
+100%{
+
+transform:translateY(120vh);
 
 }
 
 
-to{
-
-
-transform:translateY(110vh);
-
-
 }
 
 
-}
 
 
 
@@ -188,24 +197,118 @@ transform:translateY(110vh);
 
 
 /* ===============================
-HEADER
+GARLAND
 =============================== */
 
 
-.header{
+.garland{
 
 
 position:absolute;
 
 
-top:40px;
+top:0;
 
+
+left:0;
+
+
+width:100%;
+
+
+height:45px;
+
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+align-items:center;
+
+
+z-index:20;
+
+
+}
+
+
+
+
+.garland span{
+
+
+width:12px;
+
+
+height:12px;
+
+
+border-radius:50%;
+
+
+background:#ffd700;
+
+
+box-shadow:0 0 15px gold;
+
+
+animation:blink 1.5s infinite alternate;
+
+
+}
+
+
+
+.garland span:nth-child(even){
+
+animation-delay:.4s;
+
+background:#fff;
+
+}
+
+
+
+
+@keyframes blink{
+
+
+from{
+
+opacity:.4;
+
+}
+
+
+to{
+
+opacity:1;
+
+}
+
+
+}
+
+
+
+
+
+/* ===============================
+HEADER AVATAR
+=============================== */
+
+
+.header{
+
+position:absolute;
+
+top:50px;
 
 left:20px;
 
-
 z-index:50;
-
 
 }
 
@@ -214,13 +317,11 @@ z-index:50;
 
 .avatar{
 
+width:60px;
 
-width:65px;
-
-height:65px;
+height:60px;
 
 border-radius:50%;
-
 
 overflow:hidden;
 
@@ -228,21 +329,17 @@ overflow:hidden;
 border:3px solid #ffd700;
 
 
-background:#1b1028;
-
-
-box-shadow:
-
-0 0 20px gold;
+background:#160c25;
 
 
 display:flex;
 
-
 align-items:center;
 
-
 justify-content:center;
+
+
+box-shadow:0 0 20px gold;
 
 
 }
@@ -251,29 +348,25 @@ justify-content:center;
 
 .avatar img{
 
-
 width:100%;
 
 height:100%;
 
-
 object-fit:cover;
 
+display:none;
 
 }
 
 
 
-
 #avatarLetter{
-
 
 font-size:28px;
 
 font-weight:bold;
 
 color:#ffd700;
-
 
 }
 /* ===============================
@@ -283,15 +376,11 @@ CONTENT
 
 .content{
 
-
 position:absolute;
-
 
 inset:0;
 
-
 z-index:30;
-
 
 }
 
@@ -301,19 +390,16 @@ z-index:30;
 
 .page{
 
-
 display:none;
 
-
 width:100%;
-
 
 height:100%;
 
 
 padding:
 
-120px 20px 100px;
+120px 20px 90px;
 
 
 overflow-y:auto;
@@ -325,9 +411,7 @@ overflow-y:auto;
 
 .page.active{
 
-
 display:block;
-
 
 }
 
@@ -336,11 +420,17 @@ display:block;
 
 
 /* ===============================
-BALANCE
+BALANCE RESTORE
 =============================== */
 
 
 .balance-box{
+
+
+text-align:center;
+
+
+padding-top:20px;
 
 
 background:none;
@@ -350,15 +440,6 @@ border:none;
 
 
 box-shadow:none;
-
-
-backdrop-filter:none;
-
-
-padding:15px 0;
-
-
-text-align:center;
 
 
 }
@@ -373,19 +454,24 @@ text-align:center;
 display:flex;
 
 
-justify-content:center;
-
-
 align-items:center;
 
 
-gap:15px;
+justify-content:center;
+
+
+gap:14px;
 
 
 font-size:42px;
 
 
-font-weight:bold;
+font-weight:700;
+
+
+text-shadow:
+
+0 0 15px rgba(255,215,0,.4);
 
 
 }
@@ -393,17 +479,20 @@ font-weight:bold;
 
 
 
+
+/* маленькая монета возле баланса */
+
+
 .coin-balance{
 
 
-width:65px;
+width:42px;
 
 
-height:65px;
+height:42px;
 
 
 border-radius:50%;
-
 
 
 display:flex;
@@ -422,24 +511,27 @@ linear-gradient(
 
 135deg,
 
-#fff3a0,
+#fff4a3,
 
-#d89b00
+#d99a00
 
 );
 
 
 
-color:#4a2500;
+color:#4a2400;
 
 
-font-size:35px;
+font-size:24px;
+
+
+font-weight:bold;
 
 
 
 box-shadow:
 
-0 0 25px gold;
+0 0 18px gold;
 
 
 }
@@ -451,13 +543,18 @@ box-shadow:
 .crystals{
 
 
-margin-top:20px;
+margin-top:12px;
 
 
-font-size:22px;
+font-size:20px;
+
+
+color:#fff;
 
 
 }
+
+
 
 
 
@@ -467,13 +564,13 @@ font-size:22px;
 display:block;
 
 
-margin-top:8px;
+font-size:12px;
 
 
-font-size:13px;
+opacity:.6;
 
 
-opacity:.55;
+margin-top:5px;
 
 
 }
@@ -485,10 +582,13 @@ opacity:.55;
 .click-power{
 
 
-margin-top:20px;
+margin-top:18px;
 
 
-font-size:20px;
+font-size:18px;
+
+
+color:#ffd86b;
 
 
 }
@@ -499,10 +599,10 @@ font-size:20px;
 .second-power{
 
 
-margin-top:12px;
+margin-top:10px;
 
 
-font-size:18px;
+font-size:16px;
 
 
 }
@@ -512,23 +612,23 @@ font-size:18px;
 
 
 /* ===============================
-CLICK BUTTON
+CLICK ZONE
 =============================== */
 
 
 .fire-zone{
 
 
-height:360px;
+height:350px;
 
 
 display:flex;
 
 
-align-items:center;
-
-
 justify-content:center;
+
+
+align-items:center;
 
 
 position:relative;
@@ -539,22 +639,26 @@ position:relative;
 
 
 
+
 .fire-effect{
 
 
 position:absolute;
 
 
-font-size:90px;
+font-size:80px;
 
 
-opacity:.4;
+opacity:.45;
 
 
 pointer-events:none;
 
 
-animation:pulseFire 2s infinite;
+
+animation:
+
+firePulse 2s infinite;
 
 
 }
@@ -562,51 +666,48 @@ animation:pulseFire 2s infinite;
 
 
 
-@keyframes pulseFire{
+
+@keyframes firePulse{
 
 
 0%{
 
-
 transform:scale(.9);
-
 
 opacity:.3;
 
-
 }
+
 
 
 50%{
 
-
 transform:scale(1.2);
-
 
 opacity:.7;
 
-
 }
+
 
 
 100%{
 
-
 transform:scale(.9);
-
 
 opacity:.3;
 
-
-}
-
-
 }
 
 
 
+}
 
 
+
+
+
+
+/* главная монета */
 
 
 .main-coin{
@@ -631,9 +732,9 @@ radial-gradient(
 
 circle,
 
-#fff5a8,
+#fff4a5,
 
-#e0a000
+#d99400
 
 );
 
@@ -652,7 +753,10 @@ color:#4b2600;
 box-shadow:
 
 
-0 0 50px gold;
+0 0 50px gold,
+
+
+inset 0 0 25px rgba(255,255,255,.5);
 
 
 
@@ -666,7 +770,7 @@ cursor:pointer;
 .main-coin:active{
 
 
-transform:scale(.92);
+transform:scale(.93);
 
 
 }
@@ -680,10 +784,13 @@ transform:scale(.92);
 text-align:center;
 
 
+margin-top:10px;
+
+
+font-size:14px;
+
+
 opacity:.7;
-
-
-font-size:15px;
 
 
 }
@@ -697,7 +804,15 @@ PANELS
 
 background:
 
-rgba(18,8,35,.75);
+linear-gradient(
+
+145deg,
+
+rgba(35,18,55,.85),
+
+rgba(12,5,25,.85)
+
+);
 
 
 
@@ -717,7 +832,11 @@ padding:20px;
 
 box-shadow:
 
-0 0 25px rgba(0,0,0,.35);
+
+0 0 25px rgba(0,0,0,.45),
+
+
+inset 0 0 20px rgba(255,215,0,.05);
 
 
 
@@ -732,17 +851,16 @@ box-shadow:
 text-align:center;
 
 
+font-size:28px;
+
+
 color:#ffd86b;
-
-
-font-size:32px;
 
 
 margin-bottom:20px;
 
 
 }
-
 
 
 
@@ -763,18 +881,17 @@ border-radius:15px;
 
 border:
 
-1px solid rgba(255,215,0,.4);
+1px solid rgba(255,215,0,.35);
 
 
 
 background:
 
-rgba(0,0,0,.3);
+rgba(0,0,0,.35);
 
 
 
 color:white;
-
 
 
 padding:0 15px;
@@ -795,19 +912,27 @@ outline:none;
 
 
 
+
+
+/* ===============================
+BUTTONS
+=============================== */
+
+
 .gold-button{
 
 
 width:100%;
 
 
-height:55px;
+height:52px;
 
 
 border:none;
 
 
 border-radius:18px;
+
 
 
 margin-top:10px;
@@ -820,21 +945,21 @@ linear-gradient(
 
 135deg,
 
-#ffd700,
+#ffe36b,
 
-#d99400
+#d18b00
 
 );
 
 
 
-font-size:17px;
+color:#452300;
 
 
 font-weight:bold;
 
 
-color:#402300;
+font-size:16px;
 
 
 
@@ -847,12 +972,17 @@ align-items:center;
 justify-content:center;
 
 
-
 text-decoration:none;
 
 
-cursor:pointer;
 
+box-shadow:
+
+0 0 20px rgba(255,215,0,.35);
+
+
+
+cursor:pointer;
 
 
 }
@@ -873,44 +1003,46 @@ transform:scale(.96);
 
 
 
-
-
 .menu-card{
 
 
 width:100%;
 
 
-height:55px;
+height:52px;
+
+
+border-radius:18px;
 
 
 margin-top:12px;
 
 
 
-border-radius:18px;
+background:
+
+rgba(255,255,255,.08);
+
 
 
 border:
 
-1px solid rgba(255,215,0,.35);
-
-
-
-background:
-
-rgba(255,255,255,.08);
+1px solid rgba(255,215,0,.3);
 
 
 
 color:white;
 
 
-font-size:17px;
+font-size:16px;
 
+
+
+cursor:pointer;
 
 
 }
+
 
 
 
@@ -920,73 +1052,7 @@ font-size:17px;
 
 
 /* ===============================
-UPGRADES FIX
-=============================== */
-
-
-#upgradeList{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:12px;
-
-
-margin-top:15px;
-
-
-}
-
-
-
-
-
-.upgrade-card{
-
-
-background:
-
-rgba(255,255,255,.08);
-
-
-
-border-radius:18px;
-
-
-padding:15px;
-
-
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.upgrade-card button{
-
-
-margin-top:10px;
-
-
-}
-
-
-
-
-
-
-
-
-/* ===============================
-TOP FIX
+TOP LIST
 =============================== */
 
 
@@ -1007,6 +1073,8 @@ gap:12px;
 
 
 
+
+
 .top-player{
 
 
@@ -1020,26 +1088,33 @@ gap:12px;
 
 
 
+padding:12px;
+
+
+border-radius:20px;
+
+
+
 background:
 
 rgba(255,255,255,.08);
 
 
 
-padding:12px;
-
-
-border-radius:18px;
-
-
-
 border:
 
-1px solid rgba(255,215,0,.2);
+1px solid rgba(255,215,0,.35);
+
+
+
+box-shadow:
+
+0 0 15px rgba(0,0,0,.3);
 
 
 
 }
+
 
 
 
@@ -1056,10 +1131,15 @@ height:55px;
 border-radius:50%;
 
 
+border:2px solid #ffd700;
+
+
 object-fit:cover;
 
 
 }
+
+
 
 
 
@@ -1098,9 +1178,90 @@ color:#ffd700;
 font-size:16px;
 
 
+margin-top:4px;
+
+
+}
+
+
+
+
+
+
+
+/* ===============================
+UPGRADES
+=============================== */
+
+
+#upgradeList{
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:12px;
+
+
+}
+
+
+
+
+
+.upgrade-card{
+
+
+background:
+
+rgba(255,255,255,.08);
+
+
+
+border-radius:20px;
+
+
+padding:15px;
+
+
+
+border:
+
+1px solid rgba(255,215,0,.3);
+
+
+
+}
+
+
+
+
+.upgrade-card h3{
+
+
+color:#ffd86b;
+
+
+margin-bottom:8px;
+
+
+}
+
+
+
+
+.upgrade-card button{
+
+
+margin-top:10px;
+
+
 }
 /* ===============================
-BOTTOM NAV
+BOTTOM NAVIGATION
 =============================== */
 
 
@@ -1110,10 +1271,10 @@ BOTTOM NAV
 position:absolute;
 
 
-bottom:0;
-
-
 left:0;
+
+
+bottom:0;
 
 
 width:100%;
@@ -1135,13 +1296,17 @@ align-items:center;
 
 background:
 
-rgba(10,5,25,.9);
+rgba(8,3,20,.9);
 
 
 
 border-top:
 
-1px solid rgba(255,215,0,.35);
+1px solid rgba(255,215,0,.25);
+
+
+
+backdrop-filter:blur(12px);
 
 
 
@@ -1158,23 +1323,24 @@ z-index:200;
 .nav{
 
 
+background:none;
+
+
 border:none;
 
-
-background:none;
 
 
 color:white;
 
 
-font-size:15px;
-
+font-size:14px;
 
 
 opacity:.65;
 
 
 padding:10px;
+
 
 
 cursor:pointer;
@@ -1201,39 +1367,10 @@ opacity:1;
 
 
 
+.nav:active{
 
 
-/* ===============================
-PROMO
-=============================== */
-
-
-#myPromo{
-
-
-text-align:center;
-
-
-font-weight:bold;
-
-
-color:#ffd700;
-
-
-font-size:20px;
-
-
-}
-
-
-
-
-
-#activatedCount,
-#promoEarn{
-
-
-color:#ffd700;
+transform:scale(.9);
 
 
 }
@@ -1245,59 +1382,7 @@ color:#ffd700;
 
 
 /* ===============================
-TRANSFER SEARCH
-=============================== */
-
-
-#transferResults{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-gap:10px;
-
-
-margin-bottom:10px;
-
-
-}
-
-
-
-.user-result{
-
-
-background:
-
-rgba(255,215,0,.12);
-
-
-
-border:
-
-1px solid rgba(255,215,0,.3);
-
-
-
-border-radius:15px;
-
-
-padding:12px;
-
-
-
-}
-
-
-
-
-
-/* ===============================
-CLICK EFFECT
+CLICK FLOAT
 =============================== */
 
 
@@ -1313,7 +1398,10 @@ left:50%;
 top:55%;
 
 
-transform:translateX(-50%);
+
+transform:
+
+translateX(-50%);
 
 
 
@@ -1327,26 +1415,35 @@ color:#ffd700;
 
 
 
-animation:
+text-shadow:
 
-floatClick .8s forwards;
+0 0 15px gold;
+
+
+
+pointer-events:none;
 
 
 
 z-index:500;
 
 
-pointer-events:none;
+
+animation:
+
+coinFloat .8s forwards;
 
 
 }
 
 
 
-@keyframes floatClick{
 
 
-from{
+@keyframes coinFloat{
+
+
+0%{
 
 
 opacity:1;
@@ -1361,7 +1458,7 @@ translate(-50%,0);
 
 
 
-to{
+100%{
 
 
 opacity:0;
@@ -1375,14 +1472,52 @@ translate(-50%,-100px);
 }
 
 
+
 }
 
 
 
 
 
+
+
+
 /* ===============================
-NO BLOCKING LAYERS
+PREMIUM
+=============================== */
+
+
+.premium{
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#b66cff,
+
+#ffd700
+
+);
+
+
+
+color:#26003d;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+NO BLOCKING FIX
 =============================== */
 
 
@@ -1396,7 +1531,6 @@ pointer-events:none;
 
 
 }
-
 
 
 
@@ -1416,6 +1550,37 @@ z-index:300;
 
 
 
+
+
+
+
+/* ===============================
+SCROLL FIX
+=============================== */
+
+
+::-webkit-scrollbar{
+
+
+display:none;
+
+
+}
+
+
+
+body{
+
+
+overscroll-behavior:none;
+
+
+}
+
+
+
+
+
 /* ===============================
 MOBILE
 =============================== */
@@ -1424,27 +1589,27 @@ MOBILE
 @media(max-width:500px){
 
 
-
-.main-coin{
-
-
-width:160px;
+.balance{
 
 
-height:160px;
-
-
-font-size:60px;
+font-size:36px;
 
 
 }
 
 
 
-.balance{
+
+.main-coin{
 
 
-font-size:34px;
+width:165px;
+
+
+height:165px;
+
+
+font-size:65px;
 
 
 }
@@ -1455,7 +1620,7 @@ font-size:34px;
 .panel h2{
 
 
-font-size:28px;
+font-size:24px;
 
 
 }
