@@ -1,6 +1,6 @@
 // ===================================
-// URALcoin SERVER v17
-// Full API + API KEY
+// URALcoin SERVER v18
+// Full API + Roulette System
 // ===================================
 
 
@@ -116,6 +116,314 @@ loadUsers();
 
 
 // ===============================
+// ROULETTE DATABASE
+// ===============================
+
+
+let roulette = {
+
+
+active:false,
+
+
+started:0,
+
+
+endTime:0,
+
+
+bets:[],
+
+
+
+result:null
+
+
+};
+
+
+
+
+
+
+const rouletteNumbers = [
+
+
+0,
+
+1,2,3,4,5,6,7,8,9,10,
+
+11,12,13,14,15,16,17,18,
+
+19,20,21,22,23,24,
+
+25,26,27,28,29,30,
+
+31,32,33,34,35,36
+
+
+];
+
+
+
+
+
+
+
+
+const redNumbers = [
+
+
+1,3,5,7,9,
+
+12,14,16,18,
+
+19,21,23,25,27,
+
+30,32,34,36
+
+
+];
+
+
+
+
+
+
+
+function isRed(number){
+
+
+return redNumbers.includes(number);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// ROULETTE START
+// ===============================
+
+
+function startRoulette(){
+
+
+
+roulette.active=true;
+
+
+roulette.started=Date.now();
+
+
+roulette.endTime=
+
+Date.now()+25000;
+
+
+roulette.bets=[];
+
+
+roulette.result=null;
+
+
+
+}
+
+
+
+
+
+
+
+
+function finishRoulette(){
+
+
+
+let result =
+
+Math.floor(
+
+Math.random()*37
+
+);
+
+
+
+
+
+roulette.result=result;
+
+
+
+roulette.active=false;
+
+
+
+
+
+roulette.bets.forEach(bet=>{
+
+
+
+let user = users.find(
+
+u=>
+
+String(u.id)===String(bet.userId)
+
+);
+
+
+
+
+
+if(!user)
+
+return;
+
+
+
+
+
+
+let win=false;
+
+
+
+
+
+if(bet.type==="1-18"){
+
+
+win =
+result>=1 &&
+result<=18;
+
+
+}
+
+
+
+
+
+
+
+if(bet.type==="19-36"){
+
+
+win =
+result>=19 &&
+result<=36;
+
+
+}
+
+
+
+
+
+
+
+if(bet.type==="13-24"){
+
+
+win =
+result>=13 &&
+result<=24;
+
+
+}
+
+
+
+
+
+
+
+if(bet.type==="25-36"){
+
+
+win =
+result>=25 &&
+result<=36;
+
+
+}
+
+
+
+
+
+
+
+if(bet.type==="even"){
+
+
+win =
+result!==0 &&
+result%2===0;
+
+
+}
+
+
+
+
+
+
+
+if(bet.type==="odd"){
+
+
+win =
+result!==0 &&
+result%2!==0;
+
+
+}
+
+
+
+
+
+
+if(win){
+
+
+
+user.balance +=
+
+bet.amount*2;
+
+
+
+}
+
+
+
+
+
+
+});
+
+
+
+
+
+
+saveUsers();
+
+
+}
+// ===============================
 // CREATE PROMO
 // ===============================
 
@@ -149,6 +457,7 @@ Math.random()
 while(
 
 users.some(
+
 u=>u.promoCode===code
 
 )
@@ -170,9 +479,8 @@ return code;
 
 
 
-
 // ===============================
-// API KEY GENERATOR
+// API KEY
 // ===============================
 
 
@@ -197,6 +505,15 @@ Math.random()
 
 
 }
+
+
+
+
+
+
+
+
+
 // ===============================
 // CREATE USER
 // ===============================
@@ -208,6 +525,7 @@ app.post(
 
 
 let data=req.body;
+
 
 
 
@@ -228,6 +546,8 @@ error:"NO_ID"
 
 
 
+
+
 let user = users.find(
 
 u=>
@@ -235,6 +555,7 @@ u=>
 String(u.id)===String(data.id)
 
 );
+
 
 
 
@@ -293,6 +614,9 @@ upgrades:{},
 history:[],
 
 
+rouletteHistory:[],
+
+
 created:Date.now()
 
 
@@ -339,6 +663,7 @@ user.promoCode=generatePromo();
 
 
 
+
 saveUsers();
 
 
@@ -378,7 +703,9 @@ String(u.id)===String(req.params.id)
 
 
 res.json(
+
 user || null
+
 );
 
 
@@ -417,6 +744,7 @@ String(u.id)===String(req.body.id)
 
 
 
+
 if(user){
 
 
@@ -424,7 +752,9 @@ if(user){
 user.balance =
 
 Number(
+
 req.body.balance || 0
+
 );
 
 
@@ -434,6 +764,8 @@ saveUsers();
 
 
 }
+
+
 
 
 
@@ -508,6 +840,8 @@ friends:u.friends
 
 
 
+
+
 res.json({
 
 players:top
@@ -550,6 +884,7 @@ String(u.id)===String(req.body.id)
 
 
 
+
 if(!user){
 
 
@@ -569,19 +904,19 @@ message:"Пользователь не найден"
 
 
 
-if(!user.apiKey || user.apiKey===""){
 
+if(!user.apiKey){
 
 
 user.apiKey = generateApiKey();
 
 
-
 saveUsers();
 
 
-
 }
+
+
 
 
 
@@ -663,7 +998,6 @@ balance:u.balance
 
 
 }));
-
 
 
 
@@ -841,6 +1175,7 @@ date:new Date().toLocaleString()
 
 
 
+
 saveUsers();
 
 
@@ -851,6 +1186,286 @@ saveUsers();
 res.json({
 
 success:true
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// ROULETTE STATE
+// ===============================
+
+
+app.get(
+"/roulette/state",
+(req,res)=>{
+
+
+
+if(
+
+!roulette.active &&
+
+Date.now() >
+
+roulette.endTime
+
+){
+
+
+startRoulette();
+
+
+}
+
+
+
+
+
+
+let timeLeft=0;
+
+
+
+
+
+
+if(roulette.active){
+
+
+timeLeft =
+
+Math.max(
+
+0,
+
+Math.floor(
+
+(roulette.endTime-Date.now())
+
+/1000
+
+)
+
+);
+
+
+
+if(timeLeft===0){
+
+
+finishRoulette();
+
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+res.json({
+
+
+active:roulette.active,
+
+
+timeLeft:timeLeft,
+
+
+result:roulette.result,
+
+
+bets:roulette.bets.length
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// ROULETTE BET
+// ===============================
+
+
+app.post(
+"/roulette/bet",
+(req,res)=>{
+
+
+let user = users.find(
+
+u=>
+
+String(u.id)===String(req.body.id)
+
+);
+
+
+
+
+
+if(!user){
+
+
+return res.json({
+
+success:false,
+
+message:"Игрок не найден"
+
+});
+
+
+}
+
+
+
+
+
+
+
+let amount =
+Number(req.body.amount);
+
+
+
+
+
+let type =
+String(req.body.type);
+
+
+
+
+
+
+if(amount<=0){
+
+
+return res.json({
+
+success:false,
+
+message:"Неверная ставка"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(user.balance < amount){
+
+
+return res.json({
+
+success:false,
+
+message:"Недостаточно средств"
+
+});
+
+
+}
+
+
+
+
+
+
+
+if(!roulette.active){
+
+
+startRoulette();
+
+}
+// продолжаем /roulette/bet
+
+
+user.balance -= amount;
+
+
+
+
+
+roulette.bets.push({
+
+
+userId:String(user.id),
+
+
+name:user.name,
+
+
+type:type,
+
+
+amount:amount
+
+
+});
+
+
+
+
+
+
+saveUsers();
+
+
+
+
+
+
+res.json({
+
+success:true,
+
+message:"Ставка принята",
+
+timeLeft:
+
+Math.floor(
+
+(roulette.endTime-Date.now())
+
+/1000
+
+)
 
 });
 
@@ -1097,7 +1712,9 @@ app.get(
 
 
 res.send(
-"URALcoin server v17 online"
+
+"URALcoin server v18 Roulette online"
+
 );
 
 
@@ -1114,7 +1731,7 @@ PORT,
 
 console.log(
 
-"URALcoin v17 started",
+"URALcoin v18 started",
 
 PORT
 
